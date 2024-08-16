@@ -1,0 +1,11 @@
+|     obsdate |  UL5_4 | e_UL5_4 |    mag | e_mag | observatory | filter |                                                                                           image |
+|  59523.2135 | 19.846 |   0.028 | 19.846 | 0.028 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59523.2135_720.com.fits |
+|  59524.2075 | 19.791 |   0.028 | 19.791 | 0.028 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59524.2075_720.com.fits |
+| 59526.26942 | 19.677 |   0.028 | 19.677 | 0.028 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59526.2694_720.com.fits |
+| 59529.33175 | 19.818 |   0.028 | 17.392 | 0.037 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59529.3318_720.com.fits |
+|  59530.2525 | 19.361 |   0.028 | 15.985 |  0.03 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59530.2525_720.com.fits |
+|  59578.2095 | 20.214 |   0.029 | 13.067 | 0.029 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59578.2095_720.com.fits |
+|   59579.202 | 20.339 |   0.029 | 13.161 | 0.029 |      RASA36 |      r |  /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59579.202_720.com.fits |
+|  59581.2075 | 19.941 |   0.028 | 13.263 | 0.028 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59581.2075_360.com.fits |
+|  59582.1875 | 20.057 |   0.028 |  13.28 | 0.028 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59582.1875_480.com.fits |
+|  59583.2545 |   20.2 |   0.029 | 13.357 | 0.029 |      RASA36 |      r | /data2/SN2021aefx_220627/RASA36/r/MERGE/aligned/combined/NGC1566_RASA36_59583.2545_600.com.fits |

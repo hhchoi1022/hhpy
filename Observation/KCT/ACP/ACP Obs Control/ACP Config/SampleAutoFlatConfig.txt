@@ -1,0 +1,172 @@
+;REMOVE THIS LINE
+;
+; -----------------------------------------
+; ACP Automatic Sky-Flat configuration file
+; -----------------------------------------
+;
+; USER SETUP (See ACP Help, Automatic Sky Flats)
+; REMOVE THE FIRST LINE OF THIS FILE!
+;
+; --- AZIMUTH AND ALTITUDE COORDINATES ---
+;
+; Valid altitude and azimuth values must be in decimal. Altitude -90.0 to +90.0, 
+; Azimuth 0.0 to less than +360.0. Sexagesimal is not supported. Also, altitude
+; must be ABOVE YOUR MOUNT'S LIMITS! So if you need -10 altitude for your panel,
+; your mount's limit probably needs to be set below -10 not exactly -10.
+;
+FlatMode              Sky                ; One of "Sky", "Panel", "Screen"
+;
+TargetBackgroundADU   20000              ; Target flatfield mean in ADU
+TargetADUTolerance    4000               ; Tolerance on the above
+MinExposure           1                  ; Minimum exposure (as short as possible)
+MaxExposure           10                 ; Maximum exposure (until you see too many stars)
+;
+; Post-flat "dew avoidance" slewing. Uncomment PostFlatAlt to activate this
+; feature, and set it to your desired post-flat slew altitude. Mind the horizon
+; and safety limnits set in ACP and your mount! Uncomment PostFlatAz and set it
+; to the desired post-flat slew azimuth. If left commented-out the post-flat
+; slew will use the telescope azimuth at the end of flat acquisition, avoiding
+; a flip if the mount is a GEM.
+;
+;PostFlatAlt          20                 ; Post-flat altitude (must be above safety limits!)
+;PostFlatAz           90                 ; Post-flat azimuth 
+;
+; ------------------------------
+; FILE AND FOLDER NAMING SECTION
+; ------------------------------
+;
+; Required folder name customization templates. If using the default ACP image file
+; template ($DATENITE folders) this will create an AutoFlat subfolder in the same
+; folder that the images themselves go in.
+;
+;     FOR INFO ON THESE, SEE ACP HELP, CUSTOMIZING ACP, 
+;     CUSTOMIZING FILE AND FOLDER NAMES. SCROLL DOWN TO 
+;     THE AUTOFLAT CONFIG SECTION.
+;
+FolderTemplate        $DEFPATH\$DATENITE\AutoFlat
+FileTemplate          AutoFlat-PA$FLATPA-$FLATFILT-Bin$FLATBIN-$FLATSEQ-$MERSIDE
+;
+; Optional autoflat log folder. Default is to put the autoflat logs into the 
+; user's normal log folders (local user or web). Uncomment to activate this
+; feature (remove the leading ';')
+;
+;LogFolder            [any valid folder path, folder(s) will be created]
+;
+; -----------------
+; SKY FLATS SECTION  (used only when flats are done on the sky)
+; -----------------
+;
+; Factors to improve exposure scaling process. The scaling process 
+; assumes no additional time for downloads. For cameras with relatively 
+; long download times (~20+ seconds), that assumption may not be accurate 
+; enough to keep the ADU levels within TargetADUTolerance. The scaling 
+; factor will be less than 1.0 in the morning and greater than 1.0 in 
+; the evening. STARTING POINTS are 0.95 and 1.05 respectively. The values
+; 1 and 1 are here for differences in decimal point '.' versus ',' and 
+; so you NEED TO EDIT THESE!
+;
+ADUAcceleration_AM    1                  ; Factors to improve exposure scaling accuracy
+ADUAcceleration_PM    1
+;
+; Start/End sun angles (deg.). These are set purposely too wide,
+; adjust after you get some experience. Look at your flat logs.
+;
+TwilightSunLo         -9                 ; Low elevation of Sun for flats (morning)
+TwilightSunHi         +2                 ; Hi elevation of Sun for flats (evening)
+;
+; ----------------------------
+; FLAT PANEL OR SCREEN SECTION (used only when flats use EL panel or lighted screen)
+; ----------------------------
+;
+; These coordinates are used to point the telescope at the flat panel/screen
+; Comment these out if you don't want the scope moved here.
+;
+; ** WARNING ** PANEL FLATS ARE ACQUIRED WITH THE DOME/ROOF CLOSED. WHILE
+;               IT WILL NOT BE CLOSED UNTIL AFTER THE SCOPE IS MOVED 
+;               HERE, IT STILL PRESENTS A COLLISION HAZARD FOR LOW-HANGING
+;               ROOFS.
+;
+DoFlatAlt             30                 ; Altitude of flat panel/screen
+DoFlatAz              120                ; Azimuth of flat panel/screen
+;
+; Optional dome azimuth, needed if the panel is mounted on the rotating
+; part of the dome. It may differ from the telescope azimuth (DoFlatAz 
+; above). Uncomment to activate this feature (remove the leading ';')
+;
+;DomeAz                180                ; Azimuth of dome
+;
+; These are the EL panel brightness values for each filter. They must be
+; in the same order as your filters (as listed in MaxIm DL). Adjust these
+; on the high side so that the resulting flat exposures fall towards the 
+; short end of the exposure range (to minimize the time needed to acquire 
+; flats!). This also minimizes the effects of ambient light leakage. The 
+; permissible values range from 0 to 255. Start with 192.
+;
+; DO NOT COMMENT THESE 4 LISTS OUT. If you don't need brightness, just leave 
+; them alone and just don't put the #BRT# into the command line (see below). 
+;
+PerFilterBrightness   192,192,192,192,192,192,192,192,192
+;
+; Starting with ACP 8.1 you can specify separate panel brightness values
+; for higher binning, accounting for the higher sensitivity at those 
+; binning levels.
+;
+PerFilterBrightnessBin2   192,192,192,192,192,192,192,192,192
+PerFilterBrightnessBin3   192,192,192,192,192,192,192,192,192
+PerFilterBrightnessBin4   192,192,192,192,192,192,192,192,192
+;
+; These are the command lines for turning the flat light source on and off.
+; If #BRT# appears in the command line, the brightness value for the current
+; filter (from the above array) will be substituted. For FlipFlat and FlatMan
+; see the provided documentation and include the 'S' option so the command
+; window doesn't hang there for several seconds. This is really simple and 
+; only needs to be done once. The most common error is getting the COM port 
+; wrong. The commands below are for the Alnitak/Optec FlipFlat and include
+; options for opening and closing the lighted cover plate. For the FlatMan
+; anf FlatMan XL, remove the 'C' and 'O' options. For other light sources 
+; these commands may be used to control an programmable power outlet, etc.
+;
+LightCtrlProgram      C:\Program Files (x86)\Alnitak Astrosystems\Alnitak Astrosystems Controller\AACmd.exe
+LightOnCommand        3 C L B#BRT#       ; Command string to turn light on and set/change brightness
+LightOffCommand       3 O D              ; Command string to turn light off
+LightOnDelay          60                 ; Time needed (sec) for brightness to stabilize
+;
+; Comment out the above and uncomment these if you want to 
+; do panel flats during simulation. This will cause the 
+; panel commands to appear in the run log. 
+;
+;;LightCtrlProgram cmd.exe
+;;LightOnCommand   echo ON #BRT#
+;;LightOffCommand  echo OFF
+;;LightOnDelay     10
+;
+; --------------
+; ADVANCED USERS
+; --------------
+;
+IRAF_FITS             False              ; True for IRAF compatible IMAGETYP
+;
+; This controls the size of the "test" image, used to determine when the 
+; brightness is within range. Normally the 64 x 64 size is OK, and limits
+; the download time. However you can change this is desired. 
+;
+TestImageSize         128                ; 128 is the default size
+;
+; To prevent (faintly visible) stars from being in the same location from flat to 
+; flat, the scope is stopped for a few seconds between flats. Normally, 3 seconds
+; is more than enough to separate the star locations in each flat. If you are 
+; forced to run with "disable overlapped slew and image download" due to camera
+; limitations, you may want to try shortening this. Otherwise, the pause in 
+; tracking is overlapped with image download so it should have no impact on
+; your cadence.
+;
+StarDriftSeconds      3                  ; Scope stops for this long between flats
+;
+;
+; When set to True, this suppresses the splitting of rotated flats (with a 
+; rotator and apecified PA) between East and West. Set this to True if you
+; want all of your flats to be taken for the "east" configuration.
+;
+NoAutoFlipRotatorPA   False              ; False means normal behavior
+;
+; -- end --

@@ -1,0 +1,95 @@
+Welcome to ACP 8.2! Yes, the Tip of the Day is back! Please give this a chance to provide you with possibly surprising tidbits each time you start ACP. At the bottom of many tips are links to ACP Help with the details, so this info is just one click away if you are interested. Keep the tips coming, you might be surprised. The tips include both installtion and usage info.
+
+You should check out the DC-3 Dreams Communication Center. If you have an ACP license, you're already registered. Your login was sent to you with your license. If you are evaluating ACP, send us a message at info@dc3.com and request an account, then use the Pre-Sales section for questions and comments. The link below will open the Comm Center.|http://forums.dc3.com/
+
+If this is a new installation, please go through the Getting Started process for your best experience. We have worked to make installing ACP as easy as possible. Since ACP must work with virtually limitless combinations of equipment from multiple companies, installing is not trivial. Click below to open our Getting Started help.|getstart.htm
+
+If you are a new user, please read our New User's Guide. It has links to other sources of information and to our YouTube channel where you can get all sorts of good info.|newuser.html
+
+If you just upgraded ACP, please read the Release Notes. You'll quickly find out all of the things that have been added and improved. Click the link below to open the release notes.|relnotes.htm
+
+One of our eager and capable customers, Dick Berg, has produced an extensive ACP Reference Guide and published it online. He keeps updating this and it's already loaded with all sorts of good information, reference material, links, you name it. Take a look!|http://solo.dc3.com/ar/ACPRefGuide.html
+
+We regularly do live-streamed programs on YouTube, and we have tutorial videos there as well. YOu may be surprised at how detailed and useful they are. We put a lot into this communication medium. Please visit our YouTube channel.|http://youtube.com/dc3dreamsastro
+
+One of the most confusing and misun derstood aspects of ACP is that it is a multi-user system with remote login and account level security. That means it has to protect your computer and protect the data of each user. Thus files are stored in places you may not guess. For a detailed explanation of all of this please videw our video "Where are my Files? Clearing the confusion". Click the link below to  view it.|https://www.youtube.com/watch?v=PdB_EPbDhzY
+
+Do you have a rotated guider? Sick of wrestling with "getting" a guide star? Do you have a horrible memory of getting your Field of View Indictor scaled just right? We have the answer for you! Our help section on Off-Axis Guiding, Rotators, and Field of View Indicators is for you. You'll find a section on "How to win the fight with Off-Axis Guiders Get a Guide Star the Easy Way", and more. Have a look now.|oag-fovi.htm
+
+ACP's web and mobile interface is the primary way to use the program. We've literally put years of design into this interface. Please try to start out observing single targets with ACP through its web and mobile interface. If you're in the observatory, click the Use Web Browser button. Learning ACP this way will provide you with one set of controls to use whether you're in the observatory, in a warm room 100 feet away, or observing remotely from afar.|web.htm
+
+If your mount can accept SYNC commands (some with modeling features cannot), you can have ACP's automatic all-sky pointing update and plate solving "find" your scope for you. Theough the included PinPoint Astrometric Engine's all-sky capabiliy, if ACP can't plate solve after a couple of tries, it will do a plate solve via Astrometry.Net and then use that to correct your mount's pointing. It is slower than local solving. If you need this frequently you can install Andy GLasso's ANSVR for local all-sky solving.|allsky.htm
+
+ACP Planner (free) is a great way to plan your multi-target runs and generate more complex ACP observing plans. Please give it a look. The link below will take you to the ACP Planner home page. There you'll find info, videos, and downloading instructions. Don't miss this powerful tool!|http://acp.dc3.com/planner.html
+
+Did you know that ACP has a built-in dome control and slaving feature. You do not need ASCOM Dome Control or POTH, both of which just add needless complexity. Instead you set up ACP to connect to your dome and telescope and it cross-connects the two for automatic slaving, maintaining the slit position regardless of the scope's construction of geometry. It also works for roll-off roofs which don't need p[ointing but still can be used to provide weather safety.|dome.htm
+
+If you are running ACP remotely, the very best way to get your images back to you is via a cloud file sync service such as DropBox, iCloud, OneDrive, Google Drive, etc. ACP's file and folder customization feature makes possible just about anytning you might want to do, including separate options for multiple ACP users. For more info click the link.|web-dropbox.htm
+
+Once you get everyting set up with your ACP installation, save an ACP Profile. You can do this with your MaxIM DL settings as well, see MaxIm Help on Configurations. Also FocusMax provides for saving your focusing data. Save your ACP Profile, MaxIm Configuration, and focusing data for different configurations if you switch cameras or optics. Back up this data to a thumb drive or CD in case you need to change computers or reload your OS.|profiles.htm
+
+ACP acquires images according to an observing plan. The easiest way to create an observing plan is to use the Single Image or Color Series forms on the web browser. For more complex plans, use our free ACP Planner tool. You can also write plans manually for many special applications yourself. The link below will take you to reference info on plans. It's really worth looking at this just to be aware of the possibilities. For example did you know you can chain from one plan to another?|planfmt.html
+
+ACP adds many FITS mets-data items to the images is acquires. Some of the setup items in ACP Preferences translate to FITS fields. Hover the mouse over places to see which ones. For example the Observatory Name translates to the OBSERVAT field in your images. There are many more, and some are of course calculated at run time like the World Coordinate System precision astrometry added by PinPoint solutions. We have provided a table of these meta-data FITS fields here.|fits-fields.htm
+
+You can customize ACP's image file names and folder names/locations in almost limitless ways, including delivery of images to remote users via DropBox or other cloud storage. ACP can support all sorts of processing pipelines and tools with easy and convenient image naming. The standard naming as delivered is almost certainly not what you really want so please look at this info. Also having multiple web/mobile users can create another layer of complexity and confusion. We'll try to help!|filecust.htm
+
+Observing plans can accept targets in many formats, including minor planet/comet orbital elements. The easiest way is to use the ACP web forms, and the MP and CT target names (see the forms' Help buttons). If you want to use these solar system targets, you will need to download and install the latest Minor Planet Center minor planet and observable comet databases|mpcfmt.html
+
+Many cameras have multiple image read-out modes which may include RBI (image ghost) pre-flash functions. You can tell ACP to routinely use one readout mode for pointing update plate solving and focusing (typically a fast downloading mode) and another for your final data images. You can also force ACP to use a particular readout mode on specific images.|readoutmodes.htm
+
+If you have a German equatorial mount (GEM), it’s really important that you get ACP’s GEM flip settings correct. There’s no need to fudge the flip point past the meridian because ACP does auto-flip. It has to flip somewhere! The advanced flip settings in FlipConfig.txt allow you to take advantage of your mount's ability to track past the meridian, in most cases eliminating the need to wait as a target passes your mount's flip point. Click the link below for details.|gemflip.htm
+
+Even though you may have ACP's guiding working OK, it might be a good idea to review the info there in case you may have missed something. You could find out how to make the best use of ACP's guiding. There links to a classic paper by Jim McMillan, as well as an engineering white paper on rotated guiding. The latter explains how ACP is able to provied rotated guiding including meridian flips with no need to recalibrate the guider, ever.|autoguide.htm
+
+If you need to find or sync your scope after power-up, use the ACP FindLostScope.js script. DO NOT use a bright star!! Slew to some random place in the sky and let PinPoint plate-solve and sync your scope. FindLostScope.vbs does this. If yourscope's pointing is too far off, and you have enabled it in PinPoint and All-Sky preferences, it will use Astrometry.net to do an all-sky solution.
+
+If you have a high-resolution mount with encoders such at the Planewave L-series, ACP has a "single sync" mode where it will do a pointing update and send a single high-accuracy sync to the controller, then it can completely avoid pointing updates and plate solves for pointing for the rest of the night. This can be a major win for efficiency and cadence.|singlesync.htm
+
+If your run includes the command to shut down your observatory at the end, ACP will park the scope first, close the dome/roof, optionally park/home the dome, and warm the imager.
+
+If you are using ACP's console for routing observing, you are missing out on ACP's most useful features. Please give its web/mobile user controls a try.|web.htm
+
+Did you know that Software Bisque's TheSky HD on the iPad has built-in connectivity to ACP's web/mobile services? Pick a target in TheSky HD, touch to flip over to your ACP request input form, and touch the "Get coordinates from TheSKy". The coordinates, including rotator PS, will be filled in for you. Have a look at this video.|https://www.youtube.com/watch?v=8s9u_Powu-o
+
+Even if you think you have parfocal filters, take the time to configure the focus offset tables for ACP. The benefits are many! For one thing, you can avoid ACP wasting time auto-focusing on filter switches.|filters.htm
+
+ACP's simulation mode is a powerful learning tool. With simulated images enabled, you can plan and do runs during daylight or bad weather. You will get realistic star field images and all aspects of ACP will work. You can exercise ACP with your real telescope, filter wheel, imager, rotator etc., or use simulators for everything.|simulation.html
+
+When acquiring images of solar system bodies (asteroids, planets, comets), ACP can optionally adjust your telescope’s tracking rate to track the body using its orbital elements (orbital tracking). Use the web forms and specify orbital tracking.|mpcfmt.html
+
+Most of the ASCOM drivers for telescopes support unattended cold- and warm-starting from park or home position. Thus you shouldn’t need to ever manually sync on a bright star on startup! In fact, if you do this, using an eyeballed star on an image, you can degrade ACP’s pointing corrector model!|ptgcorr.
+
+If your telescope control system has built in pointing correction (such as the Planewave mounts, Software Bisque Paramount, and Astro-Physics with APCC), you should not use ACP pointing correction.|ptgcorr.htm
+
+If you are a university or other organiztion that needs TLS/SSL encryption on ACP's web server, you can install a certificate into the WIndows system, enable encryption in ACP, and have HTTPS services. Getting the certificate is not trivial, and you will need a domain name over which you have control. FOr more information click the link below.|ssl_security.htm
+
+If you have a German equatorial mount (GEM), you’ll never have to worry about meridian crossings again. Automatically image right through the meridian where the skies are best.|gemflip.htm
+
+You can save and reload ACP telescope pointing models. You can also load a model into the Diffraction Limited MaxPoint corrector and use its pointing analysis features.|maxpoint.htm
+
+Every ACP observing run produces a highly detailed run log. If (heaven forbid) something happens to compromise the run, you can review the log later and in most cases determine what happened and when (and sometimes why!). These logs are stored in My DOcuments\ASP Astronomy\Logs by date folder if you use ACP locally at the observatory, or via the web browser "My Documents" if running remotely.
+
+ACP can serve as a "hub" allowing other programs to share the telescope that ACP controls and have ACP's dome slaving. In the other programs, select "ACP Telescope Hub" as the telescope type. 
+
+ACP can automatically acquire dusk and dawn sky flats, use a screen, or a lighted panel. The flat system is extremely flexible yet in its default mode it’s extremely easy to use. Panel/screen flats allow selection of light brightness so the exposure times can be kept short without being so sort that shutter vignetting is an issue.|autoflat.htm
+
+ACP’s built-in web server supports individual user accounts, each with private areas for data, plans and logs. Everyone must use a username/password to access the web server. There are no public areas.|web.htm
+
+ACP has built-in dome control. There’s no need to use POTH, ASCOM Dome Controller, Digital DomeWorks, etc. You get GEM/Fork geometry adjustment, direct slew, weather safety, auto-open, auto park/home/close and many other benefits.|dome.htm
+
+The Slew or Sync (catalog) button on ACP's console lets you slew and/or sync the scope to given coordinates, jog its position, slew to one of the alignment stars, a deep sky object from the Saguaro Astronomy Club or PGC catalog, or a planet.
+
+At the end of any observing run or other script, you may notice the TRACK light flashing. This means that the tracking on your mount will be turned off in 10 minutes or less. By clicking on that light, it will turn steady, leaving the tracking on from that time onward. This can be useful when doing engineering/installation work.
+
+After you get going, take some time to review the Preferences tabs, hovering the mouse over the various controls to see the additional info. This will give you an overview of ACP's features, allowing you to make the best use of its capabilities.
+
+Visual PinPoint (included with ACP) is useful for plate-solving images, and doing astrometry of virtually any object, including searching for asteroids and supernovae. It is available on your Start menu. You'll find help on the page that first appears.
+
+The names you give to the telescope and camera in the Preferences window, Instruments tab, are written into the FITS headers of acquired images as TELESCOP and INSTRUME, respectively. Likewise the observatory name in the Observatoey tab is saved as OBSERVAT in FITS.|fits-fields.htm
+
+You can have ACP make a sound and/or speak an alert if there is an error during a script. You can use this as an alarm to wake you up in case of trouble. Check "Sound and Voice on Errors" on the General tab of Preferences.
+
+ACP has built-in telescope pointing correction. ACP will automatically learn the mechanical errors of your scope and better and better pointing as time goes on. There's no need to "train" it beforehand if your scope points well enough to have successful plate solving. Click the link below to learn more.|ptgcorr.htm
+
+Thanks for reading these tips. Go ahead and turn off startup tips. The tips are always available on the ACP Help menu.

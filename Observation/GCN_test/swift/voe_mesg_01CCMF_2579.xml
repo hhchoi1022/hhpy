@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<voe:VOEvent
+      ivorn="ivo://nasa.gsfc.gcn/SWIFT#XRT_SPER_725626-554"
+      role="observation" version="2.0"
+      xmlns:voe="http://www.ivoa.net/xml/VOEvent/v2.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0  http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd" >
+  <Who>
+    <AuthorIVORN>ivo://nasa.gsfc.tan/gcn</AuthorIVORN>
+    <Author>
+      <shortName>VO-GCN</shortName>
+      <contactName>Scott Barthelmy</contactName>
+      <contactPhone>+1-301-286-3106</contactPhone>
+      <contactEmail>scott.barthelmy@nasa.gov</contactEmail>
+    </Author>
+    <Date>2016-12-06T08:12:31</Date>
+    <Description>This VOEvent message was created with GCN VOE version: 1.19 18nov16</Description>
+  </Who>
+  <What>
+    <Param name="Packet_Type"  value="87" />
+    <Param name="Pkt_Ser_Num"  value="1" />
+    <Param name="TrigID"       value="725626" ucd="meta.id" />
+    <Param name="Segment_Num"  value="0" ucd="meta.id.part" />
+    <Param name="Burst_TJD"    value="17728" unit="days" ucd="time" />
+    <Param name="Burst_SOD"    value="29239.36" unit="sec" ucd="time" />
+    <Param name="N_Packets"    value="62" unit="dn" />
+    <Param name="N_Events"     value="106" unit="dn" />
+    <Param name="SPER_URL" value="http://gcn.gsfc.nasa.gov/gcn/notices_s/sw00725626000msxpc_uf.evt" />
+    <Param name="Coords_Type"   value="2" unit="dn" />
+    <Param name="Coords_String" value="pointing_direction" />
+    <Group name="Obs_Support_Info" >
+      <Description>The Sun and Moon values are valid at the time the VOEvent XML message was created.</Description>
+      <Param name="Sun_RA"        value="253.34" unit="deg" ucd="pos.eq.ra" />
+      <Param name="Sun_Dec"       value="-22.55" unit="deg" ucd="pos.eq.dec" />
+      <Param name="Sun_Distance"  value="72.47" unit="deg" ucd="pos.angDistance" />
+      <Param name="Sun_Hr_Angle"  value="-3.08" unit="hr" />
+      <Param name="Moon_RA"       value="333.92" unit="deg" ucd="pos.eq.ra" />
+      <Param name="Moon_Dec"      value="-10.41" unit="deg" ucd="pos.eq.dec" />
+      <Param name="MOON_Distance" value="55.94" unit="deg" ucd="pos.angDistance" />
+      <Param name="Moon_Illum"    value="39.18" unit="%" ucd="arith.ratio" />
+      <Param name="Galactic_Long" value="71.20" unit="deg" ucd="pos.galactic.lon" />
+      <Param name="Galactic_Lat"  value="3.13" unit="deg" ucd="pos.galactic.lat" />
+      <Param name="Ecliptic_Long" value="313.42" unit="deg" ucd="pos.ecliptic.lon" />
+      <Param name="Ecliptic_Lat"  value="54.20" unit="deg" ucd="pos.ecliptic.lat" />
+    </Group>
+    <Description>Swift-XRT single pixel event report (SPER).</Description>
+  </What>
+  <WhereWhen>
+    <ObsDataLocation>
+      <ObservatoryLocation id="GEOLUN" />
+      <ObservationLocation>
+        <AstroCoordSystem id="UTC-FK5-GEO" />
+        <AstroCoords coord_system_id="UTC-FK5-GEO">
+          <Time unit="s">
+            <TimeInstant>
+              <ISOTime>2016-12-06T08:07:19.36</ISOTime>
+            </TimeInstant>
+          </Time>
+          <Position2D unit="deg">
+            <Name1>RA</Name1>
+            <Name2>Dec</Name2>
+            <Value2>
+              <C1>299.4398</C1>
+              <C2>35.1134</C2>
+            </Value2>
+            <Error2Radius>0.0000</Error2Radius>
+          </Position2D>
+        </AstroCoords>
+      </ObservationLocation>
+    </ObsDataLocation>
+  <Description>The RA,Dec coordinates are of the type: pointing_direction.</Description>
+  </WhereWhen>
+  <How>
+    <Description>Swift Satellite, XRT Instrument</Description>
+    <Reference uri="http://gcn.gsfc.nasa.gov/swift.html" type="url" />
+  </How>
+  <Why importance="0.99">
+    <Inference probability="0.9">
+      <Concept>process.variation.burst;em.gamma</Concept>
+    </Inference>
+  </Why>
+  <Citations>
+    <EventIVORN cite="followup">ivo://nasa.gsfc.gcn/SWIFT#BAT_GRB_Pos_725626-464</EventIVORN>
+    <Description>This is the XRT SPER for the original BAT trigger.</Description>
+  </Citations>
+  <Description>
+  </Description>
+</voe:VOEvent>

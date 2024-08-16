@@ -1,0 +1,22 @@
+; Prepare for the observation (RASA36)
+#WAITUNTIL 1, 04/30/23 22:52:06
+
+; Calibration frames
+
+; Start of the evening
+#WAITUNTIL 1, 04/30/23 23:29:42
+
+; Targeting
+#COUNT 18
+#INTERVAL 60
+#NOPREVIEW 
+#NOSOLVE
+MS230501h	07:28:41	05:08:34
+
+#COUNT 18
+#INTERVAL 60
+#NOPREVIEW 
+#NOSOLVE
+MS230501h	07:25:28	02:34:17
+
+#QUITAT 05/01/23 09:51:01

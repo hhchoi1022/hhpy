@@ -1,0 +1,11 @@
+AutoFlatConfig.txt
+ImageFileConfig.txt
+CalFileConfig.txt
+LogFileConfig.txt
+FilterInfo.txt
+FilterState.txt
+BadBrightStars.txt
+RoModeInfo.txt
+AoInfo.txt
+Active.clb
+

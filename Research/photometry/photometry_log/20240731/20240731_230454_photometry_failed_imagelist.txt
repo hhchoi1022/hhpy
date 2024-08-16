@@ -1,0 +1,11 @@
+{
+    "Execution Time": "2024-07-31 23:01:49",
+    "calculate": [],
+    "align": [],
+    "combine": [],
+    "photometry": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/com_align_Calib-KCT_STX16803-NGC1566-20220930-082201-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/com_align_Calib-KCT_STX16803-NGC1566-20221226-073709-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/com_align_Calib-KCT_STX16803-NGC1566-20221229-071216-r-120.fits"
+    ]
+}

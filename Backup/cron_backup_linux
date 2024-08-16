@@ -1,0 +1,14 @@
+
+* * * * * cp /home/hhchoi1022/.bashrc /home/hhchoi1022/Desktop/Gitrepo/Backup/bashrc_linux
+* * * * * crontab -l > /home/hhchoi1022/Desktop/Gitrepo/Backup/cron_backup_linux
+
+0 15 1 * * /home/hhchoi1022/anaconda3/bin/ipython /home/hhchoi1022/Desktop/Gitrepo/Monitoring/backup.py
+
+
+# From here, Only commands for conda
+PATH=/home/hhchoi1022/anaconda3/condabin/
+0 14 1 * * conda env export -n hhchoi1022 > /home/hhchoi1022/Desktop/Gitrepo/Backup/hhchoi1022.yml
+0 13 1 * * conda env export -n py37 > /home/hhchoi1022/Desktop/Gitrepo/Backup/py37.yml
+
+#@reboot /home/hhchoi1022/anaconda3/bin/ipython /home/hhchoi1022/Desktop/Gitrepo/tnsalert.py >> /home/hhchoi1022/Desktop/Gitrepo/tnsalert.log 2>&1
+#@reboot ipython /home/hhchoi1022/Desktop/Gitrepo/tnsale

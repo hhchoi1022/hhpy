@@ -1,0 +1,112 @@
+<ns0:VOEvent xmlns:ns0="http://www.ivoa.net/xml/VOEvent/v2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ivorn="ivo://nasa.gsfc.gcn/Fermi#GBM_Gnd_Pos_2022-09-07T14:05:26.48_684252331_57-028" role="observation" version="2.0" xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0  http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd">
+  <Who>
+    <AuthorIVORN>ivo://nasa.gsfc.tan/gcn</AuthorIVORN>
+    <Author>
+      <shortName>Fermi (via VO-GCN)</shortName>
+      <contactName>Julie McEnery</contactName>
+      <contactPhone>+1-301-286-1632</contactPhone>
+      <contactEmail>Julie.E.McEnery@nasa.gov</contactEmail>
+    </Author>
+    <Date>2022-09-07T14:06:13</Date>
+    <Description>This VOEvent message was created with GCN VOE version: 15.08 17jun22</Description>
+  </Who>
+  <What>
+    <Param name="Packet_Type" value="112" />
+    <Param name="Pkt_Ser_Num" value="6" />
+    <Param name="TrigID" ucd="meta.id" value="684252331" />
+    <Param name="Sequence_Num" ucd="meta.id.part" value="57" />
+    <Param name="Burst_TJD" ucd="time" unit="days" value="19829" />
+    <Param name="Burst_SOD" ucd="time" unit="sec" value="50726.48" />
+    <Param name="Burst_Inten" ucd="phot.count" unit="cts" value="0" />
+    <Param name="Data_Integ" ucd="time.interval" unit="sec" value="2.048" />
+    <Param name="Burst_Signif" ucd="stat.snr" unit="sigma" value="8.50" />
+    <Param name="Phi" ucd="pos.az.azi" unit="deg" value="99.00" />
+    <Param name="Theta" ucd="pos.az.zd" unit="deg" value="75.00" />
+    <Param name="Algorithm" unit="dn" value="4173" />
+    <Param name="Lo_Energy" unit="keV" value="44032" />
+    <Param name="Hi_Energy" unit="keV" value="279965" />
+    <Param name="SC_Geo_X" value="101044" />
+    <Param name="SC_Geo_Y" value="-43496" />
+    <Param name="SC_Geo_Z" value="8880" />
+    <Param name="Trigger_ID" value="0x20000000" />
+    <Param name="Misc_flags" value="0x40000000" />
+    <Group name="Trigger_ID">
+      <Param name="Def_NOT_a_GRB" value="false" />
+      <Param name="Target_in_Blk_Catalog" value="false" />
+      <Param name="Spatial_Prox_Match" value="false" />
+      <Param name="Long_short" value="unknown" />
+      <Param name="Temporal_Prox_Match" value="true" />
+      <Param name="Test_Submission" value="false" />
+    </Group>
+    <Group name="Misc_Flags">
+      <Param name="Values_Out_of_Range" value="false" />
+      <Param name="Flt_Generated" value="false" />
+      <Param name="Gnd_Generated" value="true" />
+      <Param name="CRC_Error" value="false" />
+    </Group>
+    <Param name="LightCurve_URL" ucd="meta.ref.url" value="http://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/triggers/2022/bn220907587/quicklook/glg_lc_medres34_bn220907587.gif">
+      <Description> The LC_URL file will not be created/available until ~15 min after the trigger.</Description>
+    </Param>
+    <Param name="LocationMap_URL" ucd="meta.ref.url" value="http://gcn.gsfc.nasa.gov/notices_f/gbm_gnd_loc_map_684252331.fits">
+      <Description>The LocationMap_URL file will not be created/available until ~4 min after the notice.</Description>
+    </Param>
+    <Param name="Coords_Type" unit="dn" value="1" />
+    <Param name="Coords_String" value="source_object" />
+    <Group name="Obs_Support_Info">
+      <Description>The Sun and Moon values are valid at the time the VOEvent XML message was created.</Description>
+      <Param name="Sun_RA" ucd="pos.eq.ra" unit="deg" value="166.13" />
+      <Param name="Sun_Dec" ucd="pos.eq.dec" unit="deg" value="5.93" />
+      <Param name="Sun_Distance" ucd="pos.angDistance" unit="deg" value="104.96" />
+      <Param name="Sun_Hr_Angle" unit="hr" value="-6.92" />
+      <Param name="Moon_RA" ucd="pos.eq.ra" unit="deg" value="310.13" />
+      <Param name="Moon_Dec" ucd="pos.eq.dec" unit="deg" value="-23.54" />
+      <Param name="MOON_Distance" ucd="pos.angDistance" unit="deg" value="37.69" />
+      <Param name="Moon_Illum" ucd="arith.ratio" unit="%" value="89.17" />
+      <Param name="Galactic_Long" ucd="pos.galactic.lon" unit="deg" value="10.38" />
+      <Param name="Galactic_Lat" ucd="pos.galactic.lat" unit="deg" value="2.73" />
+      <Param name="Ecliptic_Long" ucd="pos.ecliptic.lon" unit="deg" value="269.64" />
+      <Param name="Ecliptic_Lat" ucd="pos.ecliptic.lat" unit="deg" value="4.82" />
+    </Group>
+    <Description>The Fermi-GBM location of a transient.</Description>
+  </What>
+  <WhereWhen>
+    <ObsDataLocation>
+      <ObservatoryLocation id="GEOLUN" />
+      <ObservationLocation>
+        <AstroCoordSystem id="UTC-FK5-GEO" />
+        <AstroCoords coord_system_id="UTC-FK5-GEO">
+          <Time unit="s">
+            <TimeInstant>
+              <ISOTime>2022-09-07T14:05:26.48</ISOTime>
+            </TimeInstant>
+          </Time>
+          <Position2D unit="deg">
+            <Name1>RA</Name1>
+            <Name2>Dec</Name2>
+            <Value2>
+              <C1>269.6200</C1>
+              <C2>-18.6200</C2>
+            </Value2>
+            <Error2Radius>5.5800</Error2Radius>
+          </Position2D>
+        </AstroCoords>
+      </ObservationLocation>
+    </ObsDataLocation>
+  <Description>The RA,Dec coordinates are of the type: source_object.</Description>
+  </WhereWhen>
+  <How>
+    <Description>Fermi Satellite, GBM Instrument</Description>
+    <Reference type="url" uri="http://gcn.gsfc.nasa.gov/fermi.html" />
+  </How>
+  <Why importance="0.95">
+    <Inference probability="0.5">
+      <Concept>process.variation.burst;em.gamma</Concept>
+    </Inference>
+  </Why>
+  <Citations>
+    <EventIVORN cite="followup">ivo://nasa.gsfc.gcn/Fermi#GBM_Alert_2022-09-07T14:05:26.48_684252331_1-020</EventIVORN>
+    <Description>This is an updated position to the original trigger.</Description>
+  </Citations>
+  <Description>
+  </Description>
+</ns0:VOEvent>

@@ -1,0 +1,436 @@
+#%%
+from lmfit import Parameters, minimize, report_fit
+from astropy.io import ascii
+from observedphot import ObservedPhot
+import matplotlib.pyplot as plt
+import numpy as np
+from HHsupport_analysis import mag_to_flux
+from HHsupport_analysis import load_filt_keys
+from HHsupport_analysis import flux_to_mag
+from scipy import interpolate
+from HHsupport_analysis import interpolate_spline
+#%% Observation
+DM = 31.17
+ZP = 25
+filepath_all = '/Users/hhchoi1022/Gitrepo/data/SN2021aefx/observation/lightcurve/Alldata_No_cor.dat'
+tbl_obs = ascii.read(filepath_all, format = 'fixed_width')
+tbl_obs['absmag'] = (tbl_obs['mag'] - DM).round(3)
+observed_data = ObservedPhot(tbl_obs, MW_extinction_corrected= True, Host_extinction_corrected= True)
+observed_data.exclude_observatory(['Swope'])
+plt.figure(dpi = 400)
+observed_data.show_lightcurve(day_binsize = 20, scatter_linewidth=0.5, scatter_size=40, errorbar_linewidth=0.5, errorbar_capsize=3, color_BV = True, color_gr = True, UL = True, label = True, label_location=0, color_UB = True)
+plt.xlim(59525, 59540)
+#%% Fireball model
+def fireball_model(time, amplitude, exptime, alpha):
+    flux = amplitude * (time - exptime )**alpha
+    return flux
+def fireball_filter(params, time, filter_):
+    exptime = params['exptime_fireball']
+    amp = params[f'amp_{filter_}']
+    alpha= params[f'alpha_{filter_}']
+    return fireball_model(np.array(time), amp, exptime, alpha)
+def fireball_calc_chisq(params, x, y, e_y, filter_key):
+    tot_chisq = []
+    for i, filter_ in enumerate(filter_key):
+        obstime = x[i]
+        obsflux = y[i]
+        obserr = e_y[i]
+        modelflux = fireball_filter(params, obstime, filter_)
+        chisq = (((obsflux - modelflux)/obserr)**2)
+        tot_chisq.append(chisq)
+    return np.concatenate(tot_chisq)
+# %% Fireball Fitting
+fit_filterset = 'UBgVri'
+phase_min = 59535
+phase_max = 59538
+tbl_filt_all = observed_data.get_filt_data(observed_data.get_data_detected())
+tbl_fit = tbl_obs[(tbl_obs['obsdate']>phase_min) & (tbl_obs['obsdate']<phase_max)]
+tbl_filt = observed_data.get_filt_data(tbl_fit)
+#%%
+x_fit = []
+y_fit = []
+e_y_fit = []
+fit_params = Parameters()
+fit_params.add('exptime_fireball', value = 59529, min = 59525, max = 59529.3315)
+for filter_ in fit_filterset:
+    if filter_ in tbl_filt.keys():
+        #fit_params.add(f'exptime_{filter_}', value = 59529, min = 59525, max = 59535)
+        fit_params.add(f'amp_{filter_}', value = 1000, min = 10, max = 200000)
+        fit_params.add(f'alpha_{filter_}', value = 2, min = 1, max = 10)
+        obsdate_filt = tbl_filt[filter_]['obsdate']
+        flux_filt = mag_to_flux(tbl_filt[filter_]['mag'], zp = ZP)
+        e_flux_filt = flux_filt * 2.303/2.5 * tbl_filt[filter_]['e_mag']
+        x_fit.append(obsdate_filt.tolist())
+        y_fit.append(flux_filt.tolist())
+        e_y_fit.append(e_flux_filt.tolist())
+out = minimize(fireball_calc_chisq, fit_params, args = (x_fit, y_fit, e_y_fit, fit_filterset))
+report_fit(out.params)
+#%% Fireball Visualization
+color_key, offset_key, _, _, label_key = load_filt_keys(fit_filterset)
+plt.figure(dpi = 100, figsize = (10, 6))
+plt.gca().invert_yaxis()
+phase_range = np.arange(out.params[f'exptime_fireball'].value, 59540, 0.1)
+for filter_ in fit_filterset:
+    exptime = out.params[f'exptime_fireball']
+    #exptime = out.params[f'exptime_{filter_}']
+    amp = out.params[f'amp_{filter_}']
+    alpha= out.params[f'alpha_{filter_}']
+    tbl_filter = tbl_filt_all[filter_]
+    tbl_filter.sort('obsdate')
+    flux_model = fireball_filter(out.params, phase_range, filter_)
+    mag_model = flux_to_mag(flux_model, zp = ZP)
+    plt.text(59531,10,'%.4f'%exptime)
+    plt.plot(phase_range, mag_model + offset_key[filter_] , c = color_key[filter_], label = rf'[{label_key[filter_]}] $\alpha = {round(alpha.value,2)}$', linestyle= '--', linewidth = 1)
+    plt.scatter(tbl_filter['obsdate'], tbl_filter['mag'] + offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_])
+    plt.ylim(25, 8)
+    """
+    if filter_ =='i':
+        plt.scatter(tbl_filter['obsdate'], tbl_filter['absmag']-0.5, facecolor = 'none', edgecolor = color_key[filter_])
+        #plt.plot(tbl_filter['obsdate'], tbl_filter['absmag']-0.4, color = color_key[filter_])
+    elif filter_ =='U':
+        plt.scatter(tbl_filter['obsdate'], tbl_filter['absmag']-0.6, facecolor = 'none', edgecolor = color_key[filter_])
+        #plt.plot(tbl_filter['obsdate'], tbl_filter['absmag']-0.6, color = color_key[filter_])
+    elif filter_ =='u':
+        plt.scatter(tbl_filter['obsdate'], tbl_filter['absmag']-0.7, facecolor = 'none', edgecolor = color_key[filter_])
+        #plt.plot(tbl_filter['obsdate'], tbl_filter['absmag']-0.7, color = color_key[filter_])
+    else:
+        plt.scatter(tbl_filter['obsdate'], tbl_filter['absmag'], facecolor = 'none', edgecolor = color_key[filter_])
+        #plt.plot(tbl_filter['obsdate'], tbl_filter['absmag'], color = color_key[filter_])
+    """
+plt.xlim(phase_range[0]-3, 59540)
+plt.fill_betweenx([25,8],phase_min, phase_max, alpha = 0.3)
+#plt.ylim(-10, -24)
+plt.legend(loc = 4)
+#%%
+def DOM_model(E_exp = 1.0,
+              M_ej = 1.0,
+              kappa = 0.05,
+              t_delay = 5e3,
+              f_comp = 1.5,
+              M_dom = 0.1,
+              v_dom = 5e3,
+              f_dom = 0.1,
+              format_ = 'flux', # or mag
+              home_dir : str = '/Users/hhchoi1022/Gitrepo/Research/Supernova/DOM_model/'
+              ):
+    #model = DOMInteractionL17(E_exp = E_exp, M_ej = M_ej, kappa = kappa, t_delay = t_delay, f_comp = f_comp, M_dom = M_dom, V_dom = v_dom, f_dom = f_dom)
+    #tbl, _, _ = model.calc_magnitude(np.arange(0.1, 10, 0.1), 'UBVRIugri')
+    tbl = ascii.read(f'{home_dir}{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{v_dom}_{f_dom}.dat', format = 'fixed_width')
+
+    if format_.upper() == 'FLUX':
+        for filter_ in 'UBVRIugri':
+            tbl[filter_][:] = mag_to_flux(tbl[filter_], zp = ZP).round(5)            
+    spl_dict = dict()
+    for filter_ in 'UBVRIugri':
+        value = tbl[filter_]
+        phase = tbl['phase']
+        interp_func, _ = interpolate_spline(phase, value, show = False)
+        #interp_func = interpolate.interp1d(phase + exptime_DOM, value, 'linear')
+        spl_dict[filter_] = interp_func
+    return spl_dict
+#%% Fireball Visualization
+
+color_key, offset_key, _, _, label_key = load_filt_keys(fit_filterset)
+plt.figure(dpi = 100, figsize = (5, 8))
+plt.gca().invert_yaxis()
+phase_range = np.arange(59529.5, 59540, 0.1)
+DOM_spl = DOM_model(E_exp = 0.5, M_ej = 1.4, kappa = 0.05, t_delay = 1e4, f_comp = 1.5, M_dom = 0.01, v_dom = 5e3, f_dom = 0.05)
+for filter_ in fit_filterset:
+    exptime = out.params[f'exptime_fireball']
+    #exptime = out.params[f'exptime_{filter_}']
+    amp = out.params[f'amp_{filter_}']
+    alpha= out.params[f'alpha_{filter_}']
+    tbl_filter = tbl_filt_all[filter_]
+    tbl_filter.sort('obsdate')
+    flux_model = fireball_filter(out.params, phase_range, filter_)
+    flux_DOM = DOM_spl[filter_](np.arange(0.1, 10.6, 0.1))
+    flux_both = flux_model+ flux_DOM
+    mag_model = flux_to_mag(flux_model, zp = ZP)
+    mag_DOM = flux_to_mag(flux_DOM, zp = ZP)
+    mag_both = flux_to_mag(flux_both, zp = ZP)
+    plt.text(59531,-20,'%.4f'%exptime)
+    plt.scatter(tbl_filter['obsdate'], tbl_filter['absmag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_])
+    plt.plot(phase_range, mag_model + offset_key[filter_], c = color_key[filter_], label = rf'[{label_key[filter_]}] $\alpha = {round(alpha.value,2)}$', linestyle= '--', linewidth = 1)
+    plt.plot(phase_range, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= '--', linewidth = 1)
+    plt.plot(phase_range, mag_both + offset_key[filter_], c = color_key[filter_], linestyle= '-', linewidth = 1)
+plt.xlim(phase_range[0]-3, 59540)
+plt.ylim(-5, -22.5)
+plt.legend(loc = 4)
+#%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#%%
+
+#%%
+
+#%%
+
+# %% Fireball + DOM Fitting
+def DOM_model(params,
+              home_dir : str = '/Users/hhchoi1022/Gitrepo/Research/Supernova/DOM_model/',
+              format_ = 'flux', # or flux
+              ):
+    exptime_DOM = params['exptime_DOM'].value
+    E_exp = params['E_exp'].value
+    M_ej = params['M_ej'].value
+    kappa = 0.05#params['kappa']
+    t_delay = 5e3#params['t_delay']
+    f_comp = 1.5#params['f_comp']
+    M_dom = 0.1#params['M_dom']
+    v_dom = 5e3#params['v_dom']
+    f_dom = 0.1#params['f_dom']
+    tbl = ascii.read(f'{home_dir}{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{v_dom}_{f_dom}.dat', format = 'fixed_width')
+    if format_.upper() == 'FLUX':
+        for filter_ in 'UBVRIugri':
+            tbl[filter_][:] = mag_to_flux(tbl[filter_], zp = ZP).round(5)            
+    spl_dict = dict()
+    for filter_ in 'UBVRIugri':
+        value = tbl[filter_]
+        phase = tbl['phase']
+        interp_func, _ = interpolate_spline(phase + exptime_DOM, value, show = False)
+        #interp_func = interpolate.interp1d(phase + exptime_DOM, value, 'linear')
+        spl_dict[filter_] = interp_func
+    return spl_dict
+'''
+def DOM_filter(params, time, filter_):
+    exptime_DOM = params['exptime_DOM']
+    model = DOM_model(format_ = 'flux')
+    flux = model[filter_]
+    phase = model['phase'] + exptime_DOM
+    spl, _ = interpolate_spline(phase, flux)
+    return spl(np.array(time))
+'''
+def fireball_filter(params, time, filter_):
+    exptime_fireball = params['exptime_fireball']
+    amp = params[f'amp_{filter_}']
+    alpha= params[f'alpha_{filter_}']
+    return fireball_model(np.array(time), amp, exptime_fireball, alpha)
+
+def DOMfireball_calc_chisq(params, x, y, e_y, filter_key):
+    tot_chisq = []
+    dom_model = DOM_model(params, format_ = 'flux')
+    for i, filter_ in enumerate(filter_key):
+        obstime = x[i]
+        obsflux = y[i]
+        obserr = e_y[i]
+        DOM_flux = dom_model[filter_](obstime)
+        fireball_flux = fireball_filter(params, obstime, filter_)
+        DOMfireball_flux = DOM_flux + fireball_flux
+        chisq = (((obsflux - DOMfireball_flux)/obserr)**2)
+        tot_chisq.append(chisq)
+    return np.concatenate(tot_chisq)
+# %%
+fit_params = Parameters()
+fit_params.add('exptime_fireball', value = 59529, min = 59527, max = 59535, brute_step=1)
+fit_params.add('exptime_DOM', value = 59529, min = 59527, max = 59535, brute_step=1)
+fit_params.add('E_exp', value = 1.0, min = 1.0, max = 1.5, brute_step=0.25)
+fit_params.add('M_ej', value = 1.0, min = 1.0, max = 1.2, brute_step = 0.2)
+#fit_params.add('kappa', value = 0.05, min = 0.03, max = 0.05)
+#fit_params.add('t_delay', value = 5e3, min = 5e3, max = 1e4)
+#fit_params.add('f_comp', value = 1.5, min = 1.5, max = 1.6)
+#fit_params.add('M_dom', value = 0.1, min = 0.1, max = 0.2)
+#fit_params.add('v_dom', value = 5e3, min = 5e3, max = 6e3)
+#fit_params.add('f_dom', value = 0.1, min = 0.1, max = 0.15)
+for filter_ in fit_filterset:
+    if filter_ in tbl_filt.keys():
+        fit_params.add(f'amp_{filter_}', value = 100, min = 0, max = 2000, brute_step=10)
+        fit_params.add(f'alpha_{filter_}', value = 2, min = 1, max = 5, brute_step= 0.1)
+nll = lambda *args: DOMfireball_calc_chisq(*args, x = x_fit, y = y_fit, e_y = e_y_fit, filter_key = 'UBV')
+soln = minimize(nll, fit_params, method = 'brute')
+#%%
+
+
+
+
+#%%
+from DOM_interaction_L17 import DOMInteractionL17
+
+def DOM_model(params,
+              E_exp = 1.0,
+              M_ej = 1.0,
+              kappa = 0.05,
+              t_delay = 5e3,
+              f_comp = 1.5,
+              M_dom = 0.1,
+              v_dom = 5e3,
+              f_dom = 0.1,
+              format_ = 'flux', # or mag
+              home_dir : str = '/Users/hhchoi1022/Gitrepo/Research/Supernova/DOM_model/'
+              ):
+    exptime = params['exptime_DOM']
+    #model = DOMInteractionL17(E_exp = E_exp, M_ej = M_ej, kappa = kappa, t_delay = t_delay, f_comp = f_comp, M_dom = M_dom, V_dom = v_dom, f_dom = f_dom)
+    #tbl, _, _ = model.calc_magnitude(np.arange(0.1, 10, 0.1), 'UBVRIugri')
+    tbl = ascii.read(f'{home_dir}{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{v_dom}_{f_dom}.dat', format = 'fixed_width')
+
+    if format_.upper() == 'FLUX':
+        for filter_ in 'UBVRIugri':
+            tbl[filter_][:] = mag_to_flux(tbl[filter_], zp = ZP).round(5)            
+    spl_dict = dict()
+    for filter_ in 'UBVRIugri':
+        value = tbl[filter_]
+        phase = tbl['phase']
+        interp_func, _ = interpolate_spline(phase + exptime, value, show = False)
+        #interp_func = interpolate.interp1d(phase + exptime_DOM, value, 'linear')
+        spl_dict[filter_] = interp_func
+    return spl_dict, tbl
+
+def fireball_filter(params, time, filter_):
+    exptime_fireball = params['exptime_fireball']
+    amp = params[f'amp_{filter_}']
+    alpha= params[f'alpha_{filter_}']
+    return fireball_model(np.array(time), amp, exptime_fireball, alpha)
+
+def DOMfireball_calc_chisq(params, x, y, e_y, filter_key, **kwargs):
+    tot_chisq = []
+    dom_model, _ = DOM_model(params, **kwargs)
+    for i, filter_ in enumerate(filter_key):
+        obstime = x[i]
+        obsflux = y[i]
+        obserr = e_y[i]
+        DOM_flux = dom_model[filter_](obstime)
+        fireball_flux = fireball_filter(params, obstime, filter_)
+        DOMfireball_flux = DOM_flux + fireball_flux
+        chisq = (((obsflux - DOMfireball_flux)/obserr)**2)
+        tot_chisq.append(chisq)
+    return np.concatenate(tot_chisq)
+#%%
+fit_params = Parameters()
+fit_params.add('exptime_fireball', value = 59525, min = 59525, max = 59530)
+fit_params.add('exptime_DOM', value = 59527, min = 59523, max = 59530)
+for filter_ in fit_filterset:
+    if filter_ in tbl_filt.keys():
+        fit_params.add(f'amp_{filter_}', value = 10, min = 1, max = 1000)
+        fit_params.add(f'alpha_{filter_}', value = 2, min = 1, max = 5)
+nll = lambda *args: DOMfireball_calc_chisq(*args, x = x_fit, y = y_fit, e_y = e_y_fit, filter_key = 'UBVgri')
+soln = minimize(nll, fit_params, method = 'leastsq', max_nfev= 5000)
+#%%
+
+
+
+#%%
+
+# Fireball + Companion interaction(K10) model
+def fireball_model(time, amplitude, exptime, alpha):
+    flux = amplitude * (time - exptime )**alpha
+    return flux
+
+def get_chisq_combined(filt_tbl, fireball_model, comp_interac_model, explosion_Ni, explosion_inter, amplitude, alpha, rstar):
+    obs_mjd,obs_mag,obs_magerr =  filt_tbl['obsdate'],filt_tbl['mag'],filt_tbl['e_mag']
+    filter_ = filt_tbl['filter'][0]
+    obs_flux = mag_to_flux(obs_mag)
+    obs_fluxerr = obs_magerr*obs_flux*2.303/2.5
+    fireballmodel_flux = fireball_model(obs_mjd, amplitude, explosion_Ni, alpha)
+    comp_model = comp_interac_model(rstar, 1.4)
+    interactionmodel_mag = np.array(comp_model.calc_magnitude(obs_mjd-explosion_inter, filter_)[0][filter_]) + DM
+    interactionmodel_flux = mag_to_flux(np.array(interactionmodel_mag))
+    model_flux = fireballmodel_flux+ interactionmodel_flux
+    chisq = np.sum(((obs_flux - model_flux)/(obs_fluxerr))**2)
+    reduced_chisq = chisq/len(obs_flux-2)
+    return reduced_chisq
+
+def get_multichisq_combined(theta, obs_tbl, fireball_model, comp_interac_model):
+    explosion_Ni, rstar, explosion_inter = theta[0], theta[-2], theta[-1]
+    ampl_cut = (len(theta))//2
+    amplitudelist, alphalist = theta[1:ampl_cut], theta[ampl_cut:-2]
+    sum_chisq = 0
+    filtset = set(obs_tbl['filter'])
+    for filt_, amplitude, alpha in zip(filtset, amplitudelist, alphalist):
+        filt_tbl = obs_tbl[obs_tbl['filter'] == filt_]
+        chisq = get_chisq_combined(filt_tbl, fireball_model, comp_interac_model, explosion_Ni, explosion_inter, amplitude, alpha, rstar)
+        sum_chisq += chisq
+    return sum_chisq
+amplitudelist = 1500
+alphalist = 2 
+explosion_Ni = 59528
+explosion_inter = 59528.191
+rstar = 1
+initial = [explosion_Ni]+ [amplitudelist] * len(fit_filterset)+ [alphalist] * len(fit_filterset) + [rstar] + [explosion_inter]
+bnd_explosion_Ni = [59527.5,59530]
+bnd_explosion_inter = [59527.5,59529.33]
+bnd_amplitude = [100,5000]
+bnd_alpha = [1.4,3]
+bnd_rstar = [0.5,10]
+bnd = [bnd_explosion_Ni]+ [bnd_amplitude] * len(fit_filterset)+ [bnd_alpha] * len(fit_filterset) + [bnd_rstar] + [bnd_explosion_inter]
+bnds = ()
+for bound in bnd:
+    bnds += (tuple(bound),)
+
+# %%
+from scipy.optimize import minimize
+from companion_interaction_K10 import CompanionInteractionK10
+nll = lambda *args: get_multichisq_combined(*args, obs_tbl = tbl_fit, fireball_model = fireball_model, comp_interac_model = CompanionInteractionK10)
+soln = minimize(nll, x0 = initial, tol = 0.1,options = dict(maxiter=3000), bounds = bnds) # tol = step_size 
+#soln_combined = soln
+
+# %%
+
+# Fireball + DOM interaction(L17) model
+def fireball_model(time, amplitude, exptime, alpha):
+    flux = amplitude * (time - exptime )**alpha
+    return flux
+
+def get_chisq_combined(filt_tbl, fireball_model, DOM_interac_model, explosion_Ni, explosion_DOM, amplitude, alpha,
+                       E_exp,
+                       M_ej,
+                       kappa,
+                       M_dom,
+                       V_dom,
+                       f_dom,
+                       t_delay,
+                       f_comp):
+    obs_mjd,obs_mag,obs_magerr =  filt_tbl['obsdate'],filt_tbl['mag'],filt_tbl['e_mag']
+    filter_ = filt_tbl['filter'][0]
+    obs_flux = mag_to_flux(obs_mag)
+    obs_fluxerr = obs_magerr*obs_flux*2.303/2.5
+    fireballmodel_flux = fireball_model(obs_mjd, amplitude, explosion_Ni, alpha)
+    DOM_interac_model()
+    comp_model = comp_interac_model(rstar, 1.4)
+    interactionmodel_mag = np.array(comp_model.calc_magnitude(obs_mjd-explosion_inter, filter_)[0][filter_]) + DM
+    interactionmodel_flux = mag_to_flux(np.array(interactionmodel_mag))
+    model_flux = fireballmodel_flux+ interactionmodel_flux
+    chisq = np.sum(((obs_flux - model_flux)/(obs_fluxerr))**2)
+    reduced_chisq = chisq/len(obs_flux-2)
+    return reduced_chisq
+
+def get_multichisq_combined(theta, obs_tbl, fireball_model, comp_interac_model):
+    explosion_Ni, rstar, explosion_inter = theta[0], theta[-2], theta[-1]
+    ampl_cut = (len(theta))//2
+    amplitudelist, alphalist = theta[1:ampl_cut], theta[ampl_cut:-2]
+    sum_chisq = 0
+    filtset = set(obs_tbl['filter'])
+    for filt_, amplitude, alpha in zip(filtset, amplitudelist, alphalist):
+        filt_tbl = obs_tbl[obs_tbl['filter'] == filt_]
+        chisq = get_chisq_combined(filt_tbl, fireball_model, comp_interac_model, explosion_Ni, explosion_inter, amplitude, alpha, rstar)
+        sum_chisq += chisq
+    return sum_chisq
+
+
+
+
+#%%

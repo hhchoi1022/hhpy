@@ -1,0 +1,64 @@
+
+
+repopath='/Users/hhchoi1022/Gitrepo'
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/hhchoi1022/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/hhchoi1022/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/hhchoi1022/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/hhchoi1022/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+####### PATH ######
+export OMP_NUM_THREADS=4
+export PATH="/Users/hhchoi1022/opt/anaconda3/lib/python3.9/site-packages:$PATH"
+export PATH=/opt/homebrew/bin:$PATH
+
+####### PATH end ######
+
+####### alias ######
+now=`date`
+gitpush(){ local message="${1:-$(date +'$y%m$d')}_mbp"
+cd /Users/hhchoi1022/Gitrepo && git add . && git commit -m "$now" && git push origin master }
+	
+gitpushTCS(){ 
+local message="${1:-$(date +'$y%m$d')}_mbp"
+cd /Users/hhchoi1022/tcspy && git add . && git commit -m "$message" && git push origin main }
+
+gitpull(){ cd /Users/hhchoi1022/Gitrepo && git pull origin master }
+
+gitpullTCS(){ cd /Users/hhchoi1022/tcspy && git pull origin main }
+
+alias ll='ls -alF'
+alias qso='ssh -p 45204 hhchoi10222@qso.snu.ac.kr'
+alias skynet='ssh -p 45204 hhchoi1022@skynet.snu.ac.kr'
+alias lyman='ssh -p 45204 hhchoi1022@lyman.snu.ac.kr'
+alias proton='ssh -p 2222 hhchoi1022@210.117.217.72'
+alias 39='conda activate py39'
+alias 37='conda activate py37'
+alias pshrepo=gitpush
+alias pshtcs=gitpushTCS
+alias pllrepo=gitpull
+alias plltcs=gitpullTCS
+alias gitstat=gitstat
+alias repo='cd /Users/hhchoi1022/Gitrepo'
+alias ds9='open -a SAOImageDS9'
+
+####### alias end ######
+
+####### PATH ######
+PYTHONPATH=$PYTHONPATH:$repopath/Support:$repopath:/Users/hhchoi1022/
+export PYTHONPATH
+# MESA
+#export MESA_DIR=/Users/hhchoi1022/Program/mesa-r22.05.1
+#export OMP_NUM_THREADS=4export MESASDK_ROOT=/Applications/mesasdk
+#export PATH=/Users/hhchoi1022/.iraf/bin/:$PATH
+#source $MESASDK_ROOT/bin/mesasdk_init.sh

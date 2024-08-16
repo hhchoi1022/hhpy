@@ -1,0 +1,16 @@
+catalog
+V 3
+B 4
+
+observation
+X 2
+v 5
+b 3
+verr 6
+berr 4
+
+transformation
+fit k1v=0.1301, a=-0.0537, zv=-0.2476, k2v=0.0193
+fit k1b=0.2427, c=-0.1143, zb=0.0622, k2b=0.0288
+FITbv: b-v=(k1b-k1v)*X+a*(B-V)+(zb-zv)+(k2b-k2v)*(B-V)*X
+#FITb: b=B+k1b*X+c*(B-V)+zb+k2b*(B-V)*X

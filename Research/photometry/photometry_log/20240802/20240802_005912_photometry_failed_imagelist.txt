@@ -1,0 +1,7 @@
+{
+    "Execution Time": "2024-08-02 00:58:20",
+    "calculate": [],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

@@ -1,0 +1,14 @@
+{
+    "Execution Time": "2024-08-05 16:26:27",
+    "calculate": [],
+    "align": [],
+    "combine": [],
+    "photometry": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/com_align_Calib-KCT_STX16803-NGC1566-20221106-050712-g-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/com_align_Calib-KCT_STX16803-NGC1566-20221205-063931-g-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/com_align_Calib-KCT_STX16803-NGC1566-20221221-072715-g-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/com_align_Calib-KCT_STX16803-NGC1566-20221222-072429-g-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/com_align_Calib-KCT_STX16803-NGC1566-20221223-072548-g-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/com_align_Calib-KCT_STX16803-NGC1566-20221229-070036-g-120.fits"
+    ]
+}

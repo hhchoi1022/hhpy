@@ -1,0 +1,2 @@
+0 15 * * 3 cp /Users/hhchoi1022/.zshrc /Users/hhchoi1022/Gitrepo/Backup/zshrc_mbp16
+0 16 * * 3 crontab -l > /Users/hhchoi1022/Gitrepo/Backup/cron_backup_mbp16.txt 

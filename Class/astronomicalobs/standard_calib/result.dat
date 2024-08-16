@@ -1,0 +1,72 @@
+# Mon 05:07:26 04-Apr-2022
+begin	FITv
+	status	0	(Solution converged)
+	variance	8.862760E-5
+	stdeviation	0.009414223
+	avsqerror	1.
+	averror		1.
+	avsqscatter	0.
+	avscatter	0.
+	chisqr		8.862760E-5
+	msq		7.444718E-5
+	rms		0.008628278
+	reference	v
+	fitting		V+k1v*X+a*(B-V)+zv+k2v*(B-V)*X
+	weights		uniform
+	parameters	4
+		k1v	(fit)
+		a	(fit)
+		zv	(fit)
+		k2v	(fit)
+	derivatives	4
+		0.1
+		0.1
+		0.1
+		0.1
+	values	4
+		0.1301234
+		-0.0536884
+		-0.2475999
+		0.01926812
+	errors	4
+		0.004671629
+		0.008612228
+		0.00813162
+		0.004763226
+
+# Mon 05:07:34 04-Apr-2022
+begin	FITb
+	status	3	(Solution did not converge)
+	variance	0.001317064
+	stdeviation	0.03629138
+	avsqerror	1.
+	averror		1.
+	avsqscatter	0.
+	avscatter	0.
+	chisqr		0.001317064
+	msq		0.001106334
+	rms		0.0332616
+	reference	b
+	fitting		B+k1b*X+c*(B-V)+zb+k2b*(B-V)*X
+	weights		uniform
+	parameters	4
+		k1b	(fit)
+		c	(fit)
+		zb	(fit)
+		k2b	(fit)
+	derivatives	4
+		0.1
+		0.1
+		0.1
+		0.1
+	values	4
+		0.2427
+		-0.1143
+		0.06220003
+		0.02879999
+	errors	4
+		0.0180089
+		0.03319982
+		0.03134704
+		0.01836208
+

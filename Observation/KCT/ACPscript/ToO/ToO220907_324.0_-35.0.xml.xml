@@ -1,0 +1,97 @@
+<ns0:VOEvent xmlns:ns0="http://www.ivoa.net/xml/VOEvent/v2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ivorn="ivo://nasa.gsfc.gcn/AMON#TEST_Event2022-09-07T17:28:44.00_099999-936" role="test" version="2.0" xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0  http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd">
+  <Who>
+    <AuthorIVORN>ivo://nasa.gsfc.tan/gcn</AuthorIVORN>
+    <Author>
+      <shortName>GCN (via VO-TAN)</shortName>
+      <contactName>Scott Barthelmy</contactName>
+      <contactPhone>+1-301-286-3106</contactPhone>
+      <contactEmail>scott@milkyway.gsfc.nasa.gov</contactEmail>
+    </Author>
+    <Date>2022-09-07T17:28:52</Date>
+    <Description>This VOEvent message was created with TAN VOE version: 15.08 17jun22</Description>
+  </Who>
+  <What>
+    <Param name="Packet_Type" value="159" />
+    <Param name="Pkt_Ser_Num" value="40" />
+    <Param name="ID" ucd="meta.id" value="099999" />
+    <Param name="run_id" ucd="meta.id" value="0" />
+    <Param name="event_id" ucd="meta.id" value="99999" />
+    <Param name="Event_TJD" ucd="time" unit="days" value="19829" />
+    <Param name="Event_SOD" ucd="time" unit="sec" value="62924.00" />
+    <Param name="Nevents" ucd="arith.count" unit="dn" value="9">
+                                 <Description>Number of events in the alert</Description>
+                                 </Param>
+    <Param name="Stream" ucd="meta.id" unit="dn" value="1">
+                                 <Description>IceCube coincidence stream identification</Description>
+                                 </Param>
+    <Param name="Rev" ucd="meta.id" unit="dn" value="0">
+                                 <Description>Alert revision</Description>
+                                 </Param>
+    <Param name="False_pos" ucd="arith.rate,stat.falsealarm" unit="tbd" value="1.0058e+00">
+                                 <Description>False positive rate, a value of zero means not available</Description>
+                                 </Param>
+    <Param name="pvalue" ucd="arith.rate,stat.falsealarm" unit="tbd" value="1.0000e+00">
+                                 <Description>False positive rate, a value of zero means not available</Description>
+                                 </Param>
+    <Param name="deltaT" ucd="time.timeduration" unit="sec" value="0.1200">
+                                 <Description>Time window of the burst</Description>
+                                 </Param>
+    <Param name="sigmaT" ucd="time.timeduration" unit="sec" value="0.0200">
+                                 <Description>Uncertainty of the time window</Description>
+                                 </Param>
+    <Param name="charge" ucd="physics.charge" unit="pe" value="0.0000" />
+    <Param name="signal_trackness" ucd="stat.probability" unit="dn" value="0.0000" />
+    <Param name="src_error_90" ucd="stat.error.sys" unit="deg" value="1.0000" />
+    <Param name="src_error_50" ucd="stat.error.sys" unit="deg" value="0.0000" />
+    <Param name="same_as_ehe" ucd="meta.number" unit="dn" value="0" />
+    <Param name="Subseconds" ucd="time" unit="sec" value="0.000000" />
+    <Param name="Trigger_ID" value="0x0" />
+    <Param name="Misc_flags" value="0x40000000" />
+    <Group name="Trigger_ID">
+      <Param name="SubType" value="indi" />
+      <Param name="Test" value="false" />
+      <Param name="RADec_valid" value="false" />
+      <Param name="Retraction" value="false" />
+      <Param name="InternalTest" value="false" />
+    </Group>
+    <Group name="Misc_flags">
+    </Group>
+  </What>
+  <WhereWhen>
+    <ObsDataLocation>
+      <ObservatoryLocation id="GEOLUN" />
+      <ObservationLocation>
+        <AstroCoordSystem id="UTC-FK5-GEO" />
+        <AstroCoords coord_system_id="UTC-FK5-GEO">
+          <Time unit="s">
+            <TimeInstant>
+              <ISOTime>2022-09-07T17:28:44.00</ISOTime>
+            </TimeInstant>
+          </Time>
+          <Position2D unit="deg">
+            <Name1>RA</Name1>
+            <Name2>Dec</Name2>
+            <Value2>
+              <C1>324.0000</C1>
+              <C2>-35.0000</C2>
+            </Value2>
+            <Error2Radius>1.0000</Error2Radius>
+          </Position2D>
+        </AstroCoords>
+      </ObservationLocation>
+    </ObsDataLocation>
+  <Description>The RA,Dec coordinates are of the type: source_object.</Description>
+  </WhereWhen>
+  <How>
+    <Description>GCN</Description>
+    <Reference type="url" uri="http://gcn.gsfc.nasa.gov/gcn/amon.html" />
+    <Reference type="url" uri="http://gcn.gsfc.nasa.gov/gcn/amon_events.html" />
+  </How>
+  <Why importance="1.0">
+    <Inference probability="1.0">
+      <Concept>process.variation.burst;em</Concept>
+    </Inference>
+  </Why>
+  <Description>
+  </Description>
+</ns0:VOEvent>

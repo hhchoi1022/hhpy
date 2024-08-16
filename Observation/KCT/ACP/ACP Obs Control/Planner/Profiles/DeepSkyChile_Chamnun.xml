@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ACP version="1.0">
+	<description>ACP configuration database</description>
+	<plangen>
+		<presets></presets>
+		<value name="lastplansfolder">C:\Users\user\Documents\ACP Astronomy\Plans</value>
+		<value name="filter0">u</value>
+		<value name="filter1">g</value>
+		<value name="filter2">r</value>
+		<value name="filter3">i</value>
+		<value name="filter4">Filter 5</value>
+		<value name="filter5">Filter 6</value>
+		<value name="filter6">Filter 7</value>
+		<value name="filter7">Filter 8</value>
+		<value name="filter8">Filter 9</value>
+		<value name="filter9">Filter 10</value>
+		<value name="bin1time">45</value>
+		<value name="bin2time">25</value>
+		<value name="bin3time">15</value>
+		<value name="bin4time">10</value>
+		<value name="maxunguided">30</value>
+		<value name="guiderstarttime">30</value>
+		<value name="guidersettletime">15</value>
+		<value name="filterswitchtime">10</value>
+		<value name="pointingupdatetime">60</value>
+		<value name="autofocustime">120</value>
+		<value name="slewrate">3</value>
+		<value name="hasfilters">True</value>
+		<value name="internalguider">True</value>
+		<value name="hasrotator">False</value>
+		<value name="afatplanstart">False</value>
+		<value name="afbetweenfilters">False</value>
+		<value name="afbeforetarget">False</value>
+		<value name="afperiodic">True</value>
+		<value name="afinterval">120</value>
+		<value name="enableflatplans">False</value>
+		<value name="specifyflatplans">False</value>
+		<value name="defflatcount">4</value>
+		<value name="defimagecount">1</value>
+		<value name="defimageinterval">120</value>
+		<value name="defimagebinning">1</value>
+		<value name="defimagedither">False</value>
+		<value name="disableballoons">False</value>
+		<value name="reusableplans">True</value>
+		<value name="disabletiming">False</value>
+		<value name="useobslocaltime">True</value>
+		<value name="obstimefromutc">-3</value>
+		<value name="obsname">DeepSkyChile</value>
+		<value name="obsdomain">192.168.0.5</value>
+		<value name="obsusername">Chamnun</value>
+		<value name="obspassword">ceou@snu</value>
+	</plangen>
+</ACP>

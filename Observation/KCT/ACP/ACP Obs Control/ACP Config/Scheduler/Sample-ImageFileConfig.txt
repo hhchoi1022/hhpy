@@ -1,0 +1,112 @@
+;
+; ======================================================
+; ACP Expert Scheduler custom image path & name template
+; ======================================================
+;
+; Construct the full path/name template for images acquired by ACP Scheduler.
+; Comments start with ';', blank lines are ignored. DON'T INSERT TABS!
+; Illegal path/file characters such as '?' and "\" in names will be filtered
+; out or substituted with legal characters. In addition, for file names only,
+; parentheses will be filtered out.
+;
+; WARNING! DO NOT INCLUDE THE ".fts" ON THE END! If no template is given
+; the standard ACP Scheduler path and name will be used.
+;
+; Each scheduler user can (optionally) have their own path/name setup. Include 
+; a separate template for the user, prefixed by the user name in square 
+; brackets. See the examples at the end of this file. NOTE: Per-user templates
+; must PRECEDE the default one.
+;
+; The following substitution tokens are provided:
+;
+;   Token       Description
+;   ----------  --------------------------------------------------------------
+;   $DEFPATH    The ACP Local User default images path (see ACP Preferences,
+;               Local User tab), a "Scheduler" folder under that, then
+;               a folder with the Project's Observer name under that.
+;               OR IF SUBMITTED VIA ACP WEB FORM: The path to the ACP web user's 
+;               images. In this case, the Project Contact Name will be of the 
+;               form "Joe Observer [ACP joeuser]"
+;
+;   $WEBROOT    The ACP "Path to web document root" (see ACP preferences,
+;               Servers tab)
+;
+;   $INTERVAL   The exposure interval of the image rounded to whole seconds, 
+;               three digits, zero-filled (e.g. 090 for 90.55 sec)
+;
+;   $IMGNAME    Name of the current ImageSet
+;
+;   $IMGFILT    Filter name for current ImageSet
+;
+;   $IMGBIN     Binning for the current ImageSet
+;
+;   $IMGSEQ     Sequence number for the current image of the current
+;               ImageSet, three digits, zero-filled (e.g. "021")
+;
+;   $TEMP       Cooler temperature. If no cooler, this will be "No Temp",
+;               and if the cooler is off, this may be a proposterous number.
+;
+;   $MERSIDE    If the scope is a german mount, "W" if LOOKING west, "E" if
+;               LOOKING east, "_" if not a german mount.
+;
+;   $OBSNAME    The name of the current Observation
+;
+;   $OBSRA      J2000 Right Ascension of the current Observation, sexagesimal
+;               without delimiters, zero-filled (e.g. "193451"). This 
+;               will be valid for major planets and orbital elements, as 
+;               the current coordinates will have been calculated.
+;
+;   $OBSDEC     J2000 Declination of the current Observation, sexagesimal
+;               without delimiters, zero-filled (e.g. "+214306"). This 
+;               will be valid for major planets and orbital elements, as 
+;               the current coordinates will have been calculated.
+;
+;   $OBSPA      Equatorial Position Angle of the current Observation to the
+;               nearest degree, three digits, zero-filled (e.g. "164")
+;
+;   $OBSSEQ     Sequence number for the current Observation's set count,
+;               three digits, zero-filled (e.g. "021")
+;
+;   $PLNNAME    The name of the current Plan
+;
+;   $PRJNAME    The name of the current Project
+;
+;   $PRJEXID    The External ID of the current Project
+;
+;   $PRJCONT    The Contact Name of the current Project. If this has the ACP
+;               login username in it (see $DEFPATH), that part will be
+;               removed.
+;
+;   $USRNAME    The Scheduler User Name for the current Project.
+;
+;   $ACPLOGIN   The ACP web user login username, if present in the Project's
+;               Contact Name (see $DEFPATH), or "_" if not present.
+;
+;   $DATENITE   The local date of the run, in ISO 8601 format YYYYMMDD. This
+;               date changes at the time the sun crosses the local meridian.
+;               Use this to put all images from one night/run into the same 
+;               folder. 
+;
+;   $DATEUTC    The current UTC date, in ISO 8601 format YYYYMMDD
+;               (e.g. "20060528")
+;
+;   $TIMEUTC    The current UTC time, in ISO 8601 basic format HHMMSS
+;               (e.g., 142804). 
+;
+;   $DATELOC    The current local date, in ISO 8601 format YYYYMMDD
+;               (e.g. "20060528")
+;
+;   $TIMELOC    The current local time, in ISO 8601 basic format HHMMSS
+;               (e.g., 142804). 
+;
+;   $DATEJUL    The current UTC Julian date (e.g. "2453846")
+;   ----------  --------------------------------------------------------------
+;
+;
+; Example: Reproduce the default naming of Scheduler (in AcquireScheduler.vbs)
+;          but put scheduler user Omega Centauri's images in a special folder:
+;
+; [Omega Centauri]C:\OmieImages\$DATEUTC\$OBSNAME_$IMGFILT_$TIMEUTC
+; $DEFPATH\$DATENITE\$PLNNAME\$OBSNAME-S$OBSSEQ-$IMGNAME-R$IMGSEQ-$IMGFILT
+;
+; Put your template(s) on the line below:

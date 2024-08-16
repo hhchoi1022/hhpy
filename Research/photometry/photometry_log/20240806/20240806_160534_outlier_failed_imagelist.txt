@@ -1,0 +1,19 @@
+{
+    "Execution Time": "2024-08-06 16:05:12",
+    "calculate": [],
+    "align": [],
+    "combine": [],
+    "photometry": [],
+    "outlier": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20211218-131334-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20211218-131643-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20211218-131952-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220121-120904-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220210-104612-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220210-104921-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220210-105231-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220322-110805-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220322-111114-r-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib-LSGT-NGC1566-20220322-111423-r-180.fits"
+    ]
+}

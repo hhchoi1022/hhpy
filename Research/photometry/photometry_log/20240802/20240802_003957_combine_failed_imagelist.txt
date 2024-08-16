@@ -1,0 +1,24 @@
+{
+    "Execution Time": "2024-08-01 23:32:22",
+    "calculate": [],
+    "align": [],
+    "combine": [],
+    "photometry": [],
+    "outlier": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20211029-071324-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20211029-071541-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20220818-094142-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20220818-094832-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20220922-081315-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221103-083326-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221107-045400-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221107-050050-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221108-054117-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221108-054334-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221109-081835-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221109-082052-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221109-082311-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221109-082527-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib-KCT_STX16803-NGC1566-20221109-082744-r-120.fits"
+    ]
+}

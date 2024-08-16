@@ -1,0 +1,612 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+ACP Weather Server for AAG CloudWatcher Data File
+=================================================
+
+Script:         AAGCloudWatcher.wsc
+Author:         Robert B. Denny <rdenny@dc3.com>
+Version:        8.1.0
+Requires:       ACP 8.1 or later
+                Windows Script 5.6 or later
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ACP and its scripts with Weather information. This component
+                is responsible for providing the interface with the weather sensor,
+                which is does by reading the 1-line log file produced by the AAG
+                Cloud Watcher software.
+
+Usage:          In ACP Preferences, Weather tab, select ACP.AAGCloudWatcher as the server
+                ID, then click Setup... and select the 1-line log file that is produced
+                by the AAG software as the "CCDAutopilot 4 Data File" (this is compatible
+                with the Boltwood 1-line file from Clarity).
+
+Edit History:
+    06-Jan-16   GEM:801 Initial Edit, from BoltwoodFile for ACP 8.0 SR1
+    08-Jul-16   GEM:1463 (8.1) Use the Alert flag if available. Turn off diag trace.
+    09-Jul-16   GEM:1448 Trace reasons for unsafe weather. 
+    10-Jul-16   GEM:1483 Fix safe/unsafe return and guard data items in the precence
+                of a file access, data or file stale error. Do this by caching the last
+                error code/message when actually polled and raise the same error between
+                polls. 
+    13-Jul-16   GEM:1483 Fix ordering of initialization for long/short Boltwood format
+                (whether the last two flags are present, etc).
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="AAGCloudWatcher">
+		<?component error="false" debug="false" ?>
+		<registration progid="AAG.Weather" classid="{43F8B6C6-40F6-4997-825F-B395EA5DB9EC}" description="ACP weather server for AAG CloudWatcher (data file)" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<method name="SetupDialog">
+			</method>
+			<property name="Connected">
+				<get/>
+				<put/>
+			</property>
+			<property name="AmbientTemperature">
+				<get/>
+			</property>
+			<property name="BarometricPressure">
+				<get/>
+			</property>
+			<property name="Clouds">
+				<get/>
+			</property>
+			<property name="DewPoint">
+				<get/>
+			</property>
+			<property name="InsideTemperature">
+				<get/>
+			</property>
+			<property name="Name">
+				<get/>
+			</property>
+			<property name="Precipitation">
+				<get/>
+			</property>
+			<property name="RelativeHumidity">
+				<get/>
+			</property>
+			<property name="Safe">
+				<get/>
+			</property>
+			<property name="SkyTemperature">
+				<get/>
+			</property>
+			<property name="WindDirection">
+				<get/>
+			</property>
+			<property name="WindVelocity">
+				<get/>
+			</property>
+		</public>
+		<object id="FileDialog" progid="ACP.FileDialog" events="false" reference="true"/>
+		<object id="Util" progid="ACP.Util" events="false" reference="true"/>
+		<object id="FSO" progid="Scripting.FileSystemObject" events="false" reference="false"/>
+		<script id="WeatherAccess" language="VBScript">
+<![CDATA[
+Option Explicit
+
+Const SVR_VERSION = "8.1.0"
+Const ERR_SOURCE = "AAG CloudWatcher"
+Const PRP = "Property "				' Common bits for error messages
+Const NTI = " is not implemented"
+'
+' Polling interval, do not read file more often than this
+'
+Const POLL_INT = #00:00:15#
+'
+' Turn this on to have detailed tracing to a log file
+'
+Const DIAG_TRACE = True
+
+'
+' Manifest constants from Clarity II, compatible with AAG
+'
+Const cloudUnknown = 0
+Const cloudClear = 1
+Const cloudCloudy = 2
+Const cloudVeryCloudy = 3
+Const windUnknown = 0
+Const windCalm = 1
+Const windWindy = 2
+Const windVeryWindy = 3
+Const rainUnknown = 0
+Const rainDry = 1
+Const rainWet = 2      'sensor has water on it
+Const rainRain = 3     'falling rain drops detected
+Const dayUnknown = 0
+Const dayDark = 1
+Const dayLight = 2
+Const dayVeryLight = 3
+
+'
+' State variables
+'
+Dim c_sTraceFileName                                        ' Full path to trace diagnostic log file
+Dim c_oTraceFileStream                                      ' Text stream into which trace info is written
+Dim c_sLogFileName                                          ' Full path/name of Clarity log file
+Dim c_bConnected
+Dim c_dtLastPollTime
+Dim c_dtLastLogTime
+Dim c_iSecondsSinceData
+Dim c_bAlertFlagAvail
+Dim c_fAmbientTemp
+Dim c_fSkyTemp
+Dim c_fWindSpeed
+Dim c_fHumidity
+Dim c_fDewPoint
+Dim c_iRainFlag
+Dim c_iWetFlag
+Dim c_bAlertCond
+Dim c_iCloudCond
+Dim c_iWindCond
+Dim c_iRainCond
+Dim c_iDayCond
+Dim c_bLastSafe
+'
+' See PollIf()
+'
+Dim c_bLastPollError                                        ' True if last poll raised an error
+Dim c_iLastPollErrNumber                                    ' Last poll error code
+Dim c_sLastPollErrMessage                                   ' Last poll error message
+
+'
+' Code outside of any Function or Sub is executed when this object is created.
+'
+c_sTraceFileName = Util.Prefs.LocalUser.DefaultLogDir & "\AAGWeatherTrace.log"
+Set c_oTraceFileStream = Nothing                           ' [sentinel]
+c_sLogFileName = ""
+c_bConnected = False
+c_dtLastPollTime = CDate(Now - #01:00:00#)                 ' Force initial poll
+
+'------------------------------------------------------------------------------
+' Method SetupDialog()
+'
+' Parameters:   (none)
+' Returns:      (nothing)
+'
+' Invokes the weather access setup dialog. I put in a file selection dialog,
+' courtesy of ACP's Util object which you have use of automatically here.
+'------------------------------------------------------------------------------
+Sub SetupDialog()
+
+    c_sLogFileName = Util.Profile.GetValue("CloudWatcherLog", "\WXCloudWatcherFile", "") ' Try for previous selection
+    If c_sLogFileName = "" Then
+        FileDialog.InitialDirectory = "C:\"
+    Else
+        FileDialog.InitialDirectory = FSO.GetParentFolderName(c_sLogFileName)
+    End If
+
+    FileDialog.DialogTitle = "Select CloudWatcher CCDAP 4 log file"
+    FileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"
+    FileDialog.Flags = 4096                                 ' Guarantee file exists
+    If FileDialog.ShowOpen() Then
+        c_sLogFileName = FileDialog.FileName
+        Util.Profile.WriteValue "CloudWatcherLog", c_sLogFileName, "\WXCloudWatcherFile"
+    End If
+        
+End Sub
+
+'------------------------------------------------------------------------------
+' Property Connected (R/W, REQUIRED)
+'
+' True means weather sensor is connected and operating (Boolean). 
+' Set True to connect.
+'------------------------------------------------------------------------------
+' dim Connected									            ' PrimalScript UI target (typ.)
+Function get_Connected()
+    ' Return True if connected, else False
+	get_Connected = c_bConnected
+End Function
+
+Function put_Connected(newValue)
+    ' Code to establish or terminate the connection
+    If newValue Then                                        ' Connecting
+        Trace "Connecting"
+        c_sLogFileName = Util.Profile.GetValue("CloudWatcherLog", "\WXCloudWatcherFile", "")
+        If c_sLogFileName = "" Then
+    	    Fail &H80040401, "Cannot connect - CloudWatcher CCDAP 4 Log file has not been selected"
+    	End If
+        c_bAlertFlagAvail = False                           ' May get changed in PollIf
+    	PollIf                                              ' Get initial data for check and model
+        c_bConnected = True
+        c_bLastSafe = True
+        Trace "Connected OK"
+    Else
+        Trace "Disconnecting & closing trace file"
+        On Error Resume Next
+        c_oTraceFileStream.Close
+        On Error GoTo 0
+        c_bConnected = False
+    End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property AmbientTemperature (R/O, OPTIONAL)
+'
+' The ambient (outside) air temperature (Single, deg.C)
+'------------------------------------------------------------------------------
+' Dim AmbientTemperature
+Function get_AmbientTemperature()
+    PollIf
+    get_AmbientTemperature = c_fAmbientTemp
+End Function
+
+'------------------------------------------------------------------------------
+' Property BarometricPressure (R/O, OPTIONAL)
+'
+' The barometric pressure (Single, millibars)
+' NOTE: This must be in millibars, per international aviation weather reporting
+'       standards.
+'------------------------------------------------------------------------------
+' Dim BarometricPressure
+Function get_BarometricPressure()
+	Fail &H80040400, PRP & "Get BarometricPressure" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Clouds (R/O, OPTIONAL)
+'
+' Cloud coverage (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim Clouds
+Function get_Clouds()
+    PollIf
+	Select Case c_iCloudCond
+		Case cloudUnknown:
+			Fail &H80040404, "No cloud data currently available"
+		Case cloudClear:
+			get_Clouds = 0.0
+		Case cloudCloudy:
+			get_Clouds = 0.5
+		Case cloudVeryCloudy:
+			get_Clouds = 1.0
+		Case Else:
+			Fail &H80040405, "Unknown cloud value from AAG"
+	End Select
+End Function
+
+'------------------------------------------------------------------------------
+' Property DewPoint (R/O, OPTIONAL)
+'
+' The dew point temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim DewPoint
+Function get_DewPoint()
+    PollIf
+    get_DewPoint = c_fDewPoint
+End Function
+
+'------------------------------------------------------------------------------
+' Property InsideTemperature (R/O, OPTIONAL)
+'
+' The temperature inside the observatory (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim InsideTemperature
+Function get_InsideTemperature()
+	Fail &H80040400, PRP & "Get InsideTemperature" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Name (R/O, OPTIONAL)
+'
+' The display name of the weather system (String)
+'------------------------------------------------------------------------------
+' dim Name
+Function get_Name()
+    PollIf
+    get_Name = "AAG CloudWatcher"
+End Function
+
+'------------------------------------------------------------------------------
+' Property Precipitation (R/O, OPTIONAL)
+'
+' True if precipitation is present (Boolean)
+'------------------------------------------------------------------------------
+' Dim Precipitation
+Function get_Precipitation()
+    PollIf
+    get_Precipitation = (c_iRainCond = rainRain)
+End Function
+
+'------------------------------------------------------------------------------
+' Property RelativeHumidity (R/O, OPTIONAL)
+'
+' The relative humidity (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim RelativeHumidity
+Function get_RelativeHumidity()
+    PollIf
+    get_RelativeHumidity = c_fHumidity
+End Function
+
+'------------------------------------------------------------------------------
+' Property Safe (R/O, REQUIRED)
+'
+' Return True when weather is safe, False when not. Returning False will
+' stop any ACP script in progress and cause alarm and shutdown processes
+' to be initiated.
+'------------------------------------------------------------------------------
+' dim Safe
+Function get_Safe()
+    Dim message
+    ' WARNING: TRAP ERRORS HERE! Raised error on Safe property will kill ACP!
+    On Error Resume Next
+    PollIf
+    If Err.Number <> 0 Then
+        message = "Weather Unsafe! data-file acquisition error:"
+        message = message & vbCrLf & "  " & Err.Description
+		Util.Console.PrintLine message
+		Trace message
+        get_Safe = False
+        c_bLastSafe = False
+        Exit Function
+    End If
+    On Error GoTo 0
+    
+    If c_bAlertFlagAvail Then
+        get_Safe = Not c_bAlertCond
+    Else
+    	get_Safe = (Not c_iCloudCond = cloudUnknown) And _
+    	            (Not c_iCloudCond = cloudVeryCloudy) And _
+    	            (Not c_iRainCond = rainUnknown) And _
+    				(Not c_iRainCond = rainRain) And _
+    				(Not c_iWindCond < 0) And _
+    	            (Not c_iWindCond = windVeryWindy) And _
+    				(Not c_iDayCond = dayUnknown) And _
+    				(Not c_iDayCond = dayVeryLight)
+    End If
+	If Not get_Safe And c_bLastSafe Then                ' If this is a change from safe to unsafe
+		message = "AAG CloudWatcher: Weather is unsafe!"
+		If c_bAlertFlagAvail Then
+    	       message = message & vbCrLf & "               AAG is alerting unsafe weather (see alert checkboxes)"
+		Else
+    		If(c_iCloudCond = cloudUnknown) Then _
+    		    message = message & vbCrLf & "               Cloud sensor is not ready or broken"
+    		If(c_iCloudCond = cloudVeryCloudy) Then _
+    		    message = message & vbCrLf & "               Cloud condition is Very Cloudy"
+    		If(c_iRainCond = rainUnknown) Then _
+    		    message = message & vbCrLf & "               Rain sensor is not ready or broken"
+    		If(c_iRainCond = rainRain) Then _
+    		    message = message & vbCrLf & "               Rain condition is Rainy"
+    		If(c_iWindCond < 0) Then _
+    		    message = message & vbCrLf & "               Wind sensor is not ready or broken"
+    		If(c_iWindCond = windVeryWindy) Then _
+    		    message = message & vbCrLf & "               WindCondition is Very Windy"
+    		If(c_iDayCond = DayUnknown) Then _
+    		    message = message & vbCrLf & "               Daylight sensor is not ready or broken"
+    		If(c_iDayCond = DayVeryLight) Then _
+    		    message = message & vbCrLf & "               Daylight condition is Very Bright"
+        End If
+		Util.Console.PrintLine message
+		Trace message
+	End If
+    
+	c_bLastSafe = get_Safe
+	
+End Function
+
+'------------------------------------------------------------------------------
+' Property SkyTemperature (R/O, OPTIONAL)
+'
+' The sky temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim SkyTemperature
+Function get_SkyTemperature()
+    PollIf
+	get_SkyTemperature = c_fSkyTemp
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindDirection (R/O, OPTIONAL)
+'
+' The azimuth FROM which the wind is blowing (Single, deg. magnetic)
+' NOTE: This must be in degrees MAGNETIC, per international aviation weather 
+'       reporting standards.
+'------------------------------------------------------------------------------
+' Dim WindDirection
+Function get_WindDirection()
+	Fail &H80040400, PRP & "Get WindDirection" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindVelocity (R/O, OPTIONAL)
+'
+' The wind velocity (Single, knots)
+'------------------------------------------------------------------------------
+' Dim WindVelocity
+Function get_WindVelocity()
+    PollIf
+    get_WindVelocity = c_fWindSpeed
+End Function
+
+' ===============
+' Local Functions
+' ===============
+
+
+'------------------------------------------------------------------------------
+' Sub PollIf()
+'
+' If the poll time has expired, attempt to read the one line from the Boltwood 
+' data file. If it is locked, wait 500ms and try again. Try 10 times then fail. 
+' If succeeded, update the "last poll time". This is from a sample AAG_CCDAP4.log. 
+' Just to be safe, I include the logic to handle where the last two flags are 
+' missing, an in that case I fall back on the old logic and make the safe/unsafe
+' decision internally:
+'
+' 0        1         2         3         4         5         6         7         8         9         0
+' 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+' Date       Time        T V  SkyT  AmbT  SenT    Wind   Hum Dew    Hea R W Since Now()        c w r d C A
+' ---------------------------------------------------------------------------------------------------------
+' 2016-07-09 16:54:42.78 C K -28.5  18.7  22.5    45.3   75  10.3   3   0 0 00004 042560.70466 1 2 1 1 0 0
+' Raises error if something isn't right
+'------------------------------------------------------------------------------
+Sub PollIf()
+    Dim S, L, i, buf, bits, mph, faren, curLocale, RX
+    
+    '
+    ' If not actually polling the file, we need to re-create any raised
+    ' error that happened lasat time we polled. THis way the rest of the
+    ' server has no idea we didn't really read the info, and just uses what
+    ' was there last time. These globals are set in the special PollFail()
+    '
+    If (Now - c_dtLastPollTime) < POLL_INT Then 
+        If c_bLastPollError Then Err.Raise c_iLastPollErrNumber, ERR_SOURCE, c_sLastPollErrMessage
+        Exit Sub
+    End If
+    '
+    ' Going to poll for real
+    '
+    c_dtLastPollTime = Now                                  ' Update last poll time
+    c_bLastPollError = False                                ' Forget any raised error from last poll
+    
+    If Not FSO.FileExists(c_sLogFileName) Then              ' Catch vaporized data file
+        c_dtLastPollTime = Now                              ' Keep poll interval for possible long delay (NetBIOS)
+        PollFail &H80040407, "The 1-line data file doesn't exist!"
+    End If
+    
+    '
+    ' Read and process the 1-line data file
+    ' Locking logic thanks to Rob Hawley (see GEM:1383)
+    '
+    On Error Resume Next
+    For i = 0 To 19                                         ' Try twice a sec. for 10 sec.
+        Set S = FSO.OpenTextFile(c_sLogFileName, 1)     ' also resets pointer to start of file
+        If Err.Number = 0 Then 
+            buf = S.ReadLine                            ' OK We have the file open. Read the data line
+            If Err.Number = 0 Then
+                Trace "Success reading CloudWatcher data file (" & i & "):"
+                Trace buf
+                S.Close                                 ' And close it right away
+                Exit For
+            Else
+                buf = Err.Description
+                Trace "Can't read CloudWatcher data file (" & i & ") " & buf
+                S.Close
+            End If
+        Else
+            buf = Err.Description
+            Trace "Can't open CloudWatcher data file for read (" & i & ") " & buf
+        End If
+        Err.Clear
+        Util.WaitForMilliseconds 500
+    Next    
+    On Error GoTo 0                                         ' Re-arm trapping 
+    If i >= 19 Then 
+        c_dtLastPollTime = Now                              ' Keep poll interval for possible long delay (NetBIOS)
+        PollFail &H80040401, "Failed to open or read CloudWatcher data file" & _
+                    "  (last error: " & buf & ")"
+    End If
+    '
+    ' AAG always puts out . for decimal point, temporarily switch locale to en-us
+    '
+    curLocale = GetLocale()
+    SetLocale("en-us")
+    '
+    ' Interpret log file. Detect old/new format
+    '
+    Set RX = New RegExp                                     ' Compress runs of whitespace
+    RX.Pattern = " +"
+    RX.Global = True
+    buf = RX.Replace(buf, " ")
+    bits = Split(buf, " ")                                  ' Now just split on space
+    If UBound(bits) > 16 Then                               ' New (Clarity II) format
+        If UBound(bits) = 20 Then                           ' Even newer Clarity with Alert
+            Trace "Have the Alert flag"
+            c_bAlertFlagAvail = True                        ' We have the Alert flag
+            c_bAlertCond = (CInt(bits(20)) = 1)             ' 1 = Alerting
+        End If
+        faren = (UCase(bits(2)) = "F")
+        mph = (UCase(bits(3)) = "M")
+        c_fSkyTemp = CSng(bits(4))
+        If faren Then
+            c_fSkyTemp = (c_fSkyTemp - 32) * 5 / 9          ' Convert F to C if needed (typ.)
+        End If
+        c_fAmbientTemp = CSng(bits(5))
+        If faren Then
+            c_fAmbientTemp = (c_fAmbientTemp - 32) * 5 / 9
+        End If
+        c_fWindSpeed = CSng(bits(7))
+        If mph Then
+            c_fWindSpeed = 0.8688 * c_fWindSpeed            ' Convert miles/hr to knots
+        Else
+            c_fWindSpeed = 0.5400 * c_fWindSpeed            ' Convert km/hr to knots
+        End If
+        c_fHumidity = CSng(bits(8)) / 100                   ' Humidity, frac (0-1)
+        c_fDewPoint = CSng(bits(9))                         ' Dew point temp
+        If faren Then                                       ' Convert F to C if needed
+            c_fDewPoint = (c_fDewPoint - 32) * 5 / 9
+        End If
+        c_iRainFlag = CInt(bits(11))
+        c_iWetFlag = CInt(bits(12))
+        c_iSecondsSinceData = CInt(bits(13))
+        'c_dtLastLogTime = CDate(bits(14))
+        c_dtLastLogTime = CDate(bits(0) & " " & Left(bits(1), 8)) ' Remove decimals from seconds
+        c_iCloudCond = CInt(bits(15))
+        c_iWindCond = CInt(bits(16))
+        c_iRainCond = CInt(bits(17))
+        c_iDayCond = CInt(bits(18))
+    Else                                                    ' Some sort of bogus data line
+        SetLocale curLocale
+        PollFail &H80040402, "Weather data file does not contain valid data"
+    End If
+    SetLocale curLocale                                     ' Restore locale
+    
+    '
+    ' Signal that our data is really no good
+    '
+    If (Now - c_dtLastLogTime) > #00:01:00# Then
+        PollFail &H80040402, "Weather data file is stale (> 60 sec old)"
+    End If
+    If c_iSecondsSinceData > 60 Then
+        PollFail &H80040402, "No weather data from CloudWatcher for > 60 sec"
+    End If
+
+End Sub
+
+'
+' Log a message into the trace file (ever appending)
+'
+Sub Trace(message)
+    If Not DIAG_TRACE Then Exit Sub
+    
+    If c_oTraceFileStream Is Nothing Then
+        If FSO.FileExists(c_sTraceFileName) Then FSO.DeleteFile c_sTraceFileName    ' Start with fresh file
+        Set c_oTraceFileStream = FSO.OpenTextFile(c_sTraceFileName, 8, True)        ' CreateIf, for Append
+        c_oTraceFileStream.WriteLine Util.FormatVar(Util.SysUTCDate, "Hh:Nn:Ss") & " Log opened, server " & SVR_VERSION
+    End If   
+    c_oTraceFileStream.Write Util.FormatVar(Util.SysUTCDate, "Hh:Nn:Ss") & " "
+    c_oTraceFileStream.WriteLine message
+End Sub
+
+'
+' Raise an error and trace the error message as well
+'
+Sub Fail (code, message)
+    Trace "ERROR: " & message
+    Err.Raise code, ERR_SOURCE, message
+End Sub
+'
+' Special version that saves the number and message for raising
+' errors between polls.
+'
+Sub PollFail (code, message)
+    c_bLastPollError = True                                 ' Result of last real poll
+    c_iLastPollErrNumber = code
+    c_sLastPollErrMessage = message
+    Trace "ERROR: " & message
+    Err.Raise code, ERR_SOURCE, message
+End Sub
+
+]]>
+		</script>
+	</component>
+</package>

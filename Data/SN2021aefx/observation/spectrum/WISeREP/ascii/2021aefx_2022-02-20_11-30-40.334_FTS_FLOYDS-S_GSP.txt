@@ -1,0 +1,3033 @@
+# SIMPLE  =                    T / Fits standard                                  
+# BITPIX  =                  -32 / Bits per pixel                                 
+# NAXIS   =                    3 / Number of axes                                 
+# NAXIS1  =                 2710 / Axis length                                    
+# NAXIS2  =                    1 / Axis length                                    
+# NAXIS3  =                    4 / Axis length                                    
+# EXTEND  =                    F / File may contain extensions                    
+# ORIGIN  = 'NOAO-IRAF FITS Image Kernel July 2003' / FITS file originator        
+# DATE    = '2022-02-21T05:36:53' / Date FITS file was generated                  
+# IRAF-TLM= '2022-02-21T05:36:53' / Time of last modification                     
+# OBJECT  = 'SN2021aefx'         / Name of the object observed                    
+# DATADICV= 'LCOGT-FITS-SPECTRO.DIC-0.0.5' / Version number of the data dictionary
+# HDRVER  = 'LCOGT-HDR-2.0.1'    / Version number of the headers                  
+# SITEID  = 'coj     '           / ID code of the Observatory site                
+# SITE    = 'LCOGT node at Siding Spring Observatory' / Site of the Observatory   
+# ENCID   = 'clma    '           / ID code of the Enclosure                       
+# ENCLOSUR= 'Clamshell-02'       / Building containing Telescope                  
+# TELID   = '2m0a    '           / ID code of the Telescope                       
+# TELESCOP= '2m0-02  '           / The Name of the Telescope                      
+# LATITUDE=          -31.2728196 / [deg North] Telescope Latitude                 
+# LONGITUD=          149.0708466 / [deg East] Telescope Longitude                 
+# HEIGHT  =             1130.000 / [m] Altitude of Telescope above sea level      
+# OBSGEO-X=         -4681305.099 / [m] Cartesian X co-ord of telescope (WGS84)    
+# OBSGEO-Y=          2804939.432 / [m] Cartesian Y co-ord of telescope (WGS84)    
+# OBSGEO-Z=         -3292370.526 / [m] Cartesian Z co-ord of telescope (WGS84)    
+# OBSTYPE = 'SPECTRUM'           / Observation type                               
+# FRAMENUM=                   11 / Running frame number                           
+# MOLTYPE = 'SPECTRUM'           / Molecule type                                  
+# MOLNUM  =                   11 / Molecule number                                
+# MOLFRNUM=                    1 / Exposure number within molecule                
+# FRMTOTAL=                    1 / Total number of exposures within molecule      
+# ORIGNAME= 'coj2m002-en12-20220220-0011-e00.fits' / Fname written by ICS         
+# OBSTELEM= 'N/A     '           / Link to observation telemetry                  
+# TIMESYS = 'UTC     '           / Time system used                               
+# DATE-OBS= '2022-02-20T11:30:40.815' / [UTC] Start date and time of the observati
+# DAY-OBS = '20220220'           / [UTC] Date at start of local observing night   
+# UTSTART = '11:30:40.815'       / [UTC] The start time of the observation        
+# UTSTOP  = '11:40:40.892'       / [UTC] The finish time of the observation       
+# MJD-OBS =        59630.4796335 / [UTC days] Start date/time (Modified Julian Dat
+# EXPTIME =              600.077 / [s] Exposure length                            
+# REQTIME =          600.0000000 / [s] Requested exposure length                  
+# FILTER1 = 'air     '           / The first filter wheel filter type             
+# FILTERI1= 'air     '           / The first filter wheel filter id               
+# FILTER2 = 'NOTPRESENT'         / The second filter wheel filter type            
+# FILTERI2= 'NOTPRESENT'         / The second filter wheel filter id              
+# FILTER3 = 'NOTPRESENT'         / The third filter wheel filter type             
+# FILTERI3= 'NOTPRESENT'         / The third filter wheel filter id               
+# FILTER  = 'air     '           / Filter used                                    
+# FWID    = 'UNKNOWN '           / Filter Wheel ID                                
+# INSTRUME= 'en12    '           / Instrument used                                
+# INSSTATE= 'OKAY    '           / The instrument status                          
+# ICSVER  = 'master@0xfc0e925'   / Version number of the ICS software             
+# CONFMODE= '0.1MHz_2.0preamp'   / Camera mode configuration                      
+# CONFNAME= 'N/A     '           / The instrument configuration used              
+# DETECTOR= 'Andor Newton DU940P-BU' / Detector type                              
+# DETECTID= '14242-18-11'        / Detector serial number                         
+# GAIN    =            2.3000000 / [electrons/count] Pixel gain                   
+# RDNOISE =            3.5000000 / [electrons/pixel] Read noise                   
+# DARKCURR=            0.0000000 / [electrons/pixel/s @ 200K] Dark current        
+# SATURATE=        38400.0000000 / [ADU] Saturation level                         
+# MAXLIN  =        38000.0000000 / [ADU] Non-linearity level                      
+# RDSPEED =           51.2000000 / [kpix/s] Readout speed used                    
+# DETSIZE = '[1:2079,1:512]'     / [pixel] Detector size                          
+# AMPNAME = 'Conventional'       / Amplifier name                                 
+# CCDSUM  = '1 1     '           / CCD on-chip summing/binning                    
+# ROI     = 'UNKNOWN '           / [binned pixel] Region of interest or MULTIPLE  
+# DETSEC  = 'UNKNOWN '           / [binned pixel] Section of useful data          
+# CCDXPIXE=            0.0000135 / [m] Size of pixels, in X                       
+# CCDYPIXE=            0.0000135 / [m] Size of pixels, in Y                       
+# PIXSCALE=            0.3370000 / [arcsec/pixel] Nominal pixel scale on sky      
+# CCDSTEMP=          -70.0000000 / [deg C] CCD required temperature               
+# CCDATEMP=          -70.1610031 / [deg C] CCD actual temperature                 
+# CCDSESIG= 'N/A     '           / [mK] CCD temp control servo error signal       
+# TELMODE = 'AUTOMATIC'          / Telescope mode                                 
+# TAGID   = 'UNSPECIFIED'        / Time Allocation Group ID                       
+# USERID  = 'supernova_exchange' / User ID                                        
+# PROPID  = 'KEY2020B-002'       / Proposal ID                                    
+# GROUPID = 'SN2021aefx'         / Group ID                                       
+# OBSID   = 'UNSPECIFIED'        / Observation ID                                 
+# OBSNOTE = 'UNSPECIFIED'        / Observation Note                               
+# SCHEDNAM= 'POND    '           / Name of scheduler in control                   
+# TRACKNUM= '1398340 '           / Request DB tracking number                     
+# REQNUM  = '2792985 '           / Request DB request number                      
+# MOLUID  = '457398229'          / Molecule unique ID                             
+# BLKTYPE = 'POND    '           / Group type                                     
+# BLKUID  = '345082995'          / Group unique ID                                
+# BLKSDATE= '2022-02-20T11:26:59' / [UTC] Block start date                        
+# BLKEDATE= '2022-02-20T11:47:44' / [UTC] Block end date                          
+# BLKNOMEX=         1245.0000000 / [s] Block nominal exec time                    
+# BLKMNPH = 'N/A     '           / [(0-1)] Maximum lunar phase required           
+# BLKMNDST=           20.0000000 / [deg] Minimum lunar distance required          
+# BLKSEECO= 'N/A     '           / Minimum seeing required                        
+# BLKTRNCO= 'N/A     '           / Minimum transparency required                  
+# BLKAIRCO= '1.6     '           / Maximum airmass required                       
+# SCHEDSEE=            4.5735976 / [arcsec] Estimated seeing when group scheduled 
+# SCHEDTRN= 'N/A     '           / [(0-1)] Estimated transparency when group sched
+# TRIGGER = 'N/A     '           / External trigger ID                            
+# OBRECIPE= 'N/A     '           / Observing Recipes required/used                
+# PCRECIPE= 'N/A     '           / Processing Recipes required/used               
+# PPRECIPE= 'N/A     '           / Post-Processing Recipes required/used          
+# RA      = '04:19:52.915'       / [HH:MM:SS.sss] RA where telescope is pointing  
+# DEC     = '-54:57:04.02'       / [sDD:MM:SS.ss] Dec where telescope is pointing 
+# RADESYS = 'ICRS    '           / [[FK5,ICRS]] Fundamental coord. system of the o
+# LST     = '07:28:29.13'        / [HH:MM:SS.ss] LST at start of current observati
+# CAT-RA  = '04:19:53.342'       / [HH:MM:SS.sss] Catalog RA of the object        
+# CAT-DEC = '-54:56:52.55'       / [sDD:MM:SS.ss] Catalog Dec of the object       
+# CAT-EPOC=         2000.0000000 / [Year] Catalog epoch of the coordinates        
+# OFST-RA = '04:19:57.404'       / [HH:MM:SS.sss] Catalog RA plus pointing offsets
+# OFST-DEC= '-54:53:16.42'       / [sDD:MM:SS.ss] Catalog Dec plus pointing offset
+# TPT-RA  = '04:19:00.826'       / [HH:MM:SS.sss] Telescope demand RA             
+# TPT-DEC = '-54:50:11.93'       / [sDD:MM:SS.ss] Telescope demand Dec            
+# SRCTYPE = 'EXTRASOLAR'         / Source type                                    
+# PM-RA   =            0.0000000 / [sec/year] Proper motion in RA of the object   
+# PM-DEC  =            0.0000000 / [arcsec/year] Proper motion in Dec of the objec
+# PARALLAX=            0.0000000 / [arcsec] Parallax of the object                
+# RADVEL  =            0.0000000 / [km/s] Radial velocity of the object           
+# RATRACK =            0.0000000 / [arcsec/s] Non-sidereal tracking in RA         
+# DECTRACK=            0.0000000 / [arcsec/s] Non-sidereal tracking in Dec        
+# TRACFRAC=            1.0000000 / Fraction of ephemeris rate applied             
+# TELSTATE= 'WARNING '           / Current telescope status                       
+# ENGSTATE= 'UNKNOWN '           / Engineering override state                     
+# TCSSTATE= 'OKAY    '           / TCS state                                      
+# TCSVER  = '0.4     '           / Version number of the TCS software             
+# TPNTMODL= '20210924133213'     / Version number of the pointing model           
+# UT1-UTC =           -0.1028600 / [s] UT1-UTC                                    
+# POLARMOX=            0.0149000 / [arcsec] Polar motion X                        
+# POLARMOY=            0.3566000 / [arcsec] Polar motion Y                        
+# EOPSRC  = 'IERS BULL. A 2022/02/17' / Source of the EOP Values                  
+# ROLLERDR=            0.0000000 / [rad] Driven roller encoder angle              
+# ROLLERND=            0.0000000 / [rad] Non-driven roller encoder angle          
+# AZDMD   =          220.3102120 / [deg] Azimuth axis demand                      
+# AZIMUTH =          220.3102324 / [deg] Azimuth axis position                    
+# AZSTAT  = 'WARNING '           / Azimuth axis state                             
+# ALTDMD  =           49.4388937 / [deg] Altitude axis demand                     
+# ALTITUDE=           49.4388836 / [deg] Altitude axis position                   
+# ALTSTAT = 'OKAY    '           / Altitude axis state                            
+# ROTTYPE = 'CASSEGRAIN'         / Selected image derotator                       
+# ROTMODE = 'VFLOAT  '           / Rotator mode                                   
+# ROTDMD  =           18.8946270 / [deg] Rotator axis demand                      
+# ROTANGLE=           18.8946703 / [deg] Rotator axis position                    
+# ROTSKYPA=           73.9976230 / [deg] Rotator position angle                   
+# ROTSTAT = 'OKAY    '           / Rotator axis state                             
+# AIRMASS =             1.330106 / Effective mean airmass                         
+# AMSTART =            1.3153991 / Airmass at start of observation                
+# AMEND   =            1.3448125 / Airmass at end of observation                  
+# ENC1STAT= 'OPEN    '           / Enclosure shutter 1 state                      
+# ENC2STAT= 'OPEN    '           / Enclosure shutter 2 state                      
+# ENCAZ   =            0.0000000 / [deg] Enclosure azimuth                        
+# ENCWLIGT= 'UNKNOWN '           / Enclosure white lights state                   
+# ENCRLIGT= 'UNKNOWN '           / Enclosure red lights state                     
+# FSTATION= 'CASSEGRAIN'         / Focal station, e.g. CASSEGRAIN, NASMYTH WRAP SI
+# FOLDSTAT= 'N/A     '           / Fold mirror state                              
+# FOLDPORT= '5       '           / Fold mirror port                               
+# FOLDPOSN= 'N/A, N/A'           / [{mm,deg}] Fold mirror position (r, theta)     
+# M1COVER = 'UNKNOWN '           / M1 mirror cover state                          
+# M1HRTMN = 'UNKNOWN '           / M1 Hartmann screen state                       
+# FOCDMD  =            0.0000000 / [mm] Demanded focus position in focal plane    
+# FOCPOSN =           -0.0093975 / [mm] Actual focus position in focal plane      
+# FOCTELZP=           16.0600000 / [mm] Telescope default focus                   
+# FOCINOFF=            4.2169089 / [mm] Instrument focus offset                   
+# FOCTOFF =           -0.4204340 / [mm] Thermal correction value                  
+# FOCZOFF =           -0.0771956 / [mm] Zenith compression correction             
+# FOCAFOFF=            1.1014463 / [mm] Autofocus offset in focal plane           
+# FOCOBOFF=            0.0000000 / [mm] Observer focus offset/defocus in focal pla
+# FOCFLOFF=           -1.0000000 / [mm] Filter focus offset in focal plane        
+# FOCSTAT = 'HALTED  '           / Focus state                                    
+# M2PITCH =          -49.8171055 / [arcsec] M2 tilt about vertex in pitch directio
+# M2ROLL  =            8.9175911 / [arcsec] M2 tilt about vertex in roll direction
+# AUXROLL =            4.9876087 / [arcsec] Auxiliary pointing corrections in roll
+# AUXPITCH=          -28.0619000 / [arcsec] Auxiliary pointing corrections in pitc
+# CTYPE1  = 'LINEAR  '           / Type of WCS Projection                         
+# CTYPE2  = 'LINEAR  '           / Type of WCS Projection                         
+# CRPIX1  =                -220. / [pixel] Coordinate of reference point (axis 1) 
+# CRVAL1  =      3295.3143529892 / [deg] RA at the reference pixel                
+# CUNIT1  = 'Angstrom'           / Units of RA                                    
+# CUNIT2  = 'deg     '           / Units of Dec                                   
+# CD1_1   =     2.28832721710205 / WCS CD transformation matrix                   
+# CD2_2   =                   1. / WCS CD transformation matrix                   
+# WMSSTATE= 'OKAY    '           / WMS system state                               
+# WMSHUMID=           59.6000000 / [%] Current percentage humidity                
+# WMSTEMP =           20.1000000 / [deg C] External temperature                   
+# WMSPRES =          884.0000000 / [mbar] Atmospheric pressure                    
+# WINDSPEE=           14.4000000 / [km/h] Windspeed                               
+# WINDDIR =            3.0000000 / [deg E of N] Wind direction                    
+# WMSRAIN = 'CLEAR   '           / Rain alert                                     
+# WMSMOIST=         5000.0000000 / [mV] Moisture level                            
+# WMSDEWPT=           12.0990000 / [deg C] Dewpoint                               
+# WMSCLOUD=          -29.9500000 / [deg C] Boltwood sky temperature               
+# WMSSKYBR=           20.8384224 / [mag/arcsec^2] Measured sky brightness         
+# SKYMAG  =           20.8304328 / [mag/arcsec^2] Computed (expected) sky brightne
+# TUBETEMP=           20.6250000 / [deg C] Temperature of the telescope tube      
+# M1TEMP  = 'UNKNOWN '           / [deg C] Primary mirror temperature             
+# FOCTEMP =           20.6260000 / [deg C] Focus temperature                      
+# ISSTEMP = 'UNKNOWN '           / [deg C] ISS temperature                        
+# REFPRES =          885.0000000 / [mbar] Pressure used in refraction calculation 
+# REFTEMP =           20.1000000 / [deg C] Temperature used in refraction calculat
+# REFHUMID=           59.7000000 / [%] Humidity used in refraction calculation    
+# AGSTATE = 'GUIDING_CLOSED_LOOP' / Autoguider software state                     
+# AGCAM   = 'kb38    '           / Camera used for autoguiding                    
+# AGLCKFRC=               100.00 / [%] Fraction of time AG locked                 
+# AGMODE  = 'ON      '           / Autoguider mode                                
+# AGRA    =           64.9705033 / [deg] RA of guide star                         
+# AGDEC   =          -54.9511258 / [deg] Dec of guide star                        
+# AGGMAG  = 'UNKNOWN '           / [mag] Autoguider guide star mag                
+# AGFWHM  =           45.8040031 / [arcsec] Autoguider FWHM                       
+# AGMIRDMD= 'N/A     '           / [mm] Autoguider mirror demand                  
+# AGMIRPOS= 'N/A, N/A'           / Autoguider mirror position                     
+# AGMIRST = 'N/A     '           / Autoguider mirror state                        
+# AGFOCDMD= 'UNKNOWN '           / [mm] Autoguider focus demand                   
+# AGFOCUS = 'UNKNOWN '           / [mm] Autoguider focus position                 
+# AGFOCOFF=            0.3500000 / [mm] Autoguider relative focus offset          
+# AGFOCST = 'UNKNOWN '           / Autoguider focus state                         
+# AGFILTER= 'LL      '           / Autoguider filter                              
+# AGFILTID= 'RGBL-L1-007'        / Autoguider filter id                           
+# AGFILST = 'Enabled '           / Autoguider filter state                        
+# MOONSTAT= 'UP      '           / [{UP, DOWN}] Moon position at obs start        
+# MOONFRAC=            0.8437185 / [(0 - 1)] Lunar Illuminated Fraction           
+# MOONDIST=          110.0269369 / [deg] Lunar distance from target               
+# MOONALT =            5.0542120 / [deg] Lunar altitude                           
+# SUNDIST =           81.8708600 / [deg] Solar distance from target               
+# SUNALT  =          -31.9401865 / [deg] Solar altitude                           
+# APERTURE= 'N/A     '           / Aperture identification                        
+# APERPA  = 'UNKNOWN '           / [deg] Slit position angle                      
+# PICKMIRR= 'UNKNOWN '           / Calibration pickoff mirror                     
+# APERTYPE= 'SLIT    '           / Aperture type                                  
+# APERLEN =           30.0000000 / [arcsec] Aperture length                       
+# APERWID =            2.0000000 / [arcsec] Aperture width                        
+# LMP1TYPE= 'Tungsten Halogen'   / Lamp 1 type                                    
+# LMP1ID  = 'UNKNOWN '           / Unique Lamp ID                                 
+# LMP1SET = 'off     '           / Lamp 1 Set Status                              
+# LMP1SHUT= 'closed  '           / Lamp 1 Shutter Status                          
+# LMP2TYPE= 'Xenon   '           / Lamp 2 type                                    
+# LMP2ID  = 'UNKNOWN '           / Unique Lamp ID                                 
+# LMP2SET = 'off     '           / Lamp 2 Set Status                              
+# LMP2SHUT= 'closed  '           / Lamp 2 Shutter Status                          
+# LMP3TYPE= 'Mercury '           / Lamp 3 type                                    
+# LMP3ID  = 'UNKNOWN '           / Unique Lamp ID                                 
+# LMP3SET = 'off     '           / Lamp 3 Set Status                              
+# LMP3SHUT= 'closed  '           / Lamp 3 Shutter Status                          
+# LMP3CUR = '10      '           / [mA] Lamp 3 current                            
+# LMP4TYPE= 'Zinc    '           / Lamp 4 type                                    
+# LMP4ID  = 'UNKNOWN '           / Unique Lamp ID                                 
+# LMP4SET = 'off     '           / Lamp 4 Set Status                              
+# LMP4SHUT= 'closed  '           / Lamp 4 Shutter Status                          
+# NDANGLE = 'UNKNOWN '           / [deg] Angle of neutral density filter          
+# NDPOS   = 'UNKNOWN '           / ND Filter Position                             
+# NDZERO  = 'UNKNOWN '           / Diff between motor home and ND=0               
+# CHECKSUM= '7ADJA1DG08DG78DG'   / HDU checksum updated 2022-02-21T05:38:16       
+# DATASUM = '617540652'          / data unit checksum updated 2022-02-21T05:38:16 
+# WCSDIM  =                    3                                                  
+# LTM1_1  =                   1.                                                  
+# LTM2_2  =                   1.                                                  
+# WAT0_001= 'system=equispec'                                                     
+# WAT1_001= 'wtype=linear label=Wavelength units=angstroms'                       
+# WAT2_001= 'wtype=linear'                                                        
+# OVERSCAN= 'Feb 21  5:32 Overscan section is [2049:2079,1:512] with mean=587.640'
+# CCDMEAN =             4.944206                                                  
+# CCDMEANT=           1329888771                                                  
+# CCDPROC = 'Feb 21  5:32 CCD processing done'                                    
+# GRISM   = 'red/blu '           / full range spectrum                            
+# ARCFILE = 'coj2m002-en12-20220220-0011-e00.fits' / file name in the archive     
+# DCLOG1  = 'Transform'                                                           
+# DC-FLAG =                    0                                                  
+# LACOSMIC=                    T / Laplacian cosmic ray rejection                 
+# FLATRED = 'nttflatSN2021aefx_fts_20220220_red_2.0_59631_1c.fits' / flat file    
+# APNUM1  = '1 1 43.39 53.39'                                                     
+# CTYPE3  = 'LINEAR  '                                                            
+# CD3_3   =                   1.                                                  
+# LTM3_3  =                   1.                                                  
+# WAT3_001= 'wtype=linear'                                                        
+# XMIN    =               3300.0 / min wavelength [Angstrom]                      
+# XMAX    =    10179.99987316132 / max wavelength [Angstrom]                      
+# SPERES_R=    440.8288209513844 / Spectral resolving power                       
+# LAMRMS_R=               0.0568 / residual RMS [nm]                              
+# LAMNLINR=                 12.0 / Nb of arc lines used in the fit of the wavel. s
+# SPE_ER_R=  0.01639674764498537 / statistical uncertainty                        
+# ARCRED  = 'arc_nttSN2021aefx_fts_20220220_red_2.0_59631_1_ex' / reference arc   
+# DCLOG2  = 'REFSPEC1 = arc_nttSN2021aefx_fts_20220220_red_2.0_59631_1_ex'        
+# SHIFTRED=                 -4.0                                                  
+# EX-FLAG =                    0                                                  
+# CA-FLAG =                    0                                                  
+# BUNIT   = 'erg/cm2/s/A'                                                         
+# SENSFUNR= 'sens_fts_20210301_red_l745a_59274_1.fits' / sensitivity curve        
+# IDENT   = '59630.979 SN2021aefx 2022-02-20 red floyds.2.2.2' / file identificati
+# ATMOR   = 'atmo_fts_nttltt4364_fts_20190516_red_1.6_58662_1_l.fits'             
+# ARCBLU  = 'arc_nttSN2021aefx_fts_20220220_blue_2.0_59631_1_ex' / reference arc  
+# LAMRMS_B=              0.00829 / residual RMS [nm]                              
+# LAMNLINB=                  4.0 / Nb of arc lines used in the fit of the wavel. s
+# SPE_ER_B=             0.004145 / statistical uncertainty                        
+# SPERES_B=     459.640972741105 / Spectral resolving power                       
+# SENSFUNB= 'sens_fts_20210301_blu_l745a_59274_1.fits' / sensitivity curve        
+# BANDID1 = 'spectrum - background fit, weights variance, clean yes'              
+# BANDID2 = 'raw - background fit, weights none, clean no'                        
+# BANDID3 = 'background - background fit'                                         
+# BANDID4 = 'sigma - background fit, weights variance, clean yes'                 
+# LTV1    =                -221.                                                  
+# REDUCER = 'Megan Newsome'      / User who reduced the spectrum                  
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+#                                                                                 
+3801.034668 5.719421e-16
+3803.322995 2.792480e-16
+3805.611322 3.675909e-16
+3807.899650 4.494007e-16
+3810.187977 4.244979e-16
+3812.476304 3.962234e-16
+3814.764631 3.935228e-16
+3817.052958 5.459704e-16
+3819.341286 2.220386e-16
+3821.629613 2.088213e-16
+3823.917940 4.605744e-16
+3826.206267 4.533666e-16
+3828.494595 3.965387e-16
+3830.782922 4.069875e-16
+3833.071249 4.507972e-16
+3835.359576 3.748019e-16
+3837.647903 5.121353e-16
+3839.936231 3.760973e-16
+3842.224558 4.459382e-16
+3844.512885 4.416395e-16
+3846.801212 4.730832e-16
+3849.089540 6.300972e-16
+3851.377867 5.126837e-16
+3853.666194 5.129176e-16
+3855.954521 5.656228e-16
+3858.242848 6.954280e-16
+3860.531176 5.402247e-16
+3862.819503 7.605869e-16
+3865.107830 7.164044e-16
+3867.396157 8.368339e-16
+3869.684484 9.462666e-16
+3871.972812 1.070871e-15
+3874.261139 8.554077e-16
+3876.549466 9.245458e-16
+3878.837793 1.013605e-15
+3881.126121 1.027693e-15
+3883.414448 1.117200e-15
+3885.702775 1.452093e-15
+3887.991102 1.366035e-15
+3890.279429 1.348047e-15
+3892.567757 1.325495e-15
+3894.856084 1.378516e-15
+3897.144411 1.494507e-15
+3899.432738 1.502135e-15
+3901.721066 1.721253e-15
+3904.009393 1.851764e-15
+3906.297720 1.560631e-15
+3908.586047 1.640139e-15
+3910.874374 1.616913e-15
+3913.162702 1.993851e-15
+3915.451029 1.900140e-15
+3917.739356 2.018835e-15
+3920.027683 1.828468e-15
+3922.316010 1.821371e-15
+3924.604338 1.856295e-15
+3926.892665 1.766893e-15
+3929.180992 1.979067e-15
+3931.469319 1.677426e-15
+3933.757647 2.112699e-15
+3936.045974 2.020865e-15
+3938.334301 1.983508e-15
+3940.622628 2.154928e-15
+3942.910955 2.130002e-15
+3945.199283 2.245093e-15
+3947.487610 1.984801e-15
+3949.775937 1.964902e-15
+3952.064264 2.051841e-15
+3954.352592 2.267326e-15
+3956.640919 2.292543e-15
+3958.929246 2.339726e-15
+3961.217573 2.535505e-15
+3963.505900 2.281259e-15
+3965.794228 2.357147e-15
+3968.082555 2.649679e-15
+3970.370882 2.561521e-15
+3972.659209 2.430874e-15
+3974.947536 2.421216e-15
+3977.235864 2.525268e-15
+3979.524191 2.648929e-15
+3981.812518 2.655474e-15
+3984.100845 2.800367e-15
+3986.389173 2.412725e-15
+3988.677500 2.427092e-15
+3990.965827 2.376528e-15
+3993.254154 2.570373e-15
+3995.542481 2.642718e-15
+3997.830809 2.714464e-15
+4000.119136 2.490755e-15
+4002.407463 2.398516e-15
+4004.695790 2.657406e-15
+4006.984118 2.540965e-15
+4009.272445 2.475476e-15
+4011.560772 2.363871e-15
+4013.849099 2.416009e-15
+4016.137426 2.637985e-15
+4018.425754 2.521655e-15
+4020.714081 2.306448e-15
+4023.002408 2.236273e-15
+4025.290735 2.433415e-15
+4027.579062 2.131603e-15
+4029.867390 2.287316e-15
+4032.155717 2.099354e-15
+4034.444044 2.416177e-15
+4036.732371 2.265163e-15
+4039.020699 2.166190e-15
+4041.309026 2.288783e-15
+4043.597353 2.238532e-15
+4045.885680 2.156683e-15
+4048.174007 2.089519e-15
+4050.462335 2.160738e-15
+4052.750662 1.975794e-15
+4055.038989 2.169710e-15
+4057.327316 2.034651e-15
+4059.615644 2.016815e-15
+4061.903971 2.148223e-15
+4064.192298 2.038632e-15
+4066.480625 2.140785e-15
+4068.768952 1.967174e-15
+4071.057280 2.003681e-15
+4073.345607 2.097816e-15
+4075.633934 1.749242e-15
+4077.922261 1.714756e-15
+4080.210588 1.676725e-15
+4082.498916 1.607190e-15
+4084.787243 1.711469e-15
+4087.075570 1.853054e-15
+4089.363897 1.450431e-15
+4091.652225 1.386311e-15
+4093.940552 1.296842e-15
+4096.228879 1.456387e-15
+4098.517206 1.480526e-15
+4100.805533 1.321389e-15
+4103.093861 1.249128e-15
+4105.382188 1.561800e-15
+4107.670515 1.550138e-15
+4109.958842 1.362792e-15
+4112.247169 1.403280e-15
+4114.535497 1.468631e-15
+4116.823824 1.432699e-15
+4119.112151 1.525587e-15
+4121.400478 1.469295e-15
+4123.688806 1.431269e-15
+4125.977133 1.457549e-15
+4128.265460 1.403874e-15
+4130.553787 1.401009e-15
+4132.842114 1.357288e-15
+4135.130442 1.627602e-15
+4137.418769 1.567594e-15
+4139.707096 1.523921e-15
+4141.995423 1.513628e-15
+4144.283751 1.621670e-15
+4146.572078 1.462913e-15
+4148.860405 1.581901e-15
+4151.148732 1.621066e-15
+4153.437059 1.563550e-15
+4155.725387 1.609381e-15
+4158.013714 1.609255e-15
+4160.302041 1.641657e-15
+4162.590368 1.601856e-15
+4164.878695 1.580151e-15
+4167.167023 1.506015e-15
+4169.455350 1.686517e-15
+4171.743677 1.694521e-15
+4174.032004 1.711781e-15
+4176.320332 1.692507e-15
+4178.608659 1.610888e-15
+4180.896986 1.710828e-15
+4183.185313 1.604168e-15
+4185.473640 1.799026e-15
+4187.761968 1.697847e-15
+4190.050295 1.773723e-15
+4192.338622 1.970110e-15
+4194.626949 1.693594e-15
+4196.915277 1.887429e-15
+4199.203604 1.807900e-15
+4201.491931 1.814875e-15
+4203.780258 1.941405e-15
+4206.068585 1.995964e-15
+4208.356913 1.860591e-15
+4210.645240 2.080520e-15
+4212.933567 1.980418e-15
+4215.221894 1.769870e-15
+4217.510221 1.832697e-15
+4219.798549 1.858342e-15
+4222.086876 1.710322e-15
+4224.375203 1.711398e-15
+4226.663530 1.930513e-15
+4228.951858 1.964061e-15
+4231.240185 1.959809e-15
+4233.528512 2.194519e-15
+4235.816839 1.947243e-15
+4238.105166 2.202630e-15
+4240.393494 2.070457e-15
+4242.681821 1.941616e-15
+4244.970148 2.014064e-15
+4247.258475 2.135703e-15
+4249.546803 2.044391e-15
+4251.835130 1.913286e-15
+4254.123457 1.934546e-15
+4256.411784 1.857380e-15
+4258.700111 1.940356e-15
+4260.988439 1.997917e-15
+4263.276766 2.042359e-15
+4265.565093 1.996003e-15
+4267.853420 2.039261e-15
+4270.141747 1.986080e-15
+4272.430075 1.814751e-15
+4274.718402 1.730779e-15
+4277.006729 1.967384e-15
+4279.295056 2.175752e-15
+4281.583384 2.077378e-15
+4283.871711 1.935594e-15
+4286.160038 1.990775e-15
+4288.448365 2.052206e-15
+4290.736692 1.987023e-15
+4293.025020 2.232304e-15
+4295.313347 2.179625e-15
+4297.601674 2.033038e-15
+4299.890001 2.132617e-15
+4302.178329 2.066675e-15
+4304.466656 2.157242e-15
+4306.754983 2.209074e-15
+4309.043310 2.080392e-15
+4311.331637 2.048381e-15
+4313.619965 2.100628e-15
+4315.908292 2.473525e-15
+4318.196619 2.248772e-15
+4320.484946 2.257401e-15
+4322.773273 2.421171e-15
+4325.061601 2.287139e-15
+4327.349928 2.510874e-15
+4329.638255 2.216567e-15
+4331.926582 2.424061e-15
+4334.214910 2.317229e-15
+4336.503237 1.934187e-15
+4338.791564 2.412973e-15
+4341.079891 2.541276e-15
+4343.368218 2.360954e-15
+4345.656546 2.414968e-15
+4347.944873 2.193376e-15
+4350.233200 2.250522e-15
+4352.521527 2.363789e-15
+4354.809855 2.419368e-15
+4357.098182 2.282476e-15
+4359.386509 2.380344e-15
+4361.674836 2.342598e-15
+4363.963163 2.448989e-15
+4366.251491 2.286398e-15
+4368.539818 2.491534e-15
+4370.828145 2.217827e-15
+4373.116472 2.118210e-15
+4375.404799 2.291775e-15
+4377.693127 2.421128e-15
+4379.981454 2.238410e-15
+4382.269781 2.156123e-15
+4384.558108 2.068031e-15
+4386.846436 2.151016e-15
+4389.134763 1.964764e-15
+4391.423090 2.082790e-15
+4393.711417 2.124430e-15
+4395.999744 2.272383e-15
+4398.288072 1.916493e-15
+4400.576399 1.948294e-15
+4402.864726 2.031985e-15
+4405.153053 1.953209e-15
+4407.441381 1.871349e-15
+4409.729708 1.823515e-15
+4412.018035 1.702774e-15
+4414.306362 1.675076e-15
+4416.594689 1.674917e-15
+4418.883017 1.741673e-15
+4421.171344 1.508553e-15
+4423.459671 1.327974e-15
+4425.747998 1.382085e-15
+4428.036325 1.485106e-15
+4430.324653 1.533837e-15
+4432.612980 1.380964e-15
+4434.901307 1.415394e-15
+4437.189634 1.523003e-15
+4439.477962 1.308509e-15
+4441.766289 1.368182e-15
+4444.054616 1.238982e-15
+4446.342943 1.102637e-15
+4448.631270 1.372832e-15
+4450.919598 1.319449e-15
+4453.207925 1.315802e-15
+4455.496252 1.375806e-15
+4457.784579 1.352516e-15
+4460.072906 1.153809e-15
+4462.361234 1.394080e-15
+4464.649561 1.327724e-15
+4466.937888 1.270127e-15
+4469.226215 1.492986e-15
+4471.514543 1.507875e-15
+4473.802870 1.421494e-15
+4476.091197 1.538806e-15
+4478.379524 1.469327e-15
+4480.667851 1.367999e-15
+4482.956179 1.423718e-15
+4485.244506 1.431329e-15
+4487.532833 1.432487e-15
+4489.821160 1.702336e-15
+4492.109488 1.698101e-15
+4494.397815 1.701725e-15
+4496.686142 1.687118e-15
+4498.974469 1.568680e-15
+4501.262796 1.562005e-15
+4503.551124 1.652660e-15
+4505.839451 1.686242e-15
+4508.127778 1.674500e-15
+4510.416105 1.859977e-15
+4512.704432 1.872518e-15
+4514.992760 1.591857e-15
+4517.281087 1.867663e-15
+4519.569414 1.935584e-15
+4521.857741 2.129158e-15
+4524.146069 1.968322e-15
+4526.434396 2.230212e-15
+4528.722723 2.484976e-15
+4531.011050 2.127036e-15
+4533.299377 2.170513e-15
+4535.587705 2.038838e-15
+4537.876032 2.645312e-15
+4540.164359 2.509746e-15
+4542.452686 2.344638e-15
+4544.741014 2.670484e-15
+4547.029341 2.957258e-15
+4549.317668 2.582274e-15
+4551.605995 2.842013e-15
+4553.894322 2.833995e-15
+4556.182650 3.053868e-15
+4558.470977 2.839883e-15
+4560.759304 2.935305e-15
+4563.047631 3.222672e-15
+4565.335958 3.005502e-15
+4567.624286 3.180643e-15
+4569.912613 3.264530e-15
+4572.200940 3.393707e-15
+4574.489267 3.745580e-15
+4576.777595 3.421194e-15
+4579.065922 3.683610e-15
+4581.354249 3.601039e-15
+4583.642576 3.679520e-15
+4585.930903 3.910425e-15
+4588.219231 3.807374e-15
+4590.507558 3.666244e-15
+4592.795885 3.914321e-15
+4595.084212 4.205388e-15
+4597.372540 4.206485e-15
+4599.660867 4.399773e-15
+4601.949194 4.313256e-15
+4604.237521 4.381690e-15
+4606.525848 4.326316e-15
+4608.814176 4.391967e-15
+4611.102503 4.849051e-15
+4613.390830 4.610682e-15
+4615.679157 4.698701e-15
+4617.967484 4.994008e-15
+4620.255812 5.023472e-15
+4622.544139 5.017801e-15
+4624.832466 5.200407e-15
+4627.120793 4.905120e-15
+4629.409121 4.876804e-15
+4631.697448 5.419566e-15
+4633.985775 5.389753e-15
+4636.274102 5.589343e-15
+4638.562429 5.292161e-15
+4640.850757 5.583016e-15
+4643.139084 5.610184e-15
+4645.427411 5.477565e-15
+4647.715738 5.512159e-15
+4650.004066 5.505235e-15
+4652.292393 5.720912e-15
+4654.580720 5.698396e-15
+4656.869047 5.471373e-15
+4659.157374 5.892430e-15
+4661.445702 5.695789e-15
+4663.734029 5.809811e-15
+4666.022356 5.773940e-15
+4668.310683 5.352986e-15
+4670.599010 5.595140e-15
+4672.887338 5.512233e-15
+4675.175665 5.892930e-15
+4677.463992 5.553884e-15
+4679.752319 5.792802e-15
+4682.040647 5.586524e-15
+4684.328974 5.642540e-15
+4686.617301 5.626080e-15
+4688.905628 5.524961e-15
+4691.193955 5.467452e-15
+4693.482283 5.642856e-15
+4695.770610 5.455964e-15
+4698.058937 5.682096e-15
+4700.347264 5.620019e-15
+4702.635592 5.511170e-15
+4704.923919 5.627318e-15
+4707.212246 5.049892e-15
+4709.500573 5.178275e-15
+4711.788900 5.150895e-15
+4714.077228 5.145935e-15
+4716.365555 5.112104e-15
+4718.653882 5.188713e-15
+4720.942209 5.328893e-15
+4723.230536 5.221051e-15
+4725.518864 4.969426e-15
+4727.807191 4.984265e-15
+4730.095518 5.141363e-15
+4732.383845 4.874947e-15
+4734.672173 4.839670e-15
+4736.960500 4.851579e-15
+4739.248827 4.681017e-15
+4741.537154 4.242416e-15
+4743.825481 4.299950e-15
+4746.113809 4.476570e-15
+4748.402136 4.367720e-15
+4750.690463 4.156140e-15
+4752.978790 3.891668e-15
+4755.267118 3.840315e-15
+4757.555445 3.560480e-15
+4759.843772 3.660040e-15
+4762.132099 3.823323e-15
+4764.420426 3.742418e-15
+4766.708754 3.243747e-15
+4768.997081 2.821078e-15
+4771.285408 2.944968e-15
+4773.573735 2.741727e-15
+4775.862062 2.821493e-15
+4778.150390 2.666960e-15
+4780.438717 2.847360e-15
+4782.727044 2.693731e-15
+4785.015371 2.579746e-15
+4787.303699 2.683270e-15
+4789.592026 2.548067e-15
+4791.880353 2.568962e-15
+4794.168680 2.393986e-15
+4796.457007 2.230389e-15
+4798.745335 2.180098e-15
+4801.033662 2.574124e-15
+4803.321989 2.460119e-15
+4805.610316 2.380902e-15
+4807.898643 2.124715e-15
+4810.186971 2.056202e-15
+4812.475298 2.363847e-15
+4814.763625 2.099634e-15
+4817.051952 2.035083e-15
+4819.340280 2.098549e-15
+4821.628607 1.866561e-15
+4823.916934 1.878980e-15
+4826.205261 1.983287e-15
+4828.493588 1.934973e-15
+4830.781916 1.759854e-15
+4833.070243 1.527369e-15
+4835.358570 1.907966e-15
+4837.646897 1.769573e-15
+4839.935225 1.637919e-15
+4842.223552 1.866315e-15
+4844.511879 1.667617e-15
+4846.800206 1.900208e-15
+4849.088533 1.926317e-15
+4851.376861 1.712240e-15
+4853.665188 1.438203e-15
+4855.953515 1.529522e-15
+4858.241842 1.611347e-15
+4860.530169 1.507556e-15
+4862.818497 1.516645e-15
+4865.106824 1.648992e-15
+4867.395151 1.686763e-15
+4869.683478 1.824852e-15
+4871.971806 1.551634e-15
+4874.260133 1.567508e-15
+4876.548460 1.493514e-15
+4878.836787 1.740398e-15
+4881.125114 1.754912e-15
+4883.413442 1.823256e-15
+4885.701769 1.840192e-15
+4887.990096 1.875315e-15
+4890.278423 1.728375e-15
+4892.566751 1.697366e-15
+4894.855078 1.842896e-15
+4897.143405 2.062225e-15
+4899.431732 1.774143e-15
+4901.720059 1.857079e-15
+4904.008387 1.934239e-15
+4906.296714 1.969002e-15
+4908.585041 1.820920e-15
+4910.873368 1.864698e-15
+4913.161695 1.930798e-15
+4915.450023 2.081299e-15
+4917.738350 2.025315e-15
+4920.026677 2.132622e-15
+4922.315004 2.031707e-15
+4924.603332 2.006588e-15
+4926.891659 2.092215e-15
+4929.179986 2.072382e-15
+4931.468313 2.466085e-15
+4933.756640 2.524288e-15
+4936.044968 2.301297e-15
+4938.333295 2.393048e-15
+4940.621622 2.555306e-15
+4942.909949 2.653037e-15
+4945.198277 2.710920e-15
+4947.486604 2.701000e-15
+4949.774931 2.857368e-15
+4952.063258 2.755450e-15
+4954.351585 2.834495e-15
+4956.639913 2.880103e-15
+4958.928240 2.843810e-15
+4961.216567 2.832002e-15
+4963.504894 2.915813e-15
+4965.793221 2.867378e-15
+4968.081549 2.796387e-15
+4970.369876 2.762725e-15
+4972.658203 2.779854e-15
+4974.946530 2.797188e-15
+4977.234858 2.769113e-15
+4979.523185 2.813199e-15
+4981.811512 2.629828e-15
+4984.099839 2.620139e-15
+4986.388166 2.720747e-15
+4988.676494 2.591117e-15
+4990.964821 2.557829e-15
+4993.253148 2.465906e-15
+4995.541475 2.628874e-15
+4997.829803 2.483267e-15
+5000.118130 2.560790e-15
+5002.406457 2.549133e-15
+5004.694784 2.328257e-15
+5006.983111 2.497511e-15
+5009.271439 2.286634e-15
+5011.559766 2.382946e-15
+5013.848093 2.341816e-15
+5016.136420 2.302651e-15
+5018.424747 2.229411e-15
+5020.713075 2.218800e-15
+5023.001402 2.235238e-15
+5025.289729 2.177024e-15
+5027.578056 2.124390e-15
+5029.866384 2.098091e-15
+5032.154711 2.059256e-15
+5034.443038 1.997254e-15
+5036.731365 1.940014e-15
+5039.019692 1.907955e-15
+5041.308020 1.918010e-15
+5043.596347 1.945680e-15
+5045.884674 1.922846e-15
+5048.173001 1.858699e-15
+5050.461329 1.825789e-15
+5052.749656 1.816209e-15
+5055.037983 1.771349e-15
+5057.326310 1.728394e-15
+5059.614637 1.766769e-15
+5061.902965 1.845814e-15
+5064.191292 1.880627e-15
+5066.479619 1.868855e-15
+5068.767946 1.835930e-15
+5071.056273 1.789442e-15
+5073.344601 1.737594e-15
+5075.632928 1.709760e-15
+5077.921255 1.730089e-15
+5080.209582 1.779844e-15
+5082.497910 1.833130e-15
+5084.786237 1.877112e-15
+5087.074564 1.901257e-15
+5089.362891 1.891451e-15
+5091.651218 1.851741e-15
+5093.939546 1.838355e-15
+5096.227873 1.879253e-15
+5098.516200 1.920357e-15
+5100.804527 1.938724e-15
+5103.092854 1.989021e-15
+5105.381182 2.067743e-15
+5107.669509 2.068884e-15
+5109.957836 1.997684e-15
+5112.246163 2.010573e-15
+5114.534491 2.116134e-15
+5116.822818 2.164741e-15
+5119.111145 2.141968e-15
+5121.399472 2.145233e-15
+5123.687799 2.180584e-15
+5125.976127 2.195508e-15
+5128.264454 2.199565e-15
+5130.552781 2.233118e-15
+5132.841108 2.272072e-15
+5135.129436 2.268377e-15
+5137.417763 2.245159e-15
+5139.706090 2.247979e-15
+5141.994417 2.281945e-15
+5144.282744 2.338529e-15
+5146.571072 2.408741e-15
+5148.859399 2.479438e-15
+5151.147726 2.520372e-15
+5153.436053 2.509340e-15
+5155.724380 2.465544e-15
+5158.012708 2.418101e-15
+5160.301035 2.407523e-15
+5162.589362 2.454957e-15
+5164.877689 2.518458e-15
+5167.166017 2.559950e-15
+5169.454344 2.564526e-15
+5171.742671 2.541285e-15
+5174.030998 2.556313e-15
+5176.319325 2.620886e-15
+5178.607653 2.638300e-15
+5180.895980 2.591772e-15
+5183.184307 2.583054e-15
+5185.472634 2.633073e-15
+5187.760962 2.671799e-15
+5190.049289 2.675768e-15
+5192.337616 2.659337e-15
+5194.625943 2.645347e-15
+5196.914270 2.666940e-15
+5199.202598 2.710329e-15
+5201.490925 2.731485e-15
+5203.779252 2.736453e-15
+5206.067579 2.754229e-15
+5208.355906 2.775567e-15
+5210.644234 2.780462e-15
+5212.932561 2.752706e-15
+5215.220888 2.682872e-15
+5217.509215 2.648172e-15
+5219.797543 2.727236e-15
+5222.085870 2.835999e-15
+5224.374197 2.876109e-15
+5226.662524 2.876262e-15
+5228.950851 2.876341e-15
+5231.239179 2.869759e-15
+5233.527506 2.854075e-15
+5235.815833 2.852296e-15
+5238.104160 2.874637e-15
+5240.392488 2.889686e-15
+5242.680815 2.882728e-15
+5244.969142 2.884549e-15
+5247.257469 2.912502e-15
+5249.545796 2.959330e-15
+5251.834124 3.007317e-15
+5254.122451 3.018435e-15
+5256.410778 2.998832e-15
+5258.699105 3.012564e-15
+5260.987432 3.071588e-15
+5263.275760 3.138906e-15
+5265.564087 3.175860e-15
+5267.852414 3.136278e-15
+5270.140741 3.076867e-15
+5272.429069 3.124042e-15
+5274.717396 3.246080e-15
+5277.005723 3.326181e-15
+5279.294050 3.360648e-15
+5281.582377 3.393267e-15
+5283.870705 3.402520e-15
+5286.159032 3.353811e-15
+5288.447359 3.308877e-15
+5290.735686 3.341745e-15
+5293.024014 3.389464e-15
+5295.312341 3.375361e-15
+5297.600668 3.353109e-15
+5299.888995 3.379560e-15
+5302.177322 3.403004e-15
+5304.465650 3.384796e-15
+5306.753977 3.396992e-15
+5309.042304 3.484401e-15
+5311.330631 3.581381e-15
+5313.618958 3.631342e-15
+5315.907286 3.612769e-15
+5318.195613 3.540426e-15
+5320.483940 3.505876e-15
+5322.772267 3.544430e-15
+5325.060595 3.583893e-15
+5327.348922 3.600741e-15
+5329.637249 3.644399e-15
+5331.925576 3.706442e-15
+5334.213903 3.716893e-15
+5336.502231 3.670946e-15
+5338.790558 3.619778e-15
+5341.078885 3.590685e-15
+5343.367212 3.594148e-15
+5345.655540 3.623571e-15
+5347.943867 3.660922e-15
+5350.232194 3.684771e-15
+5352.520521 3.672579e-15
+5354.808848 3.663417e-15
+5357.097176 3.715829e-15
+5359.385503 3.764170e-15
+5361.673830 3.719336e-15
+5363.962157 3.649892e-15
+5366.250484 3.648617e-15
+5368.538812 3.709600e-15
+5370.827139 3.801860e-15
+5373.115466 3.862502e-15
+5375.403793 3.843366e-15
+5377.692121 3.788713e-15
+5379.980448 3.746161e-15
+5382.268775 3.728715e-15
+5384.557102 3.737795e-15
+5386.845429 3.744068e-15
+5389.133757 3.733909e-15
+5391.422084 3.741347e-15
+5393.710411 3.776461e-15
+5395.998738 3.801350e-15
+5398.287066 3.803124e-15
+5400.575393 3.807884e-15
+5402.863720 3.819770e-15
+5405.152047 3.818225e-15
+5407.440374 3.794009e-15
+5409.728702 3.745711e-15
+5412.017029 3.696370e-15
+5414.305356 3.687964e-15
+5416.593683 3.717877e-15
+5418.882010 3.756076e-15
+5421.170338 3.765775e-15
+5423.458665 3.708171e-15
+5425.746992 3.630227e-15
+5428.035319 3.611927e-15
+5430.323647 3.632322e-15
+5432.611974 3.638396e-15
+5434.900301 3.628220e-15
+5437.188628 3.611048e-15
+5439.476955 3.586592e-15
+5441.765283 3.554568e-15
+5444.053610 3.502012e-15
+5446.341937 3.424605e-15
+5448.630264 3.380618e-15
+5450.918591 3.406075e-15
+5453.206919 3.421070e-15
+5455.495246 3.366457e-15
+5457.783573 3.280329e-15
+5460.071900 3.200217e-15
+5462.360228 3.145613e-15
+5464.648555 3.125435e-15
+5466.936882 3.127000e-15
+5469.225209 3.129301e-15
+5471.513536 3.100155e-15
+5473.801864 3.036464e-15
+5476.090191 2.976709e-15
+5478.378518 2.934991e-15
+5480.666845 2.895334e-15
+5482.955173 2.867881e-15
+5485.243500 2.885828e-15
+5487.531827 2.923955e-15
+5489.820154 2.916196e-15
+5492.108481 2.871758e-15
+5494.396809 2.844109e-15
+5496.685136 2.820532e-15
+5498.973463 2.761129e-15
+5501.261790 2.706011e-15
+5503.550117 2.716771e-15
+5505.838445 2.762599e-15
+5508.126772 2.789354e-15
+5510.415099 2.792174e-15
+5512.703426 2.778986e-15
+5514.991754 2.763452e-15
+5517.280081 2.759924e-15
+5519.568408 2.769510e-15
+5521.856735 2.789821e-15
+5524.145062 2.813949e-15
+5526.433390 2.837253e-15
+5528.721717 2.875052e-15
+5531.010044 2.925442e-15
+5533.298371 2.921460e-15
+5535.586699 2.857636e-15
+5537.875026 2.883920e-15
+5540.163353 3.032077e-15
+5542.451680 3.104507e-15
+5544.740007 3.045007e-15
+5547.028335 3.012673e-15
+5549.316662 3.051218e-15
+5551.604989 3.071576e-15
+5553.893316 3.050995e-15
+5556.181643 3.019157e-15
+5558.469971 3.011930e-15
+5560.758298 3.074244e-15
+5563.046625 3.175824e-15
+5565.334952 3.239964e-15
+5567.623280 3.242343e-15
+5569.911607 3.186670e-15
+5572.199934 3.121930e-15
+5574.488261 3.113915e-15
+5576.776588 3.125235e-15
+5579.064916 3.089901e-15
+5581.353243 3.044897e-15
+5583.641570 3.043701e-15
+5585.929897 3.056796e-15
+5588.218225 3.045925e-15
+5590.506552 3.024512e-15
+5592.794879 3.008176e-15
+5595.083206 2.979174e-15
+5597.371533 2.929669e-15
+5599.659861 2.905951e-15
+5601.948188 2.930017e-15
+5604.236515 2.939856e-15
+5606.524842 2.893891e-15
+5608.813169 2.808008e-15
+5611.101497 2.711039e-15
+5613.389824 2.654778e-15
+5615.678151 2.654442e-15
+5617.966478 2.662027e-15
+5620.254806 2.653024e-15
+5622.543133 2.637430e-15
+5624.831460 2.609968e-15
+5627.119787 2.550961e-15
+5629.408114 2.472247e-15
+5631.696442 2.410150e-15
+5633.984769 2.375179e-15
+5636.273096 2.359968e-15
+5638.561423 2.344725e-15
+5640.849751 2.303165e-15
+5643.138078 2.233920e-15
+5645.426405 2.148425e-15
+5647.714732 2.065758e-15
+5650.003059 2.006816e-15
+5652.291387 1.954802e-15
+5654.579714 1.885361e-15
+5656.868041 1.834570e-15
+5659.156368 1.839449e-15
+5661.444695 1.846413e-15
+5663.733023 1.802442e-15
+5666.021350 1.743424e-15
+5668.309677 1.707432e-15
+5670.598004 1.694232e-15
+5672.886332 1.693194e-15
+5675.174659 1.666079e-15
+5677.462986 1.595110e-15
+5679.751313 1.523239e-15
+5682.039640 1.481345e-15
+5684.327968 1.470255e-15
+5686.616295 1.474182e-15
+5688.904622 1.444831e-15
+5691.192949 1.377996e-15
+5693.481277 1.338708e-15
+5695.769604 1.335316e-15
+5698.057931 1.306333e-15
+5700.346258 1.257464e-15
+5702.634585 1.258697e-15
+5704.922913 1.288480e-15
+5707.211240 1.256508e-15
+5709.499567 1.190988e-15
+5711.787894 1.189703e-15
+5714.076221 1.229079e-15
+5716.364549 1.229718e-15
+5718.652876 1.202052e-15
+5720.941203 1.188987e-15
+5723.229530 1.177241e-15
+5725.517858 1.141226e-15
+5727.806185 1.124496e-15
+5730.094512 1.173704e-15
+5732.382839 1.204744e-15
+5734.671166 1.137632e-15
+5736.959494 1.094691e-15
+5739.247821 1.179093e-15
+5741.536148 1.247927e-15
+5743.824475 1.193189e-15
+5746.112803 1.142089e-15
+5748.401130 1.182025e-15
+5750.689457 1.229399e-15
+5752.977784 1.231296e-15
+5755.266111 1.224370e-15
+5757.554439 1.228728e-15
+5759.842766 1.229857e-15
+5762.131093 1.232352e-15
+5764.419420 1.271554e-15
+5766.707747 1.340142e-15
+5768.996075 1.374242e-15
+5771.284402 1.374564e-15
+5773.572729 1.410048e-15
+5775.861056 1.478469e-15
+5778.149384 1.520602e-15
+5780.437711 1.537067e-15
+5782.726038 1.564378e-15
+5785.014365 1.617140e-15
+5787.302692 1.699555e-15
+5789.591020 1.778540e-15
+5791.879347 1.807582e-15
+5794.167674 1.805441e-15
+5796.456001 1.813346e-15
+5798.744328 1.846270e-15
+5801.032656 1.909097e-15
+5803.320983 1.994449e-15
+5805.609310 2.088315e-15
+5807.897637 2.160133e-15
+5810.185965 2.188529e-15
+5812.474292 2.217053e-15
+5814.762619 2.280089e-15
+5817.050946 2.323972e-15
+5819.339273 2.320845e-15
+5821.627601 2.359218e-15
+5823.915928 2.481179e-15
+5826.204255 2.588995e-15
+5828.492582 2.632691e-15
+5830.780910 2.675773e-15
+5833.069237 2.748334e-15
+5835.357564 2.820272e-15
+5837.645891 2.884329e-15
+5839.934218 2.964171e-15
+5842.222546 3.053491e-15
+5844.510873 3.110470e-15
+5846.799200 3.147782e-15
+5849.087527 3.231339e-15
+5851.375854 3.332218e-15
+5853.664182 3.351106e-15
+5855.952509 3.328766e-15
+5858.240836 3.385406e-15
+5860.529163 3.494028e-15
+5862.817491 3.561475e-15
+5865.105818 3.593926e-15
+5867.394145 3.631783e-15
+5869.682472 3.666003e-15
+5871.970799 3.678457e-15
+5874.259127 3.689200e-15
+5876.547454 3.721454e-15
+5878.835781 3.771112e-15
+5881.124108 3.825101e-15
+5883.412436 3.842949e-15
+5885.700763 3.799839e-15
+5887.989090 3.759534e-15
+5890.277417 3.772376e-15
+5892.565744 3.799957e-15
+5894.854072 3.813497e-15
+5897.142399 3.835526e-15
+5899.430726 3.873065e-15
+5901.719053 3.896226e-15
+5904.007380 3.890836e-15
+5906.295708 3.869422e-15
+5908.584035 3.849043e-15
+5910.872362 3.856584e-15
+5913.160689 3.882971e-15
+5915.449017 3.871640e-15
+5917.737344 3.820049e-15
+5920.025671 3.781429e-15
+5922.313998 3.763251e-15
+5924.602325 3.733291e-15
+5926.890653 3.719071e-15
+5929.178980 3.787604e-15
+5931.467307 3.865558e-15
+5933.755634 3.810721e-15
+5936.043962 3.708780e-15
+5938.332289 3.731150e-15
+5940.620616 3.810863e-15
+5942.908943 3.813093e-15
+5945.197270 3.768184e-15
+5947.485598 3.741575e-15
+5949.773925 3.723594e-15
+5952.062252 3.695855e-15
+5954.350579 3.678684e-15
+5956.638906 3.685390e-15
+5958.927234 3.667584e-15
+5961.215561 3.591478e-15
+5963.503888 3.507783e-15
+5965.792215 3.457131e-15
+5968.080543 3.423709e-15
+5970.368870 3.391416e-15
+5972.657197 3.349449e-15
+5974.945524 3.297132e-15
+5977.233851 3.258445e-15
+5979.522179 3.240556e-15
+5981.810506 3.221861e-15
+5984.098833 3.189554e-15
+5986.387160 3.141314e-15
+5988.675488 3.085695e-15
+5990.963815 3.045581e-15
+5993.252142 3.018548e-15
+5995.540469 2.976474e-15
+5997.828796 2.932397e-15
+6000.117124 2.931585e-15
+6002.405451 2.932117e-15
+6004.693778 2.842648e-15
+6006.982105 2.733106e-15
+6009.270432 2.740973e-15
+6011.558760 2.791433e-15
+6013.847087 2.742419e-15
+6016.135414 2.645254e-15
+6018.423741 2.596899e-15
+6020.712069 2.568327e-15
+6023.000396 2.512224e-15
+6025.288723 2.451353e-15
+6027.577050 2.412409e-15
+6029.865377 2.382301e-15
+6032.153705 2.348002e-15
+6034.442032 2.318928e-15
+6036.730359 2.301520e-15
+6039.018686 2.292655e-15
+6041.307014 2.279894e-15
+6043.595341 2.222618e-15
+6045.883668 2.111113e-15
+6048.171995 2.005053e-15
+6050.460322 1.941209e-15
+6052.748650 1.909203e-15
+6055.036977 1.898792e-15
+6057.325304 1.901837e-15
+6059.613631 1.901052e-15
+6061.901958 1.870430e-15
+6064.190286 1.814266e-15
+6066.478613 1.765960e-15
+6068.766940 1.739103e-15
+6071.055267 1.730781e-15
+6073.343595 1.737426e-15
+6075.631922 1.754454e-15
+6077.920249 1.761574e-15
+6080.208576 1.732551e-15
+6082.496903 1.688147e-15
+6084.785231 1.667521e-15
+6087.073558 1.657684e-15
+6089.361885 1.631964e-15
+6091.650212 1.615424e-15
+6093.938540 1.638714e-15
+6096.226867 1.680465e-15
+6098.515194 1.711903e-15
+6100.803521 1.725131e-15
+6103.091848 1.719262e-15
+6105.380176 1.709418e-15
+6107.668503 1.709479e-15
+6109.956830 1.718679e-15
+6112.245157 1.731196e-15
+6114.533484 1.724805e-15
+6116.821812 1.698387e-15
+6119.110139 1.711939e-15
+6121.398466 1.778433e-15
+6123.686793 1.809735e-15
+6125.975121 1.779179e-15
+6128.263448 1.762934e-15
+6130.551775 1.787564e-15
+6132.840102 1.815708e-15
+6135.128429 1.834203e-15
+6137.416757 1.851855e-15
+6139.705084 1.870185e-15
+6141.993411 1.886788e-15
+6144.281738 1.900420e-15
+6146.570065 1.910448e-15
+6148.858393 1.911797e-15
+6151.146720 1.898032e-15
+6153.435047 1.872659e-15
+6155.723374 1.843815e-15
+6158.011702 1.824316e-15
+6160.300029 1.826602e-15
+6162.588356 1.841306e-15
+6164.876683 1.853026e-15
+6167.165010 1.862501e-15
+6169.453338 1.872961e-15
+6171.741665 1.873388e-15
+6174.029992 1.856420e-15
+6176.318319 1.847862e-15
+6178.606647 1.866132e-15
+6180.894974 1.878238e-15
+6183.183301 1.860525e-15
+6185.471628 1.835418e-15
+6187.759955 1.823843e-15
+6190.048283 1.837855e-15
+6192.336610 1.872946e-15
+6194.624937 1.888809e-15
+6196.913264 1.866762e-15
+6199.201591 1.826456e-15
+6201.489919 1.792190e-15
+6203.778246 1.796077e-15
+6206.066573 1.835391e-15
+6208.354900 1.864230e-15
+6210.643228 1.871906e-15
+6212.931555 1.881859e-15
+6215.219882 1.894423e-15
+6217.508209 1.893163e-15
+6219.796536 1.890417e-15
+6222.084864 1.914343e-15
+6224.373191 1.947462e-15
+6226.661518 1.953151e-15
+6228.949845 1.926817e-15
+6231.238173 1.877266e-15
+6233.526500 1.853646e-15
+6235.814827 1.908635e-15
+6238.103154 1.976726e-15
+6240.391481 1.976036e-15
+6242.679809 1.953249e-15
+6244.968136 1.967715e-15
+6247.256463 1.994334e-15
+6249.544790 2.005144e-15
+6251.833117 2.012215e-15
+6254.121445 2.027018e-15
+6256.409772 2.051682e-15
+6258.698099 2.080525e-15
+6260.986426 2.083320e-15
+6263.274754 2.048902e-15
+6265.563081 2.014270e-15
+6267.851408 2.001261e-15
+6270.139735 1.998233e-15
+6272.428062 1.998373e-15
+6274.716390 2.002377e-15
+6277.004717 2.008884e-15
+6279.293044 2.015294e-15
+6281.581371 2.022599e-15
+6283.869699 2.035045e-15
+6286.158026 2.051667e-15
+6288.446353 2.068202e-15
+6290.734680 2.074084e-15
+6293.023007 2.054681e-15
+6295.311335 2.021523e-15
+6297.599662 1.999557e-15
+6299.887989 1.989055e-15
+6302.176316 1.980109e-15
+6304.464643 1.959083e-15
+6306.752971 1.913187e-15
+6309.041298 1.869882e-15
+6311.329625 1.862481e-15
+6313.617952 1.871039e-15
+6315.906280 1.867629e-15
+6318.194607 1.852869e-15
+6320.482934 1.832636e-15
+6322.771261 1.824808e-15
+6325.059588 1.836303e-15
+6327.347916 1.816108e-15
+6329.636243 1.734368e-15
+6331.924570 1.643276e-15
+6334.212897 1.585025e-15
+6336.501225 1.563998e-15
+6338.789552 1.567464e-15
+6341.077879 1.546508e-15
+6343.366206 1.487245e-15
+6345.654533 1.441555e-15
+6347.942861 1.427655e-15
+6350.231188 1.415883e-15
+6352.519515 1.395319e-15
+6354.807842 1.374426e-15
+6357.096169 1.353481e-15
+6359.384497 1.326283e-15
+6361.672824 1.298887e-15
+6363.961151 1.287016e-15
+6366.249478 1.277239e-15
+6368.537806 1.238973e-15
+6370.826133 1.194892e-15
+6373.114460 1.191069e-15
+6375.402787 1.207622e-15
+6377.691114 1.201722e-15
+6379.979442 1.192458e-15
+6382.267769 1.212479e-15
+6384.556096 1.224297e-15
+6386.844423 1.185590e-15
+6389.132751 1.151879e-15
+6391.421078 1.178608e-15
+6393.709405 1.202671e-15
+6395.997732 1.169944e-15
+6398.286059 1.150546e-15
+6400.574387 1.195361e-15
+6402.862714 1.243459e-15
+6405.151041 1.248624e-15
+6407.439368 1.224983e-15
+6409.727695 1.194318e-15
+6412.016023 1.191113e-15
+6414.304350 1.229917e-15
+6416.592677 1.285243e-15
+6418.881004 1.336145e-15
+6421.169332 1.370512e-15
+6423.457659 1.387512e-15
+6425.745986 1.403065e-15
+6428.034313 1.420450e-15
+6430.322640 1.428796e-15
+6432.610968 1.436924e-15
+6434.899295 1.466520e-15
+6437.187622 1.522622e-15
+6439.475949 1.601509e-15
+6441.764277 1.663279e-15
+6444.052604 1.651733e-15
+6446.340931 1.606264e-15
+6448.629258 1.603190e-15
+6450.917585 1.638822e-15
+6453.205913 1.683393e-15
+6455.494240 1.706295e-15
+6457.782567 1.683492e-15
+6460.070894 1.673748e-15
+6462.359221 1.737279e-15
+6464.647549 1.827470e-15
+6466.935876 1.888404e-15
+6469.224203 1.907984e-15
+6471.512530 1.888906e-15
+6473.800858 1.868246e-15
+6476.089185 1.876423e-15
+6478.377512 1.909387e-15
+6480.665839 1.952900e-15
+6482.954166 1.969645e-15
+6485.242494 1.953542e-15
+6487.530821 1.972484e-15
+6489.819148 2.038387e-15
+6492.107475 2.062055e-15
+6494.395802 2.031591e-15
+6496.684130 2.041872e-15
+6498.972457 2.105907e-15
+6501.260784 2.148760e-15
+6503.549111 2.160288e-15
+6505.837439 2.182904e-15
+6508.125766 2.224101e-15
+6510.414093 2.270936e-15
+6512.702420 2.305253e-15
+6514.990747 2.305140e-15
+6517.279075 2.290060e-15
+6519.567402 2.297322e-15
+6521.855729 2.325891e-15
+6524.144056 2.360381e-15
+6526.432384 2.381350e-15
+6528.720711 2.371279e-15
+6531.009038 2.358584e-15
+6533.297365 2.375907e-15
+6535.585692 2.393298e-15
+6537.874020 2.379843e-15
+6540.162347 2.363746e-15
+6542.450674 2.372514e-15
+6544.739001 2.403716e-15
+6547.027328 2.443910e-15
+6549.315656 2.444600e-15
+6551.603983 2.389807e-15
+6553.892310 2.364049e-15
+6556.180637 2.409136e-15
+6558.468965 2.461380e-15
+6560.757292 2.478164e-15
+6563.045619 2.457723e-15
+6565.333946 2.412642e-15
+6567.622273 2.380498e-15
+6569.910601 2.371799e-15
+6572.198928 2.360202e-15
+6574.487255 2.345258e-15
+6576.775582 2.351609e-15
+6579.063910 2.369831e-15
+6581.352237 2.365824e-15
+6583.640564 2.340277e-15
+6585.928891 2.314538e-15
+6588.217218 2.298447e-15
+6590.505546 2.296653e-15
+6592.793873 2.294685e-15
+6595.082200 2.270609e-15
+6597.370527 2.241178e-15
+6599.658854 2.232568e-15
+6601.947182 2.221775e-15
+6604.235509 2.179193e-15
+6606.523836 2.121632e-15
+6608.812163 2.072424e-15
+6611.100491 2.039705e-15
+6613.388818 2.024238e-15
+6615.677145 1.996742e-15
+6617.965472 1.939552e-15
+6620.253799 1.897788e-15
+6622.542127 1.900166e-15
+6624.830454 1.912037e-15
+6627.118781 1.903760e-15
+6629.407108 1.863186e-15
+6631.695436 1.797953e-15
+6633.983763 1.757100e-15
+6636.272090 1.754822e-15
+6638.560417 1.745346e-15
+6640.848744 1.711548e-15
+6643.137072 1.672486e-15
+6645.425399 1.640478e-15
+6647.713726 1.626413e-15
+6650.002053 1.609859e-15
+6652.290380 1.539985e-15
+6654.578708 1.444859e-15
+6656.867035 1.406061e-15
+6659.155362 1.411842e-15
+6661.443689 1.401059e-15
+6663.732017 1.359916e-15
+6666.020344 1.295186e-15
+6668.308671 1.234511e-15
+6670.596998 1.211537e-15
+6672.885325 1.210822e-15
+6675.173653 1.203857e-15
+6677.461980 1.194292e-15
+6679.750307 1.190151e-15
+6682.038634 1.177342e-15
+6684.326962 1.144747e-15
+6686.615289 1.116954e-15
+6688.903616 1.111734e-15
+6691.191943 1.094181e-15
+6693.480270 1.042160e-15
+6695.768598 9.937355e-16
+6698.056925 9.735679e-16
+6700.345252 9.590126e-16
+6702.633579 9.370676e-16
+6704.921906 9.206849e-16
+6707.210234 9.111056e-16
+6709.498561 8.902196e-16
+6711.786888 8.519595e-16
+6714.075215 8.047505e-16
+6716.363543 7.649494e-16
+6718.651870 7.584170e-16
+6720.940197 7.830943e-16
+6723.228524 8.119667e-16
+6725.516851 8.223031e-16
+6727.805179 7.935302e-16
+6730.093506 7.482991e-16
+6732.381833 7.365833e-16
+6734.670160 7.444934e-16
+6736.958488 7.275903e-16
+6739.246815 6.951814e-16
+6741.535142 6.756109e-16
+6743.823469 6.581818e-16
+6746.111796 6.237703e-16
+6748.400124 5.926237e-16
+6750.688451 5.889313e-16
+6752.976778 5.925602e-16
+6755.265105 5.802728e-16
+6757.553432 5.632161e-16
+6759.841760 5.547144e-16
+6762.130087 5.550389e-16
+6764.418414 5.622194e-16
+6766.706741 5.708230e-16
+6768.995069 5.756900e-16
+6771.283396 5.750007e-16
+6773.571723 5.682421e-16
+6775.860050 5.568480e-16
+6778.148377 5.429641e-16
+6780.436705 5.290360e-16
+6782.725032 5.168526e-16
+6785.013359 5.080555e-16
+6787.301686 4.997385e-16
+6789.590014 4.800138e-16
+6791.878341 4.621244e-16
+6794.166668 4.891103e-16
+6796.454995 5.363651e-16
+6798.743322 5.220663e-16
+6801.031650 4.655249e-16
+6803.319977 4.524720e-16
+6805.608304 4.767710e-16
+6807.896631 4.853650e-16
+6810.184958 4.787977e-16
+6812.473286 4.776101e-16
+6814.761613 4.825009e-16
+6817.049940 4.892416e-16
+6819.338267 4.882381e-16
+6821.626595 4.706817e-16
+6823.914922 4.644508e-16
+6826.203249 4.958417e-16
+6828.491576 5.209344e-16
+6830.779903 4.985483e-16
+6833.068231 4.642183e-16
+6835.356558 4.529040e-16
+6837.644885 4.566644e-16
+6839.933212 4.644494e-16
+6842.221539 4.640202e-16
+6844.509867 4.524818e-16
+6846.798194 4.563022e-16
+6849.086521 4.850402e-16
+6851.374848 5.086863e-16
+6853.663176 5.148986e-16
+6855.951503 5.234389e-16
+6858.239830 5.396458e-16
+6860.528157 5.499420e-16
+6862.816484 5.485822e-16
+6865.104812 5.371030e-16
+6867.393139 5.220865e-16
+6869.681466 5.153052e-16
+6871.969793 5.198706e-16
+6874.258121 5.305262e-16
+6876.546448 5.518306e-16
+6878.834775 5.950417e-16
+6881.123102 6.280376e-16
+6883.411429 6.012470e-16
+6885.699757 5.573007e-16
+6887.988084 5.682770e-16
+6890.276411 6.109253e-16
+6892.564738 6.364913e-16
+6894.853065 6.302784e-16
+6897.141393 5.906782e-16
+6899.429720 5.588793e-16
+6901.718047 5.742943e-16
+6904.006374 6.120090e-16
+6906.294702 6.417367e-16
+6908.583029 6.579506e-16
+6910.871356 6.602054e-16
+6913.159683 6.584242e-16
+6915.448010 6.614499e-16
+6917.736338 6.685541e-16
+6920.024665 6.784780e-16
+6922.312992 6.905409e-16
+6924.601319 7.015463e-16
+6926.889647 7.058158e-16
+6929.177974 6.978810e-16
+6931.466301 6.702023e-16
+6933.754628 6.350938e-16
+6936.042955 6.297812e-16
+6938.331283 6.565055e-16
+6940.619610 6.830432e-16
+6942.907937 6.956457e-16
+6945.196264 6.939451e-16
+6947.484591 6.882231e-16
+6949.772919 6.976612e-16
+6952.061246 7.125916e-16
+6954.349573 7.081125e-16
+6956.637900 6.994740e-16
+6958.926228 7.165384e-16
+6961.214555 7.410603e-16
+6963.502882 7.422977e-16
+6965.791209 7.337379e-16
+6968.079536 7.375952e-16
+6970.367864 7.541962e-16
+6972.656191 7.780973e-16
+6974.944518 7.902564e-16
+6977.232845 7.771444e-16
+6979.521173 7.696020e-16
+6981.809500 7.905217e-16
+6984.097827 8.080726e-16
+6986.386154 7.982065e-16
+6988.674481 7.774920e-16
+6990.962809 7.571809e-16
+6993.251136 7.261094e-16
+6995.539463 6.879085e-16
+6997.827790 6.779907e-16
+7000.116117 7.031417e-16
+7002.404445 7.209663e-16
+7004.692772 7.200724e-16
+7006.981099 7.327087e-16
+7009.269426 7.604274e-16
+7011.557754 7.728552e-16
+7013.846081 7.636857e-16
+7016.134408 7.473246e-16
+7018.422735 7.254968e-16
+7020.711062 6.911713e-16
+7022.999390 6.627373e-16
+7025.287717 6.708828e-16
+7027.576044 7.033547e-16
+7029.864371 7.287501e-16
+7032.152699 7.398520e-16
+7034.441026 7.390445e-16
+7036.729353 7.353239e-16
+7039.017680 7.392921e-16
+7041.306007 7.514879e-16
+7043.594335 7.684422e-16
+7045.882662 7.717934e-16
+7048.170989 7.483828e-16
+7050.459316 7.312328e-16
+7052.747643 7.480110e-16
+7055.035971 7.767208e-16
+7057.324298 7.939217e-16
+7059.612625 7.866646e-16
+7061.900952 7.557811e-16
+7064.189280 7.429897e-16
+7066.477607 7.630760e-16
+7068.765934 7.599340e-16
+7071.054261 7.192097e-16
+7073.342588 7.066514e-16
+7075.630916 7.432592e-16
+7077.919243 7.852842e-16
+7080.207570 8.079634e-16
+7082.495897 8.091496e-16
+7084.784225 7.859287e-16
+7087.072552 7.340535e-16
+7089.360879 6.851242e-16
+7091.649206 6.989292e-16
+7093.937533 7.498646e-16
+7096.225861 7.583357e-16
+7098.514188 7.374611e-16
+7100.802515 7.458944e-16
+7103.090842 7.689698e-16
+7105.379169 7.662936e-16
+7107.667497 7.659525e-16
+7109.955824 8.105266e-16
+7112.244151 8.641838e-16
+7114.532478 8.786471e-16
+7116.820806 8.701345e-16
+7119.109133 8.645961e-16
+7121.397460 8.602784e-16
+7123.685787 8.545108e-16
+7125.974114 8.590028e-16
+7128.262442 8.788601e-16
+7130.550769 8.925385e-16
+7132.839096 8.846156e-16
+7135.127423 8.635912e-16
+7137.415751 8.407674e-16
+7139.704078 8.299874e-16
+7141.992405 8.375533e-16
+7144.280732 8.537404e-16
+7146.569059 8.710263e-16
+7148.857387 8.867029e-16
+7151.145714 8.993580e-16
+7153.434041 9.117461e-16
+7155.722368 9.169359e-16
+7158.010695 8.959643e-16
+7160.299023 8.599517e-16
+7162.587350 8.458400e-16
+7164.875677 8.506925e-16
+7167.164004 8.449611e-16
+7169.452332 8.259556e-16
+7171.740659 8.047572e-16
+7174.028986 7.926984e-16
+7176.317313 8.009486e-16
+7178.605640 8.221957e-16
+7180.893968 8.422587e-16
+7183.182295 8.586618e-16
+7185.470622 8.721473e-16
+7187.758949 8.833049e-16
+7190.047276 8.925915e-16
+7192.335604 8.951213e-16
+7194.623931 8.871201e-16
+7196.912258 8.671132e-16
+7199.200585 8.406116e-16
+7201.488913 8.454088e-16
+7203.777240 8.997855e-16
+7206.065567 9.429954e-16
+7208.353894 9.433296e-16
+7210.642221 9.686183e-16
+7212.930549 1.044885e-15
+7215.218876 1.096164e-15
+7217.507203 1.095317e-15
+7219.795530 1.105696e-15
+7222.083858 1.142790e-15
+7224.372185 1.154174e-15
+7226.660512 1.127763e-15
+7228.948839 1.094806e-15
+7231.237166 1.071032e-15
+7233.525494 1.059553e-15
+7235.813821 1.059090e-15
+7238.102148 1.063964e-15
+7240.390475 1.064533e-15
+7242.678802 1.049192e-15
+7244.967130 1.028769e-15
+7247.255457 1.024207e-15
+7249.543784 1.031810e-15
+7251.832111 1.038934e-15
+7254.120439 1.031154e-15
+7256.408766 9.971712e-16
+7258.697093 9.666381e-16
+7260.985420 9.739238e-16
+7263.273747 1.010193e-15
+7265.562075 1.056642e-15
+7267.850402 1.093334e-15
+7270.138729 1.105805e-15
+7272.427056 1.109755e-15
+7274.715384 1.119494e-15
+7277.003711 1.122443e-15
+7279.292038 1.114988e-15
+7281.580365 1.129398e-15
+7283.868692 1.173324e-15
+7286.157020 1.189941e-15
+7288.445347 1.160217e-15
+7290.733674 1.145554e-15
+7293.022001 1.160855e-15
+7295.310328 1.142454e-15
+7297.598656 1.090067e-15
+7299.886983 1.085836e-15
+7302.175310 1.129272e-15
+7304.463637 1.134933e-15
+7306.751965 1.106985e-15
+7309.040292 1.120698e-15
+7311.328619 1.175879e-15
+7313.616946 1.225854e-15
+7315.905273 1.257250e-15
+7318.193601 1.271592e-15
+7320.481928 1.288697e-15
+7322.770255 1.336235e-15
+7325.058582 1.378564e-15
+7327.346910 1.363534e-15
+7329.635237 1.327979e-15
+7331.923564 1.326096e-15
+7334.211891 1.328401e-15
+7336.500218 1.297477e-15
+7338.788546 1.266164e-15
+7341.076873 1.267649e-15
+7343.365200 1.285584e-15
+7345.653527 1.298587e-15
+7347.941854 1.285210e-15
+7350.230182 1.240089e-15
+7352.518509 1.213069e-15
+7354.806836 1.231387e-15
+7357.095163 1.250606e-15
+7359.383491 1.247095e-15
+7361.671818 1.247851e-15
+7363.960145 1.264953e-15
+7366.248472 1.285131e-15
+7368.536799 1.302251e-15
+7370.825127 1.321326e-15
+7373.113454 1.331767e-15
+7375.401781 1.302931e-15
+7377.690108 1.255261e-15
+7379.978436 1.256102e-15
+7382.266763 1.295424e-15
+7384.555090 1.307319e-15
+7386.843417 1.284050e-15
+7389.131744 1.251890e-15
+7391.420072 1.211925e-15
+7393.708399 1.155980e-15
+7395.996726 1.109729e-15
+7398.285053 1.106867e-15
+7400.573380 1.123006e-15
+7402.861708 1.119045e-15
+7405.150035 1.108601e-15
+7407.438362 1.113530e-15
+7409.726689 1.107014e-15
+7412.015017 1.066301e-15
+7414.303344 1.044932e-15
+7416.591671 1.085479e-15
+7418.879998 1.131490e-15
+7421.168325 1.137764e-15
+7423.456653 1.141925e-15
+7425.744980 1.168054e-15
+7428.033307 1.185101e-15
+7430.321634 1.176204e-15
+7432.609962 1.156986e-15
+7434.898289 1.143958e-15
+7437.186616 1.159332e-15
+7439.474943 1.193334e-15
+7441.763270 1.181717e-15
+7444.051598 1.127081e-15
+7446.339925 1.117483e-15
+7448.628252 1.159096e-15
+7450.916579 1.178890e-15
+7453.204906 1.157394e-15
+7455.493234 1.115109e-15
+7457.781561 1.068766e-15
+7460.069888 1.034916e-15
+7462.358215 1.020730e-15
+7464.646543 1.026077e-15
+7466.934870 1.041025e-15
+7469.223197 1.052122e-15
+7471.511524 1.054069e-15
+7473.799851 1.046305e-15
+7476.088179 1.050069e-15
+7478.376506 1.087485e-15
+7480.664833 1.139290e-15
+7482.953160 1.179835e-15
+7485.241488 1.203506e-15
+7487.529815 1.210700e-15
+7489.818142 1.215319e-15
+7492.106469 1.228325e-15
+7494.394796 1.234167e-15
+7496.683124 1.225950e-15
+7498.971451 1.234432e-15
+7501.259778 1.271889e-15
+7503.548105 1.300997e-15
+7505.836432 1.298536e-15
+7508.124760 1.273001e-15
+7510.413087 1.235875e-15
+7512.701414 1.201115e-15
+7514.989741 1.183048e-15
+7517.278069 1.195832e-15
+7519.566396 1.229308e-15
+7521.854723 1.248268e-15
+7524.143050 1.238359e-15
+7526.431377 1.201961e-15
+7528.719705 1.165717e-15
+7531.008032 1.175080e-15
+7533.296359 1.210016e-15
+7535.584686 1.213153e-15
+7537.873013 1.195236e-15
+7540.161341 1.195984e-15
+7542.449668 1.217564e-15
+7544.737995 1.249190e-15
+7547.026322 1.273987e-15
+7549.314650 1.274886e-15
+7551.602977 1.273957e-15
+7553.891304 1.295705e-15
+7556.179631 1.301785e-15
+7558.467958 1.256543e-15
+7560.756286 1.196875e-15
+7563.044613 1.161401e-15
+7565.332940 1.156413e-15
+7567.621267 1.174648e-15
+7569.909595 1.168653e-15
+7572.197922 1.117985e-15
+7574.486249 1.092924e-15
+7576.774576 1.123846e-15
+7579.062903 1.137889e-15
+7581.351231 1.108996e-15
+7583.639558 1.102029e-15
+7585.927885 1.131650e-15
+7588.216212 1.141224e-15
+7590.504539 1.107509e-15
+7592.792867 1.041071e-15
+7595.081194 9.700901e-16
+7597.369521 9.478871e-16
+7599.657848 9.457248e-16
+7601.946176 8.655792e-16
+7604.234503 7.665979e-16
+7606.522830 8.027927e-16
+7608.811157 9.340496e-16
+7611.099484 1.024167e-15
+7613.387812 1.078998e-15
+7615.676139 1.155864e-15
+7617.964466 1.201156e-15
+7620.252793 1.142033e-15
+7622.541121 1.023371e-15
+7624.829448 9.162503e-16
+7627.117775 8.505461e-16
+7629.406102 8.383941e-16
+7631.694429 8.413657e-16
+7633.982757 8.193098e-16
+7636.271084 7.779119e-16
+7638.559411 7.303081e-16
+7640.847738 6.927616e-16
+7643.136065 6.781672e-16
+7645.424393 6.823490e-16
+7647.712720 7.022048e-16
+7650.001047 7.472518e-16
+7652.289374 8.061359e-16
+7654.577702 8.254846e-16
+7656.866029 7.927599e-16
+7659.154356 7.611018e-16
+7661.442683 7.570889e-16
+7663.731010 7.729903e-16
+7666.019338 7.965216e-16
+7668.307665 8.069304e-16
+7670.595992 8.075373e-16
+7672.884319 8.239860e-16
+7675.172647 8.536382e-16
+7677.460974 8.739616e-16
+7679.749301 8.878335e-16
+7682.037628 9.118834e-16
+7684.325955 9.243488e-16
+7686.614283 8.911088e-16
+7688.902610 8.321554e-16
+7691.190937 7.854852e-16
+7693.479264 7.774845e-16
+7695.767591 8.239098e-16
+7698.055919 8.907383e-16
+7700.344246 9.355389e-16
+7702.632573 9.414209e-16
+7704.920900 9.076452e-16
+7707.209228 8.894863e-16
+7709.497555 9.306418e-16
+7711.785882 9.897584e-16
+7714.074209 1.028525e-15
+7716.362536 1.047907e-15
+7718.650864 1.057769e-15
+7720.939191 1.094571e-15
+7723.227518 1.160483e-15
+7725.515845 1.170427e-15
+7727.804173 1.110730e-15
+7730.092500 1.100484e-15
+7732.380827 1.170098e-15
+7734.669154 1.223950e-15
+7736.957481 1.220432e-15
+7739.245809 1.176043e-15
+7741.534136 1.116221e-15
+7743.822463 1.078453e-15
+7746.110790 1.076901e-15
+7748.399117 1.105053e-15
+7750.687445 1.146310e-15
+7752.975772 1.177427e-15
+7755.264099 1.186600e-15
+7757.552426 1.170304e-15
+7759.840754 1.134103e-15
+7762.129081 1.089471e-15
+7764.417408 1.045118e-15
+7766.705735 1.008846e-15
+7768.994062 1.001800e-15
+7771.282390 1.040201e-15
+7773.570717 1.100579e-15
+7775.859044 1.152104e-15
+7778.147371 1.157313e-15
+7780.435699 1.101386e-15
+7782.724026 1.085078e-15
+7785.012353 1.173761e-15
+7787.300680 1.244690e-15
+7789.589007 1.218845e-15
+7791.877335 1.190195e-15
+7794.165662 1.223201e-15
+7796.453989 1.302369e-15
+7798.742316 1.388951e-15
+7801.030643 1.393189e-15
+7803.318971 1.305883e-15
+7805.607298 1.253425e-15
+7807.895625 1.265782e-15
+7810.183952 1.245587e-15
+7812.472280 1.184710e-15
+7814.760607 1.161126e-15
+7817.048934 1.185066e-15
+7819.337261 1.217670e-15
+7821.625588 1.228013e-15
+7823.913916 1.187952e-15
+7826.202243 1.123304e-15
+7828.490570 1.090733e-15
+7830.778897 1.080165e-15
+7833.067225 1.052474e-15
+7835.355552 1.039584e-15
+7837.643879 1.088499e-15
+7839.932206 1.131424e-15
+7842.220533 1.084596e-15
+7844.508861 9.874959e-16
+7846.797188 9.032434e-16
+7849.085515 8.612393e-16
+7851.373842 8.754619e-16
+7853.662169 9.156957e-16
+7855.950497 9.463359e-16
+7858.238824 9.380798e-16
+7860.527151 8.879310e-16
+7862.815478 8.797765e-16
+7865.103806 9.532800e-16
+7867.392133 1.014685e-15
+7869.680460 1.010954e-15
+7871.968787 9.872231e-16
+7874.257114 9.681238e-16
+7876.545442 9.440060e-16
+7878.833769 9.085351e-16
+7881.122096 8.512171e-16
+7883.410423 7.930416e-16
+7885.698750 7.961216e-16
+7887.987078 8.376554e-16
+7890.275405 8.161370e-16
+7892.563732 7.411135e-16
+7894.852059 7.036965e-16
+7897.140387 6.973914e-16
+7899.428714 6.597442e-16
+7901.717041 6.240823e-16
+7904.005368 6.628024e-16
+7906.293695 7.221166e-16
+7908.582023 7.090245e-16
+7910.870350 6.618981e-16
+7913.158677 6.517131e-16
+7915.447004 6.685177e-16
+7917.735332 6.856312e-16
+7920.023659 6.902399e-16
+7922.311986 6.746737e-16
+7924.600313 6.515234e-16
+7926.888640 6.356707e-16
+7929.176968 6.416707e-16
+7931.465295 6.690444e-16
+7933.753622 6.584081e-16
+7936.041949 5.835821e-16
+7938.330276 5.266527e-16
+7940.618604 5.347022e-16
+7942.906931 5.637370e-16
+7945.195258 5.784743e-16
+7947.483585 5.608064e-16
+7949.771913 5.174376e-16
+7952.060240 4.982988e-16
+7954.348567 5.120482e-16
+7956.636894 5.122944e-16
+7958.925221 4.987678e-16
+7961.213549 5.156231e-16
+7963.501876 5.601400e-16
+7965.790203 5.960342e-16
+7968.078530 6.032929e-16
+7970.366858 5.714932e-16
+7972.655185 5.266357e-16
+7974.943512 5.130711e-16
+7977.231839 5.287774e-16
+7979.520166 5.519648e-16
+7981.808494 5.619450e-16
+7984.096821 5.399632e-16
+7986.385148 5.221584e-16
+7988.673475 5.507037e-16
+7990.961802 5.595204e-16
+7993.250130 4.828070e-16
+7995.538457 4.039267e-16
+7997.826784 4.054744e-16
+8000.115111 4.587924e-16
+8002.403439 5.162989e-16
+8004.691766 5.012658e-16
+8006.980093 3.839326e-16
+8009.268420 2.948668e-16
+8011.556747 3.123597e-16
+8013.845075 3.535518e-16
+8016.133402 3.627077e-16
+8018.421729 3.492346e-16
+8020.710056 3.279502e-16
+8022.998384 3.278476e-16
+8025.286711 3.562443e-16
+8027.575038 3.867777e-16
+8029.863365 4.120578e-16
+8032.151692 4.448844e-16
+8034.440020 4.825762e-16
+8036.728347 5.138079e-16
+8039.016674 5.168940e-16
+8041.305001 4.604607e-16
+8043.593328 3.934314e-16
+8045.881656 4.083847e-16
+8048.169983 4.716066e-16
+8050.458310 4.939717e-16
+8052.746637 4.763650e-16
+8055.034965 4.512150e-16
+8057.323292 4.293590e-16
+8059.611619 4.167812e-16
+8061.899946 4.107482e-16
+8064.188273 4.056325e-16
+8066.476601 3.972533e-16
+8068.764928 3.839547e-16
+8071.053255 3.827804e-16
+8073.341582 4.040986e-16
+8075.629910 4.125879e-16
+8077.918237 3.874923e-16
+8080.206564 3.815982e-16
+8082.494891 4.181477e-16
+8084.783218 4.176856e-16
+8087.071546 3.522988e-16
+8089.359873 3.193827e-16
+8091.648200 3.602582e-16
+8093.936527 4.135972e-16
+8096.224854 4.376985e-16
+8098.513182 4.159007e-16
+8100.801509 3.637638e-16
+8103.089836 3.411825e-16
+8105.378163 3.532424e-16
+8107.666491 3.502385e-16
+8109.954818 3.298280e-16
+8112.243145 3.229967e-16
+8114.531472 3.396338e-16
+8116.819799 3.784097e-16
+8119.108127 4.151008e-16
+8121.396454 4.145857e-16
+8123.684781 3.860414e-16
+8125.973108 3.577967e-16
+8128.261436 3.277674e-16
+8130.549763 2.858515e-16
+8132.838090 2.686400e-16
+8135.126417 3.110735e-16
+8137.414744 3.376456e-16
+8139.703072 2.729241e-16
+8141.991399 1.734538e-16
+8144.279726 1.075385e-16
+8146.568053 9.125337e-17
+8148.856380 1.270030e-16
+8151.144708 1.968200e-16
+8153.433035 2.716265e-16
+8155.721362 3.033160e-16
+8158.009689 2.729048e-16
+8160.298017 2.337952e-16
+8162.586344 2.182784e-16
+8164.874671 2.051910e-16
+8167.162998 1.905314e-16
+8169.451325 2.014392e-16
+8171.739653 2.267437e-16
+8174.027980 2.039288e-16
+8176.316307 1.405651e-16
+8178.604634 1.187659e-16
+8180.892962 1.445950e-16
+8183.181289 1.618745e-16
+8185.469616 1.560430e-16
+8187.757943 1.378304e-16
+8190.046270 1.240569e-16
+8192.334598 1.359158e-16
+8194.622925 1.647080e-16
+8196.911252 1.878584e-16
+8199.199579 1.956467e-16
+8201.487906 1.842305e-16
+8203.776234 1.584477e-16
+8206.064561 1.271650e-16
+8208.352888 9.742375e-17
+8210.641215 7.518677e-17
+8212.929543 6.514224e-17
+8215.217870 6.853291e-17
+8217.506197 7.409797e-17
+8219.794524 7.226247e-17
+8222.082851 7.244413e-17
+8224.371179 7.905848e-17
+8226.659506 6.868903e-17
+8228.947833 3.492947e-17
+8231.236160 2.090767e-17
+8233.524487 4.735214e-17
+8235.812815 8.531275e-17
+8238.101142 1.086389e-16
+8240.389469 9.586142e-17
+8242.677796 5.269938e-17
+8244.966124 2.604461e-17
+8247.254451 2.920131e-17
+8249.542778 3.461447e-17
+8251.831105 3.593182e-17
+8254.119432 4.575732e-17
+8256.407760 5.917916e-17
+8258.696087 5.889678e-17
+8260.984414 5.415060e-17
+8263.272741 7.040802e-17
+8265.561069 9.123087e-17
+8267.849396 8.034526e-17
+8270.137723 6.530507e-17
+8272.426050 9.510762e-17
+8274.714377 1.214199e-16
+8277.002705 7.617865e-17
+8279.291032 2.924830e-17
+8281.579359 6.633975e-17
+8283.867686 1.215661e-16
+8286.156013 1.174911e-16
+8288.444341 8.328985e-17
+8290.732668 5.784046e-17
+8293.020995 5.825584e-17
+8295.309322 8.756114e-17
+8297.597650 9.554696e-17
+8299.885977 5.563556e-17
+8302.174304 2.869688e-17
+8304.462631 4.812011e-17
+8306.750958 7.132157e-17
+8309.039286 7.288122e-17
+8311.327613 6.235225e-17
+8313.615940 4.950546e-17
+8315.904267 4.668053e-17
+8318.192595 5.586999e-17
+8320.480922 6.437783e-17
+8322.769249 6.740037e-17
+8325.057576 6.680661e-17
+8327.345903 6.972939e-17
+8329.634231 9.143160e-17
+8331.922558 1.090075e-16
+8334.210885 7.182077e-17
+8336.499212 2.802493e-17
+8338.787539 7.558428e-17
+8341.075867 1.624730e-16
+8343.364194 1.779433e-16
+8345.652521 1.438400e-16
+8347.940848 1.234276e-16
+8350.229176 1.179488e-16
+8352.517503 1.147176e-16
+8354.805830 1.075875e-16
+8357.094157 9.214863e-17
+8359.382484 8.298787e-17
+8361.670812 9.209026e-17
+8363.959139 9.958371e-17
+8366.247466 8.877052e-17
+8368.535793 6.879767e-17
+8370.824121 5.278737e-17
+8373.112448 6.325940e-17
+8375.400775 1.032997e-16
+8377.689102 1.200411e-16
+8379.977429 9.507441e-17
+8382.265757 8.716749e-17
+8384.554084 1.250872e-16
+8386.842411 1.902141e-16
+8389.130738 2.448692e-16
+8391.419065 2.198908e-16
+8393.707393 1.249269e-16
+8395.995720 6.032045e-17
+8398.284047 5.345131e-17
+8400.572374 6.656725e-17
+8402.860702 8.044474e-17
+8405.149029 8.565371e-17
+8407.437356 8.333084e-17
+8409.725683 8.302971e-17
+8412.014010 8.883133e-17
+8414.302338 1.018947e-16
+8416.590665 1.163836e-16
+8418.878992 1.238541e-16
+8421.167319 1.245823e-16
+8423.455647 1.220738e-16
+8425.743974 1.128743e-16
+8428.032301 9.478881e-17
+8430.320628 8.988765e-17
+8432.608955 1.167570e-16
+8434.897283 1.463878e-16
+8437.185610 1.534255e-16
+8439.473937 1.688102e-16
+8441.762264 2.113936e-16
+8444.050591 2.313768e-16
+8446.338919 2.041375e-16
+8448.627246 1.905372e-16
+8450.915573 2.221928e-16
+8453.203900 2.564305e-16
+8455.492228 2.649293e-16
+8457.780555 2.444037e-16
+8460.068882 2.126104e-16
+8462.357209 2.243963e-16
+8464.645536 2.783607e-16
+8466.933864 3.029322e-16
+8469.222191 2.793620e-16
+8471.510518 2.362113e-16
+8473.798845 2.133292e-16
+8476.087173 2.641753e-16
+8478.375500 3.479598e-16
+8480.663827 3.628954e-16
+8482.952154 3.200680e-16
+8485.240481 2.880382e-16
+8487.528809 2.826969e-16
+8489.817136 2.990058e-16
+8492.105463 3.239730e-16
+8494.393790 3.403580e-16
+8496.682117 3.485007e-16
+8498.970445 3.538763e-16
+8501.258772 3.520736e-16
+8503.547099 3.403854e-16
+8505.835426 3.369572e-16
+8508.123754 3.565246e-16
+8510.412081 3.852883e-16
+8512.700408 4.068114e-16
+8514.988735 4.069118e-16
+8517.277062 3.831470e-16
+8519.565390 3.679205e-16
+8521.853717 3.822410e-16
+8524.142044 4.142039e-16
+8526.430371 4.469808e-16
+8528.718699 4.528359e-16
+8531.007026 4.340385e-16
+8533.295353 4.497279e-16
+8535.583680 4.992370e-16
+8537.872007 4.962272e-16
+8540.160335 4.407204e-16
+8542.448662 4.270766e-16
+8544.736989 4.629165e-16
+8547.025316 4.814440e-16
+8549.313643 4.791849e-16
+8551.601971 4.948238e-16
+8553.890298 5.134837e-16
+8556.178625 4.943686e-16
+8558.466952 4.489860e-16
+8560.755280 4.105224e-16
+8563.043607 3.983581e-16
+8565.331934 4.240672e-16
+8567.620261 4.547760e-16
+8569.908588 4.488424e-16
+8572.196916 4.271309e-16
+8574.485243 4.211608e-16
+8576.773570 4.159551e-16
+8579.061897 3.966742e-16
+8581.350224 3.970210e-16
+8583.638552 4.412379e-16
+8585.926879 4.891081e-16
+8588.215206 5.081063e-16
+8590.503533 5.133818e-16
+8592.791861 5.220923e-16
+8595.080188 5.507482e-16
+8597.368515 5.990947e-16
+8599.656842 6.288857e-16
+8601.945169 6.186195e-16
+8604.233497 5.756235e-16
+8606.521824 5.259573e-16
+8608.810151 5.234751e-16
+8611.098478 5.750410e-16
+8613.386806 6.318442e-16
+8615.675133 6.597423e-16
+8617.963460 6.384701e-16
+8620.251787 5.791320e-16
+8622.540114 5.183810e-16
+8624.828442 4.787050e-16
+8627.116769 4.726358e-16
+8629.405096 4.793142e-16
+8631.693423 4.621023e-16
+8633.981750 4.200630e-16
+8636.270078 3.675326e-16
+8638.558405 3.447995e-16
+8640.846732 3.926793e-16
+8643.135059 4.621916e-16
+8645.423387 4.881379e-16
+8647.711714 4.779912e-16
+8650.000041 4.544299e-16
+8652.288368 4.266206e-16
+8654.576695 4.055270e-16
+8656.865023 4.147600e-16
+8659.153350 4.644337e-16
+8661.441677 5.131467e-16
+8663.730004 5.328192e-16
+8666.018332 5.567144e-16
+8668.306659 5.978924e-16
+8670.594986 6.091709e-16
+8672.883313 5.753744e-16
+8675.171640 5.439356e-16
+8677.459968 5.431083e-16
+8679.748295 5.708707e-16
+8682.036622 6.143882e-16
+8684.324949 6.437220e-16
+8686.613276 6.547721e-16
+8688.901604 6.756470e-16
+8691.189931 6.941055e-16
+8693.478258 6.629516e-16
+8695.766585 6.065381e-16
+8698.054913 5.953490e-16
+8700.343240 6.272396e-16
+8702.631567 6.618285e-16
+8704.919894 6.712817e-16
+8707.208221 6.342329e-16
+8709.496549 5.839207e-16
+8711.784876 5.706103e-16
+8714.073203 5.773693e-16
+8716.361530 5.710302e-16
+8718.649858 5.542210e-16
+8720.938185 5.363139e-16
+8723.226512 5.268684e-16
+8725.514839 5.318933e-16
+8727.803166 5.308834e-16
+8730.091494 5.089869e-16
+8732.379821 4.889670e-16
+8734.668148 4.910385e-16
+8736.956475 5.145550e-16
+8739.244802 5.553394e-16
+8741.533130 6.050230e-16
+8743.821457 6.546350e-16
+8746.109784 7.011941e-16
+8748.398111 7.319833e-16
+8750.686439 7.081516e-16
+8752.974766 6.528261e-16
+8755.263093 6.835084e-16
+8757.551420 7.926042e-16
+8759.839747 8.300546e-16
+8762.128075 7.586649e-16
+8764.416402 6.351222e-16
+8766.704729 5.519792e-16
+8768.993056 6.358801e-16
+8771.281384 8.051410e-16
+8773.569711 8.499759e-16
+8775.858038 7.914391e-16
+8778.146365 7.614452e-16
+8780.434692 7.482622e-16
+8782.723020 6.932952e-16
+8785.011347 6.336988e-16
+8787.299674 6.254047e-16
+8789.588001 6.320344e-16
+8791.876328 6.038606e-16
+8794.164656 5.732213e-16
+8796.452983 5.778940e-16
+8798.741310 5.886867e-16
+8801.029637 5.796030e-16
+8803.317965 5.919178e-16
+8805.606292 6.494518e-16
+8807.894619 6.807349e-16
+8810.182946 6.492479e-16
+8812.471273 6.418732e-16
+8814.759601 7.073420e-16
+8817.047928 7.981515e-16
+8819.336255 8.627501e-16
+8821.624582 8.352101e-16
+8823.912910 7.366919e-16
+8826.201237 7.320022e-16
+8828.489564 8.510171e-16
+8830.777891 9.511411e-16
+8833.066218 9.754939e-16
+8835.354546 9.507577e-16
+8837.642873 9.004049e-16
+8839.931200 8.498290e-16
+8842.219527 8.214961e-16
+8844.507854 8.359906e-16
+8846.796182 8.443585e-16
+8849.084509 7.600560e-16
+8851.372836 6.629335e-16
+8853.661163 6.961547e-16
+8855.949491 7.705786e-16
+8858.237818 7.327036e-16
+8860.526145 6.412093e-16
+8862.814472 6.008251e-16
+8865.102799 6.166531e-16
+8867.391127 6.689227e-16
+8869.679454 7.074729e-16
+8871.967781 6.886142e-16
+8874.256108 6.382624e-16
+8876.544436 5.906607e-16
+8878.832763 5.635245e-16
+8881.121090 5.695499e-16
+8883.409417 6.157637e-16
+8885.697744 6.864997e-16
+8887.986072 7.082515e-16
+8890.274399 6.610592e-16
+8892.562726 6.457918e-16
+8894.851053 6.994109e-16
+8897.139380 7.450308e-16
+8899.427708 7.480047e-16
+8901.716035 7.285881e-16
+8904.004362 7.085127e-16
+8906.292689 7.140225e-16
+8908.581017 7.488372e-16
+8910.869344 7.984726e-16
+8913.157671 8.220074e-16
+8915.445998 7.572329e-16
+8917.734325 6.553289e-16
+8920.022653 6.343167e-16
+8922.310980 6.601221e-16
+8924.599307 6.298321e-16
+8926.887634 5.755025e-16
+8929.175961 5.722416e-16
+8931.464289 5.901962e-16
+8933.752616 5.759754e-16
+8936.040943 5.388963e-16
+8938.329270 5.018796e-16
+8940.617598 4.854096e-16
+8942.905925 5.028262e-16
+8945.194252 5.302522e-16
+8947.482579 5.408951e-16
+8949.770906 5.181942e-16
+8952.059234 4.623465e-16
+8954.347561 4.309363e-16
+8956.635888 4.540069e-16
+8958.924215 4.671089e-16
+8961.212543 4.337549e-16
+8963.500870 3.932442e-16
+8965.789197 3.699659e-16
+8968.077524 3.543609e-16
+8970.365851 3.556537e-16
+8972.654179 4.129405e-16
+8974.942506 5.113472e-16
+8977.230833 5.718388e-16
+8979.519160 5.718984e-16
+8981.807487 5.451586e-16
+8984.095815 5.119434e-16
+8986.384142 4.818778e-16
+8988.672469 4.744717e-16
+8990.960796 5.146683e-16
+8993.249124 5.584983e-16
+8995.537451 5.273457e-16
+8997.825778 4.744472e-16
+9000.114105 5.021677e-16
+9002.402432 5.519625e-16
+9004.690760 5.236421e-16
+9006.979087 4.568984e-16
+9009.267414 4.199643e-16
+9011.555741 4.303202e-16
+9013.844069 4.854238e-16
+9016.132396 4.997276e-16
+9018.420723 4.086033e-16
+9020.709050 3.283580e-16
+9022.997377 3.561373e-16
+9025.285705 4.248420e-16
+9027.574032 4.712167e-16
+9029.862359 4.932264e-16
+9032.150686 4.906734e-16
+9034.439013 4.598304e-16
+9036.727341 4.176168e-16
+9039.015668 4.219884e-16
+9041.303995 4.767611e-16
+9043.592322 4.941535e-16
+9045.880650 4.456725e-16
+9048.168977 3.815758e-16
+9050.457304 3.365558e-16
+9052.745631 3.303426e-16
+9055.033958 3.599628e-16
+9057.322286 4.025555e-16
+9059.610613 4.237350e-16
+9061.898940 3.802068e-16
+9064.187267 3.165705e-16
+9066.475595 3.273315e-16
+9068.763922 3.833604e-16
+9071.052249 4.004833e-16
+9073.340576 4.021156e-16
+9075.628903 4.451620e-16
+9077.917231 4.846984e-16
+9080.205558 4.588041e-16
+9082.493885 4.316802e-16
+9084.782212 4.783784e-16
+9087.070539 5.363275e-16
+9089.358867 5.367830e-16
+9091.647194 5.211604e-16
+9093.935521 5.292502e-16
+9096.223848 5.312449e-16
+9098.512176 5.025650e-16
+9100.800503 4.459645e-16
+9103.088830 3.800962e-16
+9105.377157 3.711896e-16
+9107.665484 4.333417e-16
+9109.953812 4.586717e-16
+9112.242139 3.996344e-16
+9114.530466 3.181827e-16
+9116.818793 2.707426e-16
+9119.107121 3.146353e-16
+9121.395448 4.153818e-16
+9123.683775 4.186253e-16
+9125.972102 3.278791e-16
+9128.260429 3.008771e-16
+9130.548757 3.480136e-16
+9132.837084 3.706531e-16
+9135.125411 3.570446e-16
+9137.413738 3.442385e-16
+9139.702065 3.409519e-16
+9141.990393 3.441218e-16
+9144.278720 3.644964e-16
+9146.567047 4.146861e-16
+9148.855374 4.614559e-16
+9151.143702 4.621556e-16
+9153.432029 4.460765e-16
+9155.720356 4.553213e-16
+9158.008683 4.590618e-16
+9160.297010 4.250842e-16
+9162.585338 4.091139e-16
+9164.873665 4.571797e-16
+9167.161992 5.155215e-16
+9169.450319 5.317292e-16
+9171.738647 4.804070e-16
+9174.026974 3.840370e-16
+9176.315301 4.300819e-16
+9178.603628 6.634490e-16
+9180.891955 7.445137e-16
+9183.180283 5.420956e-16
+9185.468610 3.633983e-16
+9187.756937 3.559111e-16
+9190.045264 4.070862e-16
+9192.333591 4.442230e-16
+9194.621919 4.311559e-16
+9196.910246 3.780465e-16
+9199.198573 3.548223e-16
+9201.486900 3.761503e-16
+9203.775228 4.111601e-16
+9206.063555 4.335730e-16
+9208.351882 4.152590e-16
+9210.640209 3.916522e-16
+9212.928536 4.351469e-16
+9215.216864 4.896560e-16
+9217.505191 4.483323e-16
+9219.793518 3.778266e-16
+9222.081845 3.959639e-16
+9224.370173 4.597848e-16
+9226.658500 4.901235e-16
+9228.946827 5.169051e-16
+9231.235154 5.814801e-16
+9233.523481 6.337084e-16
+9235.811809 6.294897e-16
+9238.100136 6.464586e-16
+9240.388463 7.403780e-16
+9242.676790 8.002303e-16
+9244.965117 7.548522e-16
+9247.253445 7.203875e-16
+9249.541772 7.684873e-16
+9251.830099 8.228850e-16
+9254.118426 8.310590e-16
+9256.406754 7.970032e-16
+9258.695081 7.431480e-16
+9260.983408 7.261014e-16
+9263.271735 7.668616e-16
+9265.560062 8.325914e-16
+9267.848390 8.923602e-16
+9270.136717 9.254660e-16
+9272.425044 8.907897e-16
+9274.713371 7.226468e-16
+9277.001698 5.141308e-16
+9279.290026 4.773278e-16
+9281.578353 5.647670e-16
+9283.866680 5.742023e-16
+9286.155007 4.985524e-16
+9288.443335 4.222616e-16
+9290.731662 3.653293e-16
+9293.019989 3.273063e-16
+9295.308316 3.323039e-16
+9297.596643 4.011614e-16
+9299.884971 4.691849e-16
+9302.173298 4.646869e-16
+9304.461625 4.456358e-16
+9306.749952 4.777093e-16
+9309.038280 5.064160e-16
+9311.326607 4.797062e-16
+9313.614934 4.335642e-16
+9315.903261 4.024105e-16
+9318.191588 3.814455e-16
+9320.479916 3.651967e-16
+9322.768243 3.448184e-16
+9325.056570 3.288497e-16
+9327.344897 3.791255e-16
+9329.633224 4.942933e-16
+9331.921552 5.599200e-16
+9334.209879 5.030510e-16
+9336.498206 2.921463e-16
+9338.786533 5.384244e-17
+9341.074861 1.408456e-16
+9343.363188 4.824840e-16
+9345.651515 5.494216e-16
+9347.939842 3.872300e-16
+9350.228169 5.201530e-16
+9352.516497 8.253661e-16
+9354.804824 7.738924e-16
+9357.093151 4.623850e-16
+9359.381478 2.951629e-16
+9361.669806 3.140272e-16
+9363.958133 4.213077e-16
+9366.246460 4.426568e-16
+9368.534787 1.932369e-16
+9370.823114 3.257643e-17
+9373.111442 3.848732e-16
+9375.399769 7.617235e-16
+9377.688096 6.118137e-16
+9379.976423 3.515079e-16
+9382.264750 4.299213e-16
+9384.553078 5.958246e-16
+9386.841405 6.098560e-16
+9389.129732 6.325483e-16
+9391.418059 7.643774e-16
+9393.706387 8.262382e-16
+9395.994714 7.203572e-16
+9398.283041 5.823722e-16
+9400.571368 5.030319e-16
+9402.859695 4.616703e-16
+9405.148023 4.442724e-16
+9407.436350 4.451937e-16
+9409.724677 4.600703e-16
+9412.013004 4.836656e-16
+9414.301332 5.459411e-16
+9416.589659 7.331517e-16
+9418.877986 9.419875e-16
+9421.166313 8.924648e-16
+9423.454640 6.613047e-16
+9425.742968 5.759813e-16
+9428.031295 6.690842e-16
+9430.319622 8.157329e-16
+9432.607949 8.493086e-16
+9434.896276 5.852542e-16
+9437.184604 3.048212e-16
+9439.472931 4.330731e-16
+9441.761258 7.354437e-16
+9444.049585 8.143245e-16
+9446.337913 7.486539e-16
+9448.626240 7.083494e-16
+9450.914567 7.021739e-16
+9453.202894 7.137066e-16
+9455.491221 6.825719e-16
+9457.779549 5.700973e-16
+9460.067876 4.784155e-16
+9462.356203 4.908964e-16
+9464.644530 5.819189e-16
+9466.932858 7.012568e-16
+9469.221185 7.624037e-16
+9471.509512 7.122761e-16
+9473.797839 5.750482e-16
+9476.086166 4.060233e-16
+9478.374494 3.069254e-16
+9480.662821 3.138692e-16
+9482.951148 3.620050e-16
+9485.239475 3.996722e-16
+9487.527802 3.843784e-16
+9489.816130 3.536183e-16
+9492.104457 4.405517e-16
+9494.392784 5.789503e-16
+9496.681111 5.377479e-16
+9498.969439 4.002769e-16
+9501.257766 4.446134e-16
+9503.546093 6.268632e-16
+9505.834420 7.460395e-16
+9508.122747 7.696173e-16
+9510.411075 7.299879e-16
+9512.699402 6.873991e-16
+9514.987729 7.093921e-16
+9517.276056 7.136453e-16
+9519.564384 5.992515e-16
+9521.852711 4.613180e-16
+9524.141038 4.156339e-16
+9526.429365 4.605433e-16
+9528.717692 5.643862e-16
+9531.006020 6.407659e-16
+9533.294347 6.322831e-16
+9535.582674 6.364058e-16
+9537.871001 7.224314e-16
+9540.159328 8.463268e-16
+9542.447656 9.309040e-16
+9544.735983 7.937049e-16
+9547.024310 4.526835e-16
+9549.312637 3.669563e-16
+9551.600965 6.401006e-16
+9553.889292 7.573232e-16
+9556.177619 5.801906e-16
+9558.465946 4.761858e-16
+9560.754273 5.523585e-16
+9563.042601 6.583762e-16
+9565.330928 7.135030e-16
+9567.619255 6.781468e-16
+9569.907582 5.816089e-16
+9572.195910 5.085783e-16
+9574.484237 4.854545e-16
+9576.772564 5.062702e-16
+9579.060891 5.213159e-16
+9581.349218 4.612481e-16
+9583.637546 4.032085e-16
+9585.925873 4.672459e-16
+9588.214200 5.776241e-16
+9590.502527 6.146729e-16
+9592.790854 6.168763e-16
+9595.079182 6.475421e-16
+9597.367509 6.806043e-16
+9599.655836 6.860739e-16
+9601.944163 6.725078e-16
+9604.232491 6.592754e-16
+9606.520818 7.174206e-16
+9608.809145 8.674099e-16
+9611.097472 9.213694e-16
+9613.385799 7.939692e-16
+9615.674127 7.388055e-16
+9617.962454 8.651251e-16
+9620.250781 9.224110e-16
+9622.539108 8.031195e-16
+9624.827435 6.546048e-16
+9627.115763 5.905919e-16
+9629.404090 6.996997e-16
+9631.692417 8.965237e-16
+9633.980744 8.702963e-16
+9636.269072 6.236987e-16
+9638.557399 4.604451e-16
+9640.845726 4.507364e-16
+9643.134053 4.963992e-16
+9645.422380 5.217632e-16
+9647.710708 4.534796e-16
+9649.999035 3.518242e-16
+9652.287362 3.467797e-16
+9654.575689 4.034791e-16
+9656.864017 4.239351e-16
+9659.152344 4.449288e-16
+9661.440671 5.332106e-16
+9663.728998 6.216911e-16
+9666.017325 6.273721e-16
+9668.305653 5.716829e-16
+9670.593980 5.027541e-16
+9672.882307 5.132809e-16
+9675.170634 6.615108e-16
+9677.458961 8.099247e-16
+9679.747289 8.418830e-16
+9682.035616 8.150538e-16
+9684.323943 7.908461e-16
+9686.612270 7.992076e-16
+9688.900598 8.437933e-16
+9691.188925 8.524037e-16
+9693.477252 8.038829e-16
+9695.765579 7.980081e-16
+9698.053906 8.441234e-16
+9700.342234 7.925409e-16
+9702.630561 6.529620e-16
+9704.918888 6.453190e-16
+9707.207215 7.927640e-16
+9709.495543 9.113421e-16
+9711.783870 9.645943e-16
+9714.072197 1.041536e-15
+9716.360524 1.087302e-15
+9718.648851 9.556382e-16
+9720.937179 7.382017e-16
+9723.225506 6.535191e-16
+9725.513833 6.315751e-16
+9727.802160 4.836837e-16
+9730.090487 3.195828e-16
+9732.378815 3.293584e-16
+9734.667142 4.124699e-16
+9736.955469 4.069552e-16
+9739.243796 3.152132e-16
+9741.532124 1.818318e-16
+9743.820451 1.071571e-16
+9746.108778 1.681913e-16
+9748.397105 2.294289e-16
+9750.685432 1.809289e-16
+9752.973760 1.637467e-16
+9755.262087 2.746609e-16
+9757.550414 3.866443e-16
+9759.838741 4.130690e-16
+9762.127069 4.102089e-16
+9764.415396 4.134346e-16
+9766.703723 4.003004e-16
+9768.992050 3.752191e-16
+9771.280377 3.890785e-16
+9773.568705 4.404093e-16
+9775.857032 4.528277e-16
+9778.145359 4.156398e-16
+9780.433686 3.925207e-16
+9782.722013 4.054915e-16
+9785.010341 4.433743e-16
+9787.298668 4.802995e-16
+9789.586995 4.705615e-16
+9791.875322 4.598099e-16
+9794.163650 5.549414e-16
+9796.451977 6.391498e-16
+9798.740304 4.977535e-16
+9801.028631 2.964937e-16
+9803.316958 3.278524e-16
+9805.605286 4.885814e-16
+9807.893613 5.685973e-16
+9810.181940 6.157430e-16
+9812.470267 7.181233e-16
+9814.758595 7.862007e-16
+9817.046922 7.325682e-16
+9819.335249 6.746378e-16
+9821.623576 7.098941e-16
+9823.911903 6.854286e-16
+9826.200231 4.965714e-16
+9828.488558 3.060520e-16
+9830.776885 2.372269e-16
+9833.065212 2.304155e-16
+9835.353539 2.538170e-16
+9837.641867 3.863204e-16
+9839.930194 5.902258e-16
+9842.218521 5.907921e-16
+9844.506848 3.619786e-16
+9846.795176 2.814752e-16
+9849.083503 4.176308e-16
+9851.371830 4.388437e-16
+9853.660157 3.047325e-16
+9855.948484 2.608246e-16
+9858.236812 3.344668e-16
+9860.525139 3.857026e-16
+9862.813466 4.108712e-16
+9865.101793 4.886079e-16
+9867.390121 5.722426e-16
+9869.678448 5.578671e-16
+9871.966775 4.907876e-16
+9874.255102 4.752438e-16
+9876.543429 5.037365e-16
+9878.831757 5.318974e-16
+9881.120084 5.802428e-16
+9883.408411 6.745326e-16
+9885.696738 7.261494e-16
+9887.985065 6.529504e-16
+9890.273393 5.783350e-16
+9892.561720 6.213138e-16
+9894.850047 6.906389e-16
+9897.138374 6.987432e-16
+9899.426702 6.851338e-16
+9901.715029 6.837144e-16
+9904.003356 6.783563e-16
+9906.291683 6.625825e-16
+9908.580010 6.537061e-16
+9910.868338 6.647406e-16
+9913.156665 6.965587e-16
+9915.444992 7.545025e-16
+9917.733319 8.595955e-16
+9920.021646 9.763998e-16
+9922.309974 9.981964e-16
+9924.598301 8.836744e-16
+9926.886628 6.565885e-16
+9929.174955 4.133626e-16
+9931.463283 3.180645e-16
+9933.751610 3.594764e-16
+9936.039937 3.960441e-16
+9938.328264 3.926136e-16
+9940.616591 3.740262e-16
+9942.904919 3.621360e-16
+9945.193246 3.805698e-16
+9947.481573 4.359507e-16
+9949.769900 5.256286e-16
+9952.058228 5.968074e-16
+9954.346555 5.894153e-16
+9956.634882 6.102563e-16
+9958.923209 7.702593e-16
+9961.211536 8.267438e-16
+9963.499864 5.657303e-16
+9965.788191 3.366428e-16
+9968.076518 4.410802e-16
+9970.364845 5.864797e-16
+9972.653172 5.353670e-16
+9974.941500 4.777871e-16
+9977.229827 5.443508e-16
+9979.518154 6.300107e-16
+9981.806481 6.613781e-16
+9984.094809 6.463074e-16
+9986.383136 5.991020e-16
+9988.671463 5.457397e-16
+9990.959790 5.155621e-16
+9993.248117 5.365353e-16
+9995.536445 6.074830e-16
+9997.824772 7.026431e-16
+10000.113099 7.558067e-16

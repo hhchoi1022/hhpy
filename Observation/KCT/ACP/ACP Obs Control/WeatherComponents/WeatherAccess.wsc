@@ -1,0 +1,283 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+ACP Weather Access Template
+===========================
+
+Script:         WeatherAccess.wsc
+Author:         Robert B. Denny <rdenny@dc3.com>
+Version:        8.0
+Requires:       ACP 8.0 or later
+                Windows Script 5.6 or later 
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ACP and its scripts with Weather information. This component
+                is responsible for providing the interface with the weather sensor. You
+                May use the ASCOM Serial device to communicate via RS-232 or if the 
+                weather sensor has an ActiveX/Scriptable interface, you may create an
+                instance of the object, and call directly into that interface.
+                
+                If you don't have a copy of PrimalScript, I STRONGLY suggest you get it 
+                and use it to work with this WSC.
+                
+                http://www.primalscript.com/
+                
+Usage:          Replace the stubbed out properties and methods here with the code needed
+                to implement each for your specific weather sensor. 
+                
+                To write to the ACP console, call Util.Console.PrintLine(). 
+                
+                THE MOST IMPORTANT PROPERTY IS "SAFE". RETURN TRUE UNLESS THE WEATHER
+                IS SUCH THAT IT PRESENTS A HAZARD TO YOUR OBSERVATORY (SUCH AS RAIN
+                LIGHTNING, OR WIND).
+                
+PLEASE NOTE:    ACP has a built-in facility for running custom scripts at the time it
+                it is started up and shutdown. See the ACP helpfile, "Customizing the
+                Program" for more info on startup and shutdown scripts.
+
+Edit History:
+    20-Sep-04   Initial Edit
+    06-Nov-06	Finish comments
+    11-Mar-15   GEM:1172 Add SkyTemperature
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="WeatherAccess">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.WeatherAccess" classid="{501B7617-DE5A-457d-AC56-6C13754D1B05}" description="ACP Weather Access Server" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<method name="SetupDialog">
+			</method>
+			<property name="Connected">
+				<get/>
+				<put/>
+			</property>
+			<property name="AmbientTemperature">
+				<get/>
+			</property>
+			<property name="BarometricPressure">
+				<get/>
+			</property>
+			<property name="Clouds">
+				<get/>
+			</property>
+			<property name="DewPoint">
+				<get/>
+			</property>
+			<property name="InsideTemperature">
+				<get/>
+			</property>
+			<property name="Name">
+				<get/>
+			</property>
+			<property name="Precipitation">
+				<get/>
+			</property>
+			<property name="RelativeHumidity">
+				<get/>
+			</property>
+			<property name="Safe">
+				<get/>
+			</property>
+			<property name="SkyTemperature">
+				<get/>
+			</property>
+			<property name="WindDirection">
+				<get/>
+			</property>
+			<property name="WindVelocity">
+				<get/>
+			</property>
+		</public>
+		<object id="Util" progid="ACP.Util" events="false" reference="true"/>
+		<script id="WeatherAccess" language="VBScript">
+<![CDATA[
+Option Explicit
+
+Const ERR_SOURCE = "ACP.WeatherAccess"
+Const PRP = "Property "				' Common bits for error messages
+Const NTI = " is not implemented"
+
+'
+' Code outside of any Function or Sub is executed when this object is created.
+'
+
+'------------------------------------------------------------------------------
+' Method SetupDialog()  (OPTIONAL)
+'
+' Parameters:   (none)
+' Returns:      (nothing)
+'
+' Invokes the weather access setup dialog
+'------------------------------------------------------------------------------
+Sub SetupDialog()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Method SetupDialog()" & NTI
+End Sub
+
+'------------------------------------------------------------------------------
+' Property Connected (R/W, REQUIRED)
+'
+' True means weather sensor is connected and operating (Boolean). 
+' Set True to connect.
+'------------------------------------------------------------------------------
+' dim Connected									' PrimalScript UI target (typ.)
+Function get_Connected()
+    ' Return True if connected, else False
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get Connected" & NTI
+End Function
+
+Function put_Connected(newValue)
+    ' Code to establish or terminate the connection
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Put Connected" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property AmbientTemperature (R/O, OPTIONAL)
+'
+' The ambient (outside) air temperature (Single, deg.C)
+'------------------------------------------------------------------------------
+' Dim AmbientTemperature
+Function get_AmbientTemperature()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get AmbientTemperature" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property BarometricPressure (R/O, OPTIONAL)
+'
+' The barometric pressure (Single, millibars)
+' NOTE: This must be in millibars, per international aviation weather reporting
+'       standards.
+'------------------------------------------------------------------------------
+' Dim BarometricPressure
+Function get_BarometricPressure()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get BarometricPressure" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Clouds (R/O, OPTIONAL)
+'
+' Cloud coverage (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim Clouds
+Function get_Clouds()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get Clouds" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property DewPoint (R/O, OPTIONAL)
+'
+' The dew point temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim DewPoint
+Function get_DewPoint()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get DewPoint" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property InsideTemperature (R/O, OPTIONAL)
+'
+' The temperature inside the observatory (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim InsideTemperature
+Function get_InsideTemperature()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get InsideTemperature" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Name (R/O, OPTIONAL)
+'
+' The display name of the weather system (String)
+'------------------------------------------------------------------------------
+' dim Name
+Function get_Name()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get Name" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Precipitation (R/O, OPTIONAL)
+'
+' True if precipitation is present (Boolean)
+'------------------------------------------------------------------------------
+' Dim Precipitation
+Function get_Precipitation()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get Precipitation" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property RelativeHumidity (R/O, OPTIONAL)
+'
+' The relative humidity (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim RelativeHumidity
+Function get_RelativeHumidity()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get RelativeHumidity" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Safe (R/O, REQUIRED)
+'
+' Return True when weather is safe, False when not. Returning False will
+' stop any ACP script in progress and cause alarm and shutdown processes
+' to be initiated.
+'------------------------------------------------------------------------------
+' dim Safe
+Function get_Safe()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get Safe" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property SkyTemperature (R/O, OPTIONAL)
+'
+' The sky temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim SkyTemperature
+Function get_SkyTemperature()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get SkyTemperature" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindDirection (R/O, OPTIONAL)
+'
+' The azimuth FROM which the wind is blowing (Single, deg. magnetic)
+' NOTE: This must be in degrees MAGNETIC, per international aviation weather 
+'       reporting standards.
+'------------------------------------------------------------------------------
+' Dim WindDirection
+Function get_WindDirection()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get WindDirection" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindVelocity (R/O, OPTIONAL)
+'
+' The wind velocity (knots)
+' NOTE: This must be in degrees MAGNETIC, per international aviation weather 
+'       reporting standards.
+'------------------------------------------------------------------------------
+' Dim WindVelocity
+Function get_WindVelocity()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get WindVelocity" & NTI
+End Function
+
+]]>
+		</script>
+	</component>
+</package>

@@ -1,0 +1,11 @@
+{
+    "Execution Time": "2024-07-29 17:56:22",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20220316-113103-i-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20220316-113412-i-180.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20220316-113722-i-180.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

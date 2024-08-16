@@ -1,0 +1,83 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<voe:VOEvent
+      ivorn="ivo://nasa.gsfc.gcn/AMON#ICECUBE_HESE_Event2015-10-04T10:01:49.00_68914370-670"
+      role="observation" version="2.0"
+      xmlns:voe="http://www.ivoa.net/xml/VOEvent/v2.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0  http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd" >
+  <Who>
+    <AuthorIVORN>ivo://nasa.gsfc.tan/gcn</AuthorIVORN>
+    <Author>
+      <shortName>AMON (via VO-TAN)</shortName>
+      <contactName>Gordana Tesic, Azadeh Keivani</contactName>
+      <contactEmail>gut10@psu.edu, keivani@psu.edu</contactEmail>
+    </Author>
+    <Date>2015-10-04T10:02:27</Date>
+    <Description>This VOEvent message was created with TAN VOE version: 1.21 02oct15</Description>
+  </Who>
+  <What>
+    <Param name="Packet_Type"  value="158" />
+    <Param name="Pkt_Ser_Num"  value="2" />
+    <Param name="TrigID"       value="68914370" ucd="meta.id" />
+    <Param name="Event_TJD"    value="17299" unit="days" ucd="time" />
+    <Param name="Event_SOD"    value="36109.00" unit="sec" ucd="time" />
+    <Param name="Nevents"      value="1" unit="dn" ucd="arith.count" />
+    <Param name="Stream"       value="1" unit="dn" ucd="meta.id" />
+    <Param name="Rev"          value="0" unit="dn" ucd="meta.id" />
+    <Param name="False_pos"    value="5.0003e-01" unit="tbd"  ucd="arith.rate,stat.falsealarm" />
+    <Param name="pvalue"       value="0.0000e+00" unit="tbd"  ucd="arith.rate,stat.falsealarm" />
+    <Param name="deltaT"       value="0.0000" unit="sec"  ucd="time.timeduration" />
+    <Param name="sigmaT"       value="0.0000" unit="sec"  ucd="time.timeduration" />
+    <Param name="charge"       value="1510.0000" unit="pe"  ucd="physics.charge" />
+    <Param name="signalness"   value="0.5000" unit="pe"  ucd="stat.probability" />
+    <Param name="hesetypeindex" value="1" unit=" "  ucd=" " />
+    <Param name="Trigger_ID"    value="0x0" />
+    <Param name="Misc_flags"    value="0x1000000" />
+    <Group name="Trigger_ID" >
+      <Param name="SubType"        value="indi" />
+      <Param name="Test"           value="false" />
+      <Param name="RADec_valid"    value="false" />
+      <Param name="Retraction"     value="false" />
+      <Param name="InternalTest"   value="false" />
+    </Group>
+    <Group name="Misc_flags" >
+    </Group>
+  </What>
+  <WhereWhen>
+    <ObsDataLocation>
+      <ObservatoryLocation id="GEOLUN" />
+      <ObservationLocation>
+        <AstroCoordSystem id="UTC-FK5-GEO" />
+        <AstroCoords coord_system_id="UTC-FK5-GEO">
+          <Time unit="s">
+            <TimeInstant>
+              <ISOTime>2015-10-04T10:01:49.00</ISOTime>
+            </TimeInstant>
+          </Time>
+          <Position2D unit="deg">
+            <Name1>RA</Name1>
+            <Name2>Dec</Name2>
+            <Value2>
+              <C1>189.1908</C1>
+              <C2>-75.8205</C2>
+            </Value2>
+            <Error2Radius>1.0000</Error2Radius>
+          </Position2D>
+        </AstroCoords>
+      </ObservationLocation>
+    </ObsDataLocation>
+  <Description>The RA,Dec coordinates are of the type: source_object.</Description>
+  </WhereWhen>
+  <How>
+    <Description>GCN</Description>
+    <Reference uri="http://gcn.gsfc.nasa.gov/gcn/amon.html" type="url" />
+    <Reference uri="http://gcn.gsfc.nasa.gov/gcn/amon_events.html" type="url" />
+  </How>
+  <Why importance="1.0">
+    <Inference probability="1.0">
+      <Concept>process.variation.burst;em</Concept>
+    </Inference>
+  </Why>
+  <Description>
+  </Description>
+</voe:VOEvent>

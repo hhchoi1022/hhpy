@@ -1,0 +1,939 @@
+***  Installation Started 03/08/2020 22:21  ***
+Title: ACP Observatory Control Software V8.1.1 Installation
+Source: C:\Users\user\Downloads\acp-811-setup.exe | 01-02-2019 | 04:20:20 | 49245881
+Made Dir: C:\Program Files (x86)\ACP Obs Control
+File Copy: C:\Program Files (x86)\ACP Obs Control\UNWISE.EXE | 09-28-2001 | 17:00:28 | | 164864 | acd7a536
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: ACP Observatory Control Software V8.1.1
+RegDB Name: DisplayName
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: C:\PROGRA~2\ACPOBS~1\UNWISE.EXE C:\PROGRA~2\ACPOBS~1\INSTALL.LOG
+RegDB Name: UninstallString
+RegDB Root: 2
+File Copy: C:\Windows\SysWOW64\RICHTX32.OCX | 03-09-2004 | 00:00:00 | 6.1.97.82 | 212240 | a0b428ae
+Made Dir: C:\Program Files (x86)\Common Files\MSSoap
+Made Dir: C:\Program Files (x86)\Common Files\MSSoap\Binaries
+File Copy: C:\Program Files (x86)\Common Files\MSSoap\Binaries\MSSOAP30.DLL | 06-25-2002 | 03:36:42 | 3.0.1325.0 | 437760 | ce587566
+File Copy: C:\Program Files (x86)\Common Files\MSSoap\Binaries\SOAPIS30.dll | 06-25-2002 | 03:36:42 | 3.0.1325.0 | 55808 | 66a974fe
+File Copy: C:\Program Files (x86)\Common Files\MSSoap\Binaries\WHSC30.dll | 06-25-2002 | 03:36:36 | 3.0.1325.0 | 91648 | 731418ce
+File Copy: C:\Program Files (x86)\Common Files\MSSoap\Binaries\WISC30.dll | 06-25-2002 | 03:36:36 | 3.0.1325.0 | 92160 | 305c27b2
+Made Dir: C:\Program Files (x86)\Common Files\MSSoap\Binaries\Resources
+Made Dir: C:\Program Files (x86)\Common Files\MSSoap\Binaries\Resources\1033
+File Copy: C:\Program Files (x86)\Common Files\MSSoap\Binaries\Resources\1033\MSSOAPR3.DLL | 06-25-2002 | 03:36:38 | 3.0.1325.0 | 30208 | 93e06b8e
+File Copy: C:\Windows\SysWOW64\DartSock.dll | 01-11-2007 | 15:26:48 | 2.8.3.10 | 221184 | ec99a943
+File Copy: C:\Windows\SysWOW64\DartServer.dll | 12-07-2006 | 15:49:52 | 3.1.3.3 | 135168 | 45a2a4fe
+File Copy: C:\Windows\SysWOW64\DartSecure2.dll | 12-22-2006 | 10:43:34 | 2.0.7.0 | 200704 | da2975f8
+File Copy: C:\Windows\SysWOW64\DartWebServer.dll | 12-07-2006 | 15:50:12 | 1.8.3.3 | 221184 | 14d4f070
+File Copy: C:\Windows\SysWOW64\DartWebUtil.dll | 12-07-2006 | 15:50:08 | 1.8.3.3 | 122880 | 9d2bae59
+File Copy: C:\Windows\SysWOW64\DartFtpServer.dll | 01-12-2007 | 17:24:30 | 3.1.4.1 | 192512 | e8bfeaeb
+File Copy: C:\Windows\SysWOW64\DartFtpUtil.dll | 12-07-2006 | 15:49:12 | 3.1.3.3 | 102400 | 48dc4284
+File Copy: C:\Windows\SysWOW64\DartCertificate.dll | 12-07-2006 | 15:49:04 | 2.8.3.3 | 159744 | 21d6baa9
+File Copy: C:\Windows\SysWOW64\astro32.dll | 02-18-2017 | 15:13:44 | 1.6.0.0 | 123392 | 356717df
+File Copy: C:\Program Files (x86)\ACP Obs Control\ThinScript.dll | 09-14-2009 | 14:29:28 | 2.1.2.0 | 147456 | b39b58cf
+File Copy: C:\Program Files (x86)\ACP Obs Control\PointingErrorGenerator.dll | 07-25-2017 | 13:04:56 | 1.1.0.1 | 28672 | 83a1fbeb
+Made Dir: C:\Users\Public\Documents\ACP Web Data
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\RTML
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\RTML\RTML-2.3.xsd | 10-22-2013 | 20:42:22 | | 17957 | 884ce2f3
+File Copy: C:\Program Files (x86)\ACP Obs Control\PointCalc.dll | 07-27-2004 | 19:33:30 | 1.0.2.0 | 114688 | f46ff23f
+File Copy: C:\Program Files (x86)\ACP Obs Control\acp.exe | 02-16-2018 | 11:43:18 | 8.2.0.3 | 1429504 | caaf4e13
+File Copy: C:\Program Files (x86)\ACP Obs Control\acp.tlb | 01-25-2006 | 15:20:28 | | 78584 | 4a936e4a
+File Copy: C:\Program Files (x86)\ACP Obs Control\7za.exe | 02-03-2009 | 12:21:00 | 4.65.0.0 | 536064 | df474b89
+File Copy: C:\Program Files (x86)\ACP Obs Control\TipOfDay.txt | 04-13-2015 | 20:06:24 | | 11743 | a3232f81
+File Copy: C:\Program Files (x86)\ACP Obs Control\TraceHelper.dll | 12-12-2005 | 12:29:48 | 1.0.0.1 | 53248 | 4e54ccde
+File Copy: C:\Program Files (x86)\ACP Obs Control\TipIcon.bmp | 05-31-1998 | 10:06:04 | | 596 | 4419fd
+File Copy: C:\Program Files (x86)\ACP Obs Control\TipIcon-r.bmp | 05-31-1998 | 10:07:04 | | 600 | 7feff8e0
+File Copy: C:\Program Files (x86)\ACP Obs Control\ScriptFail.wav | 07-15-1999 | 17:07:26 | | 22060 | e6f1fba6
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherAlert.wav | 11-06-1998 | 14:00:00 | | 42461 | 6757181f
+File Copy: C:\Program Files (x86)\ACP Obs Control\WebHit.wav | 12-07-1999 | 12:00:00 | | 4616 | 801ba146
+File Copy: C:\Program Files (x86)\ACP Obs Control\scrrun.avi | 03-28-1998 | 12:09:28 | | 3584 | 9c01d28c
+File Copy: C:\Program Files (x86)\ACP Obs Control\ENGLISH.DIC | 04-16-1999 | 21:07:28 | | 644 | 5a43f4d1
+File Copy: C:\Program Files (x86)\ACP Obs Control\readme.txt | 09-04-2016 | 17:22:00 | | 4368 | 8ffbd7d7
+File Copy: C:\Program Files (x86)\ACP Obs Control\ConfigFiles.txt | 10-30-2013 | 09:32:32 | | 174 | 30dc6906
+Made Dir: C:\Users\Public\Documents\ACP Config
+File Copy: C:\Users\Public\Documents\ACP Config\SampleFilterInfo.txt | 03-04-2004 | 20:51:32 | | 594 | c09804dd
+File Copy: C:\Users\Public\Documents\ACP Config\SampleRoModeInfo.txt | 08-26-2012 | 20:03:16 | | 230 | 2a83879a
+File Copy: C:\Users\Public\Documents\ACP Config\SampleAutoFlatConfig.txt | 07-31-2017 | 12:38:46 | | 7495 | 7fb7405f
+File Copy: C:\Users\Public\Documents\ACP Config\AutoFlatConfig.txt | 07-31-2017 | 12:38:46 | | 7495 | 7fb7405f
+File Copy: C:\Program Files (x86)\ACP Obs Control\ACP-Weather.vbs | 03-26-2015 | 11:41:56 | | 1595 | 54e1eefa
+File Copy: C:\Program Files (x86)\ACP Obs Control\Sample-ACP-Weather.vbs | 03-26-2015 | 11:41:56 | | 1595 | 54e1eefa
+File Copy: C:\Program Files (x86)\ACP Obs Control\RcPirRegAscom.js | 01-03-2011 | 09:19:00 | | 175 | a0a8af8c
+File Copy: C:\Program Files (x86)\ACP Obs Control\PlanChecker.js | 03-30-2017 | 10:09:30 | | 9357 | ff34285a
+File Copy: C:\Program Files (x86)\ACP Obs Control\checked.ico | 10-06-2010 | 16:10:08 | | 34499 | b38157d9
+File Copy: C:\Program Files (x86)\ACP Obs Control\regperms.txt | 08-18-2014 | 17:28:06 | | 488 | bc5a78a2
+File Copy: C:\Program Files (x86)\ACP Obs Control\cupd.exe | 12-06-2012 | 12:31:34 | 7.0.0.0 | 28672 | c66beeaf
+Made Dir: C:\Program Files (x86)\ACP Obs Control\Doc
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\ACP Help.chm | 12-14-2017 | 12:06:26 | | 2163157 | 45694be7
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\AutoguidingMcMillanNov2005.pdf | 11-21-2005 | 12:43:44 | | 141916 | c1abd8df
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\McMillanDeepSkyImaging10-2005.pdf | 10-07-2005 | 16:57:36 | | 102576 | e67429b1
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\McMillanAPUsage.pdf | 03-08-2005 | 15:52:54 | | 73027 | c5f8030f
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\ASP.chm | 09-24-2004 | 14:08:50 | | 74670 | 6a99b742
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\ProgRef.chm | 12-14-2017 | 12:06:10 | | 223146 | e91a1990
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\Script56.chm | 10-02-2009 | 13:08:58 | | 1351013 | 369eb500
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\PinPoint.chm | 12-22-2015 | 15:16:50 | | 310148 | dfd89b41
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\Telescope2.chm | 10-02-2009 | 13:08:24 | | 101213 | ab18aa86
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\MSAgent.chm | 08-07-2001 | 16:46:16 | | 720562 | e3b26ca5
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\MSAgent.chi | 08-07-2001 | 16:46:16 | | 35122 | 3529707a
+Made Dir: C:\Program Files (x86)\ACP Obs Control\Doc\7zip
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\7zip\copying.txt | 08-30-2001 | 01:19:26 | | 26948 | f3d7485d
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\7zip\readme.txt | 02-03-2009 | 12:36:00 | | 1274 | f0ebf280
+File Copy: C:\Program Files (x86)\ACP Obs Control\Doc\7zip\7-zip.chm | 02-03-2009 | 12:22:00 | | 88124 | 812b9764
+Made Dir: C:\Program Files (x86)\ACP Obs Control\WebMaster
+File Copy: C:\Program Files (x86)\ACP Obs Control\WebMaster\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Copy: C:\Program Files (x86)\ACP Obs Control\WebMaster\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Copy: C:\Program Files (x86)\ACP Obs Control\WebMaster\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Copy: C:\Program Files (x86)\ACP Obs Control\WebMaster\ashowtext.asp | 09-02-2014 | 14:24:56 | | 2736 | 321d31fd
+File Copy: C:\Program Files (x86)\ACP Obs Control\WebMaster\aupload.asp | 11-22-2010 | 09:13:30 | | 4808 | dbd27302
+File Copy: C:\Program Files (x86)\ACP Obs Control\AcquireSupport.wsc | 01-15-2018 | 12:14:12 | | 406577 | aebe0103
+File Copy: C:\Program Files (x86)\ACP Obs Control\Plan.wsc | 08-11-2016 | 15:07:02 | | 107142 | b6607cc4
+File Copy: C:\Program Files (x86)\ACP Obs Control\UserActionsJS-template.wsc | 04-29-2016 | 11:29:16 | | 14189 | cde82b47
+File Copy: C:\Program Files (x86)\ACP Obs Control\UserActions-template.wsc | 04-29-2016 | 11:26:26 | | 15192 | 8f187404
+File Copy: C:\Program Files (x86)\ACP Obs Control\SequenceToken.wsc | 01-19-2009 | 08:35:28 | | 4376 | a92f551
+Made Dir: C:\Program Files (x86)\ACP Obs Control\Scripting
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripting\MS-ScriptDebugger-1.0-Setup.exe | 10-17-2012 | 12:07:16 | 4.72.2106.1 | 669648 | e16b79b
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripting\OleView.exe | 04-24-1998 | 00:00:00 | 2.1.0.54 | 153872 | 3c2a40db
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripting\IViewers.dll | 04-24-1998 | 00:00:00 | 2.1.0.54 | 128272 | ef2f0a49
+Made Dir: C:\Program Files (x86)\ACP Obs Control\Scripts
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\AcquireImages.js | 08-14-2016 | 15:11:48 | | 210745 | 8114fab2
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\ask.vbs | 12-04-2006 | 16:00:24 | | 719 | da48d530
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\AutoFlat.vbs | 08-10-2016 | 19:03:50 | | 122493 | 7ac755b1
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\AutoFocus.vbs | 08-11-2016 | 09:48:54 | | 2697 | fcc8bfe6
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\AutoGuideTest.js | 10-25-2009 | 08:49:14 | | 1327 | 7a2a78c
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\CalibrateGuider.vbs | 05-18-2015 | 13:51:08 | | 2340 | e5df0a4b
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\CenterScope.vbs | 11-08-2013 | 16:33:40 | | 2877 | 11138cf7
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\FindBrightStar.vbs | 01-24-2014 | 14:33:30 | | 3268 | c4da3d8c
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\FindFocalLength.vbs | 05-24-2015 | 14:50:06 | | 3645 | 68213994
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\FindLimitingMagnitude.vbs | 10-28-2015 | 09:02:26 | | 8674 | 22286c85
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\FindLostScope.js | 12-01-2013 | 11:14:14 | | 4789 | d149ac34
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\FocusOffsets.vbs | 08-11-2016 | 16:43:58 | | 20905 | 96e4dd88
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\ModelToTpoint.vbs | 10-08-2004 | 13:38:14 | | 4428 | f41209a8
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\QuickCheck.vbs | 08-11-2016 | 15:17:28 | | 6455 | 43e9e3d1
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\Simple Loop.vbs | 06-15-2002 | 10:59:10 | | 451 | 68fc2f6
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\Sky6MosaicToPlan.vbs | 01-09-2007 | 09:13:40 | | 2702 | 23fa9c59
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\Test Pointing.vbs | 11-01-2010 | 10:04:20 | | 12181 | 90872f99
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\Train Corrector.vbs | 07-10-2014 | 16:08:10 | | 22810 | ce11e94
+File Copy: C:\Program Files (x86)\ACP Obs Control\Scripts\VoicePage.vbs | 06-15-2002 | 10:59:10 | | 411 | 4632e519
+Made Dir: C:\Program Files (x86)\ACP Obs Control\WeatherComponents
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\AAGCloudWatcher.wsc | 09-13-2016 | 10:20:28 | | 23546 | 44e6f6d0
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\AuroraCloudSensor.wsc | 07-13-2016 | 11:29:20 | | 23751 | 11b974e0
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\BGGSWeather.wsc | 12-08-2017 | 13:55:12 | | 29723 | 5acc9ca8
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\BGGSWeather.zip | 12-08-2017 | 14:16:26 | | 7463 | ca61b9b4
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\BoltwoodFile.wsc | 04-11-2017 | 16:44:34 | | 28294 | dceb9b9e
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\BoltwoodServer.wsc | 03-11-2015 | 09:38:14 | | 11502 | 54a5e8b3
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\CloudSensor-II.wsc | 04-20-2015 | 10:02:24 | | 14487 | 718c1b11
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\DSWWeather.wsc | 02-25-2017 | 14:06:20 | | 29458 | 386f96ab
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\SROWeather.wsc | 07-31-2016 | 10:43:16 | | 30694 | a6b49054
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherAccess.wsc | 03-11-2015 | 09:05:38 | | 10608 | d5dd5f10
+Made Dir: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\frmMain.frm | 03-11-2015 | 08:28:18 | | 7523 | ab054b70
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\frmMain.frx | 03-11-2015 | 08:28:18 | | 778 | b60dd13a
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\Main.bas | 10-13-2004 | 11:49:40 | | 418 | 35d3b03c
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\MSSCCPRJ.SCC | 09-21-2004 | 15:33:48 | | 195 | e5cf78c7
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\Weather.cls | 03-11-2015 | 08:39:04 | | 4977 | 1c121439
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim-ref.exe | 03-11-2015 | 08:39:26 | 2.0.0.1 | 40960 | c28a3546
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.exe | 03-11-2015 | 08:39:58 | 2.0.0.1 | 40960 | ee724804
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.vbp | 03-11-2015 | 08:56:02 | | 923 | 653534e2
+File Copy: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.vbw | 09-24-2015 | 07:46:52 | | 113 | 9bc12f33
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.exe | 03-11-2015 | 08:39:58 | 2.0.0.1 | 40960 | ee724804
+Made Dir: C:\Program Files (x86)\ACP Obs Control\CatalogTools
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\CatalogChecker.exe | 08-18-2013 | 10:06:18 | 1.5.0.0 | 36864 | 5341e339
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\A20.dat | 08-28-2007 | 17:04:38 | | 2012 | 70d67e3a
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\B10.dat | 08-28-2007 | 17:19:24 | | 156527 | 5f716b3a
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\TYC.dat | 08-28-2007 | 17:04:50 | | 227 | 4b3f34fd
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\GSC.dat | 08-28-2007 | 17:04:48 | | 468447 | 57dda985
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\UCA.dat | 08-28-2007 | 17:04:50 | | 10811 | 1c0a6881
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\UC3.dat | 03-24-2010 | 08:25:42 | | 12587 | d3d4613
+File Copy: C:\Program Files (x86)\ACP Obs Control\CatalogTools\UC4.dat | 01-31-2014 | 14:37:14 | | 34803 | ce691722
+File Copy: C:\Program Files (x86)\ACP Obs Control\SaveExistingContent.js | 11-07-2006 | 15:58:54 | | 882 | 9d56a5ac
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\author.html | 07-28-2017 | 15:19:22 | | 957134 | 3457feea
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\favicon.ico | 12-09-2005 | 10:48:58 | | 2238 | 5ff3c92
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\index.asp | 07-28-2017 | 15:19:28 | | 762159 | 66dddbbc
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\twstore-nocomp.asp | 11-19-2006 | 00:01:22 | | 8677 | 29cb71e5
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\twstore-v8.asp | 11-19-2006 | 00:08:46 | | 17201 | f3a1dfb0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\twstore.asp | 12-05-2015 | 19:45:24 | | 17545 | 1105793e
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\cust.js | 04-04-2008 | 21:30:00 | | 1468 | 45bff5a8
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\deli.js | 05-09-2008 | 17:58:06 | | 2438 | ed229aa6
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\expi.js | 04-04-2008 | 21:29:58 | | 1449 | 495ff79a
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\impi.js | 04-18-2008 | 08:23:46 | | 3517 | de23d81a
+Made Dir: C:\Users\user\Documents\ACP Astronomy
+Made Dir: C:\Users\user\Documents\ACP Astronomy\Logs
+Made Dir: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20110811-Dusk.log | 08-16-2016 | 10:52:40 | | 49908 | c4c4eb28
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20120310-Dusk.log | 08-16-2016 | 10:52:40 | | 49402 | 87ae07c9
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20120416-Dusk.log | 08-16-2016 | 10:52:40 | | 47299 | 602de675
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20120429-Dusk.log | 08-16-2016 | 10:52:40 | | 37267 | 1c4ff618
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20121016-Dusk.log | 08-16-2016 | 10:52:40 | | 22110 | 889b9b0e
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20121116-Dusk.log | 08-16-2016 | 10:52:40 | | 49612 | d12b27af
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20150511-Dusk.log | 08-16-2016 | 10:52:40 | | 18008 | 667d3f64
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20150915-Dusk.log | 08-16-2016 | 10:52:40 | | 22858 | 9690dc69
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20150916-Dusk.log | 08-16-2016 | 10:52:40 | | 11536 | 143b48bb
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151103-Dusk-good.log | 08-16-2016 | 10:52:40 | | 7484 | d22ed21b
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151103-Dusk.log | 08-16-2016 | 10:52:40 | | 825 | 524f8384
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151108-Dusk.log | 08-16-2016 | 10:52:40 | | 27871 | 821c9df5
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151113-Dusk.log | 08-16-2016 | 10:52:40 | | 47816 | 45b77909
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20160530-Smith.log | 08-16-2016 | 10:52:40 | | 10605 | 3544af55
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20160709-Dusk.log | 08-16-2016 | 10:52:40 | | 6035 | 673d427e
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070102-Dusk.log | 08-16-2016 | 10:52:40 | | 40338 | 1f2de25b
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070108-Dusk.log | 08-16-2016 | 10:52:40 | | 39637 | 63959fba
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070203-Dusk.log | 08-16-2016 | 10:52:40 | | 40551 | 9111e3d7
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070210-Dusk.log | 08-16-2016 | 10:52:40 | | 39389 | d4b565e9
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070311-Dusk.log | 08-16-2016 | 10:52:40 | | 39705 | fb6f667f
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070422-Dusk.log | 08-16-2016 | 10:52:40 | | 39457 | d8681a48
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070529-Dusk.log | 08-16-2016 | 10:52:40 | | 39868 | 471beb81
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070609-Dusk.log | 08-16-2016 | 10:52:40 | | 40615 | f04ff825
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20080402-Dusk.log | 08-16-2016 | 10:52:40 | | 39081 | 561645c0
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20100611-Dusk.log | 08-16-2016 | 10:52:40 | | 40754 | ddef00b7
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20101224-Dusk.log | 08-16-2016 | 10:52:40 | | 36485 | e23799d
+File Copy: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\BadAutoFlatFile.log | 08-16-2016 | 10:52:40 | | 4250 | c3e852e8
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aaavso.asp | 08-16-2016 | 10:52:42 | | 2579 | ea7b89aa
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aaccountctrl.asp | 06-09-2010 | 13:45:16 | | 11409 | d1396e4
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqcal.asp | 08-31-2011 | 15:56:34 | | 5273 | 961efc69
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqdefflat.asp | 07-11-2014 | 16:37:30 | | 3828 | b8dd916a
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqflat.asp | 07-11-2014 | 17:25:32 | | 6073 | 351a74be
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqform.asp | 07-31-2016 | 11:59:08 | | 20915 | c96861a6
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqplan.asp | 05-28-2016 | 16:15:48 | | 7010 | 14074aa5
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aaladinlite.asp | 08-19-2016 | 14:30:02 | | 7391 | 33dc8682
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\acamconn.asp | 01-20-2013 | 14:08:38 | | 2932 | 7feb70e3
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\acatlookup.asp | 05-22-2015 | 12:16:30 | | 5403 | 37f6bb35
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\acheckplan.asp | 11-21-2006 | 08:39:32 | | 3777 | fe900939
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aclarity.asp | 04-10-2007 | 10:20:54 | | 2348 | 645ba3c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aclarity2.asp | 09-28-2010 | 15:10:56 | | 2912 | 69acaec9
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aconsread.asp | 12-04-2006 | 14:17:52 | | 1500 | 7347fd6
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\adefflat.asp | 07-12-2014 | 09:02:52 | | 4467 | a5950cb
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\adomectl.asp | 12-01-2006 | 08:46:16 | | 1650 | fce08a1f
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\adscatsearch.asp | 10-04-2006 | 14:45:04 | | 1515 | b633af2d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aequip.asp | 06-26-2012 | 10:06:22 | | 4991 | 52dcb25f
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aflatanalyzer.asp | 08-17-2016 | 12:18:46 | | 19049 | bc87d843
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\arss.asp | 05-05-2008 | 15:20:16 | | 2734 | dadf24aa
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\arunscript.asp | 12-04-2006 | 11:10:18 | | 1258 | b2da5df9
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asastroimage.asp | 08-17-2016 | 18:02:34 | | 20684 | 69e437a5
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aschctrl.asp | 04-13-2015 | 10:57:22 | | 1475 | ca8c0e47
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\ascopeconn.asp | 11-03-2010 | 14:21:58 | | 1964 | d45f9125
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asgenprojlist.asp | 08-16-2014 | 08:34:46 | | 1709 | eb1d1174
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\ashutterctl.asp | 07-13-2012 | 17:16:10 | | 1710 | 9fa5dcaf
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asphotosingle.asp | 08-18-2016 | 04:27:16 | | 16640 | 793166a3
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asqueryccdnav.asp | 01-11-2015 | 18:41:38 | | 2486 | 59d8db78
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\astopscript.asp | 12-01-2006 | 09:00:40 | | 957 | 679937c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asuploadrtml.asp | 01-26-2014 | 13:56:56 | | 9198 | 696f0c22
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asystemstatus.asp | 09-20-2016 | 12:08:08 | | 68401 | e7c04d6
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\atempctrl.asp | 09-02-2014 | 10:22:02 | | 1705 | f384705
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\atestlogin.asp | 11-04-2007 | 02:05:08 | | 233 | c3515caf
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aunlockobs.asp | 12-01-2006 | 12:44:14 | | 1825 | 69d52988
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\auploadplan.asp | 11-04-2007 | 05:03:52 | | 1465 | 4a6dfb06
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aweather.asp | 01-06-2016 | 11:17:52 | | 2221 | 4e7efc1
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\awxconn.asp | 12-01-2006 | 08:43:14 | | 1345 | e97066ac
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\dawndusk.asp | 02-05-2013 | 16:43:58 | | 6631 | db7d779e
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\iframecss.js | 12-05-2006 | 14:22:26 | | 3421 | b46ad5e4
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\jquery-1.12.4.min.js | 06-13-2016 | 11:01:38 | | 97163 | 6ee03cbd
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\jquery.bvalidator.js | 09-11-2011 | 12:09:44 | | 22379 | f1f1b330
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\jquery.sparkline.min.js | 06-05-2013 | 10:47:20 | | 44541 | 11a06d14
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\chat.asp | 11-17-2014 | 09:45:08 | | 1342 | 5be78f52
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\getmessages.asp | 11-22-2006 | 07:32:50 | | 15820 | f1803b76
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\getusers.asp | 11-22-2006 | 07:31:02 | | 16289 | b2d1e6f5
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\index.asp | 11-17-2014 | 09:46:42 | | 17639 | 23b9946d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\message.asp | 11-17-2014 | 09:45:08 | | 3447 | 65694fe3
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\page.asp | 11-21-2006 | 18:24:36 | | 233 | a87c25eb
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\postmessage.asp | 11-22-2006 | 07:32:50 | | 21945 | e77e93c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\users.asp | 11-17-2014 | 09:45:08 | | 1493 | 3133bbd9
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\images
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\images\icon-logout.gif | 12-07-2004 | 00:43:40 | | 731 | 2847e247
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\images\icon-smilie.gif | 12-07-2004 | 00:43:40 | | 1162 | cf4c7a31
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\includes
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\includes\control.js | 12-07-2004 | 00:43:42 | | 3230 | b6f8290e
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\includes\style.css | 12-07-2004 | 00:43:42 | | 1866 | d23ecf5f
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_1.gif | 12-07-2004 | 00:43:44 | | 1088 | 90902a51
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_10.gif | 12-07-2004 | 00:43:44 | | 1130 | 9fea5130
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_11.gif | 12-07-2004 | 00:43:44 | | 676 | cfbadb15
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_12.gif | 12-07-2004 | 00:43:46 | | 1114 | ae573acd
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_2.gif | 12-07-2004 | 00:43:46 | | 946 | 5e86a46d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_3.gif | 12-07-2004 | 00:43:46 | | 1111 | fd3b0fe5
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_4.gif | 12-07-2004 | 00:43:46 | | 1146 | 4af9d5c8
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_5.gif | 12-07-2004 | 00:43:48 | | 681 | 6137cd79
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_6.gif | 12-07-2004 | 00:43:48 | | 672 | 8d84016c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_7.gif | 12-07-2004 | 00:43:48 | | 1114 | 2a08a220
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_8.gif | 12-07-2004 | 00:43:48 | | 482 | b058db3b
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\smilies\on_9.gif | 12-07-2004 | 00:43:50 | | 1117 | 67e6c24c
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\sounds
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\sounds\chat-inbound.wav | 12-07-2004 | 00:43:52 | | 64440 | bb80895c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\chat\sounds\page.wav | 07-15-1999 | 17:07:26 | | 22060 | e6f1fba6
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\im
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-down-on.png | 09-19-2006 | 00:13:08 | | 2246 | 45e5dfde
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-down.png | 09-18-2006 | 23:57:34 | | 2199 | ce09aa3c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-up-on.png | 09-19-2006 | 00:27:38 | | 2238 | f81a3d38
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-up.png | 09-18-2006 | 23:56:18 | | 2194 | ba3a0f13
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-down-on.png | 09-19-2006 | 12:38:28 | | 3425 | 299d413b
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-down.png | 09-19-2006 | 12:39:28 | | 3352 | d8afc66c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-up-on.png | 09-19-2006 | 12:39:50 | | 3420 | 3f9196b4
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-up.png | 09-19-2006 | 12:39:06 | | 3364 | 9bd196e3
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\close.gif | 12-02-2006 | 11:31:18 | | 109 | 1ce18f26
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\dc3logo.jpg | 04-02-2007 | 17:21:36 | | 15415 | 9b42d1b7
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\error.png | 12-03-2006 | 08:27:44 | | 3126 | 8a5abf0f
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\feed-icon-14x14.png | 11-01-2006 | 18:56:26 | | 689 | 49a7d8ba
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\feed-icon-28x28.png | 11-01-2006 | 18:56:18 | | 1737 | 9b021a50
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-down-on.png | 09-19-2006 | 12:15:30 | | 3132 | 3e3e2d1a
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-down.png | 09-19-2006 | 12:17:50 | | 3074 | 5a9785d6
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-up-on.png | 09-19-2006 | 12:16:58 | | 3234 | 22a22ed4
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-up.png | 09-19-2006 | 12:12:08 | | 3180 | 283cce71
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp1.png | 11-21-2010 | 15:53:06 | | 8148 | fa3e64b1
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp2.png | 11-21-2010 | 16:26:34 | | 12458 | 7f12f769
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp3-sm.png | 11-21-2010 | 16:45:10 | | 24498 | 1958aeec
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp3.png | 11-21-2010 | 16:44:04 | | 120733 | 6b23434
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp4.png | 11-21-2010 | 17:50:02 | | 20281 | f379518f
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\geo_tab_left1.gif | 10-11-2006 | 18:00:18 | | 943 | 479d66b5
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\geo_tab_right1.gif | 10-11-2006 | 18:00:06 | | 942 | 19c43626
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\getff.gif | 12-05-2006 | 22:44:52 | | 1786 | f3333394
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\info.png | 12-03-2006 | 06:45:12 | | 3003 | 458e95de
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\loading.gif | 09-01-2011 | 15:26:06 | | 3208 | 608c1429
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\new.gif | 08-18-2016 | 20:48:36 | | 144 | 996be50c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ok.png | 12-03-2006 | 06:53:54 | | 3254 | 83873303
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\question.png | 12-03-2006 | 06:47:08 | | 3273 | 10a0fcce
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\tgtform.png | 09-29-2011 | 09:12:32 | | 10081 | 9d7fcda3
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\tinyInfo.png | 11-06-2009 | 09:08:18 | | 778 | b6b4d6b1
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\tinyWarn.png | 09-27-2011 | 15:58:08 | | 1388 | cee6a20c
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\warning.png | 12-03-2006 | 08:31:00 | | 2714 | 6cbe086b
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\files
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\files\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\files\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\files\TeamViewerQS_en.exe | 09-06-2016 | 16:21:20 | 11.0.65452.0 | 8210304 | f2b74ec6
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\images
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\msguideimage.png | 06-23-2015 | 14:57:50 | | 1307 | bbd3d53b
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\nplastimage.png | 03-06-2015 | 15:10:20 | | 12727 | 92c3ca96
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\nplastimage.txt | 03-06-2015 | 15:10:22 | | 10 | 5c44bcf7
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\nppvimage.png | 03-06-2015 | 15:10:20 | | 2421 | be7d659a
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\aupload.asp | 11-22-2010 | 09:13:30 | | 4808 | dbd27302
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\aupload.asp | 11-22-2010 | 09:13:30 | | 4808 | dbd27302
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Server Logs
+Made Dir: C:\Users\Public\Documents\ACP Web Data\Doc Root\WebServices
+RegDB Key: Software\Denny\ACP\WebServer
+RegDB Val: 5
+RegDB Name: AspSessionTimeout
+RegDB Root: 2
+Made Dir: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\ACP Application.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\acp.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\Users\Public\Desktop\ACP.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\acp.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\ACP.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\acp.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\Users\Public\Desktop\ACP Plan Checker.lnk
+Link Info: C:\Windows\SysWOW64\cscript.exe | C:\Program Files (x86)\ACP Obs Control | C:\Program Files (x86)\ACP Obs Control\checked.ico | 0 | 1 | 0 | PlanChecker.js
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\User's Guide.lnk
+Link Info: C:\Windows\SysWOW64\hh.exe | C:\Program Files (x86)\ACP Obs Control\Doc |  | 0 | 1 | 0 | "ACP Help.chm"
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Read Me.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\readme.txt |  |  | 0 | 1 | 0 | 
+File Copy: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Communication Center.URL | 08-15-2007 | 12:31:30 | | 105 | ecd3ee93
+File Copy: C:\Users\Public\Desktop\DC-3 Comm Center.URL | 08-15-2007 | 12:31:30 | | 105 | ecd3ee93
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Weather Simulator.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Catalog Checker.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\CatalogTools\CatalogChecker.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Remote Assistance.lnk
+Link Info: C:\Users\Public\Documents\ACP Web Data\Doc Root\files\TeamViewerQS_en-idcahjnrf5.exe |  |  | 0 | 1 | 0 | 
+RegDB Key: SOFTWARE\ASCOM\Telescope Drivers\ACP.Telescope
+RegDB Val: ACP Telescope Hub (ASCOM)
+RegDB Root: 2
+RegDB Key: SOFTWARE\Denny\ACP
+RegDB Val: 8.1.1
+RegDB Name: Ver
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP
+RegDB Val: C:\Program Files (x86)\ACP Obs Control
+RegDB Name: AppDir
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\Scripting
+RegDB Val: C:\Program Files (x86)\ACP Obs Control\Scripts
+RegDB Name: DefBrowseDir
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: Welcome to ACP Observatory Control by DC3 Dreams.
+RegDB Name: AgentGreeting
+RegDB Root: 2
+RegDB Old: Welcome to ACP by DC3 Dreams.
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: False
+RegDB Name: AutoQuit
+RegDB Root: 2
+RegDB Old: False
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: True
+RegDB Name: DisableReqPendMsg
+RegDB Root: 2
+RegDB Old: True
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: False
+RegDB Name: ShowTraceback
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\PinPoint
+RegDB Val: 0
+RegDB Name: SpiralSearch
+RegDB Root: 2
+RegDB Old: 0
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: 
+RegDB Name: TraceFile
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: True
+RegDB Name: MultiLocalUsers
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\WebServer
+RegDB Val: C:\Users\Public\Documents\ACP Web Data\Doc Root
+RegDB Name: DocRoot
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\WebServer
+RegDB Val: C:\Users\Public\Documents\ACP Web Data\Server Logs
+RegDB Name: LogDir
+RegDB Root: 2
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: 0
+RegDB Name: AgentEnabled
+RegDB Root: 2
+RegDB Old: 0
+Self-Register: C:\Windows\SysWOW64\RICHTX32.OCX
+Self-Register: C:\Program Files (x86)\Common Files\MSSoap\Binaries\MSSOAP30.DLL
+Self-Register: C:\Program Files (x86)\Common Files\MSSoap\Binaries\SOAPIS30.dll
+Self-Register: C:\Program Files (x86)\Common Files\MSSoap\Binaries\WHSC30.dll
+Self-Register: C:\Program Files (x86)\Common Files\MSSoap\Binaries\WISC30.dll
+Self-Register: C:\Program Files (x86)\Common Files\MSSoap\Binaries\Resources\1033\MSSOAPR3.DLL
+Self-Register: C:\Windows\SysWOW64\DartSock.dll
+Self-Register: C:\Windows\SysWOW64\DartServer.dll
+Self-Register: C:\Windows\SysWOW64\DartSecure2.dll
+Self-Register: C:\Windows\SysWOW64\DartWebServer.dll
+Self-Register: C:\Windows\SysWOW64\DartWebUtil.dll
+Self-Register: C:\Windows\SysWOW64\DartFtpServer.dll
+Self-Register: C:\Windows\SysWOW64\DartFtpUtil.dll
+Self-Register: C:\Windows\SysWOW64\DartCertificate.dll
+Self-Register: C:\Program Files (x86)\ACP Obs Control\ThinScript.dll
+Self-Register: C:\Program Files (x86)\ACP Obs Control\PointingErrorGenerator.dll
+Self-Register: C:\Program Files (x86)\ACP Obs Control\PointCalc.dll
+Self-Register: C:\PROGRA~2\ACPOBS~1\acp.exe
+Self-Register: C:\PROGRA~2\ACPOBS~1\WEATHE~1\WEATHE~1\WEATHE~2.EXE
+RegDB Key: AppId\acp.exe
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: ACP Observatory Control Software
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppID
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: 1
+RegDB Name: AuthenticationLevel
+RegDB Key: CLSID\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{D5E73F9F-AEA6-4FFE-8542-3BDD1378AA22}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{5F0DAAF8-9819-4FBF-BA35-E0942E055D08}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{31FE1711-7237-45CA-A9F1-3FC6EA1A987F}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{B7A81535-A852-4F3E-8E9C-9DEFC867DB65}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{8DF910AB-E760-460F-9F04-E8A36B3BA595}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+File Overwrite: C:\Program Files (x86)\Common Files\dc3\dc3reg.dll | 02-13-2011 | 22:26:34 | 2.0.1.0 | 92672 | d1ac2e7a
+File Copy: C:\Windows\SysWOW64\dc3reg.dll | 02-13-2011 | 22:26:34 | 2.0.1.0 | 92672 | d1ac2e7a
+Delete in-use files: On
+Execute Program: C:\Program Files (x86)\ACP Obs Control\acp.exe /unregserver
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\AcquireSupport.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\Plan.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\SequenceToken.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\BoltwoodServer.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\CloudSensor-II.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\BoltwoodFile.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\SROWeather.wsc
+File Tree: C:\Program Files (x86)\ACP Obs Control\*.*
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: V8.1.1
+RegDB Name: DisplayVersion
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: http://forums.dc3.com/
+RegDB Name: HelpLink
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: DC-3 Dreams, SP Mesa, AZ
+RegDB Name: Publisher
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: http://forums.dc3.com/
+RegDB Name: URLInfoAbout
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: Support@DC3.com
+RegDB Name: Contact
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: +1 480 396 9700
+RegDB Name: HelpTelephone
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.1.1
+RegDB Val: http://acp.dc3.com/download.html
+RegDB Name: URLUpdateInfo
+RegDB Root: 2
+Self-Register: C:\Program Files (x86)\Common Files\dc3\dc3reg.dll
+User Rights: Admin
+***  Installation Started 03/17/2021 22:07  ***
+Title: ACP Observatory Control Software V8.2.1 Installation
+Source: C:\Users\user\AppData\Local\Temp\GLB3687.tmp | 03-17-2021 | 22:07:06 | 71680
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\UNWISE.EXE | 09-28-2001 | 17:00:28 | | 164864 | acd7a536
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: ACP Observatory Control Software V8.2.1
+RegDB Name: DisplayName
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: C:\PROGRA~2\ACPOBS~1\UNWISE.EXE C:\PROGRA~2\ACPOBS~1\INSTALL.LOG
+RegDB Name: UninstallString
+RegDB Root: 2
+File Overwrite: C:\Windows\SysWOW64\DartCertificate.dll | 11-11-2015 | 14:08:26 | 2.11.0.0 | 234496 | 4e7b2241
+File Overwrite: C:\Windows\SysWOW64\DartSecure2.dll | 11-11-2015 | 14:08:50 | 2.2.0.0 | 387584 | e03cb7f7
+File Overwrite: C:\Windows\SysWOW64\DartServer.dll | 11-05-2015 | 10:28:48 | 3.2.5.0 | 309760 | 10f64a14
+File Overwrite: C:\Windows\SysWOW64\DartSock.dll | 11-11-2015 | 14:08:38 | 2.11.0.0 | 425472 | 8775f65
+File Copy: C:\Windows\SysWOW64\DartUtil.dll | 11-11-2015 | 14:09:02 | 2.10.0.0 | 312320 | de5b9f63
+File Overwrite: C:\Windows\SysWOW64\DartWebServer.dll | 11-05-2015 | 13:04:56 | 1.9.5.0 | 413696 | e4a3b2f5
+File Overwrite: C:\Windows\SysWOW64\DartWebUtil.dll | 11-05-2015 | 10:28:24 | 1.9.3.0 | 189440 | 19a0c159
+File Overwrite: C:\Windows\SysWOW64\astro32.dll | 02-18-2017 | 15:13:44 | 1.6.0.0 | 123392 | 356717df
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\ThinScript.dll | 09-14-2009 | 14:29:28 | 2.1.2.0 | 147456 | b39b58cf
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\PointingErrorGenerator.dll | 11-04-2018 | 12:18:48 | 1.2.0.0 | 28672 | 7e113137
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\RTML\RTML-2.3.xsd | 10-22-2013 | 20:42:22 | | 17957 | 884ce2f3
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\acp.exe | 07-08-2019 | 07:33:42 | 8.2.0.9 | 1392640 | b389ee30
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\acp.tlb | 01-25-2006 | 15:20:28 | | 78584 | 4a936e4a
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\7za.exe | 02-03-2009 | 12:21:00 | 4.65.0.0 | 536064 | df474b89
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\TipOfDay.txt | 11-13-2018 | 17:11:32 | | 15786 | 572b41b7
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\TraceHelper.dll | 12-12-2005 | 12:29:48 | 1.0.0.1 | 53248 | 4e54ccde
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\TipIcon.bmp | 05-31-1998 | 10:06:04 | | 596 | 4419fd
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\TipIcon-r.bmp | 05-31-1998 | 10:07:04 | | 600 | 7feff8e0
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\ScriptFail.wav | 07-15-1999 | 17:07:26 | | 22060 | e6f1fba6
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherAlert.wav | 11-06-1998 | 14:00:00 | | 42461 | 6757181f
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WebHit.wav | 12-07-1999 | 12:00:00 | | 4616 | 801ba146
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\scrrun.avi | 03-28-1998 | 12:09:28 | | 3584 | 9c01d28c
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\ENGLISH.DIC | 04-16-1999 | 21:07:28 | | 644 | 5a43f4d1
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\readme.txt | 05-16-2019 | 11:41:00 | | 4384 | d8adbe09
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\ConfigFiles.txt | 10-30-2013 | 09:32:32 | | 174 | 30dc6906
+File Overwrite: C:\Users\Public\Documents\ACP Config\SampleFilterInfo.txt | 03-04-2004 | 20:51:32 | | 594 | c09804dd
+File Overwrite: C:\Users\Public\Documents\ACP Config\SampleRoModeInfo.txt | 08-26-2012 | 20:03:16 | | 230 | 2a83879a
+File Overwrite: C:\Users\Public\Documents\ACP Config\SampleAutoFlatConfig.txt | 06-24-2019 | 07:41:12 | | 8338 | 3b746cac
+File Copy: C:\Program Files (x86)\ACP Obs Control\MigrateFromVirt.exe | 08-24-2014 | 09:32:42 | 1.0.0.0 | 28672 | 1610302e
+File Copy: C:\Program Files (x86)\ACP Obs Control\RegisterWSC.bat | 11-12-2018 | 15:53:20 | | 664 | c40a719c
+Preserve Existing: Following file not copied.
+ File Copy: C:\Users\Public\Documents\ACP Config\AutoFlatConfig.txt
+Preserve Existing: Following file not copied.
+ File Copy: C:\Program Files (x86)\ACP Obs Control\ACP-Weather.vbs
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Sample-ACP-Weather.vbs | 03-26-2015 | 11:41:56 | | 1595 | 54e1eefa
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\RcPirRegAscom.js | 01-03-2011 | 09:19:00 | | 175 | a0a8af8c
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\PlanChecker.js | 03-30-2017 | 10:09:30 | | 9357 | ff34285a
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\checked.ico | 10-06-2010 | 16:10:08 | | 34499 | b38157d9
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\regperms.txt | 01-12-2019 | 13:11:18 | | 535 | a35ca616
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\cupd.exe | 12-06-2012 | 12:31:34 | 7.0.0.0 | 28672 | c66beeaf
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\ACP Help.chm | 07-02-2019 | 11:27:44 | | 2463691 | 4ab2c500
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\AutoguidingMcMillanNov2005.pdf | 11-21-2005 | 12:43:44 | | 141916 | c1abd8df
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\McMillanDeepSkyImaging10-2005.pdf | 10-07-2005 | 16:57:36 | | 102576 | e67429b1
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\McMillanAPUsage.pdf | 03-08-2005 | 15:52:54 | | 73027 | c5f8030f
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\ASP.chm | 01-13-2019 | 15:14:16 | | 74516 | dd47aa62
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\ProgRef.chm | 01-19-2019 | 10:13:22 | | 223056 | fa75d8bd
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\Script56.chm | 10-02-2009 | 13:08:58 | | 1351013 | 369eb500
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\PinPoint.chm | 12-22-2015 | 15:16:50 | | 310148 | dfd89b41
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\Telescope2.chm | 10-02-2009 | 13:08:24 | | 101213 | ab18aa86
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\MSAgent.chm | 08-07-2001 | 16:46:16 | | 720562 | e3b26ca5
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\MSAgent.chi | 08-07-2001 | 16:46:16 | | 35122 | 3529707a
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\7zip\copying.txt | 08-30-2001 | 01:19:26 | | 26948 | f3d7485d
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\7zip\readme.txt | 02-03-2009 | 12:36:00 | | 1274 | f0ebf280
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Doc\7zip\7-zip.chm | 02-03-2009 | 12:22:00 | | 88124 | 812b9764
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WebMaster\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WebMaster\aindex.asp | 07-16-2018 | 14:33:46 | | 7639 | 93f2cf04
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WebMaster\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WebMaster\ashowtext.asp | 09-02-2014 | 14:24:56 | | 2736 | 321d31fd
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WebMaster\aupload.asp | 11-22-2010 | 09:13:30 | | 4808 | dbd27302
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\AcquireSupport.wsc | 05-13-2019 | 11:03:32 | | 409720 | d4796da7
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Plan.wsc | 08-11-2016 | 15:07:02 | | 107142 | b6607cc4
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\UserActionsJS-template.wsc | 04-29-2016 | 11:29:16 | | 14189 | cde82b47
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\UserActions-template.wsc | 04-29-2016 | 11:26:26 | | 15192 | 8f187404
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\SequenceToken.wsc | 01-19-2009 | 08:35:28 | | 4376 | a92f551
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripting\MS-ScriptDebugger-1.0-Setup.exe | 10-17-2012 | 12:07:16 | 4.72.2106.1 | 669648 | e16b79b
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripting\OleView.exe | 04-24-1998 | 00:00:00 | 2.1.0.54 | 153872 | 3c2a40db
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripting\IViewers.dll | 04-24-1998 | 00:00:00 | 2.1.0.54 | 128272 | ef2f0a49
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\AcquireImages.js | 06-06-2019 | 07:23:30 | | 211394 | 67e3f1d8
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\ask.vbs | 12-04-2006 | 16:00:24 | | 719 | da48d530
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\AutoFlat.vbs | 01-25-2019 | 16:13:42 | | 127573 | 2d69b70d
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\AutoFocus.vbs | 08-11-2016 | 09:48:54 | | 2697 | fcc8bfe6
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\AutoGuideTest.js | 10-25-2009 | 08:49:14 | | 1327 | 7a2a78c
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\CalibrateGuider.vbs | 05-18-2015 | 13:51:08 | | 2340 | e5df0a4b
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\CenterScope.vbs | 11-08-2013 | 16:33:40 | | 2877 | 11138cf7
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\FindBrightStar.vbs | 01-24-2014 | 14:33:30 | | 3268 | c4da3d8c
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\FindFocalLength.vbs | 05-24-2015 | 14:50:06 | | 3645 | 68213994
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\FindLimitingMagnitude.vbs | 10-28-2015 | 09:02:26 | | 8674 | 22286c85
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\FindLostScope.js | 12-01-2013 | 11:14:14 | | 4789 | d149ac34
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\FocusOffsets.vbs | 12-11-2018 | 11:44:56 | | 22766 | 86b07a73
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\ModelToTpoint.vbs | 10-08-2004 | 13:38:14 | | 4428 | f41209a8
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\QuickCheck.vbs | 08-11-2016 | 15:17:28 | | 6455 | 43e9e3d1
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\Simple Loop.vbs | 06-15-2002 | 10:59:10 | | 451 | 68fc2f6
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\Sky6MosaicToPlan.vbs | 01-09-2007 | 09:13:40 | | 2702 | 23fa9c59
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\Test Pointing.vbs | 11-01-2010 | 10:04:20 | | 12181 | 90872f99
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\Scripts\Train Corrector.vbs | 07-10-2014 | 16:08:10 | | 22810 | ce11e94
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\AAGCloudWatcher.wsc | 09-13-2016 | 10:20:28 | | 23546 | 44e6f6d0
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\AuroraCloudSensor.wsc | 07-13-2016 | 11:29:20 | | 23751 | 11b974e0
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\BoltwoodFile.wsc | 04-11-2017 | 16:44:34 | | 28294 | dceb9b9e
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\BoltwoodServer.wsc | 03-11-2015 | 09:38:14 | | 11502 | 54a5e8b3
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\CloudSensor-II.wsc | 04-20-2015 | 10:02:24 | | 14487 | 718c1b11
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\SROWeather.wsc | 07-31-2016 | 10:43:16 | | 30694 | a6b49054
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherAccess.wsc | 03-11-2015 | 09:05:38 | | 10608 | d5dd5f10
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\frmMain.frm | 03-11-2015 | 08:28:18 | | 7523 | ab054b70
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\frmMain.frx | 03-11-2015 | 08:28:18 | | 778 | b60dd13a
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\Main.bas | 10-13-2004 | 11:49:40 | | 418 | 35d3b03c
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\MSSCCPRJ.SCC | 09-21-2004 | 15:33:48 | | 195 | e5cf78c7
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\Weather.cls | 03-11-2015 | 08:39:04 | | 4977 | 1c121439
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim-ref.exe | 03-11-2015 | 08:39:26 | 2.0.0.1 | 40960 | c28a3546
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.exe | 03-11-2015 | 08:39:58 | 2.0.0.1 | 40960 | ee724804
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.vbp | 03-11-2015 | 08:56:02 | | 923 | 653534e2
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.vbw | 09-24-2015 | 07:46:52 | | 113 | 9bc12f33
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.exe | | | | 40960 | ee724804
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\CatalogChecker.exe | 08-18-2013 | 10:06:18 | 1.5.0.0 | 36864 | 5341e339
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\A20.dat | 08-28-2007 | 17:04:38 | | 2012 | 70d67e3a
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\B10.dat | 08-28-2007 | 17:19:24 | | 156527 | 5f716b3a
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\TYC.dat | 08-28-2007 | 17:04:50 | | 227 | 4b3f34fd
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\GSC.dat | 08-28-2007 | 17:04:48 | | 468447 | 57dda985
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\UCA.dat | 08-28-2007 | 17:04:50 | | 10811 | 1c0a6881
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\UC3.dat | 03-24-2010 | 08:25:42 | | 12587 | d3d4613
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\CatalogTools\UC4.dat | 01-31-2014 | 14:37:14 | | 34803 | ce691722
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\SaveExistingContent.js | 11-07-2006 | 15:58:54 | | 882 | 9d56a5ac
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\author.html | 05-01-2019 | 08:27:04 | | 962226 | 22ec411c
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\favicon.ico | 12-09-2005 | 10:48:58 | | 2238 | 5ff3c92
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\index.asp | 05-01-2019 | 08:27:08 | | 766976 | c3d5749d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\twstore.asp | 12-05-2015 | 19:45:24 | | 17545 | 1105793e
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\cust.js | 04-04-2008 | 21:30:00 | | 1468 | 45bff5a8
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\deli.js | 05-09-2008 | 17:58:06 | | 2438 | ed229aa6
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\expi.js | 04-04-2008 | 21:29:58 | | 1449 | 495ff79a
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\impi.js | 04-18-2008 | 08:23:46 | | 3517 | de23d81a
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20110811-Dusk.log | 08-16-2016 | 10:52:40 | | 49908 | c4c4eb28
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20120310-Dusk.log | 08-16-2016 | 10:52:40 | | 49402 | 87ae07c9
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20120416-Dusk.log | 08-16-2016 | 10:52:40 | | 47299 | 602de675
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20120429-Dusk.log | 08-16-2016 | 10:52:40 | | 37267 | 1c4ff618
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20121016-Dusk.log | 08-16-2016 | 10:52:40 | | 22110 | 889b9b0e
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20121116-Dusk.log | 08-16-2016 | 10:52:40 | | 49612 | d12b27af
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20150511-Dusk.log | 08-16-2016 | 10:52:40 | | 18008 | 667d3f64
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20150915-Dusk.log | 08-16-2016 | 10:52:40 | | 22858 | 9690dc69
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20150916-Dusk.log | 08-16-2016 | 10:52:40 | | 11536 | 143b48bb
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151103-Dusk-good.log | 08-16-2016 | 10:52:40 | | 7484 | d22ed21b
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151103-Dusk.log | 08-16-2016 | 10:52:40 | | 825 | 524f8384
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151108-Dusk.log | 08-16-2016 | 10:52:40 | | 27871 | 821c9df5
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20151113-Dusk.log | 08-16-2016 | 10:52:40 | | 47816 | 45b77909
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20160530-Smith.log | 08-16-2016 | 10:52:40 | | 10605 | 3544af55
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat-20160709-Dusk.log | 08-16-2016 | 10:52:40 | | 6035 | 673d427e
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070102-Dusk.log | 08-16-2016 | 10:52:40 | | 40338 | 1f2de25b
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070108-Dusk.log | 08-16-2016 | 10:52:40 | | 39637 | 63959fba
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070203-Dusk.log | 08-16-2016 | 10:52:40 | | 40551 | 9111e3d7
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070210-Dusk.log | 08-16-2016 | 10:52:40 | | 39389 | d4b565e9
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070311-Dusk.log | 08-16-2016 | 10:52:40 | | 39705 | fb6f667f
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070422-Dusk.log | 08-16-2016 | 10:52:40 | | 39457 | d8681a48
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070529-Dusk.log | 08-16-2016 | 10:52:40 | | 39868 | 471beb81
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20070609-Dusk.log | 08-16-2016 | 10:52:40 | | 40615 | f04ff825
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20080402-Dusk.log | 08-16-2016 | 10:52:40 | | 39081 | 561645c0
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20100611-Dusk.log | 08-16-2016 | 10:52:40 | | 40754 | ddef00b7
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\AutoFlat20101224-Dusk.log | 08-16-2016 | 10:52:40 | | 36485 | e23799d
+File Overwrite: C:\Users\user\Documents\ACP Astronomy\Logs\Sky Flat Analyzer Test Data\BadAutoFlatFile.log | 08-16-2016 | 10:52:40 | | 4250 | c3e852e8
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aaavso.asp | 08-16-2016 | 10:52:42 | | 2579 | ea7b89aa
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aaccountctrl.asp | 06-09-2010 | 13:45:16 | | 11409 | d1396e4
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqcal.asp | 08-31-2011 | 15:56:34 | | 5273 | 961efc69
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqdefflat.asp | 07-11-2014 | 16:37:30 | | 3828 | b8dd916a
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqflat.asp | 07-11-2014 | 17:25:32 | | 6073 | 351a74be
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqform.asp | 07-31-2016 | 11:59:08 | | 20915 | c96861a6
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aacqplan.asp | 05-28-2016 | 16:15:48 | | 7010 | 14074aa5
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aaladinlite.asp | 08-19-2016 | 14:30:02 | | 7391 | 33dc8682
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\acamconn.asp | 01-20-2013 | 14:08:38 | | 2932 | 7feb70e3
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\acatlookup.asp | 07-10-2018 | 14:47:50 | | 5497 | 5f6bcebf
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\acheckplan.asp | 11-21-2006 | 08:39:32 | | 3777 | fe900939
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aclarity.asp | 04-10-2007 | 10:20:54 | | 2348 | 645ba3c
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aclarity2.asp | 09-28-2010 | 15:10:56 | | 2912 | 69acaec9
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aconsread.asp | 12-04-2006 | 14:17:52 | | 1500 | 7347fd6
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\adefflat.asp | 07-12-2014 | 09:02:52 | | 4467 | a5950cb
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\adomectl.asp | 12-01-2006 | 08:46:16 | | 1650 | fce08a1f
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\adscatsearch.asp | 10-04-2006 | 14:45:04 | | 1515 | b633af2d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aequip.asp | 08-16-2018 | 11:09:34 | | 5286 | 25c2860e
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aflatanalyzer.asp | 08-17-2016 | 12:18:46 | | 19049 | bc87d843
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\arss.asp | 05-05-2008 | 15:20:16 | | 2734 | dadf24aa
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\arunscript.asp | 12-04-2006 | 11:10:18 | | 1258 | b2da5df9
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asastroimage.asp | 01-20-2019 | 10:17:32 | | 21565 | 448a2547
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aschctrl.asp | 04-13-2015 | 10:57:22 | | 1475 | ca8c0e47
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\ascopeconn.asp | 11-03-2010 | 14:21:58 | | 1964 | d45f9125
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asgenprojlist.asp | 08-16-2014 | 08:34:46 | | 1709 | eb1d1174
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\ashutterctl.asp | 07-13-2012 | 17:16:10 | | 1710 | 9fa5dcaf
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asphotosingle.asp | 01-20-2019 | 10:18:04 | | 18101 | 85cdc420
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asqueryccdnav.asp | 01-11-2015 | 18:41:38 | | 2486 | 59d8db78
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asqueryskytools.asp | 07-14-2018 | 09:14:08 | | 3646 | c7d6cd07
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\astopscript.asp | 12-01-2006 | 09:00:40 | | 957 | 679937c0
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asuploadrtml.asp | 01-26-2014 | 13:56:56 | | 9198 | 696f0c22
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\asystemstatus.asp | 11-27-2018 | 05:54:00 | | 67066 | 892a989d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\atempctrl.asp | 09-02-2014 | 10:22:02 | | 1705 | f384705
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\atestlogin.asp | 11-04-2007 | 02:05:08 | | 233 | c3515caf
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aunlockobs.asp | 12-01-2006 | 12:44:14 | | 1825 | 69d52988
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\auploadplan.asp | 11-04-2007 | 05:03:52 | | 1465 | 4a6dfb06
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\aweather.asp | 01-06-2016 | 11:17:52 | | 2221 | 4e7efc1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\awxconn.asp | 12-01-2006 | 08:43:14 | | 1345 | e97066ac
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\dawndusk.asp | 02-05-2013 | 16:43:58 | | 6631 | db7d779e
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\File.History | 07-09-2018 | 12:53:00 | | 84951 | da7ef0d1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\iframecss.js | 12-05-2006 | 14:22:26 | | 3421 | b46ad5e4
+File Copy: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\jquery-3.3.1.min.js | 07-15-2018 | 18:15:50 | | 86927 | 609a5b84
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\jquery.bvalidator.js | 09-11-2011 | 12:09:44 | | 22379 | f1f1b330
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\ac\jquery.sparkline.min.js | 06-05-2013 | 10:47:20 | | 44541 | 11a06d14
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-down-on.png | 09-19-2006 | 00:13:08 | | 2246 | 45e5dfde
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-down.png | 09-18-2006 | 23:57:34 | | 2199 | ce09aa3c
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-up-on.png | 09-19-2006 | 00:27:38 | | 2238 | f81a3d38
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-classic-up.png | 09-18-2006 | 23:56:18 | | 2194 | ba3a0f13
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-down-on.png | 09-19-2006 | 12:38:28 | | 3425 | 299d413b
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-down.png | 09-19-2006 | 12:39:28 | | 3352 | d8afc66c
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-up-on.png | 09-19-2006 | 12:39:50 | | 3420 | 3f9196b4
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\bar-tw-up.png | 09-19-2006 | 12:39:06 | | 3364 | 9bd196e3
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\close.gif | 12-02-2006 | 11:31:18 | | 109 | 1ce18f26
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\dc3logo.jpg | 04-02-2007 | 17:21:36 | | 15415 | 9b42d1b7
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\error.png | 12-03-2006 | 08:27:44 | | 3126 | 8a5abf0f
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\feed-icon-14x14.png | 11-01-2006 | 18:56:26 | | 689 | 49a7d8ba
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\feed-icon-28x28.png | 11-01-2006 | 18:56:18 | | 1737 | 9b021a50
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-down-on.png | 09-19-2006 | 12:15:30 | | 3132 | 3e3e2d1a
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-down.png | 09-19-2006 | 12:17:50 | | 3074 | 5a9785d6
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-up-on.png | 09-19-2006 | 12:16:58 | | 3234 | 22a22ed4
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\fire-classic-up.png | 09-19-2006 | 12:12:08 | | 3180 | 283cce71
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp1.png | 11-21-2010 | 15:53:06 | | 8148 | fa3e64b1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp2.png | 11-21-2010 | 16:26:34 | | 12458 | 7f12f769
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp3-sm.png | 11-21-2010 | 16:45:10 | | 24498 | 1958aeec
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp3.png | 11-21-2010 | 16:44:04 | | 120733 | 6b23434
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ftp4.png | 11-21-2010 | 17:50:02 | | 20281 | f379518f
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\geo_tab_left1.gif | 10-11-2006 | 18:00:18 | | 943 | 479d66b5
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\geo_tab_right1.gif | 10-11-2006 | 18:00:06 | | 942 | 19c43626
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\getff.gif | 12-05-2006 | 22:44:52 | | 1786 | f3333394
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\info.png | 12-03-2006 | 06:45:12 | | 3003 | 458e95de
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\loading.gif | 09-01-2011 | 15:26:06 | | 3208 | 608c1429
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\new.gif | 08-18-2016 | 20:48:36 | | 144 | 996be50c
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\ok.png | 12-03-2006 | 06:53:54 | | 3254 | 83873303
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\question.png | 12-03-2006 | 06:47:08 | | 3273 | 10a0fcce
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\tgtform.png | 09-29-2011 | 09:12:32 | | 10081 | 9d7fcda3
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\tinyInfo.png | 11-06-2009 | 09:08:18 | | 778 | b6b4d6b1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\tinyWarn.png | 09-27-2011 | 15:58:08 | | 1388 | cee6a20c
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\im\warning.png | 12-03-2006 | 08:31:00 | | 2714 | 6cbe086b
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\files\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\files\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Copy: C:\Program Files (x86)\ACP Obs Control\RemoteAssistance.exe | 01-16-2019 | 15:21:36 | 14.1.3399.0 | 17405136 | 995b4025
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\msguideimage.png | 06-23-2015 | 14:57:50 | | 1307 | bbd3d53b
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\nplastimage.png | 03-06-2015 | 15:10:20 | | 12727 | 92c3ca96
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\nplastimage.txt | 03-06-2015 | 15:10:22 | | 10 | 5c44bcf7
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\images\nppvimage.png | 03-06-2015 | 15:10:20 | | 2421 | be7d659a
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\logs\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\plans\aupload.asp | 11-22-2010 | 09:13:30 | | 4808 | dbd27302
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\adelfile.asp | 09-17-2007 | 13:56:04 | | 1841 | b8a4f7eb
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\aindex.asp | 11-21-2010 | 19:36:24 | | 7858 | e14c11c0
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\amkdir.asp | 04-12-2008 | 16:45:58 | | 2065 | 74e77af1
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\ashowtext.asp | 12-05-2006 | 14:16:00 | | 2666 | 1558030d
+File Overwrite: C:\Users\Public\Documents\ACP Web Data\Doc Root\uploads\aupload.asp | 11-22-2010 | 09:13:30 | | 4808 | dbd27302
+RegDB Key: Software\Denny\ACP\WebServer
+RegDB Val: 5
+RegDB Name: AspSessionTimeout
+RegDB Root: 2
+RegDB Old: 5
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\ACP Application.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\acp.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\Users\Public\Desktop\ACP.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\acp.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\ACP.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\acp.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\Users\Public\Desktop\ACP Plan Checker.lnk
+Link Info: C:\Windows\SysWOW64\cscript.exe | C:\Program Files (x86)\ACP Obs Control | C:\Program Files (x86)\ACP Obs Control\checked.ico | 0 | 1 | 0 | PlanChecker.js
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\User's Guide.lnk
+Link Info: C:\Windows\SysWOW64\hh.exe | C:\Program Files (x86)\ACP Obs Control\Doc |  | 0 | 1 | 0 | "ACP Help.chm"
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Read Me.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\readme.txt |  |  | 0 | 1 | 0 | 
+File Copy: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Communication Center.URL | 08-15-2007 | 12:31:30 | | 105 | ecd3ee93
+File Overwrite: C:\Users\Public\Desktop\DC-3 Comm Center.URL | 08-15-2007 | 12:31:30 | | 105 | ecd3ee93
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Weather Simulator.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\WeatherComponents\WeatherSim\WeatherSim.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Catalog Checker.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\CatalogTools\CatalogChecker.exe |  |  | 0 | 1 | 0 | 
+Shell Link: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\ACP Observatory Control\Remote Assistance.lnk
+Link Info: C:\Program Files (x86)\ACP Obs Control\RemoteAssistance.exe |  |  | 0 | 1 | 0 | 
+RegDB Key: SOFTWARE\ASCOM\Telescope Drivers\ACP.Telescope
+RegDB Val: ACP Telescope Hub (ASCOM)
+RegDB Root: 2
+RegDB Old: ACP Telescope Hub (ASCOM)
+RegDB Key: SOFTWARE\Denny\ACP
+RegDB Val: 8.2.1
+RegDB Name: Ver
+RegDB Root: 2
+RegDB Old: 8.1.1
+RegDB Key: Software\Denny\ACP
+RegDB Val: C:\Program Files (x86)\ACP Obs Control
+RegDB Name: AppDir
+RegDB Root: 2
+RegDB Old: C:\Program Files (x86)\ACP Obs Control
+RegDB Key: Software\Denny\ACP\Scripting
+RegDB Val: C:\Program Files (x86)\ACP Obs Control\Scripts
+RegDB Name: DefBrowseDir
+RegDB Root: 2
+RegDB Old: C:\Program Files (x86)\ACP Obs Control\Scripts
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: Welcome to ACP Observatory Control by DC3 Dreams.
+RegDB Name: AgentGreeting
+RegDB Root: 2
+RegDB Old: Welcome to ACP Observatory Control by DC3 Dreams.
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: False
+RegDB Name: AutoQuit
+RegDB Root: 2
+RegDB Old: False
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: False
+RegDB Name: SeenAllTips
+RegDB Root: 2
+RegDB Old: False
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: 0
+RegDB Name: CurrentTip
+RegDB Root: 2
+RegDB Old: 31
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: 1
+RegDB Name: StartupTips
+RegDB Root: 2
+RegDB Old: 1
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: True
+RegDB Name: DisableReqPendMsg
+RegDB Root: 2
+RegDB Old: True
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: False
+RegDB Name: ShowTraceback
+RegDB Root: 2
+RegDB Old: False
+RegDB Key: Software\Denny\ACP\PinPoint
+RegDB Val: 0
+RegDB Name: SpiralSearch
+RegDB Root: 2
+RegDB Old: 0
+RegDB Key: Software\Denny\ACP\General
+RegDB Val: 
+RegDB Name: TraceFile
+RegDB Root: 2
+Self-Register: C:\Windows\SysWOW64\DartCertificate.dll
+Self-Register: C:\Windows\SysWOW64\DartSecure2.dll
+Self-Register: C:\Windows\SysWOW64\DartServer.dll
+Self-Register: C:\Windows\SysWOW64\DartSock.dll
+Self-Register: C:\Windows\SysWOW64\DartUtil.dll
+Self-Register: C:\Windows\SysWOW64\DartWebServer.dll
+Self-Register: C:\Windows\SysWOW64\DartWebUtil.dll
+Self-Register: C:\Program Files (x86)\ACP Obs Control\ThinScript.dll
+Self-Register: C:\Program Files (x86)\ACP Obs Control\PointingErrorGenerator.dll
+Self-Register: C:\PROGRA~2\ACPOBS~1\acp.exe
+Self-Register: C:\PROGRA~2\ACPOBS~1\WEATHE~1\WEATHE~1\WEATHE~2.EXE
+RegDB Key: AppId\acp.exe
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Old: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: ACP Observatory Control Software
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppID
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: 1
+RegDB Name: AuthenticationLevel
+RegDB Key: AppId\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: Interactive User
+RegDB Name: RunAs
+RegDB Key: CLSID\{F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{D5E73F9F-AEA6-4FFE-8542-3BDD1378AA22}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{5F0DAAF8-9819-4FBF-BA35-E0942E055D08}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{31FE1711-7237-45CA-A9F1-3FC6EA1A987F}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{B7A81535-A852-4F3E-8E9C-9DEFC867DB65}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+RegDB Key: CLSID\{8DF910AB-E760-460F-9F04-E8A36B3BA595}
+RegDB Val: {F80293BA-C7DF-468D-AF26-FE3CD8015331}
+RegDB Name: AppId
+File Overwrite: C:\Program Files (x86)\Common Files\dc3\dc3reg.dll | | | | 92672 | d1ac2e7a
+File Copy: C:\Windows\SysWOW64\dc3reg.dll | 02-13-2011 | 22:26:34 | 2.0.1.0 | 92672 | d1ac2e7a
+File Copy: C:\Program Files (x86)\ACP Obs Control\subinacl.exe | 06-11-2004 | 15:33:28 | 5.2.3790.1180 | 290304 | 90b58a75
+File Overwrite: C:\Program Files (x86)\ACP Obs Control\MigrateFromVirt.exe | 08-24-2014 | 09:32:42 | 1.0.0.0 | 28672 | 1610302e
+Delete in-use files: On
+Execute Program: C:\Program Files (x86)\ACP Obs Control\acp.exe /unregserver
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\AcquireSupport.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\Plan.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\SequenceToken.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\BoltwoodServer.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\CloudSensor-II.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\BoltwoodFile.wsc
+Execute Program: C:\WINDOWS\SYSWOW64\regsvr32.exe /s /u C:\PROGRA~2\ACPOBS~1\WeatherComponents\SROWeather.wsc
+File Tree: C:\Program Files (x86)\ACP Obs Control\*.*
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: V8.2.1
+RegDB Name: DisplayVersion
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: http://forums.dc3.com/
+RegDB Name: HelpLink
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: DC-3 Dreams, SP Mesa, AZ
+RegDB Name: Publisher
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: http://forums.dc3.com/
+RegDB Name: URLInfoAbout
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: support@dc3.com
+RegDB Name: Contact
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: +1 480 396 9700
+RegDB Name: HelpTelephone
+RegDB Root: 2
+RegDB Key: Software\Microsoft\Windows\CurrentVersion\Uninstall\ACP Observatory Control Software V8.2.1
+RegDB Val: http://acp.dc3.com/download.html
+RegDB Name: URLUpdateInfo
+RegDB Root: 2
+Self-Register: C:\Program Files (x86)\Common Files\dc3\dc3reg.dll
+User Rights: Admin

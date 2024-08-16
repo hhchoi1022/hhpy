@@ -1,0 +1,13 @@
+{
+    "Execution Time": "2024-08-01 00:34:10",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib-RASA36-NGC1566-20220409-013814-r-60.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib-RASA36-NGC1566-20220409-013959-r-60.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib-RASA36-NGC1566-20220409-014144-r-60.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib-RASA36-NGC1566-20220409-014436-r-60.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib-RASA36-NGC1566-20220409-014544-r-60.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

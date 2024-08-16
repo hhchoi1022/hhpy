@@ -1,0 +1,23 @@
+{
+    "Execution Time": "2024-08-02 00:55:36",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211208-043043-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211208-043300-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211208-043516-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211208-043733-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211208-043950-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211209-043204-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211209-043421-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211209-043637-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211209-043854-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211209-044111-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211210-043153-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211210-043409-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211210-043626-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211210-043843-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib-KCT_STX16803-NGC1566-20211210-044059-i-120.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

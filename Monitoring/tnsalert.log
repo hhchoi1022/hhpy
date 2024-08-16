@@ -1,0 +1,1094 @@
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Wed, 27 Apr 2022 05:10:01 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+Mail sent to hhchoi1022@gmail.com
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    164[0m [0;31m#%%[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0mrecipients[0m [0;34m=[0m [0;34m[[0m[0;34m'hhchoi1022@gmail.com'[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 166[0;31m [0mtable[0m [0;34m=[0m [0mAT_notifier[0m[0;34m([0m[0;36m3600[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    167[0m [0mtable[0m[0;34m.[0m[0mwrite[0m[0;34m([0m[0;34m'/data1/tmp/tns.html'[0m[0;34m,[0m[0mformat[0m [0;34m=[0m [0;34m'ascii.html'[0m[0;34m,[0m[0moverwrite[0m[0;34m=[0m[0;32mTrue[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    168[0m [0;32mif[0m [0mlen[0m[0;34m([0m[0mtable[0m[0;34m)[0m [0;34m!=[0m[0;36m0[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/Desktop/Gitrepo/monitoring/tnsalert.py[0m in [0;36mAT_notifier[0;34m(sepadist)[0m
+[1;32m     61[0m     [0mmail[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'From'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m     62[0m     [0mmail[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m [0;34m=[0m [0mparseaddr[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'To'[0m[0;34m][0m[0;34m)[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 63[0;31m     [0mmail[0m[0;34m[[0m[0;34m'Date'[0m[0;34m][0m [0;34m=[0m [0mdatetime[0m[0;34m.[0m[0mdatetime[0m[0;34m.[0m[0mstrptime[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'date'[0m[0;34m][0m[0;34m,[0m [0;34m'%a, %d %b %Y %H:%M:%S +0000'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     64[0m [0;34m[0m[0m
+[1;32m     65[0m     [0msubject[0m [0;34m=[0m [0mdecode_header[0m[0;34m([0m[0mmsg[0m[0;34m[[0m[0;34m'Subject'[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime_datetime[0;34m(cls, data_string, format)[0m
+[1;32m    566[0m     """Return a class cls instance based on the input string and the
+[1;32m    567[0m     format string."""
+[0;32m--> 568[0;31m     [0mtt[0m[0;34m,[0m [0mfraction[0m[0;34m,[0m [0mgmtoff_fraction[0m [0;34m=[0m [0m_strptime[0m[0;34m([0m[0mdata_string[0m[0;34m,[0m [0mformat[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    569[0m     [0mtzname[0m[0;34m,[0m [0mgmtoff[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m-[0m[0;36m2[0m[0;34m:[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m    570[0m     [0margs[0m [0;34m=[0m [0mtt[0m[0;34m[[0m[0;34m:[0m[0;36m6[0m[0;34m][0m [0;34m+[0m [0;34m([0m[0mfraction[0m[0;34m,[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m~/anaconda3/lib/python3.9/_strptime.py[0m in [0;36m_strptime[0;34m(data_string, format)[0m
+[1;32m    347[0m     [0mfound[0m [0;34m=[0m [0mformat_regex[0m[0;34m.[0m[0mmatch[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    348[0m     [0;32mif[0m [0;32mnot[0m [0mfound[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 349[0;31m         raise ValueError("time data %r does not match format %r" %
+[0m[1;32m    350[0m                          (data_string, format))
+[1;32m    351[0m     [0;32mif[0m [0mlen[0m[0;34m([0m[0mdata_string[0m[0;34m)[0m [0;34m!=[0m [0mfound[0m[0;34m.[0m[0mend[0m[0;34m([0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mValueError[0m: time data 'Sat, 30 Apr 2022 17:35:07 -0700 (PDT)' does not match format '%a, %d %b %Y %H:%M:%S +0000'
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]
+WARNING: IllegalSecondWarning: 'second' was found  to be '60', which is not in range [0,60). Treating as 0 sec, +1 min [astropy.coordinates.angle_formats]

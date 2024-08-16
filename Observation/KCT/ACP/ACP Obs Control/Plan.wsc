@@ -1,0 +1,3122 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+=====================================
+ACP Plan Parser and Container Objects
+=====================================
+
+Script:         Plan.wsc
+Author:         Robert B. Denny <rdenny@dc3.com>
+Version:        8.1.0  <=== CHANGE VERSION BELOW
+Requires:       ACP 8.1 or later
+                Windows Script 5.6 or later (installed by ACP setup)
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ...
+                
+Usage:          ...
+
+Edit History:
+    30-Jun-06   Initial edit, from ACP Plan Checker 1.3
+    05-Jul-06   More additions, link to AcquireSupport, callable ephemeris update.
+                Major refactoring - use a separate component for Target.
+    07-Jul-06   More, add new #bias directive and target type, warn #dark with 
+                #interval 0 deprecated, other tweaks... development underway.
+    11-Jul-06   Add CledarFilter (put) property
+    xx-Jul-06   Hot and heavy, many small changes and improvements...
+    15-Jul-06   Add Plan.DawnFlatPlan and Plan.DuskFlatPlan properties
+    17-Jul-06   Add Username property for ResolveFlatPlan()
+    30-Aug-06   4.3.2 - Change version to match ACP, fix planet: NeedEphem -> true.
+    12-Sep-06   4.3.3 - #filter with no filters now fatal
+    19-Oct-06   5.0.1 - Add ImageSet object, enhance #interval, #filter & #binning to
+                take comma-separated lists, add #count for image counts for each part
+                of the ImageSet. Adjust Target interface as needed.
+    21-Oct-06   5.0.2 - Changes needed to operate with offline plan checker. Client now
+                supplies Util, AcpApp, etc. (which can be minimal emulators), logic
+                to avoid some deep checks if offline, global on/off line flag, etc.
+                Change in meaning of #stack and #stackalign, warn obsolete usage.
+                Target now has separate FilterNum and FilterName properties (needed
+                by plan checker). Added new Init() method. Removed Plan.SupportLibrary
+                and Plan.UserName properties.
+    26-Oct-06	5.0.2 - Remove #dark 0 -> bias conversion warning. Used by cal frame
+    			web page. Produced plan has image sets for cal frames.
+    02-Nov-06	5.0.2 - Dither is carry-over, remove reinit on target change.
+    04-Nov-06	5.0.2 - New strict sexa/decimal parser/converter. Make MP be caseless.
+    15-Nov-06   5.0.3 - Skip filter count consistency check in CreateTarget() if not 
+                live or no filters.
+    19-Nov-06   5.0.3 - Fix error handling for MPCORB, NEO, MPC elements, proper exception
+                bubbling, re-throwing and reporting. Fix getMpc1Line() to use MP or
+                comet ephemeris calcs in SUP. Simplify name grabbing. Add new plan 
+                directive #calibrate.
+    22-Nov-06	5.0.4 - Add new directive #completionstate allowing resuming an interrupted
+                plan (script fail or acpwatch). New Plan properties SetsCompleted and
+                TargetsCompleted, read/write. No longer write #startsetnum out here, it
+                needs to be done by AcquireImages given the statr of the plan at failure,
+                completion, or interrupt (coming).
+    24-Nov-06   5.0.4 - Make some more Plan properties read/write, add Plan.ChainBack.
+                Add Plan PathName property.
+    26-Nov-06	5.0.4 - Fix MPC/NEO target processing, names and numbers don't always
+    			match. Remove bogus asserts
+    27-Nov-06   5.0.4 - Add more completion status properties, permit resume at deepest
+                looping level. Move plan file updater method here so preserve plan
+                independence of AcquireImages.
+    28-Nov-06   5.0.4 - Fix getSexagesimal() for negative values (oops!). Add Term() 
+                function to release global handles of SUP, Util and friends.
+    29-Nov-06	5.0.4 - Add new #TAG directive and Tag property for Target. Allows 
+    			attaching things to Target.
+    11-Jan-07   5.0.5 - Auto-dither (#dither with no arg)
+    07-May=07   5.0.6 - Fix getSexagesimal() for -00:xx:xx
+    13-Jun-07   5.0.7 - Fix comet element check for args > 12 (name can be blank or have
+                spaces).
+    26-Sep-07   5.1.1 - #dawnflats is not a plan terminator
+    27-Sep-07   5.1.1 - #afinterval and #autofocus generate errors if AF is disabled.
+                Add AutoGuide directive, Target.AutoGuide property.
+    11-Oct-07   5.1.2 - Fix #bias complier for multiple image sets (force interval = 0)
+    05-Nov-07   5.1.2 - #waituntil with time only now waits only for up to 12 hours
+    19-Nov-07   5.1.3 (HF3) - #dawnflats and #duskflats now targets. Echo compiler version.
+    			5.1.4 (???) - Erroneous version number
+    16-Mar-08	5.1.5 (HF4) - Detect comet elements with "D" instead of "P". Catch malformed
+    			directives with syntax that successfully eval()s in dispatcher. Now test
+    			directive for a-z in it only.
+    16-Jan-09   5.1.6 (HF8) - Add existence checks to #chain and #chainscript. Required
+                change to Init() adding ACP App path as new parameter. 
+    24-Jan-09   5.1.6 (HF8) - New Target.WaitUntilAuto property that contgains Automation
+                dates for non-JS clients (like Scheduler's Plan Compiler component!).
+    25-Jan-09   5.1.6 (HF8) - Add NaN sentinels for DeepSky lookup failures (for Scheduer)
+    02-Apr-09   5.1.7 (HF9) - Fix #chain for plans run from web.
+    14-Oct-09   5.1.8 (HF10) - GEM:104 - Comments regarding relative waits. No logic
+                changes at all.
+    11-Feb-10   5.1.9 (HF11) - GEM:345 - No need for #interval on #bias targets
+    07-Jun-10   5.1.10 (6.0) = GEM:435 - Fix ImageSet.SubFrame capitalization
+    01-Oct-10   5.1.11 (6.0) - GEM:406 - New #readoutmode directive (target scope)
+    01-Nov-10   6.0.1 (6.0) - GEM:408 New #defocus directive (target scope, nonpersistent)
+    03-Nov-10   6.0.1 (6.0) - GEM:107 Allow tab(s) between directive and its argument
+    19-Jul-11   6.0.2 (6.0HF2) - GEM:664 Allow #waituntil on all sets with set #0
+    17-Sep-11   6.0.3 (6.0HF2) - GEM:526 #waituntil -n.n to wait until -n.n sun angle
+    19-Sep-11   6.0.3 (6.0HF2) - GEM:703 New directive #alwayssolve
+    12-Jul-12   7.0.1 (7.0) - GEM:534 Provide optional tolerance to #chill. Catch lots of
+                places where a bad number like 2x.5 would be accepted.
+    13-Jul-12   7.0.1 (7.0) - GEM:530 Add #nopointing and #nosolve, per target.
+    18-Jul-12   7.0.1 (7.0) - GEM:774 Add #noweather to allow dawn cal frames in bad WX.
+    27-Aug-12   7.0.1 (7.0) - Found #chill display lacked tolerance. GEM:901 Fix waiting
+                with time only so it will not wait for more than 12 hours in the future.
+    28-Aug-12   7.0.1 (7.0) - Add support for MPCCOMET via "ct xxxxx" target lines.
+    17-Sep-13   7.1.1 (7.1) - GEM:1002 Set debug properties to false
+    21-Sep-13   7.1.1 (7.1) - GEM:995 Delays in UpdateCompletionStatus to compensate for 
+                probable race condition in Scripting.FileSYstemObject.
+    23-Jun-14   7.2.1 (7.2) - GEM:1117 New directive #screenflats, and check for the
+                correct mode in AutoFlatConfig. 
+    14-Aug-14   7.2.1 (7.2) - No GEM - Shorten descriptive strings for flats, too long
+                for the web SYstem Status display.
+    09-Feb-15   8.0.1 (8.0) - GEM:1212 Add #nopreview directive, and Target scope property
+                for same.
+    11-Aug-15   8.1.0 (8.1) - GEM:1231 Allow #screenflats in offline mode when mode for
+                observatory is unkn own. Sky flats are assumed.  
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="Plan">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.Plan" classid="{7511514F-26C9-4304-AAA9-2E83540C3390}" description="ACP Plan Parser and Container" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<method name="Init">
+				<parameter name="Util"/>
+				<parameter name="SUP"/>
+				<parameter name="User"/>
+				<parameter name="Live"/>
+				<parameter name="AcpPath"/>
+			</method>
+			<method name="Term"/>
+			<property name="AFinterval">
+				<get/>
+			</property>
+			<property name="AlwaysSolve">
+				<get/>
+			</property>
+			<property name="ChainBack">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChainPlan">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChainScript">
+				<get/>
+				<put/>
+			</property>
+			<property name="CountsCompleted">
+				<get/>
+				<put/>
+			</property>
+			<property name="FilterGroupsCompleted">
+				<get/>
+				<put/>
+			</property>
+			<property name="MinSetTime">
+				<get/>
+			</property>
+			<property name="PathName">
+				<get/>
+			</property>
+			<property name="QuitAt">
+				<get/>
+				<put/>
+			</property>
+			<property name="RepeatsCompleted">
+				<get/>
+				<put/>
+			</property>
+			<property name="Sets">
+				<get/>
+			</property>
+			<property name="SetsCompleted">
+				<get/>
+				<put/>
+			</property>
+			<property name="Shutdown">
+				<get/>
+				<put/>
+			</property>
+			<property name="StartSetNum">
+				<get/>
+			</property>
+			<property name="Targets">
+				<get/>
+			</property>
+			<property name="TargetsCompleted">
+				<get/>
+				<put/>
+			</property>
+			<method name="Read">
+				<parameter name="PlanFile"/>
+			</method>
+			<method name="UpdateCompletionState"/>
+		</public>
+		<object id="FSO" progid="Scripting.FileSystemObject" events="false" reference="false"/>
+		<script id="Plan" language="JScript">
+<![CDATA[
+var VERSION = "8.1.0";
+
+//
+// Components supplied by client (AcquireImages or PlanChecker)
+// See Init()
+//
+var SUP = null;                                                     // [sentinel] Copy of client's support library
+var Util;                                                           // Copy of real of emulated Util from client
+var Console;                                                        // Shortcut used throughout
+//
+// Components created here (may not be valid if offline/plan-checker)
+//
+var SAC;                                                            // MiniSAC deep sky database
+var MPC;                                                            // MPCORB database
+var MPCC;                                                           // MPCCOMET databse
+
+//
+// Common error message strings
+//
+var ORG  = "out of range: ";                                        // Avoid repeated strings
+var NON  = "non numeric: ";
+var MRG  = "missing argument in ";
+var PRV  = " conflicts with previous ";
+var CNU  = " cannot use ";
+var BDT  = "bad date/time in ";
+var TIM  = "time limit in ";
+var ALR  = " already defined, new value now in effect";
+var INC  = "inconsistent item count in previous ";
+var OBS  = "obsolete use of ";
+
+//
+// Target types for CreateTarget()
+//
+var LIGHT  = 0;
+var DARK   = 1;
+var BIAS   = 2;
+var PSEUDO = 3;
+
+//
+// Enhance String with a trim() method
+//
+String.prototype.trim = function()
+{
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+};
+
+//
+// Exception class used to throw warnings versus
+// errors, and symbolics for same.
+//
+var Warn = 0;                                                       // Throwing a warning
+var Err = 1;                                                        // Throwing an error
+function ParseException(l, m)
+{
+    this.Level = l;                                                 // Level (Warn or Err)
+    this.Message = m;                                               // Message
+}
+
+// ============
+// DATA STORAGE
+// ============
+
+// --------------------------
+// Create a new Target object
+// --------------------------
+//
+// This fills in the properties that are affected by directives,
+// both per-target and carry-over. Creating a new Target object
+// sets defaults as part of construction as well, and creates
+// the array for the ImageSets.
+//
+function CreateTarget(tgtType)  
+{
+    var TGT = new ActiveXObject("ACP.Target");                      // Create a new Target object
+    TGT.SupportLibrary = SUP;                                       // Give it a copy of AcquireSupport
+    
+    TGT.Align = t_bAlign;                                           // True to align stacked images
+    TGT.AutoFocus = t_bAutoFocus;                                   // True to force auto focus before image(s)
+    TGT.AutoGuide = t_bAutoGuide;                                   // True to force autoguiding even if it's off or it's a short exposure
+    TGT.CalFrame = (tgtType == DARK || tgtType == BIAS);            // True if this is a calibration frame (dark or bias)
+    TGT.Calibrate = t_bCalibrate;                                   // True to calibrate images for  this target even if autocal is off
+    TGT.CalPathName = "";                                           // Non empty if specified path/name for  dark/bias image
+    TGT.Comments = t_sComments;                                     // Accumulates comment only lines for target
+    TGT.Defocus = t_fDefocus;                                       // Defocus (counts) for this target's image(s)
+    TGT.Directory = t_sDir;                                         // Directory path for image(s)
+    TGT.Dither = t_fDither;                                         // Dither amount for image(s) (fractional arcsec or pixels)
+    TGT.NoPointing = t_bNoPointing;                                 // True to suppress pointing update for this target
+    TGT.NoPreview = t_bNoPreview;                                   // True to suppress web preview generation for speed
+    TGT.NoSolve = t_bNoSolve;                                       // True to suppress final image plate solving for this target's images
+    TGT.NonImage = (tgtType == PSEUDO);                             // True if this "target" will not result in image(s)
+    TGT.Pointing = t_bPointing;                                     // True to force pointing update before image(s)
+    TGT.PA = t_fPosAng;                                             // Degrees 0 <= x < 360
+    TGT.ReadoutMode = t_iReadoutMode;                               // Readout mode number
+    TGT.Repeat = t_iRepeat;                                         // Repeat count for image
+    TGT.Stack = t_bStack;                                           // True to stack multiple images
+    TGT.OrbTrack = t_bOrbTrack;                                     // True for orbital tracking
+    TGT.Tags = t_oTags;												// Object: Expando properties from new #TAG directive
+    TGT.WaitFor = t_iWaitFor;                                       // Seconds
+    TGT.WaitAirMass = t_oWaitAirMass;                               // Object: AirMass and TimeLimit (min.) properties 
+    TGT.WaitInLimits = t_iWaitInLimits;                             // Wait in-limits time limit (min.)
+    TGT.WaitUntil = t_dtiWaitUntil;                                 // Array:  JScript Date objects indexed by setnum - 1
+    TGT.WaitUntilAuto = t_dtiWaitUntilAuto;                         // Array:  Automation Date objects indexed by setnum - 1
+    TGT.WaitZenDist = t_oWaitZenDist;                               // Object: ZenDist and TimeLimit (min.) properties
+    //
+    // Check image specs then add ImageSets
+    //
+    if(tgtType != PSEUDO)
+    {
+	    var ni = t_iCount.length;                                   // # of combos in ImageSet
+	    if(t_iBinning.length != ni)
+	        throw new ParseException(Err, INC + "#binning");
+	    if(t_fInterval.length != ni)
+	        throw new ParseException(Err, INC + "#interval");
+	    if(c_bLiveMode && SUP.HaveFilters) {                        // Allow no filters if not live or no filters
+    	    if(tgtType == LIGHT && t_iFilterNum.length != ni)
+    		    throw new ParseException(Err, INC + "#filter");
+    	}
+	    for(var i = 0; i < ni; i++) {
+	        var IMG = new ActiveXObject("ACP.ImageSet");
+	        IMG.Binning = t_iBinning[i];
+	        IMG.Count = t_iCount[i];
+	        if(tgtType == DARK || tgtType == BIAS) {
+		        IMG.FilterNum = 0;
+		        IMG.FilterName = "";
+		        //
+		        // DO NOT BE TEMPTED TO CHANGE t_fInterval[i]! Bias should not
+		        // alter the carry-over intervals (which may be NaN if not set!).
+		        //
+		        if(tgtType == DARK) {
+        	        if(isNaN(t_fInterval[i]))
+        	        	throw new ParseException(Err, "#interval has not ever been set");
+        	        IMG.Interval = t_fInterval[i];
+		        } else {
+		            IMG.Interval = 0;
+		        }
+		        
+	        } else {
+		        IMG.FilterNum = t_iFilterNum[i];
+		        IMG.FilterName = t_sFilterName[i];
+    	        if(isNaN(t_fInterval[i]))
+    	        	throw new ParseException(Err, "#interval has not ever been set");
+    	        IMG.Interval = t_fInterval[i];
+	        }
+	        IMG.SubFrame = t_fSubFrame;                             // Same subframe for all (maybe separate later?)
+	        TGT.ImageSets.push(IMG);
+	    }
+    }
+    
+    return TGT;
+}
+
+// -------------------------------------------------------
+// Target scope temporary variables (init carry over vars)
+// -------------------------------------------------------
+
+var t_bAlign;
+var t_bAutoFocus;
+var t_bAutoGuide;
+var t_iBinning = new Array(); t_iBinning.push(1);                   // Default
+var t_bCalibrate;
+var t_sComments;
+var t_iCount = new Array(); t_iCount.push(1);                       // Default
+var t_fDefocus = 0;
+var t_sDir = "";
+var t_fDither = 0.0;
+var t_sFilterName = new Array(); t_sFilterName.push("");            // [sentinel] not set
+var t_iFilterNum = new Array(); t_iFilterNum.push(NaN);             // [sentinel] not set
+var t_fInterval = new Array(); t_fInterval.push(NaN);               // [sentinel] not set
+var t_iReadoutMode = NaN;                                           // [sentinel] not set
+var t_bPointing;
+var t_bNoPointing;
+var t_fPosAng = 0.0;                                                // Default for no-rot system
+var t_iRepeat;
+var t_bStack;
+var t_bNoSolve;
+var t_bNoPreview;
+var t_fSubFrame = 1.0;
+var t_bOrbTrack = false;
+var t_oTags;
+var t_iWaitFor;
+var t_oWaitAirMass;
+var t_iWaitInLimits;
+var t_dtiWaitUntil;
+var t_dtiWaitUntilAuto;
+var t_oWaitZenDist;
+var t_sFlatPlanName;
+
+// -------------
+// resetTarget() - Reset once-only directive-controlled target properties to defaults
+// -------------
+function resetTarget()
+{
+    t_bAlign = false;
+    t_bAutoFocus = false;
+    t_bAutoGuide = false;
+    t_bCalibrate = false;
+    t_sComments = new Array();
+    t_bPointing = false;
+    t_bNoPointing = false;
+    t_iRepeat = 1;
+    t_bStack = false;
+    t_bNoSolve = false;
+    t_bNoPreview = false;
+    t_oTags = null;													// [sentinel]
+    t_iWaitFor = 0;
+    t_oWaitAirMass = null;											// [sentinel]
+    t_iWaitInLimits = 0;
+    t_dtiWaitUntil = new Array();
+    t_dtiWaitUntilAuto = new Array();
+    t_oWaitZenDist = null;											// [sentinel]
+    t_sFlatPlanName = "";                                           // Used by dawn and dusk flat pseudotargets
+}
+
+
+//
+// Target List
+//
+var p_oTargets = new Array();                                       // Target objects get push()'ed onto this array
+
+//
+// Plan Scope Variables and their defaults
+//
+var p_iAFInterval = 0;                                              // Minutes
+var p_bAlwaysSolve = false;
+var p_bChainBack = false;
+var p_sChainPlan = "";
+var p_sChainScript = "";
+var p_fMinSetTime = 0.0;                                            // Hours
+var p_sPathName;                                                    // Plan file path/name
+var p_dtQuitAt = null;												// [sentinel] Not set
+var p_iSets = 1;                                                    // Default 1 set
+var p_bShutdown = false;
+var p_iStartSetNum = 1;
+var p_iSetsCompl = 0;	                                            // Completion state for interrupts
+var p_iTgtsCompl = 0;
+var p_iRptsCompl = 0;
+var p_iGrpsCompl = 0;
+var p_iCntsCompl = 0;
+//
+// Control variables
+//
+var c_bFilterSeen = false;                                          // true if #filter seen
+var c_bPosAngSeen = false;                                          // true if #posang seen
+var c_bIntvSeen = false;                                            // true if #interval seen
+var c_bRoModeSeen = false;                                          // true if #readoutmode seen
+var c_bLiveMode = false;                                            // true if running under AcquireImages (typ) in live system
+var c_bScreenFlats = false;                                         // true if ACP set up for panel/screen flats not sky flats
+var c_sUsername = "";                                               // Username for chaining and flat plan resolving (path component)
+var c_sAcpPath = "";                                                // c_bLiveMode only: For checking existence of script in #chainscript
+var c_bInitDone = false;                                            // true after Init() has been called
+var c_bDuskFlatsSeen = false;										// true if #duskflats seen
+var c_bDawnFlatsSeen = false;										// true if #dawnflats seen
+var c_bLightFrameSeen = false;										// true if any light frame seen
+var c_bScreenFlatsSeen = false;                                     // true if #screenflats seen
+// ====================
+// DIRECTIVE PROCESSING
+// ====================
+
+// ----------------------------------------------------
+// Dispatch Functions (must precede table construction)
+// ----------------------------------------------------
+
+//
+//  #afinterval - Plan Scope
+//
+function d_afinterval(arg)
+{
+    if(c_bLiveMode && !Util.Prefs.AutoFocus.Enabled)
+        throw new ParseException(Err, "#afinterval given but auto focus is disabled.");
+    if(c_bLiveMode && Util.Prefs.AutoFocus.AdaptiveAutoFocus)
+        throw new ParseException(Err, "#afinterval given but adaptive autofocus is in effect.");
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#afinterval");
+    p_iAFInterval = parseInt(arg);
+    if(isNaN(p_iAFInterval) || p_iAFInterval != arg)
+        throw new ParseException(Err, NON + "#afinterval " + arg);
+    if(p_iAFInterval <= 5)                                          // Must be > 5 minutes
+        throw new ParseException(Err, ORG + "#afinterval " + arg);
+}
+
+//
+// #alwayssolve - Plan scope
+//
+function d_alwayssolve(arg)
+{
+    // Don't need conflict check with #nosolve, this is plan level
+    p_bAlwaysSolve = true;
+}
+//
+//  #autofocus - Target Scope (once only)
+//
+function d_autofocus(arg)
+{
+    if(c_bLiveMode && !Util.Prefs.AutoFocus.Enabled)
+        throw new ParseException(Err, "#autofocus given but auto focus is disabled.");
+    t_bAutoFocus = true;
+}
+
+//
+//  #autoguide - Target Scope (once only)
+//
+function d_autoguide(arg)
+{
+    t_bAutoGuide = true;                                            // Always accept this, but...
+    if(c_bLiveMode && Util.Prefs.AutoGuiding.Enabled)               // Generate some warnings if applicable
+        throw new ParseException(Warn, "#autoguide given but automatic autoguiding is in effect.");
+    else
+        throw new ParseException(Warn, "#autoguide depends on a guider being available.");
+}
+
+//
+//  #binning - Target Scope (carry over)
+//
+function d_binning(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#binning");
+    var bits = arg.split(",");
+    t_iBinning = new Array();
+    for(var i in bits) {
+        var s = bits[i];
+        var b = parseInt(s);
+        if(isNaN(b) || b != s)
+            throw new ParseException(Err, NON + "#binning " + s);
+        if(b < 1)                                                   // Cannot be 0 or negative
+            throw new ParseException(Err, ORG + "#binning " + s);
+        t_iBinning.push(b);
+    }
+}
+//
+//  #calibrate - Target Scope (once only)
+//
+function d_calibrate(arg)
+{
+    t_bCalibrate = true;
+}
+//
+//  #chain - Plan Scope
+//
+function d_chain(arg)
+{
+    var planPath = "";                                              // Assume full path given
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#chain");
+    if(p_bShutdown)                                                 // #quitat OK, will chain
+        throw new ParseException(Err, "#chain" + PRV + "#shutdown or #shutdownat");
+    if(c_bLiveMode) {
+        if(FSO.GetParentFolderName(arg) === "") {                   // Just a file name, get user's plan folder
+            if(c_sUsername == "local_user" || c_sUsername == "localweb")
+                planPath = Util.Prefs.LocalUser.DefaultPlanDir + "\\";
+            else
+                planPath = Util.Prefs.WebRoot + "\\plans\\" + c_sUsername + "\\";
+        }
+        if(!FSO.FileExists(planPath + arg))
+            throw new ParseException(Err, "#chain to non-existent plan \"" + planPath + arg + "\"");
+    }
+    p_sChainPlan = arg;
+}
+//
+//  #chainscript - Plan Scope
+//
+function d_chainscript(arg)
+{
+    var scriptPath = "";
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#chainscript");
+    if(p_bShutdown)                                                 // #quitat OK, will chain
+        throw new ParseException(Err, "#chainscript" + PRV + "#shutdown or #shutdownat");
+    if(c_bLiveMode) {
+        if(FSO.GetParentFolderName(arg) === "") {                   // Just a file name, get appropriate script folder
+            if(c_sUsername == "local_user" || c_sUsername == "localweb")
+                scriptPath = c_sAcpPath + "\\Scripts\\";
+            else
+                scriptPath = Util.Prefs.WebRoot + "\\scripts\\";
+        }
+        if(!FSO.FileExists(scriptPath + arg))
+            throw new ParseException(Err, "#chain to non-existent script \"" + scriptPath + arg + "\"");
+    }
+    p_sChainScript = arg;
+}
+//
+//  #completionstate - Plan completion state (after an interrupt)
+//
+function d_completionstate(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#completionstate");
+    var bits = arg.split(",");
+    if(bits.length < 5)                                             // must be sets-compl,tgts-compl,repeats-compl,filts-compl,counts-compl
+        throw new ParseException(Err, MRG + "#completionstate");
+    p_iSetsCompl = parseInt(bits[0].trim());
+    if(isNaN(p_iSetsCompl))
+        throw new ParseException(Err, NON + "#completionstate " + bits[0].trim());
+    if(p_iSetsCompl < 0)                                            // Cannot be negative (typ.)
+        throw new ParseException(Err, ORG + "#completionstate " + p_iSetsCompl);
+    p_iTgtsCompl = parseInt(bits[1].trim());
+    if(isNaN(p_iTgtsCompl))
+        throw new ParseException(Err, NON + "#completionstate " + bits[1].trim());
+    if(p_iTgtsCompl < 0)
+        throw new ParseException(Err, ORG + "#completionstate " + p_iTgtsCompl);
+    p_iRptsCompl = parseInt(bits[2].trim());
+    if(isNaN(p_iRptsCompl))
+        throw new ParseException(Err, NON + "#completionstate " + bits[2].trim());
+    if(p_iRptsCompl < 0)
+        throw new ParseException(Err, ORG + "#completionstate " + p_iRptsCompl);
+    p_iGrpsCompl = parseInt(bits[3].trim());
+    if(isNaN(p_iGrpsCompl))
+        throw new ParseException(Err, NON + "#completionstate " + bits[3].trim());
+    if(p_iGrpsCompl < 0)
+        throw new ParseException(Err, ORG + "#completionstate " + p_iGrpsCompl);
+    p_iCntsCompl = parseInt(bits[4].trim());
+    if(isNaN(p_iCntsCompl))
+        throw new ParseException(Err, NON + "#completionstate " + bits[4].trim());
+    if(p_iCntsCompl < 0)
+        throw new ParseException(Err, ORG + "#completionstate " + p_iCntsCompl);
+}
+//
+//  #count - Target Scope (carry over)
+//
+function d_count(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#count");
+    var bits = arg.split(",");
+    t_iCount = new Array();
+    for(var i in bits) {
+        var s = bits[i].trim();
+        var c = parseInt(s);
+        if(isNaN(c) || c != s)
+            throw new ParseException(Err, NON + "#count " + s);
+        if(c < 1)                                                   // Cannot be 0 or negative
+            throw new ParseException(Err, ORG + "#count " + s);
+        t_iCount.push(c);
+    }
+}
+//
+//  #defocus - Target Scope (carry over)
+//
+function d_defocus(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#defocus");
+    t_fDefocus = parseInt(arg);
+    if(isNaN(t_fDefocus) || t_fDefocus != arg)
+        throw new ParseException(Err, NON + "#defocus " + arg);
+}
+//
+//  #dir - Target Scope (carry over)
+//
+function d_dir(arg)
+{
+    t_sDir = arg;
+}
+//
+//  #dither - Target Scope (carry over)
+//
+function d_dither(arg)
+{
+    if(arg === "")
+        arg = "-1";                                                 // Auto-dither
+    t_fDither = parseFloat(arg);
+    if(isNaN(t_fDither) || t_fDither != arg)
+        throw new ParseException(Err, NON + "#dither " + arg);
+    if(t_fDither < 0.0 && t_fDither != -1)                          // Cannot be negative, but can be -1 (auto). 0 is "off"
+        throw new ParseException(Err, ORG + "#dither " + arg);
+}
+//
+//  #filter - Target Scope (carry over)
+//
+function d_filter(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#filter");
+    if(c_bLiveMode && !SUP.HaveFilters)
+        throw new ParseException(Err, "#filter given but system has no filters");
+    var bits = arg.split(",");
+    t_iFilterNum = new Array();
+    t_sFilterName = new Array();
+    for(var i in bits) {
+        var sf = bits[i].trim();
+        if(c_bLiveMode) {
+            if(!SUP.FilterExists(sf))
+                throw new ParseException(Err, "Unknown filter " + sf);
+            t_iFilterNum.push(SUP.DecodeFilter(sf));
+        } else {
+            t_iFilterNum.push(0);                                   // Ignored by plan checker
+        }
+        t_sFilterName.push(sf);
+    }
+    c_bFilterSeen = true;                                           // We've seen #filter now
+}
+//
+//  #interval - Target Scope (carry over)
+//
+function d_interval(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#interval");
+    var bits = arg.split(",");
+    t_fInterval = new Array();
+    for(var i in bits) {
+        var s = bits[i].trim();
+        var n = parseFloat(s);
+        if(isNaN(n) || n != s)
+            throw new ParseException(Err, NON + "#interval " + s);
+        if(n < 0.0)
+            throw new ParseException(Err, ORG + "#interval " + s);
+        t_fInterval.push(n);
+    }
+}
+//
+//  #minsettime - Plan Scope
+//
+function d_minsettime(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#minsettime");
+    p_fMinSetTime = Date.parse("01/01/70 " + arg + " UTC") / 3600000; // Convert hh:mm:ss to hours
+    if(isNaN(p_fMinSetTime))
+        throw new ParseException(Err, "#minsettime not in hh:mm:ss " + arg);
+}
+//
+//  #nopointing - Target Scope (once only)
+//
+function d_nopointing(arg)
+{
+    if (t_bPointing)
+        throw new ParseException(Err, "#nopointing" + PRV + "#pointing");
+    t_bNoPointing = true;
+}
+//
+//  #nopreview - Target Scope (once only)
+//
+function d_nopreview(arg)
+{
+    t_bNoPreview = true;
+}
+//
+//  #nosolve - Target Scope (once only)
+//
+function d_nosolve(arg)
+{
+    if (p_bAlwaysSolve)
+        throw new ParseException(Err, "#nosolve" + PRV + "#alwayssolve");
+    t_bNoSolve = true;
+}
+//
+//  #pointing - Target Scope (once only)
+//
+function d_pointing(arg)
+{
+    if (t_bNoPointing)
+        throw new ParseException(Err, "#pointing" + PRV + "#nopointing");
+    t_bPointing = true;
+}
+//
+//  #posang - Target Scope (carry over)
+//
+function d_posang(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#posang");
+    if(c_bLiveMode && !SUP.HaveRotator)
+        throw new ParseException(Warn, "#posang given, but system has no rotator, ignored");
+    t_fPosAng = parseFloat(arg);
+    if(isNaN(t_fPosAng) || t_fPosAng != arg)
+        throw new ParseException(Err, NON + "#posang " + arg);
+    if(t_fPosAng < 0.0 || t_fPosAng >= 360.0)
+        throw new ParseException(Err, ORG + "#posang " + arg);
+    c_bPosAngSeen = true;
+}
+//
+//  #quitat - Plan Scope
+//
+function d_quitat(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#quitat");
+    var t = getDateTime(arg);
+    if(isNaN(t))
+        throw new ParseException(Err, BDT + "#quitat");
+    if(p_dtQuitAt !== null) {
+        p_dtQuitAt = t;                                              // Use new value!
+        throw new ParseException(Warn, "#quitat" + ALR);
+    }
+    p_dtQuitAt = t;
+}
+//
+//  #readoutmode - Target Scope (carry over)
+//
+function d_readoutmode(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#readoutmode");
+    if(c_bLiveMode && !SUP.HaveReadoutModes)
+        throw new ParseException(Err, "#readoutmode given but imager has no readout modes");
+    if(c_bLiveMode) {
+        if(!SUP.ReadoutModeExists(arg))
+            throw new ParseException(Err, "Unknown imager readout mode " + arg);
+        t_iReadoutMode = SUP.DecodeReadoutMode(arg);
+    } else {
+        t_iReadoutMode = 0;                                         // Ignored by plan checker
+    }
+    c_bRoModeSeen = true;                                           // We've seen #readoutmode now
+}
+//
+//  #repeat - Target Scope (once only)
+//
+function d_repeat(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#repeat");
+    if(t_iRepeat > 1)                                               // Already seen #repeat?
+        throw new ParseException(Err, "#repeat" + PRV + "#repeat");
+    t_iRepeat = parseInt(arg);
+    if(isNaN(t_iRepeat) || t_iRepeat != arg)
+        throw new ParseException(Err, NON + "#repeat " + arg);
+    if(t_iRepeat < 1)                                              // Cannot be less than 1
+        throw new ParseException(Err, ORG + "#repeat " + arg);
+    t_bStack = false;
+    t_bAlign = false;
+}
+//
+//  #sets - Plan Scope
+//
+function d_sets(arg)
+{
+    var prev = p_iSets;
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#sets");
+    p_iSets = parseInt(arg);                                        // Use new value now
+    if(isNaN(p_iSets) || p_iSets != arg)
+        throw new ParseException(Err, NON + "#sets " + arg);
+    if(p_iSets < 1)                                                 // Cannot be less than 1
+        throw new ParseException(Err, ORG + "#sets " + arg);
+    if(prev != 1 && p_iSets != 1 && p_iSets != prev)                // Already seen #sets?
+        throw new ParseException(Warn, "#sets" + ALR);              // Can only report 1 warning, this is priority
+    if(p_iSets == 1)
+        throw new ParseException(Warn, "#sets 1 is unnecessary");
+ }
+//
+//  #shutdown - Plan Scope
+//
+function d_shutdown(arg)
+{
+    if(p_bShutdown)
+        throw new ParseException(Err, "#shutdown" + PRV + "#shutdown or #shutdownat");
+    p_bShutdown = true;
+}
+//
+//  #shutdownat - Plan Scope
+//
+function d_shutdownat(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#shutdownat");
+    var t = getDateTime(arg);
+    if(isNaN(t))
+        throw new ParseException(Err, BDT + "#shutdownat");
+    if(p_bShutdown)
+        throw new ParseException(Err, "#shutdownat" + PRV + "#shutdown or #shutdownat");
+    if(p_dtQuitAt !== null && p_bShutdown) {
+        p_dtQuitAt = t;                                              // Use new value!
+        throw new ParseException(Warn, "#shutdownat" + ALR);
+    }
+    p_bShutdown = true;
+    p_dtQuitAt = t;
+}
+//
+//  #stack - Target Scope (once only)
+//
+function d_stack(arg)
+{
+    if(arg !== "")
+        throw new ParseException(Warn, OBS + "#stack");
+    if(t_bStack)
+        throw new ParseException(Err, "#stack" + PRV + "#stack or #stackalign");
+    t_bStack = true;
+    t_bAlign = false;
+}
+//
+//  #stackalign - Target Scope (once only)
+//
+function d_stackalign(arg)
+{
+    if(arg !== "")
+        throw new ParseException(Warn, OBS + "#stackalign");
+    if(t_bStack)
+        throw new ParseException(Err, "#stack" + PRV + "#stack or #stackalign");
+    t_bStack = true;
+    t_bAlign = true;
+}
+//
+//  #startsetnum - Plan Scope
+//
+function d_startsetnum(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#startsetnum");
+    if(p_iStartSetNum > 1)                                          // Already seen #sets?
+        throw new ParseException(Err, "#startsetnum already defined");
+    p_iStartSetNum = parseInt(arg);
+    if(isNaN(p_iStartSetNum) || p_iStartSetNum != arg)
+        throw new ParseException(Err, NON + "#startsetnum " + arg);
+    if(p_iStartSetNum < 0)                                          // Cannot be negative
+        throw new ParseException(Err, ORG + "#startsetnum " + arg);
+}
+//
+//  #subframe - Target Scope (carry over)
+//
+function d_subframe(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#subframe");
+    t_fSubFrame = parseFloat(arg);
+    if(isNaN(t_fSubFrame) || t_fSubFrame != arg)
+        throw new ParseException(Err, NON + "#subframe " + arg);
+    if(t_fSubFrame <= 0.0 || t_fSubFrame > 1.0)                     // Must be > 0 and <= 1
+        throw new ParseException(Err, ORG + "#subframe " + arg);
+}
+//
+//	#tag - Target scope (once only)
+//
+function d_tag(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#tag");
+    var bits = arg.split("=", 2);
+    if(bits.length != 2)
+        throw new ParseException(Err, "Missing '=' in #tag: \"" + arg + "\"");
+	var key=bits[0].trim();
+	if(t_oTags === null) { 
+		t_oTags = new Object();
+	} else if(t_oTags.hasOwnProperty(key)) {
+		throw new ParseException(Err, "Duplicate tag defined: " + key);
+	}
+	t_oTags[key] = bits[1].trim();
+}
+//
+//  #trackoff - Target Scope (carry over)
+//
+function d_trackoff(arg)
+{
+    t_bOrbTrack = false;
+}
+//
+//  #trackon - Target Scope (carry over)
+//
+function d_trackon(arg)
+{
+    if(c_bLiveMode && !SUP.HaveTrackOffset)
+        throw new ParseException(Err, "#trackon seen but scope has no sidereal rate offset capability");
+    t_bOrbTrack = true;
+}
+//
+//  #waitairmass - Target Scope (once only)
+//
+function d_waitairmass(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, "missing arguments in #waitairmass");
+    var bits = arg.split(",", 2);
+    if(bits.length != 2)
+        throw new ParseException(Err, MRG + "#waitairmass: \"" + arg + "\"");
+    var s = bits[0].trim();
+    var a = parseFloat(s);
+    if(isNaN(a) || a != s)
+        throw new ParseException(Err, NON + "airmass in #waitairmass: \"" + arg + "\"");
+    if(a < 1.0)                                                     // Cannot be < 1.0
+        throw new ParseException(Err, ORG + "airmass in #waitairmass: \"" + arg + "\"");
+    s = bits[1].trim();
+    var t = parseFloat(s);
+    if(isNaN(t) || t != s)
+        throw new ParseException(Err, NON + TIM + "#waitairmass: \"" + arg + "\"");
+    if(t <= 0.0)                                                    // Cannot be <= 0.0
+        throw new ParseException(Err, ORG + TIM + "#waitairmass: \"" + arg + "\"");
+    t_oWaitAirMass = new Object();                                  // It's real
+    t_oWaitAirMass.AirMass = a;
+    t_oWaitAirMass.TimeLimit = t;
+}
+//
+//  #waitfor - Target Scope (once only)
+//
+function d_waitfor(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#waitfor");
+    t_iWaitFor = parseInt(arg);
+    if(isNaN(t_iWaitFor) || t_iWaitFor != arg)
+        throw new ParseException(Err, NON + "#waitfor " + arg);
+    if(t_iWaitFor <= 0)                                             // Cannot be 0 or negative
+        throw new ParseException(Err, ORG + "#waitfor " + arg);
+}
+//
+//  #waitinlimits - Target Scope (once only)
+//
+function d_waitinlimits(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#waitinlimits");
+    t_iWaitInLimits = parseInt(arg);
+    if(isNaN(t_iWaitInLimits) || t_iWaitInLimits != arg)
+        throw new ParseException(Err, NON + "#waitinlimits " + arg);
+    if(t_iWaitInLimits <= 0)                                        // Cannot be 0 or negative
+        throw new ParseException(Err, ORG + "#waitinlimits " + arg);
+}
+//
+//  #waituntil - Target Scope (once only)
+//
+// Second arg may be date or negative real (sun angle)
+//
+function d_waituntil(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, "missing arguments in #waituntil");
+    var bits = arg.split(",", 2);
+    if(bits.length != 2)
+        throw new ParseException(Err, MRG + "#waituntil: \"" + arg + "\"");
+    var s = bits[0].trim();
+    var n = parseInt(s);
+    if(isNaN(n) || n != s)
+        throw new ParseException(Err, NON + "set number in #waituntil: \"" + arg + "\"");
+    if(n < 0 || n > p_iSets)                                        // Cannot be 0 or negative, or > #sets
+        throw new ParseException(Err, ORG + "set number in #waituntil: \"" + arg + "\"");
+    var s = bits[1].trim();                                        // Date or negative real
+    if(n === 0  && s.search(/\s+/) != -1)                          // Senseless combination
+         throw new ParseException(Warn, "Useless combination of set 0 (all sets) and specific date in #waituntil: \"" + arg + "\"");
+    var t;
+    if(s.substr(0, 1) == '-')                                      // Arg is negative #, sun angle
+    {
+        t = parseFloat(s);
+        if(isNaN(t) || t != s)
+            throw new ParseException(Err, NON + "#waituntil " + arg);
+    }
+    else                                                            // Date/time or just a time
+    {
+        t = getDateTime(bits[1].trim());
+        if(isNaN(t))
+            throw new ParseException(Err, BDT + "#waituntil: \"" + arg + "\"");
+    }
+    //
+    // This may seem crazy, but a "wait all sets" has use on plans that are
+    // resumed on multiple nights. The wait would pace observing on the
+    // resumed nights like on the first night.
+    //
+    if(n === 0)                                                     // Sets 0 means "all sets"
+    {
+        for(var i = 0; i < p_iSets; i++)
+        {
+            t_dtiWaitUntil[i] = t;                                  // Store in array indexed by setnum - 1
+            if(typeof t == "object")                                // Date, convert for Automation
+                t_dtiWaitUntilAuto[i] = t.getVarDate();             // For non-JScript clients
+            else                                                    // Number (sun elev)
+                t_dtiWaitUntilAuto[i] = t;
+        }
+    }
+    else                                                            // Single set wait
+    {
+        t_dtiWaitUntil[n - 1] = t;                                  // Store in array indexed by setnum - 1
+        if(typeof t == "object")                                    // Date, convert for Automation
+            t_dtiWaitUntilAuto[n - 1] = t.getVarDate();             // For non-JScript clients
+        else                                                        // Number (sun elev)
+            t_dtiWaitUntilAuto[n - 1] = t;
+    }
+}
+//
+//  #waitzendist - Target Scope (once only)
+//
+function d_waitzendist(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, "missing arguments in #waitzendist");
+    var bits = arg.split(",", 2);
+    if(bits.length != 2)
+        throw new ParseException(Err, MRG + "#waitzendist: \"" + arg + "\"");
+    var s = bits[0].trim();
+    var z = parseFloat(s);
+    if(isNaN(z) || z != s)
+        throw new ParseException(Err, NON + "zenith distance in #waitzendist: \"" + arg + "\"");
+    if(z < 1.0)                                                     // Cannot be < 1.0
+        throw new ParseException(Err, ORG + "zenith distance in #waitzendist: \"" + arg + "\"");
+    s = bits[1].trim();
+    var t = parseFloat(s);
+    if(isNaN(t) || t != s)
+        throw new ParseException(Err, NON + TIM + "#waitzendist: \"" + arg + "\"");
+    if(t <= 0.0)                                                    // Cannot be <= 0.0
+        throw new ParseException(Err, ORG + TIM + "#waitzendist: \"" + arg + "\"");
+    t_oWaitZenDist = new Object();                                  // It's real
+    t_oWaitZenDist.ZenDist = z;
+    t_oWaitZenDist.TimeLimit = t;
+}
+//
+//  #bias - Pseudo-Target
+//
+function t_bias(arg)
+{
+    if(t_iWaitInLimits !== 0)
+        throw new ParseException(Err, "#bias" + CNU + "#waitinlimits");
+    if(t_oWaitAirMass !== null)
+        throw new ParseException(Err, "#bias" + CNU + "#waitairmass");
+    if(t_oWaitZenDist !== null)
+        throw new ParseException(Err, "#bias" + CNU + "#waitzendist");
+    if(t_bStack)
+        throw new ParseException(Err, "#bias" + CNU + "#stack or #stackalign");
+    var oTgt = CreateTarget(BIAS);							        // CalFrame
+    for(var i = 0; i < oTgt.ImageSets.length; i++)
+        oTgt.ImageSets[i].Interval = 0;                             // Override current intervals
+    oTgt.Name = "Bias";
+    oTgt.TargetLine = "#bias";                               		// And the raw line
+    if(arg !== "") {
+    	if(oTgt.ImageSets.length > 1)								// If multiple cal sets, illegal
+    		throw new ParseException(Err, "Cannot specify cal filename together with multiple cal sets");
+    	oTgt.CalPathName = arg;                          			// Optional full path/name of bias image
+    	oTgt.TargetLine += " " + arg;
+    }
+    oTgt.Type = oTgt.P_BIAS;
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #chill - Pseudo-Target
+//
+function t_chill(arg)
+{
+    if(arg === "")
+        throw new ParseException(Err, MRG + "#chill");
+    var bits = arg.split(',');                                      // Temp[,tol]
+    if (bits.length == 1) bits.push("2.0");                         // Default tolerance 2 deg.
+    var s = bits[0].trim();
+    var temp = parseFloat(s);
+    if(isNaN(temp) || temp != s)
+        throw new ParseException(Err, NON + "#chill " + bits[0] + " (temperature)");
+    if(temp > 40)                                                   // Cannot > 40 C
+        throw new ParseException(Err, ORG + "#chill " + bits[0]);
+    s = bits[1].trim()
+    var tol = parseFloat(s);
+    if(isNaN(tol) || tol != s)
+        throw new ParseException(Err, NON + "#chill " + bits[0] + " (tolerance)");
+    if(tol < 0.1 || tol > 10.0)                                     // Tolerance 0.1 to 10 deg
+        throw new ParseException(Err, ORG + "#chill " + bits[1]);
+    if(t_iWaitInLimits !== 0)
+        throw new ParseException(Err, "#chill" + CNU + "#waitinlimits");
+    if(t_oWaitAirMass !== null)
+        throw new ParseException(Err, "#chill" + CNU + "#waitairmass");
+    if(t_oWaitZenDist !== null)
+        throw new ParseException(Err, "#chill" + CNU + "#waitzendist");
+    var oTgt = CreateTarget(PSEUDO);                                // Non-Image
+    oTgt.Name = "Chill imager to temp with tolerance";              // Add a display name for dump listing
+    oTgt.ChillTemp = temp;                                          // Save the target temperature
+    oTgt.ChillTol = tol;                                            // And the tolerance
+    oTgt.TargetLine = "#chill " + arg;                              // And the raw line
+    oTgt.Type = oTgt.P_CHILL;                                       // Set (pseudo) target type
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #dark - Pseudo-Target
+//
+// Interval 0 will be converted to a bias (backward compat.)
+//
+function t_dark(arg)
+{
+    if(t_iWaitInLimits !== 0)
+        throw new ParseException(Err, "#dark" + CNU + "#waitinlimits");
+    if(t_oWaitAirMass !== null)
+        throw new ParseException(Err, "#dark" + CNU + "#waitairmass");
+    if(t_oWaitZenDist !== null)
+        throw new ParseException(Err, "#dark" + CNU + "#waitzendist");
+    if(t_bStack)
+        throw new ParseException(Err, "#dark" + CNU + "#stack or #stackalign");
+    var oTgt = CreateTarget(DARK);                                  // Cal Frame
+    if(oTgt.ImageSets[0].Interval === 0)                            // If current interval = 0, convert to #bias
+    {
+        oTgt.Name = "Bias";
+        oTgt.Type = oTgt.P_BIAS;                                    // Set (pseudo) target type
+    }    
+    else
+    {
+        oTgt.Name = "Dark";
+        oTgt.Type = oTgt.P_DARK;                                    // Set (pseudo) target type
+    }
+    oTgt.TargetLine = "#dark";                               		// And the raw line
+    if(arg !== "") {
+    	if(oTgt.ImageSets.length > 1)								// If multiple cal sets, illegal
+    		throw new ParseException(Err, "Cannot specify cal filename together with multiple cal sets");
+    	oTgt.CalPathName = arg;                          			// Optional full path/name of dark/bias image
+    	oTgt.TargetLine += " " + arg;
+    }
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+//     if(oTgt.ImageSets[0].Interval === 0)                            // throw deprecation warning
+//         throw new ParseException(Warn, "#dark with #interval 0 converted to #bias\r\nRecommend #bias in future plans.");
+}
+//
+//  #domeclose - Pseudo-Target
+//
+function t_domeclose(arg)
+{
+    if(c_bLiveMode && !Util.Dome.Available)
+        throw new ParseException(Err, "#domeclose seen but dome control is not enabled");
+    if(t_iWaitInLimits !== 0)
+        throw new ParseException(Err, "#domeclose" + CNU + "#waitinlimits");
+    if(t_oWaitAirMass !== null)
+        throw new ParseException(Err, "#domeclose" + CNU + "#waitairmass");
+    if(t_oWaitZenDist !== null)
+        throw new ParseException(Err, "#domeclose" + CNU + "#waitzendist");
+    var oTgt = CreateTarget(PSEUDO);                                // Non Image
+    oTgt.Name = "Close the shutter";                                // Add a display Name
+    oTgt.TargetLine = "#domeclose";                                 // And the raw line
+    oTgt.Type = oTgt.P_DOMECLOSE;                                   // Set (pseudo) target type
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #domeopen - Pseudo-Target
+//
+function t_domeopen(arg)
+{
+    if(c_bLiveMode && !Util.Dome.Available)
+        throw new ParseException(Err, "#domeopen seen but dome control is not enabled");
+    if(t_iWaitInLimits !== 0)
+        throw new ParseException(Err, "#domeopen" + CNU + "#waitinlimits");
+    if(t_oWaitAirMass !== null)
+        throw new ParseException(Err, "#domeopen" + CNU + "#waitairmass");
+    if(t_oWaitZenDist !== null)
+        throw new ParseException(Err, "#domeopen" + CNU + "#waitzendist");
+    var oTgt = CreateTarget(PSEUDO);							    // Non-Image
+    oTgt.Name = "Open the shutter";                                 // Add a display Name
+    oTgt.TargetLine = "#domeopen";                                  // And the raw line
+    oTgt.Type = oTgt.P_DOMEOPEN;                                    // Set (pseudo) target type
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #manual - Pseudo-Target
+//
+function t_manual(arg)
+{
+    if(t_iWaitInLimits !== 0)
+        throw new ParseException(Err, "#manual" + CNU + "#waitinlimits");
+    if(t_oWaitAirMass !== null)
+        throw new ParseException(Err, "#manual" + CNU + "#waitairmass");
+    if(t_oWaitZenDist !== null)
+        throw new ParseException(Err, "#manual" + CNU + "#waitzendist");
+    if(p_iSets > 1)
+        throw new ParseException(Err, "#manual" + CNU + "#sets > 1");
+    if(p_oTargets.length > 0)                                       // Must be first target!
+        throw new ParseException(Err, "#manual not first target");
+    var oTgt = CreateTarget(LIGHT);                                 // Live image
+    if(arg === "")
+    {
+        oTgt.Name = "Manual";                                       // Supply a Name
+        oTgt.TargetLine = "#manual";                                // And the raw line
+    }
+    else
+    {
+        oTgt.Name = arg;                                            // Use supplied Name
+        oTgt.TargetLine = "#manual " + arg;                         // And the raw line
+    }
+    oTgt.Type = oTgt.P_MANUAL;                                      // Set (pseudo) target type
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #duskflats - Pseudo-Target
+//
+function t_duskflats(arg)
+{
+    if(c_bScreenFlats)
+		throw new ParseException(Err, "#duskflats unusable, system does screen/panel flats.");
+	if(c_bDuskFlatsSeen)
+		throw new ParseException(Err, "#duskflats" + PRV + "#duskflats");
+    if(c_bDawnFlatsSeen)
+    	throw new ParseException(Err, "#duskflats cannot follow #dawnflats");
+	if(c_bLightFrameSeen)
+    	throw new ParseException(Err, "#duskflats cannot follow light frame targets");
+    c_bDuskFlatsSeen = true;										// We haved seen a #duskflats
+    var oTgt = CreateTarget(PSEUDO);                                // Non-image
+    oTgt.Name = "Dusk flats";                                       // Add a display Name
+    oTgt.TargetLine = "#duskflats";                                 // And the raw line
+    oTgt.Type = oTgt.P_DUSKFLATS;                                   // Set (pseudo) target type
+    oTgt.FlatPlanName = ResolveFlatPlan(arg, false);                // Optional (false->dusk) flat plan name (may be "")
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #dawnflats - Pseudo-Target
+//
+function t_dawnflats(arg)
+{
+    if(c_bScreenFlats)
+		throw new ParseException(Err, "#dawnflats unusable, system does screen/panel flats.");
+	if(c_bDawnFlatsSeen)
+		throw new ParseException(Err, "#dawnflats" + PRV + "#dawnflats");
+    c_bDawnFlatsSeen = true;										// We haved seen a #dawnflats
+    var oTgt = CreateTarget(PSEUDO);                                // Non-image
+    oTgt.Name = "Dawn flats";                                       // Add a display Name
+    oTgt.TargetLine = "#dawnflats";                                 // And the raw line
+    oTgt.Type = oTgt.P_DAWNFLATS;                                   // Set (pseudo) target type
+    oTgt.FlatPlanName = ResolveFlatPlan(arg, true);                 // Optional (true->dawn) flat plan name (may be "")
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #screenflats - Pseudo-Target
+//
+function t_screenflats(arg)
+{
+    if(c_bLiveMode && !c_bScreenFlats)                              // Offline mode assumes sky flats, let this pass too
+		throw new ParseException(Err, "#screenflats unusable, system does sky flats.");
+	if(c_bScreenFlatsSeen)
+		throw new ParseException(Err, "#screenflats" + PRV + "#screenflats");
+    c_bScreenFlatsSeen = true;										// We haved seen a #dawnflats
+    var oTgt = CreateTarget(PSEUDO);                                // Non-image
+    oTgt.Name = "Screen flats";                                     // Add a display Name
+    oTgt.TargetLine = "#screenflats";                               // And the raw line
+    oTgt.Type = oTgt.P_SCREENFLATS;                                 // Set (pseudo) target type
+    oTgt.FlatPlanName = ResolveFlatPlan(arg, true);                 // Optional (true->dawn) flat plan name (may be "")
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+//
+//  #noweather - Pseudo-Target
+//
+function t_noweather(arg)
+{
+    var oTgt = CreateTarget(PSEUDO);							    // Non-Image
+    oTgt.Name = "Disconnect weather (any dome/roof must be closed)"; // Add a display Name
+    oTgt.TargetLine = "#noweather";                                 // And the raw line
+    oTgt.Type = oTgt.P_NOWEATHER;                                   // Set (pseudo) target type
+    p_oTargets.push(oTgt);                                          // Add to target array
+    resetTarget();                                                  // Reset once-only variables
+}
+
+//
+// Dispatch Table
+//
+var dispTable = new Object();
+dispTable.afinterval        = d_afinterval;                         // Directives
+dispTable.alwayssolve       = d_alwayssolve;
+dispTable.autofocus         = d_autofocus;
+dispTable.autoguide         = d_autoguide;
+dispTable.binning           = d_binning;
+dispTable.calibrate         = d_calibrate;
+dispTable.chain             = d_chain;
+dispTable.chainscript       = d_chainscript;
+dispTable.completionstate   = d_completionstate;
+dispTable.count             = d_count;
+dispTable.defocus           = d_defocus;
+dispTable.dir               = d_dir;
+dispTable.dither            = d_dither;
+dispTable.filter            = d_filter;
+dispTable.interval          = d_interval;
+dispTable.minsettime        = d_minsettime;
+dispTable.nopointing        = d_nopointing;
+dispTable.nopreview         = d_nopreview;
+dispTable.nosolve           = d_nosolve;
+dispTable.pointing          = d_pointing;
+dispTable.posang            = d_posang;
+dispTable.quitat            = d_quitat;
+dispTable.readoutmode       = d_readoutmode;
+dispTable.repeat            = d_repeat;
+dispTable.sets              = d_sets;
+dispTable.shutdown          = d_shutdown;
+dispTable.shutdownat        = d_shutdownat;
+dispTable.stack             = d_stack;
+dispTable.stackalign        = d_stackalign;
+dispTable.startsetnum       = d_startsetnum;
+dispTable.subframe          = d_subframe;
+dispTable.tag               = d_tag;
+dispTable.trackoff          = d_trackoff;
+dispTable.trackon           = d_trackon;
+dispTable.waitairmass       = d_waitairmass;
+dispTable.waitfor           = d_waitfor;
+dispTable.waitinlimits      = d_waitinlimits;
+dispTable.waituntil         = d_waituntil;
+dispTable.waitzendist       = d_waitzendist;
+
+dispTable.bias              = t_bias;                               // Pseudo-targets
+dispTable.chill             = t_chill;
+dispTable.dark              = t_dark;
+dispTable.domeclose         = t_domeclose;
+dispTable.domeopen          = t_domeopen;
+dispTable.manual            = t_manual;
+dispTable.duskflats         = t_duskflats;
+dispTable.dawnflats         = t_dawnflats;
+dispTable.screenflats       = t_screenflats;
+dispTable.noweather         = t_noweather;
+
+// ---------------
+// procDirective() - Directive & Pseudo-Target Dispatcher
+// ---------------
+//
+// Throws a string error if problem. Returns true to keep processing, else false.
+//
+function procDirective(sLine)
+{
+    var k, a = "";
+    var s = sLine.indexOf(" ");
+    
+    if(s >= 0) {                                                    // If an arg present
+        k = sLine.substr(1, s - 1).toLowerCase().trim();            // Lowercase command (w/o #)
+        a = sLine.substr(s + 1).trim();                             // Args
+    } else {
+        k = sLine.substr(1).toLowerCase().trim();
+        a = "";
+    }
+    //
+    // Detect chars not legal for JS function name. A comma or semicolon,
+    // for example, would split eval'ed expression into two, returning the 
+    // value of the second and ignoring the first *without error*. 
+    // This is a very subtle problem... We'll just look for anything NOT
+    // in our dispatch table names, and catch them nicely before raising
+    // an error out of the eval() below.
+    //
+    if(k.search(/[^a-z]+/) != -1)
+    	throw new ParseException(Err, "unrecognized directive: #" + k);
+    	
+    try {
+//      ========================================
+        eval("dispTable." + k + "(a);");                            // Dispatch (magic!)
+//      ========================================
+    } catch(e) {
+// Console.PrintLine("dispTable." + k + "(a);");
+// Console.PrintLine(e.name + ": " + e.description);
+        //
+        // If the directive is not recognized, the eval() above will
+        // result in a JS runtime error, e will be an object instead
+        // of a string, and e.name will be "TypeError" or "SyntaxError". 
+        // Catch these nicely.
+        //
+        if(typeof(e) == "object") {
+        	if(e.name == "TypeError") {
+            	throw new ParseException(Err, "unrecognized directive: #" + k);   // Convert to string and throw
+            } else if(e.name == "SyntaxError") {
+            	throw new ParseException(Err, "illegal characters in directive: #" + k);
+            } else { 
+            	throw e; 
+            }
+        } else {
+            throw e;                                                // Just re-throw
+        }
+    }
+    
+    switch(k)                                                       // Handle plan terminator directives
+    {
+        case "chain":       return false;
+        case "chainscript": return false;
+        default:            return true;
+    }
+}
+
+// =================
+// TARGET PROCESSING
+// =================
+
+// ------------
+// procTarget() - Process a target line (many formats)
+// ------------
+//
+// Throws a string error if problem
+//
+function procTarget(sLine)
+{
+	c_bLightFrameSeen = true;										// Used in #duskflats/#dawnflats checks
+    try {                                                           // Catch thrown errors
+        //
+        // #readoutmode is optional. If not given but camera has readout modes,
+        // we let AcquireSupport handle just defaulting to Normal mode.
+        //
+        if(c_bLiveMode && SUP.HaveFilters && !c_bFilterSeen)        // Real target, filtered system, no #filter?
+            throw new ParseException(Err, "System has filters but no #filter yet specified");
+        if(c_bLiveMode && SUP.HaveRotator && !c_bPosAngSeen)
+            throw new ParseException(Err, "System has a rotator but no #posang yet specified");
+        if(c_bDawnFlatsSeen)
+            throw new ParseException(Err, "Light frame targets cannot follow #dawnflats");
+        var oTgt = CreateTarget(LIGHT);						        // Live image
+        oTgt.TargetLine = sLine;                                    // Fill in target line for parsing
+        //
+        // Order is important. This allows tab-delim targets to begin with "mp " etc.
+        //
+        if(sLine.indexOf("\t") != -1) {                             // If this is tab-delimited J2000 coordinates
+            getTabDelim(oTgt);                                      // This fills in the RA/Dec and Name, or signals
+        }
+        else if(sLine.substr(0, 3).toLowerCase() == "mp ") {        // If this is an MPCORB Target
+            getMpcorb(oTgt);
+        }
+        else if(sLine.substr(0, 3).toLowerCase() == "ct ") {        // If this is an MPCSOFT00CMT Target
+            getMpcsoft00cmt(oTgt);
+        }
+        else if(sLine.length > 46 && sLine.substr(46, 1) == "|") {  // Looks like NEOCP ephemerides
+            getNeoEph(oTgt);
+        }
+        else if(sLine.length > 90) {                                // Probably MPC 1-line elements
+            getMpc1Line(oTgt);
+        }
+        else if(tryMajorPlanet(sLine)) {                            // Try for major planet
+            oTgt.Name = sLine;                                      // It was one
+            oTgt.Type = oTgt.PLANET;
+            oTgt.NeedEphem = true;
+        }
+        else {                                                      // Last gasp...
+            getDeepSky(oTgt);                                       // Try for deep sky
+        }
+        // Got this far, target is good
+        p_oTargets.push(oTgt);
+    } catch(e) {
+        throw e;
+    } finally {
+        resetTarget();                                              // Error or not, start new Target
+    }
+}
+
+// -------------
+// getTabDelim() - Check out & fill in a tab-delimited J2000 RA/Dec target
+// ------------
+//
+// If the target line is OK, this also sets the Name and
+// parsed RA/Dec properties of the Target object.
+//
+function getTabDelim(oTgt)
+{
+    oTgt.RA = oTgt.Dec = NaN;                                       // Just in case
+    var bits = oTgt.TargetLine.split("\t");                         // There should be 3 parts
+    if(bits.length != 3)
+        throw new ParseException(Err, "missing fields or tabs");
+    var x = getSexagesimal(bits[1]);								// Throws if problems (typ.)
+    if(x < 0 || x >= 24)
+        throw new ParseException(Err, ORG + "right ascension " + bits[1]);
+    oTgt.RA = x;
+    x = getSexagesimal(bits[2]);
+    if(x < -90 || x > 90)
+        throw new ParseException(Err, ORG + "declination " + bits[1]);
+    oTgt.Dec = x;
+    oTgt.Name = bits[0].trim();
+    oTgt.Type = oTgt.EQUJ2000;
+    oTgt.NeedEphem = false;
+}
+
+// -----------
+// getMpcorb() - Check out & fill in an MPCORB target
+// -----------
+//
+// If found, the elements are plugged into the Elements property.
+// Thus no further lookups are needed.
+//
+function getMpcorb(oTgt)
+{
+    var elements = "";
+    var name = oTgt.TargetLine.substr(3).trim();                    // Remove leading MP & white
+    if(MPC === null) {                                              // Must have access to MPCORB
+        var wl;
+        if(c_bLiveMode)
+            wl = Err;                                               // Fatal if MP given and mo MPCORB
+        else
+            wl = Warn;                                              // Check skipped if offline checking
+        throw new ParseException(wl, "MPCORB not installed, cannot process MP xxx targets");
+    }
+    MPC.Open();
+    try {
+        elements = MPC.GetElements(name);                           // Try for elements
+        name = MPC.Name;                                            // Replace name w/MPC name
+    } catch(e) {
+        throw new ParseException(Err, name + " not found in MPCORB");
+    } finally {
+        MPC.Close();
+    }
+    oTgt.Name = name;
+    oTgt.Elements = elements;
+    oTgt.Type = oTgt.MPCORB;
+    oTgt.NeedEphem = true;
+    if(c_bLiveMode) {
+        var eok;
+        try {
+            eok = SUP.MinorPlanetOb(oTgt);
+        } catch(e) {
+            throw new ParseException(Err, "MPC Ephemeris error is " + e.description);
+        }
+        if(!eok)
+            throw new ParseException(Err, "Bad orbital elements in MPCORB(!), check failed");
+    }
+}
+
+// -------------
+// getMpcsoft00cmt() - Check out & fill in an MPCSOFT00CMT target
+// -------------
+//
+// If found, the elements are plugged into the Elements property.
+// Thus no further lookups are needed.
+//
+function getMpcsoft00cmt(oTgt)
+{
+    var elements = "";
+    var name = oTgt.TargetLine.substr(3).trim();                    // Remove leading CT & white
+    if(MPCC === null) {                                             // Must have access to MPCCOMET
+        var wl;
+        if(c_bLiveMode)
+            wl = Err;                                               // Fatal if CT given and mo MPCCOMET
+        else
+            wl = Warn;                                              // Check skipped if offline checking
+        throw new ParseException(wl, "MPCCOMET not installed, cannot process CT xxx targets");
+    }
+    MPCC.Open();
+    try {
+        elements = MPCC.GetElements(name);                           // Try for elements
+        name = MPCC.Name;                                            // Replace name w/MPC name
+    } catch(e) {
+        throw new ParseException(Err, name + " not found in MPCCOMET");
+    } finally {
+        MPCC.Close();
+    }
+    oTgt.Name = name;
+    oTgt.Elements = elements;
+    oTgt.Type = oTgt.MPCSOFT00CMT;
+    oTgt.NeedEphem = true;
+    if(c_bLiveMode) {
+        var eok;
+        try {
+            eok = SUP.CometOb(oTgt);
+        } catch(e) {
+            throw new ParseException(Err, "MPC Comet Ephemeris error is " + e.description);
+        }
+        if(!eok)
+            throw new ParseException(Err, "Bad orbital elements in MPCCOMET(!), check failed");
+    }
+}
+// -----------
+// getNeoEph() - Check out & fill in an NEOCP ephemerides target
+// -----------
+//
+// Has already been checked for at least 1 | separator
+//
+function getNeoEph(oTgt)
+{
+    var neomsg = "NEOCP ephemerides ";
+    var name = oTgt.TargetLine.substr(0, 10).trim();                // Get the name and trim
+    var ephs = oTgt.TargetLine.substr(11).split("|");               // Split rest into ACP-style NEOCP eph records
+    oTgt.elements = "";                                             // Sentinel for bad elements
+    if(ephs.length < 2)                                             // Must have at least 2 records
+        throw new ParseException(Err, neomsg + "fewer than 2 " + neomsg);
+    for(var i in ephs) {                                            // Check each record for length
+        if(ephs[i].length != 35)
+            throw new ParseException(Err, "bad record length in " + neomsg + ": " + ephs[i]);
+    }
+    oTgt.Name = name;
+    oTgt.Elements = oTgt.TargetLine;
+    oTgt.Type = oTgt.NEOEPH;
+    oTgt.NeedEphem = true;
+    if(c_bLiveMode) {
+        var eok;
+        try {
+            eok = SUP.NeoEphOb(oTgt);
+        } catch(e) {
+            throw new ParseException(Err, "NEO Ephemeris error is " + e.description);
+        }
+        if(!eok)
+            throw new ParseException(Err, "Bad NEOCP Ephemeris data, check failed");
+    }
+}
+
+// -------------
+// getMpc1Line() - Check out & fill in an MPC 1-line elements target
+// -------------
+//
+// The TargetLine property contains the original elements line
+//
+function getMpc1Line(oTgt)
+{
+    var bits;
+    var mpcmsg = "MPC 1-line elements";
+    //
+    // KLUDGE: Non-numeric comet designations have leading
+    // spaces which were trimmed out by the reader. We must
+    // restore the original elements before storing in the
+    // target object. We also use this to tell (again) the
+    // target type.
+    //
+    oTgt.Elements = oTgt.TargetLine;                                // Most cases, Target line has elements string
+    if(oTgt.TargetLine.substr(94).search(/[PCD]-?[A-Z]?\//) != -1)  // Check for comet elements including fragmentary
+    {
+        if(isNaN(parseInt(oTgt.TargetLine.substr(0, 1))))
+            oTgt.Elements = "    " + oTgt.TargetLine;               // Fix up element string for non-numeric comet
+        bits = oTgt.TargetLine.substr(0, 100).split(/ +/);          // Split used elements fields
+        if(bits.length < 12)                                        // Check count of fields (at least)
+            throw new ParseException(Err, "bad format in " + mpcmsg + " (comet format)");
+        oTgt.Name = bits[0];                                        // Get packed designation
+        oTgt.Type = oTgt.MPCCOMET;
+    } else {                                                        // Probably minor planet elements
+        bits = oTgt.TargetLine.substr(0, 103).split(/ +/);          // Split used elements fields
+        if(bits.length != 11)                                       // Check count of fields (at least)
+            throw new ParseException(Err, "bad format in " + mpcmsg + " (asteroid format)");
+        oTgt.Name = bits[0];                                        // Get number or packed desi
+        oTgt.Type = oTgt.MPCASTEROID;
+    }
+    oTgt.NeedEphem = true;
+    if(c_bLiveMode) {
+        var eok;
+        try {
+            if(oTgt.Type == oTgt.MPCASTEROID)
+                eok = SUP.MinorPlanetOb(oTgt);
+            else
+                eok = SUP.CometOb(oTgt);
+        } catch(e) {
+            throw new ParseException(Err, "MPC Ephemeris error is " + e.description);
+        }
+        if(!eok)
+            throw new ParseException(Err, "Bad " + mpcmsg + ", check failed");
+    }
+}
+
+// ----------------
+// tryMajorPlanet()
+// ----------------
+//
+// Return true/false if it is a major planet or not
+//
+function tryMajorPlanet(sLine)
+{
+    return (sLine.match(/mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto/i) !== null);   
+}
+
+// ------------
+// getDeepSky() - Check out  & fill in a deep-sky (MiniSAC) target
+// ------------
+//
+function getDeepSky(oTgt)
+{
+    oTgt.RA = NaN;                                                      // Sentinels for lookup failures
+    oTgt.Dec = NaN;
+    if(SAC === null) {
+        if(c_bLiveMode)
+            throw new ParseException(Err, "Deep Sky catalog seems to be broken.");
+        else
+            throw new ParseException(Warn, "MiniSAC is not installed, cannot validate deep sky names");
+    }
+    var name = oTgt.TargetLine.trim();
+    if(!SAC.SelectObject(name))
+        throw new ParseException(Err, "not found in deep sky database: " + name);
+    oTgt.Name = name;
+    oTgt.RA = SAC.RightAscension;
+    oTgt.Dec = SAC.Declination;
+    oTgt.Type = oTgt.DEEPSKY;
+    oTgt.NeedEphem = false;
+}
+
+// ===============================================
+// MAIN LEVEL PLAN PROCESSING AND PUBLIC INTERFACE
+// ===============================================
+
+// ---------------------
+// Plan-scope properties
+// ---------------------
+
+//var AFinterval;
+function get_AFinterval()
+{
+    return p_iAFInterval;
+}
+
+//var AlwaysSolve;
+function get_AlwaysSolve()
+{
+    return p_bAlwaysSolve;
+}
+
+//var ChainBack;
+function get_ChainBack()
+{
+    return p_bChainBack;
+}
+function put_ChainBack(newVal)
+{
+    p_bChainBack = newVal;
+}
+
+//var ChainPlan;
+function get_ChainPlan()
+{
+    return p_sChainPlan;
+}
+function put_ChainPlan(newVal)
+{
+    p_sChainPlan = newVal;
+}
+
+//var ChainScript;
+function get_ChainScript()
+{
+    return p_sChainScript;
+}
+function put_ChainScript(newVal)
+{
+    p_sChainScript = newVal;
+}
+
+//var CountsCompleted;
+function get_CountsCompleted()
+{
+    return p_iCntsCompl;
+}
+function put_CountsCompleted(newVal)
+{
+    p_iCntsCompl = newVal;
+}
+
+//var DawnFlats;
+function get_DawnFlats()
+{
+    return p_bDawnFlats;
+}
+function put_DawnFlats(newVal)
+{
+    p_bDawnFlats = newVal;
+}
+
+//var DawnFlatPlan;
+function get_DawnFlatPlan()
+{
+    return p_sDawnFlatPlan;
+}
+
+//var DuskFlats;
+function get_DuskFlats()
+{
+    return p_bDuskFlats;
+}
+function put_DuskFlats(newVal)
+{
+    p_bDuskFlats = newVal;
+}
+
+//var DuskFlatPlan;
+function get_DuskFlatPlan()
+{
+    return p_sDuskFlatPlan;
+}
+
+//var FilterGroupsCompleted;
+function get_FilterGroupsCompleted()
+{
+    return p_iGrpsCompl;
+}
+function put_FilterGroupsCompleted(newVal)
+{
+    p_iGrpsCompl = newVal;
+}
+
+//var MinSetTime;
+function get_MinSetTime()
+{
+    return p_fMinSetTime;
+}
+
+//var PathName;
+function get_PathName()
+{
+    return p_sPathName;
+}
+
+//var QuitAt;
+function get_QuitAt()
+{
+    return p_dtQuitAt;
+}
+function put_QuitAt(newVal)
+{
+	p_dtQuitAt = newVal;
+}
+
+//var RepeatsCompleted;
+function get_RepeatsCompleted()
+{
+    return p_iRptsCompl;
+}
+function put_RepeatsCompleted(newVal)
+{
+	p_iRptsCompl = newVal;
+}
+
+//var Sets;
+function get_Sets()
+{
+    return p_iSets;
+}
+
+//var SetsCompleted;
+function get_SetsCompleted()
+{
+    return p_iSetsCompl;
+}
+function put_SetsCompleted(newVal)
+{
+	p_iSetsCompl = newVal;
+}
+
+//var Shutdown;
+function get_Shutdown()
+{
+    return p_bShutdown;
+}
+function put_Shutdown(newVal)
+{
+	p_bShutdown = newVal;
+}
+
+//var StartSetNum;
+function get_StartSetNum()
+{
+    return p_iStartSetNum;
+}
+
+//var Targets
+function get_Targets()
+{
+    return p_oTargets;
+}
+
+//var TargetsCompleted;
+function get_TargetsCompleted()
+{
+    return p_iTgtsCompl;
+}
+function put_TargetsCompleted(newVal)
+{
+	p_iTgtsCompl = newVal;
+}
+
+// -------
+// Methods
+// -------
+
+// ------
+// Read() - Read a plan and construct our state
+// ------
+//
+// WARNING: Init() must be called before EACH CALL to Read()!
+//
+function Read(fname)
+{
+    var strm = FSO.OpenTextFile(fname, 1);
+    var ln = 0;
+    var ok = true;
+    var ur = false;                                                 // Once-only for "unreachable lines"
+    var er = 0;                                                     // Error counter
+    var wr = 0;                                                     // Warning counter
+
+    Console.PrintLine("(using ACP Plan Compiler V" + VERSION + ")");// Echo our compiler version
+    p_sPathName = fname;                                            // Set our Path/Name property
+    resetTarget();                                                  // Start with default/init'ed target
+    while(!strm.AtEndOfStream) 
+    {
+        var buf = strm.ReadLine().trim();                           // Trim lead/trail whitespace
+        ln += 1;
+        if(buf !== "") {
+            if(buf.substr(0, 1) == ";")                             // Comment-only line
+            {
+                t_sComments.push(buf);                              // Add to t_sComments[]
+            } 
+            else 
+            {                                                       // Live line (dir or tgt)
+                buf = buf.replace(/\s*;.*$/, "");                   // Strip inline comment and preceding whitespace
+                try {                                               // Send to dir or tgt processor
+                    if(buf.substr(0, 1) == "#")
+                    {
+                        buf = buf.replace(/\t+/, " ");              // Allow tab(s) between directive and arg.
+                        if(!procDirective(buf)) {                   // Directive or pseudo-target (break if plan-terminator)
+                            while(!strm.AtEndOfStream)              // Plan terminator seen, but...
+                            {
+                                var buf2 = strm.ReadLine().trim();  // ... look for live stuff afterward
+                                if(buf2 !== "" && buf2.substr(0, 1) != ";")
+                                {
+                                    ok = false;
+                                    if(!ur)                         // Echo an error message once (ur)
+                                    {
+                                        Console.PrintLine("Error:   after line " + ln + ": " + buf + " - unreachable lines:");
+                                        er += 1;
+                                        ur = true;
+                                    }
+                                    Console.PrintLine("             " + buf2);  // Echo the unreachable lines (loop)
+                                }
+                            }
+                            break;                                  // Plan terminator ended plan
+                        }
+                    } 
+                    else 
+                    {
+                        procTarget(buf);                            // Real Target
+                    }
+                } catch(e) {                                        // Parse/proc error/warning, echo now
+                    if(e.Level == Warn) {
+                        Console.PrintLine("Warning at line " + ln + ": " + e.Message); // Log the error
+                        wr += 1;
+                    } else {
+                        ok = false;
+                        Console.PrintLine("Error at line " + ln + ": " + e.Message); // Log the error
+                        er += 1;
+                    }
+                    Console.PrintLine("(" + ln + ") -> " + buf);    // Echo the offending line to the log
+                }
+            }
+        }
+    }
+    strm.Close();
+    //
+    // Plan-level checks
+    //
+    if(p_fMinSetTime > 0.0 && p_iSets == 1)
+    {
+        Console.PrintLine("Warning: #minsettime ignored - plan has only 1 set.");
+        wr += 1;
+    }
+    //
+    // Wrap it up
+    //
+    if(er > 0 || wr > 0 ) Console.PrintLine("");                    // Provide space before totals
+    if(er > 0) Console.PrintLine("Total errors   " + er);
+    if(wr > 0) Console.PrintLine("Total warnings " + wr);
+    if(er === 0 && wr > 0) {                                        // If only warnings
+        Console.PrintLine("----------------------------");
+        Console.PrintLine("");                                      // Provide space before plan listing
+    }
+    Util = null;                                                    // Very important to prevent object leaks
+    SUP = null;
+    MPC = null;
+    MPCC = null;
+    SAC = null;
+    return ok;
+}
+
+// ------
+// Init() - Client calls first to establish environment
+// ------
+//
+// Permits this component to be used live from AcquireImages, etc., 
+// or "offline" from PlanChecker. Whichever client must call this 
+// before doing anything else!
+//
+function Init(utl, sup, user, live, acppath)
+{
+    Util = utl;
+    Console = Util.Console;
+    SUP = sup;
+    c_sUsername = user;
+    c_bLiveMode = live;
+    c_sAcpPath = acppath;                                           // undefined except c_bLiveMode = true
+    c_bScreenFlats = false;                                         // Assume sky flats
+    //
+    // Try to create MiniSAC, MPCORB, and MPCCOMET objects for lookups
+    //
+    try {
+        SAC = new ActiveXObject("MiniSAC.Catalog");
+    } catch(e) {
+        SAC = null;
+    }
+    try {
+        MPC = new ActiveXObject("ASCOM.MPCORB");
+        MPC.Open();                                                     // Assure database itself is present!
+        MPC.Close();
+    } catch(e) {
+        MPC = null;
+    }
+    try {
+        MPCC = new ActiveXObject("ASCOM.MPCCOMET");
+        MPCC.Open();                                                     // Assure database itself is present!
+        MPCC.Close();
+    } catch(e) {
+        MPCC = null;
+    }
+    
+    if(live) {
+        try {
+            var ACPApp = new ActiveXObject("ACP.Application");
+            var st = FSO.OpenTextFile(ACPApp.ConfigPath + "\\AutoFlatConfig.txt");
+            buf = st.ReadAll();
+            st.Close();
+            if (buf.search(/FlatMode\s+Sky/i) < 0)
+                c_bScreenFlats = true;
+        } catch(ex) { }
+    }
+
+}
+
+// ------
+// Term() - Release object handles
+// ------
+//
+function Term()
+{
+    Console = null;
+    Util = null;
+    SUP = null;
+    SAC = null;
+    MPC = null;
+    MPCC = null;
+}
+
+// -----------------------
+// UpdateCompletionState() - Update #completionstate and #startsetnum in Plan and file
+// -----------------------
+//
+// Note: The plan file may have been deleted (run once logic). If this is the case,
+// don't worry, just skip the update.
+//
+function UpdateCompletionState()
+{
+    var plStrm, plBuf, U;
+    try {
+        U = new ActiveXObject("ACP.Util");          // Can use live one here, never called by checker
+        plStrm = FSO.OpenTextFile(p_sPathName, 1);
+        plBuf = plStrm.ReadAll();
+        plStrm.Close();
+        // GEM:995 Prevent race condition with CreateTextFile() below
+        U.WaitForMilliseconds(500);
+        FSO.DeleteFile(p_sPathName);
+        U.WaitForMilliseconds(500);
+        U = null;
+    } catch(ex) {
+        U = null;
+        return;
+    }
+
+    plBuf = plBuf.replace(/^[ \t]*#startsetnum[\s\S]+?\r\n/i, "");
+    plBuf = plBuf.replace(/^[ \t]*#completionstate[\s\S]+?\r\n/i, "");
+    var hBuf = "";
+    if(p_iSetsCompl < p_iSets) {                                    // If plan was initerrupted or failed
+        hBuf += "#startsetnum " + p_iStartSetNum + " ; Persistent set numbering added by ACP\r\n";
+        hBuf += "#completionstate " + p_iSetsCompl + "," + p_iTgtsCompl + "," +
+                    p_iRptsCompl + "," + p_iGrpsCompl + "," + p_iCntsCompl + 
+                    " ; Plan completion status added by ACP\r\n";
+    } else {                                                        // Plan ran to completion
+        hBuf += "#startsetnum " + (p_iStartSetNum + p_iSets) + " ; Persistent set numbering added by ACP\r\n";
+    }
+
+    plStrm = FSO.CreateTextFile(p_sPathName, false);    // Must have been deleted above! (GEM:995)
+    plStrm.Write(hBuf + plBuf);
+    plStrm.Close();
+}
+
+// =================
+// UTILITY FUNCTIONS
+// =================
+
+//
+// Sexagesimal format converter. Unlike the Util methods, this one throws on
+// bad format, and also does a deeper check on the syntax.
+//
+function getSexagesimal(str)
+{
+	if(str.search(/^[-+]?[0-9]*\.?[0-9]+/) == -1)	// Must begin with number
+		throw new ParseException("Value must begin with numeric: " + str);
+	var mats = str.match(/[-+]?[0-9]*\.?[0-9]+/g);	// Must contain at least one number
+	if(mats === null)
+		throw new ParseException(NON + str);
+	if(mats.length > 3)								// Max of three numbers
+		throw new ParseException("More than 3 numerics in sexagesimal: " + str);
+	var val = 0.0;									// Convert per sexagesimal
+	for(var i = mats.length - 1; i >= 0; i--)
+		val = (val / 60.0) + Math.abs(parseFloat(mats[i]));
+//	if(parseFloat(mats[0]) < 0) val = -val;         // If neg, fix up sign
+	if(mats[0].substr(0, 1) == "-") val = -val;     // If neg, fix up sign
+	return val;
+}
+
+//
+// Date/time format converter - Handles dd-mmm-yyyy format that
+// ACP Planner produces. Returns JScript Date object.
+//
+// NOTES: If only a time (hh:mm[:ss]) is given, the returned Date
+// will be within +/- 12 hours of the current date. A date/time in
+// the past may indeed be returned. This is what we want for 
+// waits, etc. in an observing plan, waiting up to 12 hours. 
+// Also, if a date with a 2 digit year is given. JS will take 
+// it as 19xx, so we roll that forward by 100 years.
+//
+// WARNING: If day exceeds days in month, JScript will still
+// accept it and you get a date in the next month. Sorry!
+//
+function getDateTime(str)
+{
+    var t;
+    
+    if(str.search(/ +UTC$/i))                                               // Assure there is a " UTC" on the end
+        t = Date.parse(str + " UTC");
+    if(isNaN(t))                                                            // JS didn't handle it
+    {
+        //
+        // Try for dd-mmm-yyyy hh:mm:ss format (JS can't handle this)
+        //
+        if(str.match(/(\d{2})-(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)-(\d{4}) +(\d{2}):(\d{2}):(\d{2})/i) !== null)
+        {
+            var str2 = RegExp.$2 + " " + RegExp.$1 + ", " + RegExp.$3 + " " + RegExp.$4 + ":" + RegExp.$5 + ":" + RegExp.$6;
+            t = Date.parse(str2 + " UTC");
+        }
+        //
+        // Try assuming just a time hh:mm:ss (JS can't handle it). 
+        // If it's valid wait for up to 12 hours. 
+        //
+        if(isNaN(t))
+        {
+            var now = new Date();
+            t = Date.parse("01/01/1970 " + str + " UTC");                   // Milliseconds since start of day
+            if(isNaN(t)) return NaN;                                        // Even THAT is bad, forget it
+            t += Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+            if(new Date(t) < now.getTime() - 43200000) t += 86400000;       // More than 12hrs in past, make it the upcoming hh:mm:ss!
+            if(new Date(t) > now.getTime() + 43200000) t -= 86400000;       // More than 12hrs in future, make it the preceding hh:mm:ss!
+        }
+    }
+    var d = new Date(t);
+    //
+    // Check for Y2K problem with 2-digit year.
+    //
+    var y = d.getUTCFullYear();
+    if(y < 2000) d.setUTCFullYear(y + 100);                                 // Convert 19xx to 20xx
+    return d;
+}
+
+// -----------------
+// ResolveFlatPlan() - Resolve #duskflats/#dawnflats flat plan path/name
+// -----------------
+//
+// Returns full path/name for the flat plan or throws an error. This 
+// implements the various cases of arguments to #xxxflats. After doing
+// this, the Plan.XxxFlatPlan property is guaranteed to have a valid
+// full path/name.
+//
+function ResolveFlatPlan(path, isDawn)
+{
+    if(!c_bLiveMode) return "";                                             // Can't do this offline
+        
+    var tstr;
+    var buf = path;
+    
+    if(isDawn)
+        tstr = "dawn";
+    else
+        tstr = "dusk";
+
+    if(buf !== "")                                                          // If the optional flat plan path given
+    {
+        var z = buf;                                                        // Copy orig for err msg 
+        if(FSO.GetDriveName(buf) === "")                                    // If relative path given
+        {
+            if(c_sUsername == "local_user" || c_sUsername == "localweb")    // Get user's default plans dir
+                buf = Util.Prefs.LocalUser.DefaultPlanDir + "\\" + buf;     // Make full path for local user
+            else
+                buf = Util.Prefs.WebRoot + "\\plans\\" + c_sUsername + "\\" + buf; // Make full path for web user
+        }
+        if(!FSO.FileExists(buf))                                            // If doesn't exist, throw error
+            throw new ParseException(Err, "Flat plan " + z + " does not exist");
+    }
+    else                                                                    // No flat plan with #xxxxflats
+    {
+        //
+        // Check for AutoFlat's default plans default[dawn|dusk]flat.txt
+        // and THEN (second(!!) defaultflat.txt.
+        //
+        if(c_sUsername == "local_user" || c_sUsername == "localweb")        // Get user's default image dir
+            buf = Util.Prefs.LocalUser.DefaultPlanDir + "\\default";
+        else
+            buf = Util.Prefs.WebRoot + "\\plans\\" +  c_sUsername + "\\default";
+        if(FSO.FileExists(buf + tstr + "flat.txt"))                         // Try for default[dusk|dawn]flat.txt first
+            buf = buf + tstr + "flat.txt";
+        else if(FSO.FileExists(buf + "flat.txt"))                           // Nope, try for defaultflat.txt
+            buf = buf + "flat.txt";
+        else
+            throw new ParseException(Err, "No default " + tstr + " flat plan exists");
+    }
+    return buf;                                                             // Return full path/name of flat plan to use
+}
+]]>
+		</script>
+	</component>
+	<component id="Target">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.Target" classid="{269AE9E0-618E-4CF5-B33E-939B8683A37C}" description="ACP plan Target container" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<property name="DEEPSKY">
+				<get/>
+			</property>
+			<property name="EQUJ2000">
+				<get/>
+			</property>
+			<property name="MPCASTEROID">
+				<get/>
+			</property>
+			<property name="MPCCOMET">
+				<get/>
+			</property>
+			<property name="MPCORB">
+				<get/>
+			</property>
+			<property name="MPCSOFT00CMT">
+				<get/>
+			</property>
+			<property name="NEOEPH">
+				<get/>
+			</property>
+			<property name="PLANET">
+				<get/>
+			</property>
+			<property name="P_BIAS">
+				<get/>
+			</property>
+			<property name="P_CHILL">
+				<get/>
+			</property>
+			<property name="P_DARK">
+				<get/>
+			</property>
+			<property name="P_DOMECLOSE">
+				<get/>
+			</property>
+			<property name="P_DOMEOPEN">
+				<get/>
+			</property>
+			<property name="P_MANUAL">
+				<get/>
+			</property>
+			<property name="P_DUSKFLATS">
+				<get/>
+			</property>
+			<property name="P_DAWNFLATS">
+				<get/>
+			</property>
+			<property name="P_SCREENFLATS">
+				<get/>
+			</property>
+			<property name="P_NOWEATHER">
+				<get/>
+			</property>
+			<property name="Align">
+				<get/>
+				<put/>
+			</property>
+			<property name="AutoFocus">
+				<get/>
+				<put/>
+			</property>
+			<property name="AutoGuide">
+				<get/>
+				<put/>
+			</property>
+			<property name="CalFrame">
+				<get/>
+				<put/>
+			</property>
+			<property name="Calibrate">
+				<get/>
+				<put/>
+			</property>
+			<property name="CalPathName">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChillTemp">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChillTol">
+				<get/>
+				<put/>
+			</property>
+			<property name="Comments">
+				<get/>
+				<put/>
+			</property>
+			<property name="Dec">
+				<get/>
+				<put/>
+			</property>
+			<property name="DecRate">
+				<get/>
+				<put/>
+			</property>
+			<property name="Defocus">
+				<get/>
+				<put/>
+			</property>
+			<property name="Directory">
+				<get/>
+				<put/>
+			</property>
+			<property name="Dither">
+				<get/>
+				<put/>
+			</property>
+			<property name="Elements">
+				<get/>
+				<put/>
+			</property>
+			<property name="FlatPlanName">
+				<get/>
+				<put/>
+			</property>
+			<property name="ImageSets">
+				<get/>
+				<put/>
+			</property>
+			<property name="Name">
+				<get/>
+				<put/>
+			</property>
+			<property name="NeedEphem">
+				<get/>
+				<put/>
+			</property>
+			<property name="NonImage">
+				<get/>
+				<put/>
+			</property>
+			<property name="NoPointing">
+				<get/>
+				<put/>
+			</property>
+			<property name="NoPreview">
+				<get/>
+				<put/>
+			</property>
+			<property name="NoSolve">
+				<get/>
+				<put/>
+			</property>
+			<property name="OrbTrack">
+				<get/>
+				<put/>
+			</property>
+			<property name="Pointing">
+				<get/>
+				<put/>
+			</property>
+			<property name="PA">
+				<get/>
+				<put/>
+			</property>
+			<property name="RA">
+				<get/>
+				<put/>
+			</property>
+			<property name="RARate">
+				<get/>
+				<put/>
+			</property>
+			<property name="ReadoutMode">
+				<get/>
+				<put/>
+			</property>
+			<property name="Repeat">
+				<get/>
+				<put/>
+			</property>
+			<property name="Stack">
+				<get/>
+				<put/>
+			</property>
+			<property name="SupportLibrary">
+				<put/>
+			</property>
+			<property name="Tags">
+				<get/>
+				<put/>
+			</property>
+			<property name="TargetLine">
+				<get/>
+				<put/>
+			</property>
+			<property name="Type">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitFor">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitAirMass">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitInLimits">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitUntil">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitUntilAuto">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitZenDist">
+				<get/>
+				<put/>
+			</property>
+			<method name="UpdateEphem">
+			</method>
+		</public>
+		<script id="Target" language="JScript">
+<![CDATA[
+//
+// Target types
+//
+var DEEPSKY      = 0;
+var EQUJ2000     = 1;
+var MPCASTEROID  = 2;
+var MPCCOMET     = 3;
+var MPCORB       = 4;
+var MPCSOFT00CMT = 5;
+var NEOEPH       = 6;
+var PLANET       = 7;
+var P_BIAS       = 8;
+var P_CHILL      = 9;
+var P_DARK       = 10;
+var P_DOMECLOSE  = 11;
+var P_DOMEOPEN   = 12;
+var P_MANUAL     = 13;
+var P_DUSKFLATS  = 14;
+var P_DAWNFLATS  = 15;
+var P_SCREENFLATS= 16;
+var P_NOWEATHER  = 17;
+
+// 
+// =================
+// PUBLIC PROPERTIES
+// =================
+//
+
+//
+// Target Types (really an enum)
+//
+function get_DEEPSKY()      { return DEEPSKY; }
+function get_EQUJ2000()     { return EQUJ2000; }
+function get_MPCASTEROID()  { return MPCASTEROID; }
+function get_MPCCOMET()     { return MPCCOMET; }
+function get_MPCORB()       { return MPCORB; }
+function get_MPCSOFT00CMT() { return MPCSOFT00CMT; }
+function get_NEOEPH()       { return NEOEPH; }
+function get_PLANET()       { return PLANET; }
+function get_P_BIAS()       { return P_BIAS; }
+function get_P_CHILL()      { return P_CHILL; }
+function get_P_DARK()       { return P_DARK; }
+function get_P_DOMECLOSE()  { return P_DOMECLOSE; }
+function get_P_DOMEOPEN()   { return P_DOMEOPEN; }
+function get_P_MANUAL()     { return P_MANUAL; }
+function get_P_DUSKFLATS()  { return P_DUSKFLATS; }
+function get_P_DAWNFLATS()  { return P_DAWNFLATS; }
+function get_P_SCREENFLATS(){ return P_SCREENFLATS; }
+function get_P_NOWEATHER()  { return P_NOWEATHER; }
+
+//
+// The variables are initialized to their once-only target defaults
+//
+
+var Align = false;
+function get_Align()
+{
+    return Align;
+}
+function put_Align(newValue)
+{
+    Align = newValue;
+}
+
+var AutoFocus = false;
+function get_AutoFocus()
+{
+    return AutoFocus;
+}
+function put_AutoFocus(newValue)
+{
+    AutoFocus = newValue;
+}
+
+var AutoGuide = false;
+function get_AutoGuide()
+{
+    return AutoGuide;
+}
+function put_AutoGuide(newValue)
+{
+    AutoGuide = newValue;
+}
+
+var CalFrame = false;
+function get_CalFrame()
+{
+    return CalFrame;
+}
+function put_CalFrame(newValue)
+{
+    CalFrame = newValue;
+}
+
+var Calibrate = false;
+function get_Calibrate()
+{
+    return Calibrate;
+}
+function put_Calibrate(newValue)
+{
+    Calibrate = newValue;
+}
+
+var CalPathName = "";
+function get_CalPathName()
+{
+    return CalPathName;
+}
+function put_CalPathName(newValue)
+{
+    CalPathName = newValue;
+}
+
+var ChillTemp = 0;
+function get_ChillTemp()
+{
+    return ChillTemp;
+}
+function put_ChillTemp(newValue)
+{
+    ChillTemp = newValue;
+}
+
+var ChillTol = 0;
+function get_ChillTol()
+{
+    return ChillTol;
+}
+function put_ChillTol(newValue)
+{
+    ChillTol = newValue;
+}
+
+var Comments = new Array();
+function get_Comments()
+{
+    return Comments;
+}
+function put_Comments(newValue)
+{
+    Comments = newValue;
+}
+
+var Dec = NaN;
+function get_Dec()
+{
+    return Dec;
+}
+function put_Dec(newValue)
+{
+    Dec = newValue;
+}
+
+var DecRate = 0.0;
+function get_DecRate()
+{
+    return DecRate;
+}
+function put_DecRate(newValue)
+{
+    DecRate = newValue;
+}
+
+var Defocus = 0.0;
+function get_Defocus()
+{
+    return Defocus;
+}
+function put_Defocus(newValue)
+{
+    Defocus = newValue;
+}
+
+var Directory = "";
+function get_Directory()
+{
+    return Directory;
+}
+function put_Directory(newValue)
+{
+    Directory = newValue;
+}
+
+var Dither = 0.0;
+function get_Dither()
+{
+    return Dither;
+}
+function put_Dither(newValue)
+{
+    Dither = newValue;
+}
+
+var Elements = "";
+function get_Elements()
+{
+    return Elements;
+}
+
+function put_Elements(newValue)
+{
+    Elements = newValue;
+}
+
+var FlatPlanName = "";
+function get_FlatPlanName()
+{
+    return FlatPlanName;
+}
+
+function put_FlatPlanName(newValue)
+{
+    FlatPlanName = newValue;
+}
+
+var ImageSets = new Array();
+function get_ImageSets()
+{
+    return ImageSets;
+}
+function put_ImageSets(newValue)
+{
+    ImageSets = newValue;
+}
+
+var Name = "";
+function get_Name()
+{
+    return Name;
+}
+function put_Name(newValue)
+{
+    Name = newValue;
+}
+
+var NeedEphem = false;
+function get_NeedEphem()
+{
+    return NeedEphem;
+}
+function put_NeedEphem(newValue)
+{
+    NeedEphem = newValue;
+}
+
+var NonImage = false;
+function get_NonImage()
+{
+    return NonImage;
+}
+function put_NonImage(newValue)
+{
+    NonImage = newValue;
+}
+
+var NoPointing = false;
+function get_NoPointing()
+{
+    return NoPointing;
+}
+function put_NoPointing(newValue)
+{
+    NoPointing = newValue;
+}
+
+var NoPreview = false;
+function get_NoPreview()
+{
+    return NoPreview;
+}
+function put_NoPreview(newValue)
+{
+    NoPreview = newValue;
+}
+
+var NoSolve = false;
+function get_NoSolve()
+{
+    return NoSolve;
+}
+function put_NoSolve(newValue)
+{
+    NoSolve = newValue;
+}
+
+var OrbTrack = false;
+function get_OrbTrack()
+{
+    return OrbTrack;
+}
+function put_OrbTrack(newValue)
+{
+    OrbTrack = newValue;
+}
+
+var Pointing = false;
+function get_Pointing()
+{
+    return Pointing;
+}
+function put_Pointing(newValue)
+{
+    Pointing = newValue;
+}
+
+var PA = 0.0;
+function get_PA()
+{
+    return PA;
+}
+function put_PA(newValue)
+{
+    PA = newValue;
+}
+
+var RA = NaN;
+function get_RA()
+{
+    return RA;
+}
+function put_RA(newValue)
+{
+    RA = newValue;
+}
+
+var RARate = 0.0;
+function get_RARate()
+{
+    return RARate;
+}
+function put_RARate(newValue)
+{
+    RARate = newValue;
+}
+
+var ReadoutMode = 0;
+function get_ReadoutMode()
+{
+    return ReadoutMode;
+}
+function put_ReadoutMode(newValue)
+{
+    ReadoutMode = newValue;
+}
+
+var Repeat = 1;
+function get_Repeat()
+{
+    return Repeat;
+}
+function put_Repeat(newValue)
+{
+    Repeat = newValue;
+}
+
+var Stack = false;
+function get_Stack()
+{
+    return Stack;
+}
+function put_Stack(newValue)
+{
+    Stack = newValue;
+}
+
+//var SupportLibrary = 0;
+var SUP = null;
+function put_SupportLibrary(newValue)
+{
+    SUP = newValue;
+}
+
+var Tags = null;
+function get_Tags()
+{
+    return Tags;
+}
+function put_Tags(newValue)
+{
+    Tags = newValue;
+}
+
+var TargetLine = 0;
+function get_TargetLine()
+{
+    return TargetLine;
+}
+function put_TargetLine(newValue)
+{
+    TargetLine = newValue;
+}
+
+var Type = 0;
+function get_Type()
+{
+    return Type;
+}
+function put_Type(newValue)
+{
+    Type = newValue;
+}
+
+var WaitAirMass = null;
+function get_WaitAirMass()
+{
+    return WaitAirMass;
+}
+function put_WaitAirMass(newValue)
+{
+    WaitAirMass = newValue;
+}
+
+var WaitFor = 0;
+function get_WaitFor()
+{
+    return WaitFor;
+}
+function put_WaitFor(newValue)
+{
+    WaitFor = newValue;
+}
+
+var WaitInLimits = 0;
+function get_WaitInLimits()
+{
+    return WaitInLimits;
+}
+function put_WaitInLimits(newValue)
+{
+    WaitInLimits = newValue;
+}
+
+var WaitUntil = new Array();
+function get_WaitUntil()
+{
+    return WaitUntil;
+}
+function put_WaitUntil(newValue)
+{
+    WaitUntil = newValue;
+}
+
+var WaitUntilAuto = new Array();
+function get_WaitUntilAuto()
+{
+    return WaitUntilAuto;
+}
+function put_WaitUntilAuto(newValue)
+{
+    WaitUntilAuto = newValue;
+}
+
+var WaitZenDist = null;
+function get_WaitZenDist()
+{
+    return WaitZenDist;
+}
+function put_WaitZenDist(newValue)
+{
+    WaitZenDist = newValue;
+}
+
+// ==============
+// PUBLIC METHODS
+// ==============
+
+// -----------
+// UpdateEphem - Master ephemeris calculator
+// -----------
+//
+// Update the epheheris for the target if it is an Ephemeris Type. If original
+// target was MPCORB, then it already has the 1-line elements in Elements so
+// it can be treated the same as MPCASTEROID. The result of calling this is
+// that the public J2000 coordinates and coordinate rates are updated.
+//
+// The plan parser/checker has already tried all of these, so there should not
+// be any errors here!! If there are, it's fatal.
+//
+function UpdateEphem()
+{
+
+    if(!NeedEphem) return;                                         // No need for ephem
+    
+    switch(Type)
+    {
+        case MPCASTEROID:
+            if(!SUP.MinorPlanetOb(this))
+                throw "ASSERT: SUP.MinorPlanetOb() failed";
+            break;
+        
+        case MPCCOMET:
+            if(!SUP.CometOb(this))
+                throw "ASSERT: SUP.CometOb() failed";
+            break;
+        
+        case MPCORB:
+            if(!SUP.MinorPlanetOb(this))
+                throw "ASSERT: SUP.MinorPlanetOb() failed";
+            break;
+            
+        case MPCSOFT00CMT:
+            if(!SUP.CometOb(this))
+                throw "ASSERT: SUP.CometOb() failed";
+            break;
+
+        case NEOEPH:
+            if(!SUP.NeoEphOb(this))
+                throw "ASSERT: SUP.NEOEphOb() failed";
+            break;
+        
+        case PLANET:
+            if(!SUP.MajorPlanetOb(this))
+                throw "ASSERT: SUP.MajorPlanetOb() failed";
+            break;
+        
+        default:
+            throw "ASSERT: UpdateEphem() non ephemeris type.";
+    }
+    
+}
+
+]]>
+		</script>
+	</component>
+	<component id="ImageSet">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.ImageSet" classid="{7D517C3D-3FD4-4CAB-A3E2-D6F6B9F6D02C}" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<property name="Binning">
+				<get/>
+				<put/>
+			</property>
+			<property name="Count">
+				<get/>
+				<put/>
+			</property>
+			<property name="FilterName">
+				<get/>
+				<put/>
+			</property>
+			<property name="FilterNum">
+				<get/>
+				<put/>
+			</property>
+			<property name="Interval">
+				<get/>
+				<put/>
+			</property>
+			<property name="SubFrame">
+				<get/>
+				<put/>
+			</property>
+		</public>
+		<script id="ImageSet" language="JScript">
+<![CDATA[
+var Binning = 1;
+function get_Binning()
+{
+    return Binning;
+}
+function put_Binning(newValue)
+{
+    Binning = newValue;
+}
+
+var Count;
+function get_Count()
+{
+    return Count;
+}
+function put_Count(newValue)
+{
+    Count = newValue;
+}
+
+var FilterName;
+function get_FilterName()
+{
+    return FilterName;
+}
+function put_FilterName(newValue)
+{
+    FilterName = newValue;
+}
+
+var FilterNum;
+function get_FilterNum()
+{
+    return FilterNum;
+}
+function put_FilterNum(newValue)
+{
+    FilterNum = newValue;
+}
+
+var Interval;
+function get_Interval()
+{
+    return Interval;
+}
+function put_Interval(newValue)
+{
+    Interval = newValue;
+}
+
+var SubFrame = 1.0;
+function get_SubFrame()
+{
+    return SubFrame;
+}
+function put_SubFrame(newValue)
+{
+    SubFrame = newValue;
+}
+]]>
+		</script>
+	</component>
+</package>

@@ -1,0 +1,10 @@
+|   obsdate | filter |   mag | e_mag |  observatory |   status | [mag_cor-mag_origin] |
+| 59529.827 |      B | 16.68 |  0.02 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59529.829 |      V | 16.51 |  0.02 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59529.830 |      i | 16.84 |  0.01 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59530.821 |      B | 16.26 |  0.02 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59530.822 |      V | 15.68 |  0.02 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59530.823 |      i | 16.19 |  0.01 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59530.862 |      B | 16.26 |  0.02 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59530.864 |      V | 15.64 |  0.02 |KMTNet_Ni2023 | detected |                -99.9 |
+| 59530.865 |      i | 16.16 |  0.01 |KMTNet_Ni2023 | detected |                -99.9 |

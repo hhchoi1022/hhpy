@@ -1,0 +1,25 @@
+; Prepare for the observation (KCT)
+#WAITUNTIL 1, 09/17/23 22:55:52
+
+; Cooling
+#CHILL -10, 1.0
+
+; Calibration frames
+
+; Start of the observation
+#WAITUNTIL 1, 09/17/23 23:56:28
+
+; Targeting
+#COUNT 5,5,5
+#INTERVAL 120.0,120.0,120.0
+#BINNING 1,1,1
+#FILTER g,r,i
+#NOPREVIEW 
+#NOSOLVE
+#NOPOINTING
+NGC1566	08:04:26	-54:26:38
+
+#QUITAT 09/18/23 09:18:05
+
+; Closing
+#SHUTDOWN

@@ -1,0 +1,709 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+    <![CDATA[
+    'tabs=4
+    -----------------------------------------------------------------------------------------
+    
+    ============================
+    ACP Plan Parser Target Class
+    ============================
+    
+    Script:         PlanImportTarget.wsc
+    Author:         Robert B. Denny <rdenny@dc3.com>
+    Version:        6.0.1  <=== CHANGE VERSION BELOW
+    Requires:       ACP 6.0 or later
+                    Windows Script 5.6 or later (installed by ACP setup)
+    
+    Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                    provides ...
+                    
+    Description:    This is a clone of the ACP Plan compiler's Target object for Planner
+                    See the comments in PlanImportCompiler.wsc.
+                    
+                    =========================================
+                    THE GUIDS HAVE BEEN CHANGED JUST IN CASE!
+                    =========================================
+    
+    Edit History:
+    30-Nov-2010 rbd 6.0.1 - From ACP 6.0 Plan.wsc
+    -----------------------------------------------------------------------------------------
+    ]]>
+	</comment>
+	<component id="Target">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.Target" classid="{024BE01D-8DD9-46f2-B5E2-102E47B62A98}" description="ACP plan Target container" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<property name="DEEPSKY">
+				<get/>
+			</property>
+			<property name="EQUJ2000">
+				<get/>
+			</property>
+			<property name="MPCASTEROID">
+				<get/>
+			</property>
+			<property name="MPCCOMET">
+				<get/>
+			</property>
+			<property name="MPCORB">
+				<get/>
+			</property>
+			<property name="NEOEPH">
+				<get/>
+			</property>
+			<property name="PLANET">
+				<get/>
+			</property>
+			<property name="P_BIAS">
+				<get/>
+			</property>
+			<property name="P_CHILL">
+				<get/>
+			</property>
+			<property name="P_DARK">
+				<get/>
+			</property>
+			<property name="P_DOMECLOSE">
+				<get/>
+			</property>
+			<property name="P_DOMEOPEN">
+				<get/>
+			</property>
+			<property name="P_MANUAL">
+				<get/>
+			</property>
+			<property name="P_DUSKFLATS">
+				<get/>
+			</property>
+			<property name="P_DAWNFLATS">
+				<get/>
+			</property>
+			<property name="Align">
+				<get/>
+				<put/>
+			</property>
+			<property name="AutoFocus">
+				<get/>
+				<put/>
+			</property>
+			<property name="AutoGuide">
+				<get/>
+				<put/>
+			</property>
+			<property name="CalFrame">
+				<get/>
+				<put/>
+			</property>
+			<property name="Calibrate">
+				<get/>
+				<put/>
+			</property>
+			<property name="CalPathName">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChillTemp">
+				<get/>
+				<put/>
+			</property>
+			<property name="Comments">
+				<get/>
+				<put/>
+			</property>
+			<property name="Dec">
+				<get/>
+				<put/>
+			</property>
+			<property name="DecRate">
+				<get/>
+				<put/>
+			</property>
+			<property name="Defocus">
+				<get/>
+				<put/>
+			</property>
+			<property name="Directory">
+				<get/>
+				<put/>
+			</property>
+			<property name="Dither">
+				<get/>
+				<put/>
+			</property>
+			<property name="Elements">
+				<get/>
+				<put/>
+			</property>
+			<property name="FlatPlanName">
+				<get/>
+				<put/>
+			</property>
+			<property name="ImageSets">
+				<get/>
+				<put/>
+			</property>
+			<property name="Name">
+				<get/>
+				<put/>
+			</property>
+			<property name="NeedEphem">
+				<get/>
+				<put/>
+			</property>
+			<property name="NonImage">
+				<get/>
+				<put/>
+			</property>
+			<property name="OrbTrack">
+				<get/>
+				<put/>
+			</property>
+			<property name="Pointing">
+				<get/>
+				<put/>
+			</property>
+			<property name="PA">
+				<get/>
+				<put/>
+			</property>
+			<property name="RA">
+				<get/>
+				<put/>
+			</property>
+			<property name="RARate">
+				<get/>
+				<put/>
+			</property>
+			<property name="ReadoutMode">
+				<get/>
+				<put/>
+			</property>
+			<property name="Repeat">
+				<get/>
+				<put/>
+			</property>
+			<property name="Stack">
+				<get/>
+				<put/>
+			</property>
+			<property name="SupportLibrary">
+				<put/>
+			</property>
+			<property name="Tags">
+				<get/>
+				<put/>
+			</property>
+			<property name="TargetLine">
+				<get/>
+				<put/>
+			</property>
+			<property name="Type">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitFor">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitAirMass">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitInLimits">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitUntil">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitUntilAuto">
+				<get/>
+				<put/>
+			</property>
+			<property name="WaitZenDist">
+				<get/>
+				<put/>
+			</property>
+			<method name="UpdateEphem">
+			</method>
+		</public>
+		<script id="Target" language="JScript">
+<![CDATA[
+//
+// Target types
+//
+var DEEPSKY     = 0;
+var EQUJ2000    = 1;
+var MPCASTEROID = 2;
+var MPCCOMET    = 3;
+var MPCORB      = 4;
+var NEOEPH      = 5;
+var PLANET      = 6;
+var P_BIAS      = 7;
+var P_CHILL     = 8;
+var P_DARK      = 9;
+var P_DOMECLOSE = 10;
+var P_DOMEOPEN  = 11;
+var P_MANUAL    = 12;
+var P_DUSKFLATS = 13;
+var P_DAWNFLATS = 14;
+
+// 
+// =================
+// PUBLIC PROPERTIES
+// =================
+//
+
+//
+// Target Types (really an enum)
+//
+function get_DEEPSKY()      { return DEEPSKY; }
+function get_EQUJ2000()     { return EQUJ2000; }
+function get_MPCASTEROID()  { return MPCASTEROID; }
+function get_MPCCOMET()     { return MPCCOMET; }
+function get_MPCORB()       { return MPCORB; }
+function get_NEOEPH()       { return NEOEPH; }
+function get_PLANET()       { return PLANET; }
+function get_P_BIAS()       { return P_BIAS; }
+function get_P_CHILL()      { return P_CHILL; }
+function get_P_DARK()       { return P_DARK; }
+function get_P_DOMECLOSE()  { return P_DOMECLOSE; }
+function get_P_DOMEOPEN()   { return P_DOMEOPEN; }
+function get_P_MANUAL()     { return P_MANUAL; }
+function get_P_DUSKFLATS()  { return P_DUSKFLATS; }
+function get_P_DAWNFLATS()  { return P_DAWNFLATS; }
+
+//
+// The variables are initialized to their once-only target defaults
+//
+
+var Align = false;
+function get_Align()
+{
+    return Align;
+}
+function put_Align(newValue)
+{
+    Align = newValue;
+}
+
+var AutoFocus = false;
+function get_AutoFocus()
+{
+    return AutoFocus;
+}
+function put_AutoFocus(newValue)
+{
+    AutoFocus = newValue;
+}
+
+var AutoGuide = false;
+function get_AutoGuide()
+{
+    return AutoGuide;
+}
+function put_AutoGuide(newValue)
+{
+    AutoGuide = newValue;
+}
+
+var CalFrame = false;
+function get_CalFrame()
+{
+    return CalFrame;
+}
+function put_CalFrame(newValue)
+{
+    CalFrame = newValue;
+}
+
+var Calibrate = false;
+function get_Calibrate()
+{
+    return Calibrate;
+}
+function put_Calibrate(newValue)
+{
+    Calibrate = newValue;
+}
+
+var CalPathName = "";
+function get_CalPathName()
+{
+    return CalPathName;
+}
+function put_CalPathName(newValue)
+{
+    CalPathName = newValue;
+}
+
+var ChillTemp = 0;
+function get_ChillTemp()
+{
+    return ChillTemp;
+}
+function put_ChillTemp(newValue)
+{
+    ChillTemp = newValue;
+}
+
+var Comments = new Array();
+function get_Comments()
+{
+    return Comments;
+}
+function put_Comments(newValue)
+{
+    Comments = newValue;
+}
+
+var Dec = NaN;
+function get_Dec()
+{
+    return Dec;
+}
+function put_Dec(newValue)
+{
+    Dec = newValue;
+}
+
+var DecRate = 0.0;
+function get_DecRate()
+{
+    return DecRate;
+}
+function put_DecRate(newValue)
+{
+    DecRate = newValue;
+}
+
+var Defocus = 0.0;
+function get_Defocus()
+{
+    return Defocus;
+}
+function put_Defocus(newValue)
+{
+    Defocus = newValue;
+}
+
+var Directory = "";
+function get_Directory()
+{
+    return Directory;
+}
+function put_Directory(newValue)
+{
+    Directory = newValue;
+}
+
+var Dither = 0.0;
+function get_Dither()
+{
+    return Dither;
+}
+function put_Dither(newValue)
+{
+    Dither = newValue;
+}
+
+var Elements = "";
+function get_Elements()
+{
+    return Elements;
+}
+
+function put_Elements(newValue)
+{
+    Elements = newValue;
+}
+
+var FlatPlanName = "";
+function get_FlatPlanName()
+{
+    return FlatPlanName;
+}
+
+function put_FlatPlanName(newValue)
+{
+    FlatPlanName = newValue;
+}
+
+var ImageSets = new Array();
+function get_ImageSets()
+{
+    return ImageSets;
+}
+function put_ImageSets(newValue)
+{
+    ImageSets = newValue;
+}
+
+var Name = "";
+function get_Name()
+{
+    return Name;
+}
+function put_Name(newValue)
+{
+    Name = newValue;
+}
+
+var NeedEphem = false;
+function get_NeedEphem()
+{
+    return NeedEphem;
+}
+function put_NeedEphem(newValue)
+{
+    NeedEphem = newValue;
+}
+
+var NonImage = false;
+function get_NonImage()
+{
+    return NonImage;
+}
+function put_NonImage(newValue)
+{
+    NonImage = newValue;
+}
+
+var OrbTrack = false;
+function get_OrbTrack()
+{
+    return OrbTrack;
+}
+function put_OrbTrack(newValue)
+{
+    OrbTrack = newValue;
+}
+
+var Pointing = false;
+function get_Pointing()
+{
+    return Pointing;
+}
+function put_Pointing(newValue)
+{
+    Pointing = newValue;
+}
+
+var PA = 0.0;
+function get_PA()
+{
+    return PA;
+}
+function put_PA(newValue)
+{
+    PA = newValue;
+}
+
+var RA = NaN;
+function get_RA()
+{
+    return RA;
+}
+function put_RA(newValue)
+{
+    RA = newValue;
+}
+
+var RARate = 0.0;
+function get_RARate()
+{
+    return RARate;
+}
+function put_RARate(newValue)
+{
+    RARate = newValue;
+}
+
+var ReadoutMode = 0;
+function get_ReadoutMode()
+{
+    return ReadoutMode;
+}
+function put_ReadoutMode(newValue)
+{
+    ReadoutMode = newValue;
+}
+
+var Repeat = 1;
+function get_Repeat()
+{
+    return Repeat;
+}
+function put_Repeat(newValue)
+{
+    Repeat = newValue;
+}
+
+var Stack = false;
+function get_Stack()
+{
+    return Stack;
+}
+function put_Stack(newValue)
+{
+    Stack = newValue;
+}
+
+//var SupportLibrary = 0;
+var SUP = null;
+function put_SupportLibrary(newValue)
+{
+    SUP = newValue;
+}
+
+var Tags = null;
+function get_Tags()
+{
+    return Tags;
+}
+function put_Tags(newValue)
+{
+    Tags = newValue;
+}
+
+var TargetLine = 0;
+function get_TargetLine()
+{
+    return TargetLine;
+}
+function put_TargetLine(newValue)
+{
+    TargetLine = newValue;
+}
+
+var Type = 0;
+function get_Type()
+{
+    return Type;
+}
+function put_Type(newValue)
+{
+    Type = newValue;
+}
+
+var WaitAirMass = null;
+function get_WaitAirMass()
+{
+    return WaitAirMass;
+}
+function put_WaitAirMass(newValue)
+{
+    WaitAirMass = newValue;
+}
+
+var WaitFor = 0;
+function get_WaitFor()
+{
+    return WaitFor;
+}
+function put_WaitFor(newValue)
+{
+    WaitFor = newValue;
+}
+
+var WaitInLimits = 0;
+function get_WaitInLimits()
+{
+    return WaitInLimits;
+}
+function put_WaitInLimits(newValue)
+{
+    WaitInLimits = newValue;
+}
+
+var WaitUntil = new Array();
+function get_WaitUntil()
+{
+    return WaitUntil;
+}
+function put_WaitUntil(newValue)
+{
+    WaitUntil = newValue;
+}
+
+var WaitUntilAuto = new Array();
+function get_WaitUntilAuto()
+{
+    return WaitUntilAuto;
+}
+function put_WaitUntilAuto(newValue)
+{
+    WaitUntilAuto = newValue;
+}
+
+var WaitZenDist = null;
+function get_WaitZenDist()
+{
+    return WaitZenDist;
+}
+function put_WaitZenDist(newValue)
+{
+    WaitZenDist = newValue;
+}
+
+// ==============
+// PUBLIC METHODS
+// ==============
+
+// -----------
+// UpdateEphem - Master ephemeris calculator
+// -----------
+//
+// Update the epheheris for the target if it is an Ephemeris Type. If original
+// target was MPCORB, then it already has the 1-line elements in Elements so
+// it can be treated the same as MPCASTEROID. The result of calling this is
+// that the public J2000 coordinates and coordinate rates are updated.
+//
+// The plan parser/checker has already tried all of these, so there should not
+// be any errors here!! If there are, it's fatal.
+//
+function UpdateEphem()
+{
+
+    if(!NeedEphem) return;                                         // No need for ephem
+    
+    switch(Type)
+    {
+        case MPCASTEROID:
+            if(!SUP.MinorPlanetOb(this))
+                throw "ASSERT: SUP.MinorPlanetOb() failed";
+            break;
+        
+        case MPCCOMET:
+            if(!SUP.CometOb(this))
+                throw "ASSERT: SUP.CometOb() failed";
+            break;
+        
+        case MPCORB:
+            if(!SUP.MinorPlanetOb(this))
+                throw "ASSERT: SUP.MinorPlanetOb() failed";
+            break;
+            
+        case NEOEPH:
+            if(!SUP.NeoEphOb(this))
+                throw "ASSERT: SUP.NEOEphOb() failed";
+            break;
+        
+        case PLANET:
+            if(!SUP.MajorPlanetOb(this))
+                throw "ASSERT: SUP.MajorPlanetOb() failed";
+            break;
+        
+        default:
+            throw "ASSERT: UpdateEphem() non ephemeris type.";
+    }
+    
+}
+
+]]>
+		</script>
+	</component>
+</package>

@@ -1,0 +1,300 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+ACP Weather Access Template
+===========================
+
+Script:         BoltwoodServer (bodified from WeatherAccess.wsc)
+Author:         Arto Oksanen <arto.oksanen@jklsirius.fi> 
+		        (original WeatherAccess.wsc by Robert B. Denny <rdenny@dc3.com>)
+Version:        8.0
+Requires:       ACP 8.0 or later
+                Windows Script 5.6 or later
+
+Description:    This is an ACP weather server, as described in the ACP help. It connects
+                ACP to the Boltwood Cloud Sensor, via the supplied Clarity control
+                program (which must be installed and registered for scripting). This
+                server sets weather unsafe if it is very cloudy or wet by Clarity 
+		        (you can set the very cloudy threshold in Clarity) or if there has been 
+		        longer than one minute since the last data from Boltwood.
+
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ACP and its scripts with Weather information. This component
+                is responsible for providing the interface with the weather sensor. You
+                May use the ASCOM Serial device to communicate via RS-232 or if the 
+                weather sensor has an ActiveX/Scriptable interface, you may create an
+                instance of the object, and call directly into that interface.
+                
+                If you don't have a copy of PrimalScript, I STRONGLY suggest you get it 
+                and use it to work with this WSC.
+                
+                http://www.sapien.com/primalscript.aspx
+                
+Usage:          Replace the stubbed out properties and methods here with the code needed
+                to implement each for your specific weather sensor. 
+                
+                To write to the ACP console, call Util.Console.PrintLine(). 
+                
+                THE MOST IMPORTANT PROPERTY IS "SAFE". RETURN TRUE UNLESS THE WEATHER
+                IS SUCH THAT IT PRESENTS A HAZARD TO YOUR OBSERVATORY (SUCH AS RAIN
+                LIGHTNING, OR WIND).
+		
+Installation:   Copy this file into your computer and register it with regsvr32. Enable 
+                weather services in ACP and define Weather server ID to be
+		        ACP.BoltwoodWeather in ACP / Preferences / Weather 
+
+                
+PLEASE NOTE:    ACP has a built-in facility for running custom scripts at the time it
+                it is started up and shutdown. See the ACP helpfile, "Customizing the
+                Program" for more info on startup and shutdown scripts.
+
+Edit History:
+    19-Mar-06   AO      1.0 - Boltwood/Clarity support. Used template supplied with 
+                        ACP 4.2, changed names and CLSID.
+    28-Jun-06   rbd     Cleanups, code formatting, comments. 
+    11-Mar-15   rbd     GEM:1172 Add SkyTemperature
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="BoltwoodWeather">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.BoltwoodWeather" classid="{3B3DCBE5-2355-43D9-9C0A-C7FDF85812B7}" description="ACP Boltwood Server" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<method name="SetupDialog">
+			</method>
+			<property name="Connected">
+				<get/>
+				<put/>
+			</property>
+			<property name="AmbientTemperature">
+				<get/>
+			</property>
+			<property name="BarometricPressure">
+				<get/>
+			</property>
+			<property name="Clouds">
+				<get/>
+			</property>
+			<property name="DewPoint">
+				<get/>
+			</property>
+			<property name="InsideTemperature">
+				<get/>
+			</property>
+			<property name="Name">
+				<get/>
+			</property>
+			<property name="Precipitation">
+				<get/>
+			</property>
+			<property name="RelativeHumidity">
+				<get/>
+			</property>
+			<property name="Safe">
+				<get/>
+			</property>
+			<property name="SkyTemperature">
+				<get/>
+			</property>
+			<property name="WindDirection">
+				<get/>
+			</property>
+			<property name="WindVelocity">
+				<get/>
+			</property>
+		</public>
+		<object id="Util" progid="ACP.Util" events="false" reference="true"/>
+		<script id="BoltwoodWeather (Embedded)" language="VBScript">
+<![CDATA[
+Option Explicit
+
+' 10-Apr-07 rbd Fix Rain value in console message for get_Safe()
+
+Const ERR_SOURCE = "ACP.BoltwoodWeather"
+
+'
+' Code outside of any Function or Sub is executed when this object is created.
+'
+Dim CLOUD
+Set CLOUD = Nothing                     ' Initially not connected
+
+'
+' Common function raises an error of the sensor is not connected
+'
+Sub CheckConnected()
+    If  Not IsObject(CLOUD) Then 
+        Err.Raise &H80040400, ERR_SOURCE, "Clarity is not connected"
+    End If
+End Sub
+
+'------------------------------------------------------------------------------
+' Method SetupDialog (R/O, OPTIONAL)
+'
+' Parameters:   (none)
+'
+' Returns:      (nothing)
+'
+' Just put up a message indicathing nothing needs to be set up
+'------------------------------------------------------------------------------
+Sub SetupDialog()
+    MsgBox "Nothing needs to be set up", 64, ERR_SOURCE
+End Sub
+
+'------------------------------------------------------------------------------
+' Property Connected (R/W, REQUIRED)
+'------------------------------------------------------------------------------
+' dim Connected
+Function get_Connected()
+    get_Connected = Not CLOUD Is Nothing
+End Function
+
+Function put_Connected(newValue)
+    If newValue Then
+        Set CLOUD = CreateObject("Clarity.CloudSensor")
+	    Util.Console.PrintLine("Clarity is connected")
+    Else
+        Set CLOUD = Nothing
+	    Util.Console.PrintLine("Clarity is disconnected")
+    End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property AmbientTemperature (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim AmbientTemperature
+Function get_AmbientTemperature()
+    CheckConnected
+    get_AmbientTemperature = CLOUD.AmbientT
+End Function
+
+'------------------------------------------------------------------------------
+' Property BarometricPressure (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim BarometricPressure
+Function get_BarometricPressure()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get BarometricPressure is not implemented"
+End Function
+
+'------------------------------------------------------------------------------
+' Property Clouds (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim Clouds
+Function get_Clouds()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get Clouds is not implemented"    
+End Function
+
+'------------------------------------------------------------------------------
+' Property DewPoint (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim DewPoint
+Function get_DewPoint()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get DewPoint is not implemented"
+End Function
+
+'------------------------------------------------------------------------------
+' Property InsideTemperature (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim InsideTemperature
+Function get_InsideTemperature()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get InsideTemperature is not implemented"
+End Function
+
+'------------------------------------------------------------------------------
+' Property Name (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' dim Name
+Function get_Name()
+    get_Name = "Boltwood Cloud Sensor (orig)"
+End Function
+
+'------------------------------------------------------------------------------
+' Property Precipitation (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim Precipitation
+Function get_Precipitation()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get Precipitation is not implemented"
+End Function
+
+'------------------------------------------------------------------------------
+' Property RelativeHumidity (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim RelativeHumidity
+Function get_RelativeHumidity()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get RelativeHumidity is not implemented"
+End Function
+
+'------------------------------------------------------------------------------
+' Property Safe (R/O, REQUIRED)
+'
+' Return True when weather is safe, False when not. Returning False will
+' stop any ACP script in progress and cause alarm and shutdown processes
+' to be initiated.
+'------------------------------------------------------------------------------
+' dim Safe                                                  ' for PrimalSCRIPT
+Function get_Safe()
+
+	CheckConnected
+	
+	get_Safe = CLOUD.SkyCondition > 0 And CLOUD.SkyCondition < 3 And CLOUD.SecondsSinceGoodData < 60
+	
+	If Not get_safe Then
+		Util.Console.PrintLine("BoltwoodWeather: Weather is unsafe!")
+
+		If(CLOUD.SkyCondition = 0) then
+		  Util.Console.PrintLine("Clarity.SkyCondition is Unknown")
+		ElseIf(CLOUD.SkyCondition = 3) then
+		  Util.Console.PrintLine("Clarity.SkyCondition is Very Cloudy")
+		ElseIf(CLOUD.SkyCondition = 4) then
+		  Util.Console.PrintLine("Clarity.SkyCondition is Rainy")
+		ElseIf(CLOUD.SecondsSinceGoodData>60) Then
+		  Util.Console.PrintLine("Clarity.SecondsSinceGoodData = " + CStr(CLOUD.SecondsSinceGoodData))
+		End If
+	End if
+
+End Function
+
+'------------------------------------------------------------------------------
+' Property SkyTemperature (R/O, OPTIONAL)
+'
+' The sky temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim SkyTemperature
+Function get_SkyTemperature()
+	CheckConnected
+	get_DewPoint = CLOUD.RelSkyT
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindDirection (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim WindDirection
+Function get_WindDirection()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get WindDirection is not implemented"
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindVelocity (R/O, OPTIONAL)
+'------------------------------------------------------------------------------
+' Dim WindVelocity
+Function get_WindVelocity()
+    ' Replace this with code to implement this Property
+	Err.Raise &H80040400, ERR_SOURCE, "Property Get WindVelocity is not implemented"
+End Function
+
+]]>
+		</script>
+	</component>
+</package>

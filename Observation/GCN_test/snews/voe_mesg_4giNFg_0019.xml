@@ -1,0 +1,124 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<voe:VOEvent
+      ivorn="ivo://nasa.gsfc.gcn/SNEWS#Event2013-11-17T19:02:13.00_1000004-046"
+      role="test" version="2.0"
+      xmlns:voe="http://www.ivoa.net/xml/VOEvent/v2.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.ivoa.net/xml/VOEvent/v2.0  http://www.ivoa.net/xml/VOEvent/VOEvent-v2.0.xsd" >
+  <Who>
+    <AuthorIVORN>ivo://nasa.gsfc.tan/gcn</AuthorIVORN>
+    <Author>
+      <shortName>SNEWS (via VO-GCN)</shortName>
+      <contactName>Kate Scholberg</contactName>
+      <contactPhone>+1-XXX-XXX-XXXX</contactPhone>
+      <contactEmail>schol@phy.duke.edu</contactEmail>
+    </Author>
+    <Date>2013-11-17T21:07:30</Date>
+    <Description>This VOEvent message was created with GCN VOE version: 1.12 14nov13</Description>
+  </Who>
+  <What>
+    <Param name="Packet_Type"   value="149" />
+    <Param name="Pkt_Ser_Num"   value="1" />
+    <Param name="TrigID"        value="1000004" ucd="meta.id" />
+    <Param name="Event_TJD"     value="16613" unit="days" ucd="time" />
+    <Param name="Event_SOD"     value="68533.00" unit="sec" ucd="time" />
+    <Param name="Event_Signal"  value="0" unit="count]" />
+    <Param name="Trigger_ID"    value="0x40000007" />
+    <Param name="Misc_flags"    value="0x55555" />
+    <Group name="Trigger_ID" >
+      <Param name="SubType"        value="coinc" />
+      <Param name="Test"           value="true" />
+      <Param name="RADec_valid"    value="true" />
+      <Param name="Retraction"     value="false" />
+      <Param name="InternalTest"   value="true" />
+    </Group>
+    <Group name="Misc_Flags" >
+      <Param name="SuperK_Participate"   value"true"  />
+      <Param name="SuperK_Possible"      value"false"  />
+      <Param name="SuperK_Good"          value"true"  />
+      <Param name="SuperK_Override"      value"false"  />
+      <Param name="LVD_Participate"      value"true"  />
+      <Param name="LVD_Possible"         value"false"  />
+      <Param name="LVD_Good"             value"true"  />
+      <Param name="LVD_Override"         value"false"  />
+      <Param name="ICE_Participate"      value"true"  />
+      <Param name="ICE_Possible"         value"false"  />
+      <Param name="ICE_Good"             value"true"  />
+      <Param name="ICE_Override"         value"false"  />
+      <Param name="Borexino_Participate" value"true"  />
+      <Param name="Borexino_Possible"    value"false"  />
+      <Param name="Borexino_Good"        value"true"  />
+      <Param name="Borexino_Override"    value"false"  />
+      <Param name="KamLAND_Participate"  value"true"  />
+      <Param name="KamLAND_Possible"     value"false"  />
+      <Param name="KamLAND_Good"         value"true"  />
+      <Param name="KamLAND_Override"     value"false"  />
+      <Param name="TBD1_Participate"     value"false"  />
+      <Param name="TBD1_Possible"        value"false"  />
+      <Param name="TBD1_Good"            value"false"  />
+      <Param name="TBD1_Override"        value"false"  />
+      <Param name="TBD2_Participate"     value"false"  />
+      <Param name="TBD2_Possible"        value"false"  />
+      <Param name="TBD2_Good"            value"false"  />
+      <Param name="TBD2_Override"        value"false"  />
+      <Param name="TBD3_Participate"     value"false"  />
+      <Param name="TBD3_Possible"        value"false"  />
+      <Param name="TBD3_Good"            value"false"  />
+      <Param name="TBD3_Override"        value"false"  />
+    </Group>
+    <Param name="Coords_Type"   value="1" unit="dn" />
+    <Param name="Coords_String" value="source_object" />
+    <Group name="Obs_Support_Info" >
+      <Description>The Sun and Moon values are valid at the time the VOEvent XML message was created.</Description>
+      <Param name="Sun_RA"        value="233.35" unit="deg" ucd="pos.eq.ra" />
+      <Param name="Sun_Dec"       value="-19.18" unit="deg" ucd="pos.eq.dec" />
+      <Param name="Sun_Distance"  value="124.51" unit="deg" ucd="pos.angDistance" />
+      <Param name="Sun_Hr_Angle"  value="-8.46" unit="hr" />
+      <Param name="Moon_RA"       value="56.62" unit="deg" ucd="pos.eq.ra" />
+      <Param name="Moon_Dec"      value="17.92" unit="deg" ucd="pos.eq.dec" />
+      <Param name="MOON_Distance" value="58.24" unit="deg" ucd="pos.angDistance" />
+      <Param name="Moon_Illum"    value="99.94" unit="%" ucd="arith.ratio" />
+      <Param name="Galactic_Long" value="96.34" unit="deg" ucd="pos.galactic.lon" />
+      <Param name="Galactic_Lat"  value="-60.19" unit="deg" ucd="pos.galactic.lat" />
+      <Param name="Ecliptic_Long" value="0.00" unit="deg" ucd="pos.ecliptic.lon" />
+      <Param name="Ecliptic_Lat"  value="0.00" unit="deg" ucd="pos.ecliptic.lat" />
+    </Group>
+    <Description>A transient location detected by network of detectors in the SuperNova Early Warning System.</Description>
+  </What>
+  <WhereWhen>
+    <ObsDataLocation>
+      <ObservatoryLocation id="GEOLUN" />
+      <ObservationLocation>
+        <AstroCoordSystem id="UTC-FK5-GEO" />
+        <AstroCoords coord_system_id="UTC-FK5-GEO">
+          <Time unit="s">
+            <TimeInstant>
+              <ISOTime>2013-11-17T19:02:13.00</ISOTime>
+            </TimeInstant>
+          </Time>
+          <Position2D unit="deg">
+            <Name1>RA</Name1>
+            <Name2>Dec</Name2>
+            <Value2>
+              <C1>0.0000</C1>
+              <C2>0.0000</C2>
+            </Value2>
+            <Error2Radius>999.9990</Error2Radius>
+          </Position2D>
+        </AstroCoords>
+      </ObservationLocation>
+    </ObsDataLocation>
+  <Description>The RA,Dec coordinates are of the type: source_object.</Description>
+  </WhereWhen>
+  <How>
+    <Description>SNEWS: SuperNova Early Warning System</Description>
+    <Reference uri="http://gcn.gsfc.nasa.gov/snews.html" type="url" />
+  </How>
+  <Why importance=1.0>
+    <Inference probability="1.0">
+      <Concept>process.variation.burst;phys.particle.neutrino</Concept>
+    </Inference>
+  </Why>
+  <Description>
+  </Description>
+</voe:VOEvent>

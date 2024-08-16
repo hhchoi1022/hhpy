@@ -1,0 +1,13 @@
+;
+; Focus offset file for Red Mountain Simulated Observatory
+;
+-10,  3, 3	; Red, relative to Clear, PtgUpd w/Clear
+-5,   3, 3	; Green, relative to Clear, PtgUpd w/Clear
++15,  3, 3	; Blue, relative to Clear, PtgUpd w/Clear
+0,    3, 3	; Clear, relative to Clear, PtgUpd w/Clear
++40,  3, 3	; U, relative to Clear, PtgUpd w/Clear
++10,  3, 3	; B, relative to Clear, PtgUpd w/Clear
++5,   3, 3	; V, relative to Clear, PtgUpd w/Clear
+-12,  3, 3	; R, relative to Clear, PtgUpd w/Clear
+-35,  3, 3	; I, relative to Clear, PtgUpd w/Clear
++200, 3, 3	; HAlpha, relative to Clear, PtgUpd w/Clear

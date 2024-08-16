@@ -1,0 +1,708 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+ACP Weather Server for Boltwood/Clarity Data File
+=================================================
+
+Script:         BoltwoodFile.wsc
+Author:         Robert B. Denny <rdenny@dc3.com>
+Version:        8.1.1
+Requires:       ACP 8.1 or later
+                Windows Script 5.6 or later
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ACP and its scripts with Weather information. This component
+                is responsible for providing the interface with the weather sensor,
+                which is does by reading the 1-line log file produced by the Boltwood
+                Clarity software.
+
+Usage:          In ACP Preferences, Weather tab, select ACP.BoltwoodFile as the server
+                ID, then click Setup... and select the 1-line log file that is produced
+                by the Clarity software. 
+
+Edit History:
+    20-Sep-04   Initial Edit
+    06-Nov-06	Finish comments
+    07-Nov-08   From template, skeleton for Boltwood File (JAT Observatory Project)
+                New CLASSID!!!! Add some sample code to select the log fgile in the
+                SetupDialog, and connect/disconnect. 
+    16-May-11   GEM:641 - Fix unsafe logic (had old refs to CLOUD)
+    11-Mar-15   GEM:1172 Add SkyTemperature
+    09-apr-15   GEM:1122 (reopened) Add Very Light -> unsafe to this server too!
+                Also allow reporting of multiple unsafe conditions. Change unsafe timeout
+                from 30 to 60 sec, leave poll at 15 sec. Egad, add VeryCloudy for unsafe
+                too!!
+    18-Aug-15   GEM:1364 - Turn off Error flag
+    07-Oct-15   GEM:1383 - Trap read errors as well as open errors during access.
+    20-Oct-15   GEM:1383 - Add write lock as well, from Rob Hawley. Add missing check for 
+                VeryWindy (holy s**t). Prevent unsafe at startup.
+    21-Oct-15   GEM:1383 - Add Err.Clear in loop, fix error reporting in loop
+    29-Oct-15   GEM:1383 - Add optional tracing of errors to separate file.
+    31-Oct-15   GEM:1383 - Version to 8.0.5, trace version in log, make polling on 15 
+                second cycle regardless, not just on success.
+    17-May-16   GEM:1463 - Version for 8.1, Use Alert flag for safe/unsafe if present.
+                Correct comment in PollIf() for new format - column alignments.
+                Fix trace file name.
+    08-Jul-16   No GEM - Turn off diag trace no other logic changes
+    09-Jul-16   GEM:1448 Trace reasons for unsafe weather. 
+    10-Jul-16   GEM:1483 Fix safe/unsafe return and guard data items in the precence
+                of a file access, data or file stale error. Do this by caching the last
+                error code/message when actually polled and raise the same error between
+                polls. 
+    13-Jul-16   GEM:1483 Fix ordering of initialization for long/short Boltwood format
+                (whether the last two flags are present, etc).
+    10-Aug-16   GEM:1487 Use file last-mod time for lst log data. Clarity occasionally
+                puts out illegal date/time strings.
+    11-Apr-17	GEM:1535 Fix Boltwood 1 safe/unsafe. No RainCond!
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="BoltwoodFile">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.BoltwoodFile" classid="{FF6E96AD-4732-4ea6-A01E-43E77E939917}" description="ACP weather server for Boltwood Clarity log file" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<method name="SetupDialog">
+			</method>
+			<property name="Connected">
+				<get/>
+				<put/>
+			</property>
+			<property name="AmbientTemperature">
+				<get/>
+			</property>
+			<property name="BarometricPressure">
+				<get/>
+			</property>
+			<property name="Clouds">
+				<get/>
+			</property>
+			<property name="DewPoint">
+				<get/>
+			</property>
+			<property name="InsideTemperature">
+				<get/>
+			</property>
+			<property name="Name">
+				<get/>
+			</property>
+			<property name="Precipitation">
+				<get/>
+			</property>
+			<property name="RelativeHumidity">
+				<get/>
+			</property>
+			<property name="Safe">
+				<get/>
+			</property>
+			<property name="SkyTemperature">
+				<get/>
+			</property>
+			<property name="WindDirection">
+				<get/>
+			</property>
+			<property name="WindVelocity">
+				<get/>
+			</property>
+		</public>
+		<object id="FileDialog" progid="ACP.FileDialog" events="false" reference="true"/>
+		<object id="Util" progid="ACP.Util" events="false" reference="true"/>
+		<object id="FSO" progid="Scripting.FileSystemObject" events="false" reference="false"/>
+		<script id="WeatherAccess" language="VBScript">
+<![CDATA[
+Option Explicit
+
+Const SVR_VERSION = "8.1.1"
+Const ERR_SOURCE = "ACP.BoltwoodFile"
+Const PRP = "Property "				' Common bits for error messages
+Const NTI = " is not implemented"
+'
+' Polling interval, do not read file more often than this
+'
+Const POLL_INT = #00:00:15#
+'
+' Turn this on to have detailed tracing to a log file
+'
+Const DIAG_TRACE = True
+
+'
+' Manifest constants from Clarity II
+'
+Const cloudUnknown = 0
+Const cloudClear = 1
+Const cloudCloudy = 2
+Const cloudVeryCloudy = 3
+Const cloudWet = 4      ' Boltwood I only
+Const windUnknown = 0
+Const windCalm = 1
+Const windWindy = 2
+Const windVeryWindy = 3
+Const rainUnknown = 0
+Const rainDry = 1
+Const rainWet = 2      'sensor has water on it
+Const rainRain = 3     'falling rain drops detected
+Const dayUnknown = 0
+Const dayDark = 1
+Const dayLight = 2
+Const dayVeryLight = 3
+
+'
+' State variables
+'
+Dim c_sTraceFileName                                        ' Full path to trace diagnostic log file
+Dim c_oTraceFileStream                                      ' Text stream into which trace info is written
+Dim c_sLogFileName                                          ' Full path/name of Clarity log file
+Dim c_bBoltwoodII
+Dim c_bBoltwoodIIAlert
+Dim c_bConnected
+Dim c_bAlertCond
+Dim c_bLastSafe
+Dim c_dtLastPollTime
+Dim c_dtLastLogTime
+Dim c_iSecondsSinceData
+Dim c_fAmbientTemp
+Dim c_fSkyTemp
+Dim c_fWindSpeed
+Dim c_fHumidity
+Dim c_fDewPoint
+Dim c_iRainFlag
+Dim c_iWetFlag
+Dim c_iCloudCond                                            ' "sky" on Boltwood I
+Dim c_iWindCond
+Dim c_iRainCond
+Dim c_iDayCond
+'
+' See PollIf()
+'
+Dim c_bLastPollError                                        ' True if last poll raised an error
+Dim c_iLastPollErrNumber                                    ' Last poll error code
+Dim c_sLastPollErrMessage                                   ' Last poll error message
+
+'
+' Code outside of any Function or Sub is executed when this object is created.
+'
+c_sTraceFileName = Util.Prefs.LocalUser.DefaultLogDir & "\BoltwoodFileTrace.log"
+Set c_oTraceFileStream = Nothing                           ' [sentinel]
+c_sLogFileName = ""
+c_bConnected = False
+c_dtLastPollTime = CDate(Now - #01:00:00#)                 ' Force initial poll
+
+'------------------------------------------------------------------------------
+' Method SetupDialog()
+'
+' Parameters:   (none)
+' Returns:      (nothing)
+'
+' Invokes the weather access setup dialog. I put in a file selection dialog,
+' courtesy of ACP's Util object which you have use of automatically here.
+'------------------------------------------------------------------------------
+Sub SetupDialog()
+
+    c_sLogFileName = Util.Profile.GetValue("ClarityLog", "\WXBoltwoodFile", "") ' Try for previous selection
+    If c_sLogFileName = "" Then
+        FileDialog.InitialDirectory = "C:\Program Files\Boltwood Systems"
+    Else
+        FileDialog.InitialDirectory = FSO.GetParentFolderName(c_sLogFileName)
+    End If
+
+    FileDialog.DialogTitle = "Select Clarity log file"
+    FileDialog.Filter = "Log files (*.log)|*.log|All files (*.*)|*.*"
+    FileDialog.Flags = 4096                                 ' Guarantee file exists
+    If FileDialog.ShowOpen() Then
+        c_sLogFileName = FileDialog.FileName
+        Util.Profile.WriteValue "ClarityLog", c_sLogFileName, "\WXBoltwoodFile"
+    End If
+        
+End Sub
+
+'------------------------------------------------------------------------------
+' Property Connected (R/W, REQUIRED)
+'
+' True means weather sensor is connected and operating (Boolean). 
+' Set True to connect.
+'------------------------------------------------------------------------------
+' dim Connected									            ' PrimalScript UI target (typ.)
+Function get_Connected()
+    ' Return True if connected, else False
+	get_Connected = c_bConnected
+End Function
+
+Function put_Connected(newValue)
+    ' Code to establish or terminate the connection
+    If newValue Then                                        ' Connecting
+        Trace "Connecting"
+        c_sLogFileName = Util.Profile.GetValue("ClarityLog", "\WXBoltwoodFile", "")
+        If c_sLogFileName = "" Then
+    	    Fail &H80040401, "Cannot connect - Clarity Log file has not been selected"
+    	End If
+        c_bBoltwoodIIAlert = False                          ' May get changed in PollIf
+    	PollIf                                              ' Get initial data for check and model
+        c_bConnected = True
+        c_bLastSafe = False
+        Trace "Connected OK"
+    Else
+        Trace "Disconnecting & closing trace file"
+        On Error Resume Next
+        c_oTraceFileStream.Close
+        On Error GoTo 0
+        c_bConnected = False
+    End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property AmbientTemperature (R/O, OPTIONAL)
+'
+' The ambient (outside) air temperature (Single, deg.C)
+'------------------------------------------------------------------------------
+' Dim AmbientTemperature
+Function get_AmbientTemperature()
+    PollIf
+    get_AmbientTemperature = c_fAmbientTemp
+End Function
+
+'------------------------------------------------------------------------------
+' Property BarometricPressure (R/O, OPTIONAL)
+'
+' The barometric pressure (Single, millibars)
+' NOTE: This must be in millibars, per international aviation weather reporting
+'       standards.
+'------------------------------------------------------------------------------
+' Dim BarometricPressure
+Function get_BarometricPressure()
+	Fail &H80040400, PRP & "Get BarometricPressure" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Clouds (R/O, OPTIONAL)
+'
+' Cloud coverage (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim Clouds
+Function get_Clouds()
+    PollIf
+	Select Case c_iCloudCond
+		Case cloudUnknown:
+			Fail &H80040404, "No cloud data currently available"
+		Case cloudClear:
+			get_Clouds = 0.0
+		Case cloudCloudy:
+			get_Clouds = 0.5
+		Case cloudVeryCloudy:
+			get_Clouds = 1.0
+		Case Else:
+			Fail &H80040405, "Unknown cloud value from Clarity"
+	End Select
+End Function
+
+'------------------------------------------------------------------------------
+' Property DewPoint (R/O, OPTIONAL)
+'
+' The dew point temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim DewPoint
+Function get_DewPoint()
+    PollIf
+    If c_bBoltwoodII Then
+        get_DewPoint = c_fDewPoint
+    Else
+	    Fail &H80040400, PRP & "Get DewPoint" & NTI
+	End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property InsideTemperature (R/O, OPTIONAL)
+'
+' The temperature inside the observatory (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim InsideTemperature
+Function get_InsideTemperature()
+	Fail &H80040400, PRP & "Get InsideTemperature" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Name (R/O, OPTIONAL)
+'
+' The display name of the weather system (String)
+'------------------------------------------------------------------------------
+' dim Name
+Function get_Name()
+    PollIf
+    If c_bBoltwoodII Then
+        get_Name = "Boltwood Cloud Sensor II"
+    Else
+        get_Name = "Boltwood Cloud Sensor"
+    End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property Precipitation (R/O, OPTIONAL)
+'
+' True if precipitation is present (Boolean)
+'------------------------------------------------------------------------------
+' Dim Precipitation
+Function get_Precipitation()
+    PollIf
+    If c_bBoltwoodII Then
+        get_Precipitation = (c_iRainCond = rainRain)
+    Else
+	    Fail &H80040400, PRP & "Get Precipitation" & NTI
+	End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property RelativeHumidity (R/O, OPTIONAL)
+'
+' The relative humidity (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim RelativeHumidity
+Function get_RelativeHumidity()
+    PollIf
+    If c_bBoltwoodII Then
+        get_RelativeHumidity = c_fHumidity
+    Else
+	    Fail &H80040400, PRP & "Get RelativeHumidity" & NTI
+    End If
+End Function
+
+'------------------------------------------------------------------------------
+' Property Safe (R/O, REQUIRED)
+'
+' Return True when weather is safe, False when not. Returning False will
+' stop any ACP script in progress and cause alarm and shutdown processes
+' to be initiated.
+'------------------------------------------------------------------------------
+' dim Safe
+Function get_Safe()
+    Dim Message
+    ' WARNING: TRAP ERRORS HERE! Raised error on Safe property will kill ACP!
+    On Error Resume Next
+    PollIf
+    If Err.Number <> 0 Then
+        message = "Weather Unsafe! data-file acquisition error:"
+        message = message & vbCrLf & "  " & Err.Description
+		Util.Console.PrintLine message
+		Trace message
+        get_Safe = False
+        c_bLastSafe = False
+        Exit Function
+    End If
+    On Error GoTo 0
+    
+    If c_bBoltwoodII Then
+        If c_bBoltwoodIIAlert Then
+            get_Safe = Not c_bAlertCond
+        Else
+        	get_Safe = (Not c_iCloudCond = cloudUnknown) And _
+        	            (Not c_iCloudCond = cloudVeryCloudy) And _
+        	            (Not c_iRainCond = rainUnknown) And _
+        				(Not c_iRainCond = rainRain) And _
+        				(Not c_iWindCond < 0) And _
+        	            (Not c_iWindCond = windVeryWindy) And _
+        				(Not c_iDayCond = dayUnknown) And _
+        				(Not c_iDayCond = dayVeryLight)
+        End If
+    	If Not get_Safe And c_bLastSafe Then                ' If this is a change from safe to unsafe
+    		message = "CloudSensorII: Weather is unsafe!"
+    	    If c_bBoltwoodIIAlert Then
+    	        message = message & vbCrLf & "               Clarity is alerting unsafe weather (see Clarity checkboxes)"
+    	    Else
+        		If(c_iCloudCond = cloudUnknown) Then _
+        		    message = message & vbCrLf & "               Cloud sensor is not ready or broken"
+        		If(c_iCloudCond = cloudVeryCloudy) Then _
+        		    message = message & vbCrLf & "               Cloud condition is Very Cloudy"
+        		If(c_iRainCond = rainUnknown) Then _
+        		    message = message & vbCrLf & "               Rain sensor is not ready or broken"
+        		If(c_iRainCond = rainRain) Then _
+        		    message = message & vbCrLf & "               Rain condition is Rainy"
+        		If(c_iWindCond < 0) Then _
+        		    message = message & vbCrLf & "               Wind sensor is not ready or broken"
+        		If(c_iWindCond = windVeryWindy) Then _
+        		    message = message & vbCrLf & "               WindCondition is Very Windy"
+        		If(c_iDayCond = DayUnknown) Then _
+        		    message = message & vbCrLf & "               Daylight sensor is not ready or broken"
+        		If(c_iDayCond = DayVeryLight) Then _
+        		    message = message & vbCrLf & "               Daylight condition is Very Bright"
+    		End If
+    		Util.Console.PrintLine message
+    		Trace message
+    	End If
+    Else
+    	get_Safe = (Not c_iCloudCond = cloudUnknown) And _
+    	            (Not c_iCloudCond = cloudVeryCloudy) And _
+    	            (Not c_iCloudCond = cloudWet)
+    	If Not get_Safe And c_bLastSafe Then                ' If this is a change from safe to unsafe
+    		message = "CloudSensor: Weather is unsafe!"
+    		If(c_iCloudCond = cloudUnknown) Then _
+    		    message = message & vbCrLf & "               Cloud sensor is not ready or broken"
+    		If(c_iCloudCond = cloudVeryCloudy) Then _
+    		    message = message & vbCrLf & "               Cloud condition is Very Cloudy"
+    		If(c_iCloudCond = cloudWet) Then _
+    		    message = message & vbCrLf & "               Cloud condition is Wet"
+    		Util.Console.PrintLine message
+    		Trace message
+    	End If
+    End If
+    
+	c_bLastSafe = get_Safe
+	
+End Function
+
+'------------------------------------------------------------------------------
+' Property SkyTemperature (R/O, OPTIONAL)
+'
+' The sky temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim SkyTemperature
+Function get_SkyTemperature()
+    PollIf
+	get_SkyTemperature = c_fSkyTemp
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindDirection (R/O, OPTIONAL)
+'
+' The azimuth FROM which the wind is blowing (Single, deg. magnetic)
+' NOTE: This must be in degrees MAGNETIC, per international aviation weather 
+'       reporting standards.
+'------------------------------------------------------------------------------
+' Dim WindDirection
+Function get_WindDirection()
+	Fail &H80040400, PRP & "Get WindDirection" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindVelocity (R/O, OPTIONAL)
+'
+' The wind velocity (Single, knots)
+'------------------------------------------------------------------------------
+' Dim WindVelocity
+Function get_WindVelocity()
+    PollIf
+    If c_bBoltwoodII Then
+        get_WindVelocity = c_fWindSpeed
+    Else
+	    Fail &H80040400, PRP & "Get WindVelocity" & NTI
+	End If
+End Function
+
+' ===============
+' Local Functions
+' ===============
+
+
+'------------------------------------------------------------------------------
+' Sub PollIf()
+'
+' If the poll time has expired, attempt to read the one line from the Boltwood 
+' data file. If it is locked, wait 500ms and try again. Try 10 times then fail. 
+' If succeeded, update the "last poll time". Then parse the file detecting the
+' old vs new format:
+'
+'      0        1         2         3         4         5         6         7         8         9         0
+'      123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+'      Date       Time        T V  SkyT  AmbT  SenT    Wind   Hum Dew    Hea R W Since Now()        c w r d C A
+' --------------------------------------------------------------------------------------------------------------
+' new: 2016-07-09 16:54:42.78 C K -28.5  18.7  22.5    45.3   75  10.3   3   0 0 00004 042560.70466 1 2 1 1 0 0
+'
+'      0        1         2         3         4         5         6         7
+'      1234567890123456789012345678901234567890123456789012345678901234567890
+'      Date       Time     U  SkyT  AmbT  SenT Hea W Since  Now() Day's S
+' ---------------------------------------------------------------------------
+' old: 2005-06-03 02:07:23 C  -28.5 18.7  22.5   3 0 00004 038506.08846 1
+'
+' Raises error if something isn't right
+'------------------------------------------------------------------------------
+Sub PollIf()
+    Dim S, L, i, buf, bits, mph, faren, curLocale, RX 
+    
+    '
+    ' If not actually polling the file, we need to re-create any raised
+    ' error that happened lasat time we polled. THis way the rest of the
+    ' server has no idea we didn't really read the info, and just uses what
+    ' was there last time. These globals are set in the special PollFail()
+    '
+    If (Now - c_dtLastPollTime) < POLL_INT Then 
+        If c_bLastPollError Then Err.Raise c_iLastPollErrNumber, ERR_SOURCE, c_sLastPollErrMessage
+        Exit Sub
+    End If
+    '
+    ' Going to poll for real
+    '
+    c_dtLastPollTime = Now                                  ' Update last poll time
+    c_bLastPollError = False                                ' Forget any raised error from last poll
+    
+    If Not FSO.FileExists(c_sLogFileName) Then              ' Catch vaporized Boltwood file
+        c_dtLastPollTime = Now                              ' Keep poll interval for possible long delay (NetBIOS)
+        PollFail &H80040407, "The Boltwood data file doesn't exist!"
+    End If
+    
+    '
+    ' Read and process the Boltwood/Clarity file
+    ' Locking logic thanks to Rob Hawley (see GEM:1383)
+    '
+    On Error Resume Next
+    For i = 0 To 19                                         ' Try twice a sec. for 10 sec.
+        Set L = FSO.OpenTextFile(c_sLogFileName, 8)         ' Lock the file for writing (using append)
+        If Err.Number = 0 Then 
+            Set S = FSO.OpenTextFile(c_sLogFileName, 1)     ' also resets pointer to start of file
+            If Err.Number = 0 Then 
+                buf = S.ReadLine                            ' OK We have the file open. Read the data line
+                If Err.Number = 0 Then
+                    Trace "Success reading Boltwood data file (" & i & "):"
+                    Trace buf
+                    c_dtLastLogTime = FSO.GetFile(c_sLogFileName).DateLastModified
+                    S.Close                                 ' And close it right away
+                    L.Close
+                    Exit For
+                Else
+                    buf = Err.Description
+                    Trace "Can't read Boltwood data file (" & i & ") " & buf
+                    S.Close
+                    L.Close
+                End If
+            Else
+                buf = Err.Description
+                Trace "Can't open Boltwood data file for read (" & i & ") " & buf
+                L.Close
+            End If
+         Else
+            Trace "Can't lock Boltwood data file for write (" & i & ") " & buf
+            buf = Err.Description
+        End If
+        Err.Clear
+        Util.WaitForMilliseconds 500
+    Next    
+    On Error GoTo 0                                         ' Re-arm trapping 
+    If i >= 19 Then 
+        c_dtLastPollTime = Now                              ' Keep poll interval for possible long delay (NetBIOS)
+        PollFail &H80040401, "Failed to open or read Boltwood data file" & _
+                    "  (last error: " & buf & ")"
+    End If
+    '
+    ' Boltwood always puts out . for decimal point, temporarily switch locale to en-us
+    '
+    curLocale = GetLocale()
+    SetLocale("en-us")
+    '
+    ' Interpret log file. Detect old/new format
+    '
+    Set RX = New RegExp                                     ' Compress runs of whitespace
+    RX.Pattern = " +"
+    RX.Global = True
+    buf = RX.Replace(buf, " ")
+    bits = Split(buf, " ")                                  ' Now just split on space
+    If UBound(bits) > 16 Then                               ' New (Clarity II) format
+        c_bBoltwoodII = True
+        Trace "Have Boltwood II"
+        If UBound(bits) = 20 Then                           ' Even newer Clarity with Alert
+            Trace "Have new Clarity with Alert flag"
+            c_bBoltwoodIIAlert = True                       ' We have the Alert flag
+            c_bAlertCond = (CInt(bits(20)) = 1)             ' 1 = Alerting
+        End If
+        faren = (UCase(bits(2)) = "F")
+        mph = (UCase(bits(3)) = "M")
+        c_fSkyTemp = CSng(bits(4))
+        If faren Then
+            c_fSkyTemp = (c_fSkyTemp - 32) * 5 / 9          ' Convert F to C if needed (typ.)
+        End If
+        c_fAmbientTemp = CSng(bits(5))
+        If faren Then
+            c_fAmbientTemp = (c_fAmbientTemp - 32) * 5 / 9
+        End If
+        c_fWindSpeed = CSng(bits(7))
+        If mph Then
+            c_fWindSpeed = 0.8688 * c_fWindSpeed            ' Convert miles/hr to knots
+        Else
+            c_fWindSpeed = 0.5400 * c_fWindSpeed            ' Convert km/hr to knots
+        End If
+        c_fHumidity = CSng(bits(8)) / 100                   ' Humidity, frac (0-1)
+        c_fDewPoint = CSng(bits(9))                         ' Dew point temp
+        If faren Then                                       ' Convert F to C if needed
+            c_fDewPoint = (c_fDewPoint - 32) * 5 / 9
+        End If
+        c_iRainFlag = CInt(bits(11))
+        c_iWetFlag = CInt(bits(12))
+        c_iSecondsSinceData = CInt(bits(13))
+        'c_dtLastLogTime = CDate(bits(14))                  ' ?? unknown why I stopped using this ??
+        'The date/time string is unusable as well because it occasionally has illegal data (hh:mm:60)
+        'Instead I get the last log time above from the file last-mod time. Geeze.
+        'c_dtLastLogTime = CDate(bits(0) & " " & Left(bits(1), 8)) ' Remove decimals from seconds
+        c_iCloudCond = CInt(bits(15))
+        c_iWindCond = CInt(bits(16))
+        c_iRainCond = CInt(bits(17))
+        c_iDayCond = CInt(bits(18))
+    ElseIf UBound(bits) > 8 Then                            ' Old format
+        c_bBoltwoodII = False
+        faren = (UCase(bits(2)) = "F")
+        c_fSkyTemp = CSng(bits(3))
+        If faren Then
+            c_fSkyTemp = (c_fSkyTemp - 32) * 5 / 9
+        End If
+        c_fAmbientTemp = CSng(bits(4))
+        If faren Then
+            c_fAmbientTemp = (c_fAmbientTemp - 32) * 5 / 9
+        End If
+        c_iWetFlag = CInt(bits(7))
+        c_iSecondsSinceData = CInt(bits(8))
+        c_dtLastLogTime = CDate(bits(9))
+        c_iCloudCond = CInt(bits(10))
+    Else                                                    ' Some sort of bogus data line
+        SetLocale curLocale
+        PollFail &H80040402, "Weather data file does not contain valid data"
+    End If
+    SetLocale curLocale                                     ' Restore locale
+    
+    '
+    ' Signal that our data is really no good
+    '
+    If (Now - c_dtLastLogTime) > #00:01:00# Then
+        PollFail &H80040402, "Weather data file is stale (> 60 sec old)"
+    End If
+    If c_iSecondsSinceData > 60 Then
+        PollFail &H80040402, "No weather data from Boltwood for > 60 sec"
+    End If
+
+End Sub
+
+'
+' Log a message into the trace file (ever appending)
+'
+Sub Trace(message)
+    If Not DIAG_TRACE Then Exit Sub
+    
+    If c_oTraceFileStream Is Nothing Then
+        If FSO.FileExists(c_sTraceFileName) Then FSO.DeleteFile c_sTraceFileName    ' Start with fresh file
+        Set c_oTraceFileStream = FSO.OpenTextFile(c_sTraceFileName, 8, True)        ' CreateIf, for Append
+        c_oTraceFileStream.WriteLine Util.FormatVar(Util.SysUTCDate, "Hh:Nn:Ss") & " Log opened, server " & SVR_VERSION
+    End If   
+    c_oTraceFileStream.Write Util.FormatVar(Util.SysUTCDate, "Hh:Nn:Ss") & " "
+    c_oTraceFileStream.WriteLine message
+End Sub
+
+'
+' Raise an error and trace the error message as well
+'
+Sub Fail (code, message)
+    Trace "ERROR: " & message
+    Err.Raise code, ERR_SOURCE, message
+End Sub
+'
+' Special version that saves the number and message for raising
+' errors between polls.
+'
+Sub PollFail (code, message)
+    c_bLastPollError = True                                 ' Result of last real poll
+    c_iLastPollErrNumber = code
+    c_sLastPollErrMessage = message
+    Trace "ERROR: " & message
+    Err.Raise code, ERR_SOURCE, message
+End Sub
+
+]]>
+		</script>
+	</component>
+</package>

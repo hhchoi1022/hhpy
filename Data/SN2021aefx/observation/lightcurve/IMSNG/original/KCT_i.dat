@@ -1,0 +1,15 @@
+|    obsdate |  UL5_4 | e_UL5_4 |    mag | e_mag | observatory | filter |                                                                                        image |
+| 59544.2286 |  17.82 |   0.043 | 12.695 | 0.043 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59544.2286_600.com.fits |
+| 59545.2192 |  17.99 |   0.041 | 12.704 | 0.041 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59545.2192_600.com.fits |
+| 59546.2198 | 17.982 |   0.041 | 12.712 | 0.041 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59546.2198_600.com.fits |
+| 59547.2202 | 17.974 |   0.041 |  12.73 | 0.041 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59547.2202_600.com.fits |
+| 59548.2214 |  17.87 |   0.042 | 12.776 | 0.042 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59548.2214_600.com.fits |
+| 59549.2048 | 18.014 |   0.041 | 12.786 | 0.041 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59549.2048_600.com.fits |
+| 59551.1894 | 17.743 |   0.043 |  12.85 | 0.044 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59551.1894_600.com.fits |
+| 59552.2075 | 17.721 |   0.043 | 12.889 | 0.044 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59552.2075_480.com.fits |
+| 59553.2056 | 18.159 |   0.041 | 12.939 | 0.041 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59553.2056_600.com.fits |
+| 59554.1894 | 17.899 |   0.041 | 12.995 | 0.042 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59554.1894_600.com.fits |
+| 59555.1908 | 17.944 |   0.041 | 13.071 | 0.042 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59555.1908_600.com.fits |
+| 59556.1912 |  17.83 |   0.042 | 13.153 | 0.043 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59556.1912_600.com.fits |
+| 59557.1922 |  18.04 |   0.041 | 13.242 | 0.041 |         KCT |      i | /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59557.1922_600.com.fits |
+|  59558.192 | 17.879 |   0.041 | 13.343 | 0.042 |         KCT |      i |  /data2/SN2021aefx_220627/KCT_STX16803/i/aligned/combined/NGC1566_KCT_59558.192_600.com.fits |

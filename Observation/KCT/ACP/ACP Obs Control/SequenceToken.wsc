@@ -1,0 +1,203 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+ACP Script Sequencing token
+===========================
+
+Script:         SequenceToken.wsc
+Author:         Robert B. Denny <rdenny@dc3.com>
+Version:        5.1
+Requires:       ACP 4.2 or later
+                Windows Script 5.6 or later (installed by ACP setup)
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ACP with...
+                
+Edit History:
+    23-Jan-06 rbd   4.2 - Initial edit
+    23-Nov-06 rbd   5.0 - Add ChainBackObsPlan for plan interrupt/resume
+    19-Jan-09 rbd   5.1 - Add ChainBackScript to allow arbitrary script to run an
+                    observing plan then have AcquireImages chain back to that SCRIPT.
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="SequenceToken">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.SequenceToken" classid="{60635BA9-F95F-4168-A4AB-6FC5002CA7D9}" description="ACP script sequencing token" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<property name="DawnFlatPlan">
+				<get/>
+				<put/>
+			</property>
+			<property name="DuskFlatPlan">
+				<get/>
+				<put/>
+			</property>
+			<property name="DoDuskFlats">
+				<get/>
+				<put/>
+			</property>
+			<property name="DoDawnShutdown">
+				<get/>
+				<put/>
+			</property>
+			<property name="AutoFlatResult">
+				<get/>
+				<put/>
+			</property>
+			<property name="ObservingPlan">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChainBackObsPlan">
+				<get/>
+				<put/>
+			</property>
+			<property name="ChainBackScript">
+				<get/>
+				<put/>
+			</property>
+		</public>
+		<script id="SequenceToken" language="VBScript">
+<![CDATA[
+Option Explicit
+
+Dim c_DawnFlatPlan
+Dim c_DuskFlatPlan
+Dim c_ObservingPlan
+Dim c_ChainBackObsPlan
+Dim c_ChainBackScript
+Dim c_DoDuskFlats
+Dim c_DoDawnShutdown
+Dim c_AutoFlatResult
+
+c_DawnFlatPlan = ""                                             ' Initialize ("constructor")
+c_DuskFlatPlan = ""
+c_ObservingPlan = ""
+c_ChainBackObsPlan = ""
+c_ChainBackScript = ""
+c_DoDuskFlats = False
+c_DoDawnShutdown = False
+c_AutoFlatResult = ""                                           ' "OK" or error message from AutoFlat
+
+' ==========
+' PROPERTIES
+' ==========
+
+'dim DawnFlatPlan (PrimalSCRIPT target)
+Function get_DawnFlatPlan()
+
+    get_DawnFlatPlan = c_DawnFlatPlan
+
+End Function
+
+Function put_DawnFlatPlan(newValue)
+
+    c_DawnFlatPlan = newValue
+
+End Function
+
+
+'Dim DuskFlatPlan (PrimalSCRIPT target)
+Function get_DuskFlatPlan()
+
+    get_DuskFlatPlan = c_DuskFlatPlan
+
+End Function
+
+Function put_DuskFlatPlan(newValue)
+
+    c_DuskFlatPlan = newValue
+
+End Function
+
+
+'Dim DoDuskFlats (PrimalSCRIPT target)
+Function get_DoDuskFlats()
+
+    get_DoDuskFlats = c_DoDuskFlats
+
+End Function
+
+Function put_DoDuskFlats(newValue)
+
+    c_DoDuskFlats = newValue
+
+End Function
+
+
+'Dim DoDawnShutdown (PrimalSCRIPT target)
+Function get_DoDawnShutdown()
+
+    get_DoDawnShutdown = c_DoDawnShutdown
+
+End Function
+
+Function put_DoDawnShutdown(newValue)
+
+    c_DoDawnShutdown = newValue
+
+End Function
+
+
+'Dim AutoFlatResult (PrimalSCRIPT target)
+Function get_AutoFlatResult()
+
+    get_AutoFlatResult = c_AutoFlatResult
+
+End Function
+
+Function put_AutoFlatResult(newValue)
+
+    c_AutoFlatResult = newValue
+
+End Function
+
+'Dim ObservingPlan (PrimalSCRIPT target)
+Function get_ObservingPlan()
+
+    get_ObservingPlan = c_ObservingPlan
+
+End Function
+
+Function put_ObservingPlan(newValue)
+
+    c_ObservingPlan = newValue
+
+End Function
+
+'Dim ChainBackObsPlan (PrimalSCRIPT target)
+Function get_ChainBackObsPlan()
+
+    get_ChainBackObsPlan = c_ChainBackObsPlan
+
+End Function
+
+Function put_ChainBackObsPlan(newValue)
+
+    c_ChainBackObsPlan = newValue
+
+End Function
+
+'Dim ChainBackScript (PrimalSCRIPT target)
+Function get_ChainBackScript()
+
+    get_ChainBackScript = c_ChainBackScript
+
+End Function
+
+Function put_ChainBackScript(newValue)
+
+    c_ChainBackScript = newValue
+
+End Function
+
+]]>
+		</script>
+	</component>
+</package>

@@ -1,0 +1,9 @@
+;
+; Sample RoModeInfo.txt
+;
+; Change the xxxxxx, yyyyyy, and zzzzzz below to the actual names of the
+; readout modes you want to use for normal, fast, and flat, respectively.
+;
+Normal = xxxxxx
+Fast = yyyyyy
+Flat = zzzzzz

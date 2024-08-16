@@ -1,0 +1,5 @@
+obj ra dec exptime filter count binning priority note mode n_tel
+NGC1566 121.111 -54.444 120 g,r,i 5 1 1 "" Search 1
+NGC1566 121.111 -54.444 120 g,r,i 5 1 1 "" Search 1
+NGC1672 121.111 -54.444 120 g,r,i 5 1 1 "" Search 1
+NGC1566 121.111 -54.444 120 g,r,i 5 1 1 "" Search 1

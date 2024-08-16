@@ -1,0 +1,98 @@
+;
+; ====================================================
+; ACP Expert Scheduler custom log path & name template
+; ====================================================
+;
+; Construct the full path/name template for ACP run logs produced for ACP
+; Scheduler initiated runs. Comments start with ';', blank lines are ignored. 
+; DON'T INSERT TABS! Illegal path/file characters such as '?' and "\" in 
+; names will be filtered out or substituted with legal characters. 
+; In addition, for file names only, parentheses will be filtered out.
+;
+; WARNING! DO NOT INCLUDE THE ".log" ON THE END! If no template is given
+; the standard ACP Scheduler log path and name will be used.
+;
+; Each scheduler user can (optionally) have their own path/name setup. Include 
+; a separate template for the user, prefixed by the user name in square 
+; brackets. See the examples at the end of this file. NOTE: Per-user templates
+; must PRECEDE the default one.
+;
+; The following substitution tokens are provided 
+; (some are rather useless for logs!):
+;
+;   Token       Description
+;   ----------  --------------------------------------------------------------
+;   $DEFPATH    The ACP Local User default logs path (see ACP Preferences,
+;               Local User tab), a "Scheduler" folder under that, then
+;               a folder with the Project's Observer name under that.
+;               OR IF SUBMITTED VIA ACP WEB FORM: The path to the ACP web user's 
+;               logs. In this case, the Project Contact Name will be of the 
+;               form "Joe Observer [ACP joeuser]"
+;
+;   $WEBROOT    The ACP "Path to web document root" (see ACP preferences,
+;               Servers tab)
+;
+;   $MERSIDE    If the scope is a german mount, "W" if LOOKING west, "E" if
+;               LOOKING east, "_" if not a german mount.
+;
+;   $OBSNAME    The name of the current Observation
+;
+;   $OBSRA      J2000 Right Ascension of the current Observation, sexagesimal
+;               without delimiters, zero-filled (e.g. "193451"). This 
+;               will be valid for major planets and orbital elements, as 
+;               the current coordinates will have been calculated.
+;
+;   $OBSDEC     J2000 Declination of the current Observation, sexagesimal
+;               without delimiters, zero-filled (e.g. "+214306"). This 
+;               will be valid for major planets and orbital elements, as 
+;               the current coordinates will have been calculated.
+;
+;   $OBSPA      Equatorial Position Angle of the current Observation to the
+;               nearest degree, three digits, zero-filled (e.g. "164")
+;
+;   $OBSSEQ     Sequence number for the current Observation's set count,
+;               three digits, zero-filled (e.g. "021")
+;
+;   $PLNNAME    The name of the current Plan
+;
+;   $PRJNAME    The name of the current Project
+;
+;   $PRJEXID    The External ID of the current Project
+;
+;   $PRJCONT    The Contact Name of the current Project. If this has the ACP
+;               login username in it (see $DEFPATH), that part will be
+;               removed.
+;
+;   $USRNAME    The Scheduler User Name for the current Project.
+;
+;   $ACPLOGIN   The ACP web user login username, if present in the Project's
+;               Contact Name (see $DEFPATH), or "_" if not present.
+;
+;   $DATENITE   The local date of the run, in ISO 8601 format YYYYMMDD. This
+;               date changes at the time the sun crosses the local meridian.
+;               Use this to put all images from one night/run into the same 
+;               folder. 
+;
+;   $DATEUTC    The current UTC date, in ISO 8601 format YYYYMMDD
+;               (e.g. "20060528")
+;
+;   $TIMEUTC    The current UTC time, in ISO 8601 basic format HHMMSS
+;               (e.g., 142804). 
+;
+;   $DATELOC    The current local date, in ISO 8601 format YYYYMMDD
+;               (e.g. "20060528")
+;
+;   $TIMELOC    The current local time, in ISO 8601 basic format HHMMSS
+;               (e.g., 142804). 
+;
+;   $DATEJUL    The current UTC Julian date (e.g. "2453846")
+;   ----------  --------------------------------------------------------------
+;
+;
+; Example: Reproduce the default log naming of Scheduler (in AcquireScheduler.vbs)
+;          but put scheduler user Omega Centauri's ACP run logs in a special folder:
+;
+; [Omega Centauri]C:\OmieLogs\$DATEUTC\$OBSNAME_$DATEUTC@$TIMEUTC
+; $DEFPATH\Scheduler\$DATENITE\$USRNAME\$OBSNAME-$DATEUTC@$TIMEUTC
+;
+; Put your template(s) on the line below:

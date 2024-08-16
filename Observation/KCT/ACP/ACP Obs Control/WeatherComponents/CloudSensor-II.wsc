@@ -1,0 +1,396 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+<![CDATA[
+'tabs=4
+-----------------------------------------------------------------------------------------
+
+Boltwood CloudSensor II Weather Server
+======================================
+
+Script:         CloudSensor-II.wsc
+Author:         Robert B. Denny <rdenny@dc3.com> and Arto Oksanen (original Boltwood Server)
+Version:        8.0.1
+Requires:       ACP 8.0 or later
+                Windows Script 5.6 or later
+
+Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                provides ACP and its scripts with Weather information. This component
+                is responsible for providing the interface with the Boltwood CloudSensor II
+                weather sensor.
+
+Edit History:
+    06-Nov-06   Initial Edit, after Arto Oksanen's BoltwoodServer
+    03-Apr-08   Wait for data on connect so don't give false unsafe!
+    26-Mar-09   Wait for 10 minutes (adjustable) on change from unsafe to safe before
+                actually reporting safe to client.
+    11-Nov-14   Fix RelativeHumidity - wow!
+    07-Aug-14   GEM:1122 Add VeryLight as an unsafe condition
+    11-Mar-15   GEM:1172 Add SkyTemperature
+    20-Apr-15   GEM:1172 Fix SkyTemperature :-(
+-----------------------------------------------------------------------------------------
+]]>
+	</comment>
+	<component id="BoltwoodII">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.BoltwoodII" classid="{195AF777-2A9E-4713-980F-FB3B5E7700E0}" description="ACP Weather Access Server for Boltwood Cloud Sensor II" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<method name="SetupDialog">
+			</method>
+			<property name="Connected">
+				<get/>
+				<put/>
+			</property>
+			<property name="AmbientTemperature">
+				<get/>
+			</property>
+			<property name="BarometricPressure">
+				<get/>
+			</property>
+			<property name="Clouds">
+				<get/>
+			</property>
+			<property name="DewPoint">
+				<get/>
+			</property>
+			<property name="InsideTemperature">
+				<get/>
+			</property>
+			<property name="Name">
+				<get/>
+			</property>
+			<property name="Precipitation">
+				<get/>
+			</property>
+			<property name="RelativeHumidity">
+				<get/>
+			</property>
+			<property name="Safe">
+				<get/>
+			</property>
+			<property name="SkyTemperature">
+				<get/>
+			</property>
+			<property name="WindDirection">
+				<get/>
+			</property>
+			<property name="WindVelocity">
+				<get/>
+			</property>
+		</public>
+		<object id="Util" progid="ACP.Util" events="false" reference="true"/>
+		<script id="BoltwoodII" language="VBScript">
+<![CDATA[
+Option Explicit
+
+'--------------------------------------------------------------------------
+' Adjust this for the time (min) you want the weather to remain safe before
+' actually reporting it to be safe to ACP.
+'
+Const SAFE_MINUTES = 10.0
+' -------------------------------------------------------------------------
+
+Const ERR_SOURCE = "ACP.BoltwoodII"
+Const PRP = "Property "				                                ' Common bits for error messages
+Const NTI = " is not implemented"
+Const SKY = "               SkyCondition is "
+Const RAI = "               RainCondition is "
+'
+' Manifest constants from Clarity II
+'
+Const cloudUnknown = 0
+Const cloudClear = 1
+Const cloudCloudy = 2
+Const cloudVeryCloudy = 3
+Const windUnknown = 0
+Const windCalm = 1
+Const windWindy = 2
+Const windVeryWindy = 3
+Const rainUnknown = 0
+Const rainDry = 1
+Const rainWet = 2      'sensor has water on it
+Const rainRain = 3     'falling rain drops detected
+Const dayUnknown = 0
+Const dayDark = 1
+Const dayLight = 2
+Const dayVeryLight = 3
+
+Dim CLOUD
+Set CLOUD = Nothing                                                 ' Initially not connected (not an object)
+
+Dim bLastSafe                                                       ' Limit console traffic to changes to unsafe only
+bLastSafe = True
+Dim dtLastUnsafeTime                                                ' For delayed-safe logic (see Safe property)
+
+'
+' Common function raises an error of the sensor is not connected
+' Or hasn't received data For more than 60 seconds.
+'
+Sub CheckConnected()
+    If Not IsObject(CLOUD) Then 
+        Err.Raise &H80040200, ERR_SOURCE, "Clarity is not connected"
+    End If
+    If Not CLOUD.SecondsSinceGoodData < 60 Then
+        Err.Raise &H80040200, ERR_SOURCE, "Clarity is not receiving data"
+    End If
+End Sub
+
+'------------------------------------------------------------------------------
+' Method SetupDialog()  (OPTIONAL)
+'
+' Parameters:   (none)
+' Returns:      (nothing)
+'
+' Invokes the weather access setup dialog
+'------------------------------------------------------------------------------
+Sub SetupDialog()
+    MsgBox "Nothing needs to be set up", 64, ERR_SOURCE
+End Sub
+
+'------------------------------------------------------------------------------
+' Property Connected (R/W, REQUIRED)
+'
+' True means weather sensor is connected and operating (Boolean). 
+' Set True to connect.
+'------------------------------------------------------------------------------
+' dim Connected									                    ' PrimalScript UI target (typ.)
+Function get_Connected()
+    get_Connected = Not CLOUD Is Nothing
+End Function
+
+Function put_Connected(newValue)
+    Dim i
+    
+    If newValue Then
+        If Not CLOUD Is Nothing Then Exit Function                  ' Ignore, already connected
+        Set CLOUD = CreateObject("ClarityII.CloudSensorII")
+	    Util.Console.PrintLine "Clarity II is connected, waiting for valid data..."
+        For i = 0 To 20                                             ' Wait for up to 5  minutes
+            If(CLOUD.DataReady()) Then Exit For
+            Util.WaitForMilliseconds 15000
+        Next
+        If i >= 20 Then
+            Set CLOUD = Nothing
+            Err.Raise &H80040201, ERR_SOURCE, "Clarity didn't receive data for 5 minutes"
+        End If
+        Util.Console.PrintLine "... data received. Weather online."
+        dtLastUnsafeTime = #1/1/2000#                               ' [sentinel]
+    Else
+        Set CLOUD = Nothing
+	    Util.Console.PrintLine "Clarity II is disconnected"
+    End If
+    
+End Function
+
+'------------------------------------------------------------------------------
+' Property AmbientTemperature (R/O, OPTIONAL)
+'
+' The ambient (outside) air temperature (Single, deg.C)
+'------------------------------------------------------------------------------
+' Dim AmbientTemperature
+Function get_AmbientTemperature()
+	CheckConnected
+	get_AmbientTemperature = CLOUD.AmbientT
+End Function
+
+'------------------------------------------------------------------------------
+' Property BarometricPressure (R/O, OPTIONAL)
+'
+' The barometric pressure (Single, millibars)
+' NOTE: This must be in millibars, per international aviation weather reporting
+'       standards.
+'------------------------------------------------------------------------------
+' Dim BarometricPressure
+Function get_BarometricPressure()
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get BarometricPressure" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Clouds (R/O, OPTIONAL)
+'
+' Cloud coverage (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim Clouds
+Function get_Clouds()
+	CheckConnected
+	Select Case CLOUD.CloudCondition
+		Case cloudUnknown:
+			Err.Raise &H80040400, ERR_SOURCE, "No cloud data currently available"
+		Case cloudClear:
+			get_Clouds = 0.0
+		Case cloudCloudy:
+			get_Clouds = 0.5
+		Case cloudVeryCloudy:
+			get_Clouds = 1.0
+		Case Else:
+			Err.Raise &H80040400, ERR_SOURCE, "Unknown cloud value from Clarity"
+	End Select
+End Function
+
+'------------------------------------------------------------------------------
+' Property DewPoint (R/O, OPTIONAL)
+'
+' The dew point temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim DewPoint
+Function get_DewPoint()
+	CheckConnected
+	get_DewPoint = CLOUD.DewPointT
+End Function
+
+'------------------------------------------------------------------------------
+' Property InsideTemperature (R/O, OPTIONAL)
+'
+' The temperature inside the observatory (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim InsideTemperature
+Function get_InsideTemperature()
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get InsideTemperature" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property Name (R/O, OPTIONAL)
+'
+' The display name of the weather system (String)
+'------------------------------------------------------------------------------
+' dim Name
+Function get_Name()
+    get_Name = "Boltwood Cloud Sensor II"
+End Function
+
+'------------------------------------------------------------------------------
+' Property Precipitation (R/O, OPTIONAL)
+'
+' True if precipitation is present (Boolean)
+'------------------------------------------------------------------------------
+' Dim Precipitation
+Function get_Precipitation()
+	CheckConnected
+	get_Precipitation = (CLOUD.RainCondition = rainRain)
+End Function
+
+'------------------------------------------------------------------------------
+' Property RelativeHumidity (R/O, OPTIONAL)
+'
+' The relative humidity (Single, fractional 0-1)
+'------------------------------------------------------------------------------
+' Dim RelativeHumidity
+Function get_RelativeHumidity()
+	CheckConnected
+	get_RelativeHumidity = CLOUD.HumidityPercent / 100.0
+End Function
+
+'------------------------------------------------------------------------------
+' Property Safe (R/O, REQUIRED)
+'
+' Return False when weather is not safe. Returning False will stop any ACP 
+' script in progress and cause alarm and shutdown processes to be initiated.
+'------------------------------------------------------------------------------
+' dim Safe
+Function get_Safe()
+    Dim isSafe
+    
+	If Not IsObject(CLOUD) Then
+		get_Safe = False						                    ' We're blind, be safe
+		Exit Function
+	End If
+	isSafe = (Not CLOUD.CloudCondition = cloudUnknown) And _
+				(Not CLOUD.CloudCondition = cloudVeryCloudy) And _
+				(Not CLOUD.RainCondition = rainUnknown) And _
+				(Not CLOUD.RainCondition = rainRain) And _
+				(Not CLOUD.WindCondition < 0) And _
+				(Not CLOUD.WindCondition = windVeryWindy) And _
+				(Not CLOUD.DayCondition = dayUnknown) And _
+				(Not CLOUD.DayCondition = dayVeryLight) And _
+				CLOUD.SecondsSinceGoodData < 60
+	If Not isSafe Then
+	    If bLastSafe Then                                           ' If this is a change from safe to unsafe
+    		Util.Console.PrintLine("CloudSensorII: Weather is unsafe!")
+    		If(CLOUD.CloudCondition = cloudUnknown) Then
+                Util.Console.PrintLine(SKY & "Unknown")
+            ElseIf(CLOUD.CloudCondition = cloudVeryCloudy) Then
+                Util.Console.PrintLine(SKY & "Very Cloudy")
+            ElseIf(CLOUD.RainCondition = rainUnknown) Then
+    		  Util.Console.PrintLine("               Rain sensor is not ready or broken")
+    		ElseIf(CLOUD.RainCondition = rainRain) Then
+    		  Util.Console.PrintLine(RAI & "Rainy")
+    		ElseIf(CLOUD.WindCondition < 0) Then
+    		  Util.Console.PrintLine("               Wind sensor is not ready or broken")
+    		ElseIf(CLOUD.WindCondition = windVeryWindy) Then
+    		  Util.Console.PrintLine("               Wind Condition is Very Windy")
+    		ElseIf(CLOUD.DayCondition = dayUnknown) Then
+    		  Util.Console.PrintLine("               Daylight sensor is not ready or broken")
+    		ElseIf(CLOUD.DayCondition = dayVeryLight) Then
+    		  Util.Console.PrintLine("               Day Condition is Very Light")
+    		ElseIf(CLOUD.SecondsSinceGoodData >= 60) Then
+    		  Util.Console.PrintLine("               No data from CloudSensorII for " & _
+    		  				CStr(CLOUD.SecondsSinceGoodData) & " sec.")
+    		End If
+		End If
+	    dtLastUnsafeTime = Now
+	    bLastSafe = False
+	Else
+	    If Not bLastSafe Then                                       ' If this is a change from unsafe to safe
+	        Util.Console.PrintLine("CloudSensor II: Weather just went safe.")
+	        Util.Console.PrintLine("Waiting for " & SAFE_MINUTES & " minutes of continuous safe weather...")
+	    End If
+	    bLastSafe = True
+	    If ((Now - dtLastUnsafeTime) * 1440) > SAFE_MINUTES Then
+	        isSafe = True
+	    Else
+	        isSafe = False
+	    End If
+	End If
+	get_Safe = isSafe
+	
+End Function
+
+'------------------------------------------------------------------------------
+' Property SkyTemperature (R/O, OPTIONAL)
+'
+' The sky temperature (Single, deg C)
+'------------------------------------------------------------------------------
+' Dim SkyTemperature
+Function get_SkyTemperature()
+	CheckConnected
+	get_SkyTemperature = CLOUD.RelSkyT
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindDirection (R/O, OPTIONAL)
+'
+' The azimuth FROM which the wind is blowing (Single, deg. magnetic)
+' NOTE: This must be in degrees MAGNETIC, per international aviation weather 
+'       reporting standards.
+'------------------------------------------------------------------------------
+' Dim WindDirection
+Function get_WindDirection()
+	Err.Raise &H80040400, ERR_SOURCE, PRP & "Get WindDirection" & NTI
+End Function
+
+'------------------------------------------------------------------------------
+' Property WindVelocity (R/O, OPTIONAL)
+'
+' The wind velocity (knots)
+' NOTE: This must be in degrees MAGNETIC, per international aviation weather 
+'       reporting standards.
+'------------------------------------------------------------------------------
+' Dim WindVelocity
+Function get_WindVelocity()
+	Select Case CLOUD.Wind
+		Case -1:
+			Err.Raise &h80040200, ERR_SOURCE, "Wind sensor still heating"
+		Case -2:
+			Err.Raise &h80040200, ERR_SOURCE, "Wind sensor is wet"
+		Case -3:
+			Err.Raise &h80040200, ERR_SOURCE, "Wind sensor is broken"
+		Case Else
+			get_WindVelocity = CLOUD.Wind * 0.53996		' km/hr to knots
+	End Select
+End Function
+
+]]>
+		</script>
+	</component>
+</package>

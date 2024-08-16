@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<package>
+	<comment>
+    <![CDATA[
+    'tabs=4
+    -----------------------------------------------------------------------------------------
+    
+    ==============================
+    ACP Plan Parser ImageSet Class
+    ==============================
+    
+    Script:         PlanImportImageSet.wsc
+    Author:         Robert B. Denny <rdenny@dc3.com>
+    Version:        6.0.1  <=== CHANGE VERSION BELOW
+    Requires:       ACP 6.0 or later
+                    Windows Script 5.6 or later (installed by ACP setup)
+    
+    Environment:    This is a Windows Script Component. Once registered (with regsvr32) it
+                    provides ...
+                    
+    Description:    This is a clone of the ACP Plan compiler's ImageSet object for Planner
+                    See the comments in PlanImportCompiler.wsc.
+                    
+                    =========================================
+                    THE GUIDS HAVE BEEN CHANGED JUST IN CASE!
+                    =========================================
+    
+    Edit History:
+    30-Nov-2010 rbd 6.0.1 - From ACP 6.0 Plan.wsc
+    -----------------------------------------------------------------------------------------
+    ]]>
+	</comment>
+	<component id="ImageSet">
+		<?component error="false" debug="false" ?>
+		<registration progid="ACP.ImageSet" classid="{1A572C4D-BD34-4D25-B34F-191539D5F36D}" remotable="no" version="1.0">
+		</registration>
+		<public>
+			<property name="Binning">
+				<get/>
+				<put/>
+			</property>
+			<property name="Count">
+				<get/>
+				<put/>
+			</property>
+			<property name="FilterName">
+				<get/>
+				<put/>
+			</property>
+			<property name="FilterNum">
+				<get/>
+				<put/>
+			</property>
+			<property name="Interval">
+				<get/>
+				<put/>
+			</property>
+			<property name="SubFrame">
+				<get/>
+				<put/>
+			</property>
+		</public>
+		<script id="ImageSet" language="JScript">
+<![CDATA[
+var Binning = 1;
+function get_Binning()
+{
+    return Binning;
+}
+function put_Binning(newValue)
+{
+    Binning = newValue;
+}
+
+var Count;
+function get_Count()
+{
+    return Count;
+}
+function put_Count(newValue)
+{
+    Count = newValue;
+}
+
+var FilterName;
+function get_FilterName()
+{
+    return FilterName;
+}
+function put_FilterName(newValue)
+{
+    FilterName = newValue;
+}
+
+var FilterNum;
+function get_FilterNum()
+{
+    return FilterNum;
+}
+function put_FilterNum(newValue)
+{
+    FilterNum = newValue;
+}
+
+var Interval;
+function get_Interval()
+{
+    return Interval;
+}
+function put_Interval(newValue)
+{
+    Interval = newValue;
+}
+
+var SubFrame = 1.0;
+function get_SubFrame()
+{
+    return SubFrame;
+}
+function put_SubFrame(newValue)
+{
+    SubFrame = newValue;
+}
+]]>
+		</script>
+	</component>
+</package>

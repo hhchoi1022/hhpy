@@ -1,0 +1,22 @@
+{
+    "Execution Time": "2024-07-26 19:52:58",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211126-052439-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211127-051113-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211128-051203-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211129-051234-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211130-051416-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211201-045029-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211203-042710-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211204-045253-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211205-045132-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211206-042813-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211207-043006-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211208-043043-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211209-043204-i-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/sub_cut_align_com_align_Calib-KCT_STX16803-NGC1566-20211210-043153-i-120.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}
