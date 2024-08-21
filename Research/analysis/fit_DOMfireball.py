@@ -3,19 +3,21 @@ import numpy as np
 from astropy.table import Table
 from astropy.io import ascii
 import matplotlib.pyplot as plt
-from observedphot import ObservedPhot
+import sys
+sys.path.append('/data7/yunyi/temp_supernova/Gitrepo/')
+from Research.analysis.observedphot import ObservedPhot
 from lmfit import Parameters, minimize
 from scipy.interpolate import UnivariateSpline
 from Research.model import DOMInteractionL17
 from Research.helper import Helper
 import matplotlib
-%matplotlib inline
+#%matplotlib inline
 #%% Observation
 helper = Helper()
 DM = 31.18
 ZP = 25
-filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
-model_directory = '/data1/supernova_model/DOM_model/'
+filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
+model_directory = '/data7/yunyi/temp_supernova/DOM_model'
 fit_filterset = 'UBVugri'
 fit_start_mjd : int = 59529
 fit_end_mjd : int = 59537
@@ -304,12 +306,12 @@ def process_combination(args):
         all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
         all_values = [all_data[colname] for colname in result_tbl.columns]
         result_tbl.add_row(vals=all_values)
-    os.makedirs(f'./result/DOM_fit_result/kappa{kappa}/E{E_exp}')
-    result_tbl.write(f'./result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
+    os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+    result_tbl.write(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
 
 def main(fit_tbl):
     start = time.time()
-    os.makedirs('./result/DOM_fit_result', exist_ok=True)
+    os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result', exist_ok=True)
     
     # Prepare the list of all combinations of parameters
     all_combinations = [(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, V_dom, f_dom, fit_tbl)
@@ -323,7 +325,7 @@ def main(fit_tbl):
                         for f_dom in range_f_dom]
 
     # Use multiprocessing to process the combinations in parallel
-    with mp.Pool(processes=8) as pool:
+    with mp.Pool(processes=50) as pool:
         pool.map(process_combination, all_combinations)
 
     result_tbl.remove_row(index=0)

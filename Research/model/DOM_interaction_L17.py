@@ -16,7 +16,7 @@ import matplotlib
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
 from astropy.io import ascii
-matplotlib.use('Agg')
+#matplotlib.use('Agg')
 #%%
 class Section(object): 
     """

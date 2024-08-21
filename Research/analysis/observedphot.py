@@ -1,6 +1,5 @@
 
 #%%
-
 from astropy.io import ascii
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
@@ -308,7 +307,6 @@ class ObservedPhot:
             #plt.xlabel('Days since first detection [MJD - 59529.3318]')
             plt.xlabel('Phase [days]')
             plt.ylabel('Apparent Magnitude [AB]')
-            return fig
             
         
 
@@ -316,13 +314,15 @@ class ObservedPhot:
 # %%
 if __name__ =='__main__':    
     plt.figure(dpi = 400, figsize =(9,7))
-    filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
+    #filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
+    filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
+
     tbl_all = ascii.read(filepath_all, format = 'fixed_width')
     observed_data = ObservedPhot(tbl_all)
     #observed_data.exclude_observatory('Swope')
 
     observed_data.show_lightcurve(UL = True, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True)
-    
+    plt.show()
 # %%
 
                 
