@@ -9,7 +9,7 @@ from scipy.interpolate import UnivariateSpline
 from Research.model import DOMInteractionL17
 from Research.helper import Helper
 import matplotlib
-#%matplotlib inline
+%matplotlib inline
 #%% Observation
 helper = Helper()
 DM = 31.18
@@ -63,6 +63,7 @@ ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                               color_BV = True, 
                               color_gr = True, 
                               UL = True, 
+                              UL_alpha = 0.8,
                               label = True, 
                               label_location=0, 
                               )

@@ -163,6 +163,7 @@ class ObservedPhot:
                         scatter_linewidth = 0.5,
                         errorbar_linewidth = 0.5,
                         errorbar_capsize = 3,
+                        scatter_alpha : float = 0.4,
                         line : bool = False,
                         label : bool = False,
                         day_binsize : int = 5,
@@ -206,7 +207,7 @@ class ObservedPhot:
                             ax1.plot(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], color = colors[filter_], linewidth = scatter_linewidth)
                         else:
                             ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_])
-                            ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = 0.2)
+                            ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha)
                             ax1.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
                     if UL:
                         if len(show_data_ul) > 0:
@@ -269,7 +270,7 @@ class ObservedPhot:
                             plt.plot(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], color = colors[filter_], linewidth = scatter_linewidth)
                         else:
                             plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_])
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = 0.2)
+                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha)
                             plt.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
                     if UL:
                         if len(show_data_ul) > 0:
@@ -283,8 +284,8 @@ class ObservedPhot:
                         if line:
                             plt.plot(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], color = colors[filter_], linewidth = scatter_linewidth)
                         else:
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = '.', facecolors = 'none',  edgecolors = 'k', s = scatter_size*1.5, linewidth = scatter_linewidth, label = labels[filter_], alpha = 0.2)
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = '.', facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size*1.5, linewidth = scatter_linewidth, alpha = 0.2)
+                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = '.', facecolors = 'none',  edgecolors = 'k', s = scatter_size*1.5, linewidth = scatter_linewidth, label = labels[filter_], alpha = scatter_alpha)
+                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = '.', facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size*1.5, linewidth = scatter_linewidth, alpha = scatter_alpha)
                             plt.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
                     if UL:
                         if len(show_data_ul) > 0:
