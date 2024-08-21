@@ -58,7 +58,7 @@ output_filelist = []
 # KCT in g band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/KCT*/g/*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/KCT_g.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_KCT_g.dat',
                                     filter_='g',
                                     observatory='KCT'
                                     )   
@@ -66,7 +66,7 @@ output_filelist.append(output_file)
 # KCT in r band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/KCT*/r/sub*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/KCT_r.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_KCT_r.dat',
                                     filter_='r',
                                     observatory='KCT'
                                     )
@@ -74,7 +74,7 @@ output_filelist.append(output_file)
 # KCT in i band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/KCT*/i/sub*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/KCT_i.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_KCT_i.dat',
                                     filter_='i',
                                     observatory='KCT'
                                     )
@@ -82,7 +82,7 @@ output_filelist.append(output_file)
 # LSGT in g band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/LSGT*/g/*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_g.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_LSGT_g.dat',
                                     filter_='g',
                                     observatory='LSGT'
                                     )
@@ -90,7 +90,7 @@ output_filelist.append(output_file)
 # LSGT in r band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/LSGT*/r/*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_r.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_LSGT_r.dat',
                                     filter_='r',
                                     observatory='LSGT'
                                     )
@@ -98,7 +98,7 @@ output_filelist.append(output_file)
 # LSGT in i band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/LSGT*/i/*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_i.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_LSGT_i.dat',
                                     filter_='i',
                                     observatory='LSGT'
                                     )
@@ -107,7 +107,7 @@ output_filelist.append(output_file)
 
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/RASA36*/r/HIGH/sub*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/RASA36_r_HIGH.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_RASA36_r_HIGH.dat',
                                     filter_='r',
                                     observatory='RASA36'
                                     )
@@ -115,59 +115,96 @@ output_filelist.append(output_file)
 # RASA36 in r band MERGE mode
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/RASA36*/r/MERGE/sub*.phot',
-                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/RASA36_r_MERGE.dat',
+                                    savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_RASA36_r_MERGE.dat',
                                     filter_='r',
                                     observatory='RASA36'
                                     )
 output_filelist.append(output_file)
 
 # %%
-output_filelist = glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/*.dat')
+output_filelist = glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG*.dat')
 from astropy.table import vstack
-tbl = vstack([Table.read(output_file, format = 'ascii.fixed_width') for output_file in output_filelist])  
+tbl_IMSNG = vstack([Table.read(output_file, format = 'ascii.fixed_width') for output_file in output_filelist])  
 tbl_hosse = Table.read('/data1/supernova_rawdata/SN2021aefx/photometry/Hosseinzadeh2022.dat', format = 'ascii.fixed_width')
 tbl_ashall = Table.read('/data1/supernova_rawdata/SN2021aefx/photometry/Ashall2022.dat', format = 'ascii.fixed_width')
-tbl_phot = vstack([tbl, tbl_hosse, tbl_ashall])
+tbl_IMSNG.write('/data1/supernova_rawdata/SN2021aefx/photometry/all_IMSNG.dat', format = 'ascii.fixed_width', overwrite = True)
+#%%
+from astropy.table import Table, MaskedColumn
 
-tbl_phot.sort('obsdate')
-tbl_phot.write('/data1/supernova_rawdata/SN2021aefx/photometry/combined_photometry.data', format = 'ascii.fixed_width', overwrite = True)
+# Assuming tbl_hosse is already defined
+"""
+tbl_hosse_new = Table()
+tbl_hosse_new['obsdate'] = tbl_hosse['obsdate']
+tbl_hosse_new['mag'] = tbl_hosse['mag']
+tbl_hosse_new['e_mag'] = tbl_hosse['e_mag']
+tbl_hosse_new['magsys'] = ['Vega' if component in ['U', 'B', 'V', 'U_S', 'B_S', 'V_S'] else 'AB' for component in tbl_hosse['filter']]
+tbl_hosse_new['filter'] = tbl_hosse['filter']
+tbl_hosse_new['depth_5sig'] = MaskedColumn(data=[None]*len(tbl_hosse), mask=True)
+tbl_hosse_new['zp'] = MaskedColumn(data=[None]*len(tbl_hosse), mask=True)
+tbl_hosse_new['observatory'] = tbl_hosse['observatory']
+tbl_hosse_new['detected'] = True
+tbl_hosse_new.sort('obsdate')
+
+tbl_hosse_new.write('/data1/supernova_rawdata/SN2021aefx/photometry/Hosseinzadeh2022_new.dat', format='ascii.fixed_width', overwrite=True)
+
+tbl_ashall_new = Table()
+tbl_ashall_new['obsdate'] = tbl_ashall['obsdate']
+tbl_ashall_new['mag'] = tbl_ashall['mag']
+tbl_ashall_new['e_mag'] = tbl_ashall['e_mag']
+tbl_ashall_new['magsys'] = ['Vega' if component in ['U', 'B', 'V', 'U_S', 'B_S', 'V_S'] else 'AB' for component in tbl_ashall['filter']]
+tbl_ashall_new['filter'] = tbl_ashall['filter']
+tbl_ashall_new['depth_5sig'] = MaskedColumn(data=[None]*len(tbl_ashall), mask=True)
+tbl_ashall_new['zp'] = MaskedColumn(data=[None]*len(tbl_ashall), mask=True)
+tbl_ashall_new['observatory'] = tbl_ashall['observatory']
+tbl_ashall_new['detected'] = True
+tbl_ashall_new.sort('obsdate')
+tbl_ashall_new.write('/data1/supernova_rawdata/SN2021aefx/photometry/Ashall2022_new.dat', format='ascii.fixed_width', overwrite=True)
+"""
+#%%
+tbl_phot = vstack([tbl_IMSNG, tbl_hosse, tbl_ashall])
+tbl_phot.write('/data1/supernova_rawdata/SN2021aefx/photometry/all_phot.dat', format = 'ascii.fixed_width', overwrite = True)
 tbl_spec = Table.read('/home/hhchoi1022/Desktop/Gitrepo/Research/spectroscopy/timeseriesspec.synphot', format = 'ascii.fixed_width')
-tbl_all = vstack([tbl_phot, tbl_spec])
-tbl_filters = tbl_all.group_by('filter').groups
+tbl_spec.write('/data1/supernova_rawdata/SN2021aefx/photometry/all_spec.dat', format = 'ascii.fixed_width', overwrite = True)
+tbl_photspec = vstack([tbl_phot, tbl_spec])
+tbl_photspec.write('/data1/supernova_rawdata/SN2021aefx/photometry/all_photspec.dat', format = 'ascii.fixed_width', overwrite = True)
+tbl_filters = tbl_photspec.group_by('filter').groups
 # %%
 import matplotlib.pyplot as plt
 
 i = 12
+
 tbl_show_RASA36 = tbl_filters[i][tbl_filters[i]['observatory'] == 'RASA36']
 tbl_show_KCT = tbl_filters[i][tbl_filters[i]['observatory'] == 'KCT']
 tbl_show_LSGT = tbl_filters[i][tbl_filters[i]['observatory'] == 'LSGT']
 tbl_show_LC1 = tbl_filters[i][tbl_filters[i]['observatory'] == 'LasCumbres1m']
+tbl_show_SWIFT = tbl_filters[i][tbl_filters[i]['observatory'] == 'Swift']
 tbl_show_Swope = tbl_filters[i][tbl_filters[i]['observatory'] == 'Swope']
 tbl_show_en12 = tbl_filters[i][tbl_filters[i]['observatory'] == 'en12']
 tbl_show_salt = tbl_filters[i][tbl_filters[i]['observatory'] == 'SALT']
 tbl_show_SOAR = tbl_filters[i][tbl_filters[i]['observatory'] == 'GHTS_RED']
+tbl_show_RASA36
 plt.title(f'filter = {tbl_filters[i][0]["filter"]}')
 # Black = RASA36
-# plt.scatter(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], facecolor = 'none', edgecolor = 'k',  s = 50, marker = 's')
-# plt.errorbar(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], tbl_show_RASA36['e_mag'], fmt = 'none', c= 'k')
-# # Red = KCT
+plt.scatter(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], facecolor = 'none', edgecolor = 'k',  s = 50, marker = 's')
+plt.errorbar(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], tbl_show_RASA36['e_mag'], fmt = 'none', c= 'k')
+# Red = KCT
 plt.scatter(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 'o')
 plt.errorbar(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'], tbl_show_KCT['e_mag'], fmt = 'none', c= 'r')
 # Blue = LSGT
-#plt.scatter(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], facecolor = 'none', edgecolor = 'b', s = 50, marker = 'o')
-#plt.errorbar(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], tbl_show_LSGT['e_mag'], fmt = 'none', c= 'b', marker = 'o')
+plt.scatter(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], facecolor = 'none', edgecolor = 'b', s = 50, marker = 'o')
+plt.errorbar(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], tbl_show_LSGT['e_mag'], fmt = 'none', c= 'b', marker = 'o')
 # green = LasCumbres1m#
 plt.scatter(Time(tbl_show_LC1['obsdate'], format = 'mjd').datetime, tbl_show_LC1['mag'], facecolor = 'none', edgecolor = 'g', s = 50, marker = 'o')
 plt.errorbar(Time(tbl_show_LC1['obsdate'], format = 'mjd').datetime, tbl_show_LC1['mag'], tbl_show_LC1['e_mag'], fmt = 'none', c= 'g', marker = 'o')
-# Black = Swope
-plt.scatter(Time(tbl_show_Swope['obsdate'], format = 'mjd').datetime, tbl_show_Swope['mag'], facecolor = 'none', edgecolor = 'k', s = 50, marker = 'o')
+# Yellow = Swope
+plt.scatter(Time(tbl_show_Swope['obsdate'], format = 'mjd').datetime, tbl_show_Swope['mag'], facecolor = 'none', edgecolor = 'magenta', s = 50, marker = 'o')
 plt.errorbar(Time(tbl_show_Swope['obsdate'], format = 'mjd').datetime, tbl_show_Swope['mag'], tbl_show_Swope['e_mag'], fmt = 'none', c= 'magenta', marker = 'o')
 # Black = en12
 #plt.scatter(Time(tbl_show_en12['obsdate'], format = 'mjd').datetime, tbl_show_en12['mag'], facecolor = 'none', edgecolor = 'k', s = 150, marker = 'o')
 #plt.errorbar(Time(tbl_show_en12['obsdate'], format = 'mjd').datetime, tbl_show_en12['mag'], tbl_show_en12['e_mag'], fmt = 'none', c= 'magenta', marker = 'o')
 # Black = SALT
-plt.scatter(Time(tbl_show_salt['obsdate'], format = 'mjd').datetime, tbl_show_salt['mag'], facecolor = 'none', edgecolor = 'k', s = 100, marker = 's')
-plt.errorbar(Time(tbl_show_salt['obsdate'], format = 'mjd').datetime, tbl_show_salt['mag'], tbl_show_salt['e_mag'], fmt = 'none', c= 'magenta', marker = 's')
+#plt.scatter(Time(tbl_show_salt['obsdate'], format = 'mjd').datetime, tbl_show_salt['mag'], facecolor = 'none', edgecolor = 'k', s = 100, marker = 's')
+#plt.errorbar(Time(tbl_show_salt['obsdate'], format = 'mjd').datetime, tbl_show_salt['mag'], tbl_show_salt['e_mag'], fmt = 'none', c= 'magenta', marker = 's')
 # Black = SOAR
 #plt.scatter(Time(tbl_show_SOAR['obsdate'], format = 'mjd').datetime, tbl_show_SOAR['mag'], facecolor = 'none', edgecolor = 'k', s = 150, marker = 'o')
 #plt.errorbar(Time(tbl_show_SOAR['obsdate'], format = 'mjd').datetime, tbl_show_SOAR['mag'], tbl_show_SOAR['e_mag'], fmt = 'none', c= 'magenta', marker = 'o')
@@ -178,12 +215,15 @@ plt.errorbar(Time(tbl_show_salt['obsdate'], format = 'mjd').datetime, tbl_show_s
 #plt.errorbar(Time(tbl_ashall_g['obsdate'], format ='mjd').datetime, tbl_ashall_g['mag'], tbl_ashall_g['e_mag'], fmt = 'none', c = 'b')
 #plt.scatter(Time(tbl_Hosse_g['obsdate'], format ='mjd').datetime, tbl_Hosse_g['mag'], c= 'r')
 #plt.grid()
-plt.xlim(datetime(year = 2021, month = 11, day = 10), datetime(year = 2021, month = 11, day = 16))
+#plt.xlim(datetime(year = 2021, month = 11, day = 10), datetime(year = 2022, month = 1, day = 10))
 #plt.xlim(datetime(year = 2022, month = 1, day = 10), datetime(year = 2022, month = 4, day = 20))
-plt.ylim(18,14)
+#plt.ylim(14.5,15.5)
 import numpy as np
 #plt.yticks(np.arange(17, 16, -1))
 
+plt.axvline(datetime(year = 2021, month = 11, day = 25))
+plt.axvline(datetime(year = 2022, month = 1, day = 25))
+Time(datetime(year = 2022, month = 1, day = 25)).mjd
 # %%
 # Get the g-band and r-band data
 i_g = 12  # g-band index
@@ -204,8 +244,8 @@ observatories = {
     'GHTS_RED': {'marker': '*', 'color': 'cyan'},
 }
 
-from photometry_helper import Photometry_helper
-phot_helper = Photometry_helper()
+from Research.helper import PhotometryHelper
+phot_helper = PhotometryHelper()
 plt.figure(figsize=(10, 6))
 
 # Iterate over each observatory
@@ -244,7 +284,7 @@ plt.gca().invert_yaxis()  # Magnitudes decrease upwards
 plt.grid(True)
 plt.legend(loc='best')
 plt.xlim(datetime(year = 2021, month = 11, day = 10), datetime(year = 2022, month = 2, day = 16))
-plt.ylim(-0.5, 0.5)
+plt.ylim(-0.5, 1.5)
 plt.show()
 
 # %%

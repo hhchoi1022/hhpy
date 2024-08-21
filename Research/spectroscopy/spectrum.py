@@ -10,6 +10,7 @@ import astropy.units as u
 from pyphot import unit
 import matplotlib.pyplot as plt
 import numpy as np
+from Research.helper import Helper
 #%%
 class Spectrum:
     
@@ -17,6 +18,7 @@ class Spectrum:
                  wavelength : np.array,
                  flux : np.array,
                  flux_unit : str = 'fnu'):
+        self.helper = Helper()
         self._wavelength_data = wavelength
         self._flux_data = flux
         if flux_unit.upper() in ['FNU', 'FLAMB', 'JY', 'MJY']:
@@ -129,11 +131,10 @@ class Spectrum:
                    visualize : bool = False,
                    visualize_unit : str = 'mag' # mag or flux
                    ):
-        from HHsupport_analysis import load_filt_keys
         from astropy.table import Table
         import pyphot
         phot_tbl = dict()
-        color_key, _, _, pyphot_key, _ = load_filt_keys(filterset)
+        color_key, _, _, pyphot_key, _ = self.helper.load_filt_keys(filterset)
         lib = pyphot.get_library()
 
         if visualize:
@@ -205,22 +206,37 @@ if __name__ == '__main__':
     print('g-r: ',synth_phot_tbl['g'] - synth_phot_tbl['r'])
     print('B-V: ',synth_phot_tbl['B'] - synth_phot_tbl['V'])
 # %%
-if __name__ == '__main__':
+import matplotlib.pyplot as plt
+import numpy as np
+import matplotlib.cm as cm  # Import the colormap
 
-    for file_ in specfilelist[14:15]:#[16:17]:
+if __name__ == '__main__':
+    visualize_files = specfilelist[0:1]  # Choose the first 6 files to visualize
+    num_files = len(visualize_files)  # Determine the number of files
+    colormap = cm.get_cmap('viridis', num_files)  # Choose a colormap and set the number of colors
+
+    for i, file_ in enumerate(visualize_files):  # Loop over all files in specfilelist
         specfile = SpectroscopyFile(file_)
         flux = specfile.flux
         wl = specfile.wavelength
-        spec = Spectrum(wl, flux, flux_unit = 'flamb')
-        #plt.plot(wl*1.03, spec.flamb/np.max(spec.flamb), label =f'{specfile.obsdate}') # flamb
+        spec = Spectrum(wl, flux, flux_unit='flamb')
+        
         from Research.helper import AnalysisHelper
         Planck = AnalysisHelper().planck
-        val = Planck(temperature = 8000, wl_AA = wl)
-        spec.show(show_flux_unit = 'flamb', normalize= True, smooth_factor = 11, log = False, redshift = 0.04, normalize_cenwl=7500)
-        plt.plot(val['wl'], + val['flamb']/np.max(val['flamb']))   
-        plt.axvline(4100)
-        plt.axvline(8400)
-        plt.legend()
+        val = Planck(temperature=8000, wl_AA=wl)
+        
+        # Get a color from the colormap
+        color = colormap(i)
+        
+        # If spec.show() supports a color parameter
+        spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.04, normalize_cenwl=7500, color=color, label = specfile.obsdate)
+
+        plt.axvline(4100, color='black')  # Vertical lines in black
+        plt.axvline(8400, color='black')
+    
+    plt.legend()
+    plt.show()
+
 # %%    
 if __name__ == '__main__':  
     redshift = 0.005
@@ -233,7 +249,7 @@ if __name__ == '__main__':
     Planck = AnalysisHelper().planck
     val  = Planck(temperature = 8000, wl_AA = wl)
     #plt.plot(val['wl'], + val['flamb']/np.mean(val['flamb'][np.where((np.arange(np.min(wl), np.max(wl), 1) > 6700-30) & (np.arange(np.min(wl), np.max(wl), 1) < 6700+30))]))   
-    plt.axvline(3920)
+    plt.axvline(3700)
     plt.axvline(5800)
     plt.axvline(8500)
     plt.axvline(7000)
@@ -253,5 +269,7 @@ if __name__ == '__main__':
     spec_new = Spectrum(list(tbl['wl']), list(tbl['flux']), flux_unit = 'flamb')
     spec_new.show(show_flux_unit = 'flamb', normalize= False, smooth_factor = 11, log = False)
     tbl.write('SN2021aefx_211111_SALT.dat', format='ascii.basic', overwrite=True)
-
+    tbl_cbv = ascii.read('/home/hhchoi1022/Desktop/Gitrepo/Research/spectroscopy/mostfit/SN2017cbv/57822.6863542.spec', format = 'fixed_width')
+    wl_cbv, flux_cbv = tbl_cbv['wavelength[AA]'], tbl_cbv['flamb']
+    #Spectrum(wl_cbv, flux_cbv, flux_unit = 'flamb').show(show_flux_unit = 'flamb', normalize= True, smooth_factor = 11, log = False,  normalize_cenwl=7500)
 # %%

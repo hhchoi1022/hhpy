@@ -2,6 +2,7 @@
 import astropy.units as u
 from astropy import constants as const
 import numpy as np
+import os
 from scipy.optimize import fsolve
 import time
 import pyphot
@@ -9,9 +10,13 @@ from typing import Optional
 from astropy.table import Table
 from scipy import interpolate
 import matplotlib.pyplot as plt
-
 from Research.spectroscopy import Spectrum
 from Research.helper import AnalysisHelper
+import matplotlib
+from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import as_completed
+from astropy.io import ascii
+matplotlib.use('Agg')
 #%%
 class Section(object): 
     """
@@ -60,14 +65,23 @@ class DOMInteractionL17(AnalysisHelper):
         self.const.pc = const.pc.cgs
         
         # Parameters
-        self.E_exp = E_exp * 1e51* u.erg
-        self.M_ej = M_ej * const.M_sun.cgs
-        self.kappa = kappa * (u.cm**2/u.g)
-        self.M_dom = M_dom * const.M_sun.cgs
-        self.V_dom = (V_dom * u.km/u.s).cgs
-        self.f_dom = f_dom 
-        self.t_delay = t_delay * u.s
-        self.f_comp = f_comp
+        self._E_exp = E_exp
+        self._M_ej = M_ej
+        self._kappa = kappa
+        self._M_dom = M_dom
+        self._V_dom = V_dom
+        self._f_dom = f_dom
+        self._t_delay = t_delay
+        self._f_comp = f_comp
+        
+        self.E_exp = self._E_exp * 1e51* u.erg
+        self.M_ej = self._M_ej * const.M_sun.cgs
+        self.kappa = self._kappa * (u.cm**2/u.g)
+        self.M_dom = self._M_dom * const.M_sun.cgs
+        self.V_dom = (self._V_dom * u.km/u.s).cgs
+        self.f_dom = self._f_dom 
+        self.t_delay = self._t_delay * u.s
+        self.f_comp = self._f_comp
         
         # Calculated parameters
         self.V_ej = self._V_ej
@@ -332,33 +346,87 @@ class DOMInteractionL17(AnalysisHelper):
         plt.legend()
         return fig
 
+    def save(self, 
+             td,
+             filterset : str = 'UBVRIugri',
+             save_directory : str = '/data1/supernova_model/DOM_model/',
+             save_figures : bool = True,
+             overwrite : bool = False):
+        subdir = os.path.join(save_directory,f'kappa%.2f'%self._kappa,f'E%.1f'%self._E_exp)   
+        if not os.path.exists(subdir): 
+            os.makedirs(subdir, exist_ok = True)      
+        filename = '%.1f_%.1f_%.2f_%.1f_%.1f_%.2f_%.1f_%.2f'%(self._E_exp, self._M_ej, self._kappa, self._t_delay, self._f_comp, self._M_dom, self._V_dom, self._f_dom)
+        filename_dat = os.path.join(subdir, f'{filename}.dat')
+        if overwrite:
+            mag_tbl, lightcurve, tempcurve = self.calc_magnitude(td = td, filterset = filterset, visualize = save_figures)
+            mag_tbl.write(filename_dat, format='ascii.fixed_width', overwrite=True)        
+            if save_figures:
+                lightcurve.savefig(os.path.join(subdir, f'{filename}_LC.png'))
+                tempcurve.savefig(os.path.join(subdir, f'{filename}_TL.png'))
+            print(f'{filename_dat} is saved. ')
+        else:
+            if os.path.exists(filename_dat):
+                print(f'{filename_dat} is already exist. ')
+                pass
+            else:
+                mag_tbl, lightcurve, tempcurve = self.calc_magnitude(td = td, filterset = filterset, visualize = save_figures)
+                mag_tbl.write(filename_dat, format='ascii.fixed_width', overwrite=True)        
+                if save_figures:
+                    lightcurve.savefig(os.path.join(subdir, f'{filename}_LC.png'))
+                    tempcurve.savefig(os.path.join(subdir, f'{filename}_TL.png'))
+                print(f'{filename_dat} is saved. ')
+    
+    def get_LC(self,
+               td,
+               filterset : str = 'UBVRIugri',
+               search_directory : str = '/data1/supernova_model/DOM_model/',
+               force_calculate : bool = False,
+               save : bool = True):
+        subdir = os.path.join(search_directory,f'kappa%.2f'%self._kappa,f'E%.1f'%self._E_exp)
+        if not os.path.exists(subdir): 
+            os.makedirs(subdir, exist_ok = True)      
+        filename = '%.1f_%.1f_%.2f_%.1f_%.1f_%.2f_%.1f_%.2f'%(self._E_exp, self._M_ej, self._kappa, self._t_delay, self._f_comp, self._M_dom, self._V_dom, self._f_dom)
+        filename_dat = os.path.join(subdir, f'{filename}.dat')
+        if os.path.exists(filename_dat) and not force_calculate:
+            data = ascii.read(filename_dat, format = 'fixed_width')
+        else:
+            data, _, _ = self.calc_magnitude(td = td, filterset = filterset, visualize = False)
+            if save:
+                self.save(td = td, filterset = filterset, save_directory = search_directory, save_figures = True, overwrite = False)
+        return data
+
 # %%
 if __name__ == '__main__':
-    from concurrent.futures import ProcessPoolExecutor, as_completed
-
     def process_params(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, v_dom, f_dom, home_dir, td):
-        print(f'Start calculation: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
-        DOM = DOMInteractionL17(E_exp=E_exp, M_ej=M_ej, kappa=kappa, t_delay=t_delay, f_comp=f_comp, M_dom=M_dom, V_dom=v_dom, f_dom=f_dom)
-        result, lightcurve, tempcurve = DOM.calc_magnitude(td=td, filterset='UBVRIugri', visualize = True)
+        print(f'Start: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
+        dirname = f'{home_dir}kappa{kappa}/E{E_exp}'
         filename = '%.1f_%.1f_%.2f_%.1f_%.1f_%.2f_%.1f_%.2f'%(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, v_dom, f_dom)
-        result.write(f'{home_dir}{filename}.dat', format='ascii.fixed_width', overwrite=True)
-        lightcurve.savefig(f'{home_dir}{filename}_LC.png')
-        tempcurve.savefig(f'{home_dir}{filename}_TL.png')
+        if not os.path.exists(dirname): 
+            os.makedirs(dirname, exist_ok = True) 
+        filename_dat = os.path.join(dirname, f'{filename}.dat')
+        if not os.path.exists(filename_dat):            
+            print(f'Start calculation: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
+            DOM = DOMInteractionL17(E_exp=E_exp, M_ej=M_ej, kappa=kappa, t_delay=t_delay, f_comp=f_comp, M_dom=M_dom, V_dom=v_dom, f_dom=f_dom)
+            result, lightcurve, tempcurve = DOM.calc_magnitude(td=td, filterset='UBVRIugri', visualize = True)
+            result.write(filename_dat, format='ascii.fixed_width', overwrite=True)
+            lightcurve.savefig( os.path.join(dirname, f'{filename}_LC.png'))
+            tempcurve.savefig( os.path.join(dirname, f'{filename}_TL.png'))
+            print(f'{home_dir}kappa{kappa}/E{E_exp}/{filename} is saved. ')
 
 if __name__ == '__main__':
     #home_dir = '/home/hhchoi1022/Desktop/Gitrepo/Research/Supernova/DOM_model/'
-    home_dir = '/home/hhchoi1022/Desktop/Gitrepo/Research/model/DOM_model/'
+    home_dir = '/data7/yunyi/temp_supernova/Gitrepo/Research/model/DOM_model/' 
     range_E_exp = np.arange(0.8, 1.6, 0.2) # 10^51 ergs
     range_M_ej = np.arange(0.8, 1.6, 0.2) # solar mass
     range_kappa = [0.03, 0.05] # cm2/g
-    range_t_delay = np.arange(5e3, 13e3, 1000) # s
+    range_t_delay = np.arange(1e2, 1e4, 200) # s
     range_f_comp = [1.5] # compress fraction
     range_M_dom = np.arange(0.08,0.16,0.02) # solar mass
     range_v_dom = np.arange(5e3, 10e3, 1e3) # km/s
     range_f_dom = np.arange(0.03, 0.16, 0.02) # fraction of DOM mass
     td = np.arange(0.1, 10, 0.1)
     expected_time = len(range_E_exp) * len(range_M_ej) * len(range_kappa) * len(range_t_delay) * len(range_f_comp) * len(range_M_dom) * len(range_v_dom) * len(range_f_dom) * len(td) * 0.05 /3600
-    n_workers = 12
+    n_workers = 50 
     print('expected time: ', expected_time/n_workers, 'Hour')
     
     
@@ -377,34 +445,6 @@ if __name__ == '__main__':
         for future in as_completed(futures):
             try:
                 future.result()  # This will raise an exception if the function call raised one.
-            except Exception as e:
-                print(f"Generated an exception: {e}")
-#%%
-if __name__ == '__main__':
-    from astropy.io import ascii
-    import seaborn as sns
+            except:
+                pass
 
-    result_tbl = Table()
-    header_parameters = ['E_exp','M_ej','kappa','t_delay','f_comp','M_dom','v_dom','f_dom']
-    header_fitvalues = ['Luminosity_shock', 'Temperature_eff']
-    tot_header = header_parameters + header_fitvalues
-    result_tbl = Table(names = tot_header)
-    result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
-    for E_exp in range_E_exp:
-        for M_ej in range_M_ej:
-            for kappa in range_kappa:
-                for t_delay in range_t_delay:
-                    for f_comp in range_f_comp:
-                        for M_dom in range_M_dom:
-                            for v_dom in range_v_dom:
-                                for f_dom in range_f_dom:
-                                    result = ascii.read(f'{home_dir}{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{v_dom}_{f_dom}.dat', format = 'fixed_width')
-                                    result_day2 = result[9]
-                                    data_parameters = dict(E_exp = E_exp, M_ej = M_ej, kappa = kappa, t_delay = t_delay, f_comp = f_comp, M_dom = M_dom, v_dom = v_dom, f_dom = f_dom)
-                                    data_day2 = dict(Luminosity_shock = np.log10(result_day2['Luminosity_shock']), Temperature_eff = np.log10(result_day2['Temperature_eff']))
-                                    all_data = {**data_parameters, **data_day2}
-                                    all_values = []
-                                    for colname in result_tbl.columns:
-                                        value = all_data[colname]
-                                        all_values.append(value)
-                                    result_tbl.add_row(vals = all_values)

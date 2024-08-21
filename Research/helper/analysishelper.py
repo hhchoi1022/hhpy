@@ -6,6 +6,7 @@ from astropy.coordinates import SkyCoord
 from astropy.time import Time
 from astropy.table import Table
 
+from scipy.interpolate import UnivariateSpline
 from tqdm import tqdm
 import os
 import numpy as np
@@ -88,7 +89,7 @@ class AnalysisHelper():
         
         notes 
         -----
-        Order = ['o', 's', '^', 'v', '<', '>', 'p', 'h', 'H', '*', '+', 'x', 'D', 'd', '|', '_', ',', '.', '8', 'P', 'X', '1', '2', '3', '4']
+        Order = ['o', 's', '^', 'p', '+', 'D', 'v', 'h', 'H', '*', '<', 'x', '>', 'd', '|', '_', ',', '.', '8', 'P', 'X', '1', '2', '3', '4']
 
         -----
         '''
@@ -137,10 +138,10 @@ class AnalysisHelper():
                         V = 0,
                         R = 1,
                         I = 3,
-                        u = -5,
+                        u = -4,
                         g = -1,
-                        r = 2,
-                        i = 4,
+                        r = 1,
+                        i = 2,
                         z = 5
                         )
         

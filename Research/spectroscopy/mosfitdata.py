@@ -115,8 +115,10 @@ class mosfitData:
         mjdlist = []
         for spectrometry in self.data['spectra']:
             if not spectrometry['u_fluxes'] =='Uncalibrated':
-                
-                filename = f'{spectrometry["filename"].split(".")[0]}_{spectrometry["time"]}.spec'
+                try:
+                    filename = f'{spectrometry["filename"].split(".")[0]}_{spectrometry["time"]}.spec'
+                except:
+                    filename = f'{spectrometry["time"]}.spec'
                 data = np.array(spectrometry['data']).astype(float)
                 if 'u_errors' in spectrometry.keys():
                     wavelength = data[:,0]
@@ -168,5 +170,5 @@ class mosfitData:
 
 # %%
 if __name__ == '__main__':
-    A = mosfitData(target = 'SN2021aefx', spectra = True, save = True)
+    A = mosfitData(target = 'SN2017cbv', spectra = True, save = True)
 # %%

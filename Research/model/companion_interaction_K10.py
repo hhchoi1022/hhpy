@@ -4,9 +4,12 @@ from typing import Optional
 from astropy.table import Table
 import matplotlib.pyplot as plt
 from astropy import constants as const
-
 from Research.spectroscopy import Spectrum
 from Research.helper import AnalysisHelper
+import matplotlib
+from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import as_completed
+matplotlib.use('Agg')
 #%%
 class CompanionInteractionK10(AnalysisHelper):
     """
@@ -206,43 +209,39 @@ class CompanionInteractionK10(AnalysisHelper):
 # %%
 if __name__ == '__main__':
     import time
-    home_dir = './Comp_model/'
-    range_rstar = np.arange(0.5, 30, 0.05)
-    range_m_wd = [1.0, 1.2, 1.4]
-    range_v9 = [0.7, 1.0, 1.3]
-    solar_r = 6.955e10
-    td = np.arange(0.1, 15, 0.1)
-    for rstar in range_rstar:
-        rstar = np.round(rstar, 2)
-        for m_wd in range_m_wd:
-            for v9 in range_v9:
-                Comp = CompanionInteractionK10(rstar = rstar, m_wd = m_wd, v9 = v9, commonangle= False, kappa = 0.2)
-                result, lightcurve, tempcurve = Comp.calc_magnitude(td = td, filterset = 'UBVRIugri')
-                result.write(f'{home_dir}{rstar}_{m_wd}_{v9}.dat', format = 'ascii.fixed_width', overwrite = True)
-                lightcurve.savefig(f'{home_dir}{rstar}_{m_wd}_{v9}_LC.png')
-                tempcurve.savefig(f'{home_dir}{rstar}_{m_wd}_{v9}_TL.png')
-
-    Comp = CompanionInteractionK10(rstar = 3, m_wd = m_wd, v9 = v9, commonangle= False, kappa = 0.2)
-    wl_range = np.arange(4000, 9000, 20)
-    td = [1,3,5,7,9]
+    import os
+    from concurrent.futures import ProcessPoolExecutor, as_completed
+    import matplotlib.pyplot as plt
     from matplotlib import cm
-    cmap = cm.get_cmap('seismic')
-    for i, time in enumerate(td):
-        spec = Comp.calc_spectrum(time)
-        plt.plot(wl_range, spec(wl_range), c = cmap((i+1)/len(td)), label = f'{time}d', linewidth = 3)
-    #plt.gca().invert_yaxis()
-    plt.ylim(-13, -15)
-    plt.xlabel('Wavelength[AA]', fontsize = 20)
-    plt.ylabel('Absolute magnitude', fontsize = 20)
-    plt.legend()
 
+    home_dir = '/data7/yunyi/temp_supernova/Gitrepo/Research/model/Comp_model/' 
+    range_rstar = np.arange(0.5, 30, 0.05)
+    range_m_wd =  np.arange(1.0, 1.4, 0.1)
+    range_v9 = np.arange(0.7, 1.4, 0.1)
     td = np.arange(0.1, 10, 0.1)
-    result, lightcurve, tempcurve = Comp.calc_magnitude(td = td, filterset = 'UBVRIugri', visualize= True)
 
-    plt.plot(td, result['B'] - result['V'])
-# %%
-C = CompanionInteractionK10(rstar = 10, m_wd = 1.4, v9 = 1.0, commonangle= False, kappa = 0.2)
-# %%
-C.calc_magnitude([1,2,3,4,5,6,7,8,9,10], filterset = 'UBV', visualize = True)
-#print(time.perf_counter()-start)
-# %%
+    def process_params(rstar, m_wd, v9, home_dir, td):
+        print(f'Start: rstar={rstar}, m_wd={m_wd}, v9={v9}')
+        Comp = CompanionInteractionK10(rstar=rstar, m_wd=m_wd, v9=v9, commonangle=False, kappa=0.2)
+        result, lightcurve, tempcurve = Comp.calc_magnitude(td=td, filterset='UBVRIugri', visualize = True)
+        directory = os.path.join(home_dir, f'M{m_wd}')
+        if not os.path.exists(directory):
+            os.makedirs(directory, exist_ok = True)
+        result.write(f'{directory}/{rstar}_{m_wd}_{v9}.dat', format='ascii.fixed_width', overwrite=True)
+        lightcurve.savefig(f'{directory}/{rstar}_{m_wd}_{v9}_LC.png')
+        tempcurve.savefig(f'{directory}/{rstar}_{m_wd}_{v9}_TL.png')
+        return f'Completed: rstar={rstar}, m_wd={m_wd}, v9={v9}'
+
+    param_combinations = [(np.round(rstar, 2), np.round(m_wd,1), np.round(v9,1)) for rstar in range_rstar for m_wd in range_m_wd for v9 in range_v9]
+
+    with ProcessPoolExecutor(max_workers = 50) as executor:
+        futures = {executor.submit(process_params, rstar, m_wd, v9, home_dir, td): (rstar, m_wd, v9) for rstar, m_wd, v9 in param_combinations}
+        for future in as_completed(futures):
+            try:
+                result = future.result()
+                print(result)
+            except Exception as e:
+                rstar, m_wd, v9 = futures[future]
+                print(f'Error with rstar={rstar}, m_wd={m_wd}, v9={v9}: {e}')
+#%%
+

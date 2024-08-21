@@ -1,0 +1,9 @@
+{
+    "Execution Time": "2024-08-20 10:59:09",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/com_align_Calib-RASA36-NGC1566-20220123-042946-r-60.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

@@ -225,7 +225,7 @@ class Image(PhotometryHelper):
             ax1.legend()
 
             # Second subplot: ZP
-            ax2.set_title(f'ZP [Aperture = {np.round(float(aperture_size_list[0]),2)}]')
+            ax2.set_title(f'ZP [Aperture = {np.round(self.telinfo["pixelscale"] *float(aperture_size_list[1]),2)}"]')
             ax2.scatter(obs_matched['MAG_APER_1'] + self.zp['APER_1'], ref_matched[mag_ref_key] - obs_matched['MAG_APER_1'], c='k', alpha = 0.5)
             ax2.scatter(obs_selected['MAG_APER_1'] + self.zp['APER_1'], ref_selected[mag_ref_key] - obs_selected['MAG_APER_1'], c='r', alpha = 0.5)
             ax2.axhline(self.zp['APER_1'], c='r', linestyle='--', label=f'ZP = {np.round(self.zp["APER_1"], 1)}')
@@ -431,20 +431,20 @@ if __name__ == '__main__':
     #reference_image='/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-g-4440.com.fits'
     #reference_image = '/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-r-3360.com.fits'
     #reference_image = '/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-i-720.com.fits'
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/g/*180.fits'))
-    reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-180448-g-540.com.fits'
+    #filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/g/*180.fits'))
+    #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-180448-g-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-181452-r-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits'
-    #filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/*60.fits'))
-    #reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
-    phot_helper = Photometry_helper()
+    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/*60.fits'))
+    reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
+    phot_helper = PhotometryHelper()
     sex_configfile = None
     #telinfo = phot_helper.get_telinfo(telescope='KCT', ccd='STX16803')
-    telinfo = phot_helper.get_telinfo(telescope='LSGT', ccd='SNUCAMII')
-    #telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
-    #sex_configfile = '/home/hhchoi1022/Desktop/Gitrepo/Research/photometry/sextractor/RASA36_HIGH.config'
+    #telinfo = phot_helper.get_telinfo(telescope='LSGT', ccd='SNUCAMII')
+    telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
+    sex_configfile = '/home/hhchoi1022/Desktop/Gitrepo/Research/photometry/sextractor/RASA36_HIGH.config'
 #%%
-    image = filelist[0]
+    image = filelist[100]
     im = Image(image, telescope_info=telinfo, reference_image = reference_image)
     #im.photometry(ra=64.9723704, dec=-54.9481347, trim_reference_image= True, trim_target_image= True, subtract = True, visualize= True)
     im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = 'PS1', check_zp_by_color = True)
