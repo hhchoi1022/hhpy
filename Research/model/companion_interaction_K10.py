@@ -1,15 +1,17 @@
 #%%
-import numpy as np
-from typing import Optional
-from astropy.table import Table
-import matplotlib.pyplot as plt
-from astropy import constants as const
-from Research.spectroscopy import Spectrum
-from Research.helper import AnalysisHelper
-import matplotlib
+import os
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
-matplotlib.use('Agg')
+import matplotlib
+import numpy as np
+from typing import Optional
+import matplotlib.pyplot as plt
+from astropy.table import Table
+from astropy import constants as const
+from astropy.io import ascii
+from Research.spectroscopy import Spectrum
+from Research.helper import AnalysisHelper
+#matplotlib.use('Agg')
 #%%
 class CompanionInteractionK10(AnalysisHelper):
     """
@@ -206,6 +208,55 @@ class CompanionInteractionK10(AnalysisHelper):
         plt.plot(1, 1, c='r', label =r'$T_{eff}$')
         plt.legend()
         return fig
+    
+    def save(self, 
+             td,
+             filterset : str = 'UBVRIugri',
+             save_directory : str = '/data1/supernova_model/Comp_model/',
+             save_figures : bool = True,
+             overwrite : bool = False):
+        subdir = os.path.join(save_directory,f'M%.1f'%self.wdmass)   
+        if not os.path.exists(subdir): 
+            os.makedirs(subdir, exist_ok = True)      
+        filename = '%.1f_%.1f_%.1f'%(self.rstar, self.wdmass, self.v9)
+        filename_dat = os.path.join(subdir, f'{filename}.dat')
+        if overwrite:
+            mag_tbl, lightcurve, tempcurve = self.calc_magnitude(td = td, filterset = filterset, visualize = save_figures)
+            mag_tbl.write(filename_dat, format='ascii.fixed_width', overwrite=True)        
+            if save_figures:
+                lightcurve.savefig(os.path.join(subdir, f'{filename}_LC.png'))
+                tempcurve.savefig(os.path.join(subdir, f'{filename}_TL.png'))
+            print(f'{filename_dat} is saved. ')
+        else:
+            if os.path.exists(filename_dat):
+                print(f'{filename_dat} is already exist. ')
+                pass
+            else:
+                mag_tbl, lightcurve, tempcurve = self.calc_magnitude(td = td, filterset = filterset, visualize = save_figures)
+                mag_tbl.write(filename_dat, format='ascii.fixed_width', overwrite=True)        
+                if save_figures:
+                    lightcurve.savefig(os.path.join(subdir, f'{filename}_LC.png'))
+                    tempcurve.savefig(os.path.join(subdir, f'{filename}_TL.png'))
+                print(f'{filename_dat} is saved. ')
+    
+    def get_LC(self,
+               td,
+               filterset : str = 'UBVRIugri',
+               search_directory : str = '/data1/supernova_model/Comp_model/',
+               force_calculate : bool = False,
+               save : bool = True):
+        subdir = os.path.join(search_directory,f'M%.1f'%self.wdmass)   
+        if not os.path.exists(subdir): 
+            os.makedirs(subdir, exist_ok = True)      
+        filename = '%.1f_%.1f_%.1f'%(self.rstar, self.wdmass, self.v9)
+        filename_dat = os.path.join(subdir, f'{filename}.dat')
+        if os.path.exists(filename_dat) and not force_calculate:
+            data = ascii.read(filename_dat, format = 'fixed_width')
+        else:
+            data, _, _ = self.calc_magnitude(td = td, filterset = filterset, visualize = False)
+            if save:
+                self.save(td = td, filterset = filterset, save_directory = search_directory, save_figures = True, overwrite = False)
+        return data
 # %%
 if __name__ == '__main__':
     import time

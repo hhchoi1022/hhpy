@@ -192,9 +192,7 @@ tot_header = header_parameters + header_fitvalues + header_fitconfig
 result_tbl = Table(names = tot_header)
 result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
 #%%
-
 import numpy as np
-
 # Define the ranges with rounding or conversion to integers where necessary
 range_E_exp = np.round(np.arange(0.8, 1.6, 0.2), 2)  # 10^51 ergs, rounded to 2 decimal places
 range_M_ej = np.round(np.arange(0.8, 1.6, 0.2), 2)   # solar mass, rounded to 2 decimal places
@@ -307,6 +305,7 @@ def process_combination(args):
         all_values = [all_data[colname] for colname in result_tbl.columns]
         result_tbl.add_row(vals=all_values)
     os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+    result_tbl.remove_row(index = 0)
     result_tbl.write(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
 
 def main(fit_tbl):
