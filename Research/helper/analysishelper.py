@@ -6,6 +6,7 @@ from astropy.coordinates import SkyCoord
 from astropy.time import Time
 from astropy.table import Table
 
+import matplotlib.pyplot as plt
 from scipy.interpolate import UnivariateSpline
 from tqdm import tqdm
 import os
@@ -126,19 +127,19 @@ class AnalysisHelper():
                         V = 'g',
                         R = 'r',
                         I = 'k',
-                        u = 'darkcyan',
+                        u = 'magenta',
                         g = 'lightseagreen',
                         r = 'orange',
                         i = 'lightcoral',
                         z = 'gray'
                         )
         offset_key = dict(
-                        U = -4, 
+                        U = -3, 
                         B = -2,
                         V = 0,
                         R = 1,
                         I = 3,
-                        u = -4,
+                        u = -5,
                         g = -1,
                         r = 1,
                         i = 2,

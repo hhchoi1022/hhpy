@@ -169,6 +169,7 @@ class ObservedPhot:
                         label_location = 'upper right',
                         color_UB : bool = False,
                         color_BV : bool = False,
+                        color_ug : bool = False,
                         color_gr : bool = True,
                         UL : bool = False,
                         UL_linewidth_ver : float = 0.5,
@@ -205,9 +206,13 @@ class ObservedPhot:
                         if line:
                             ax1.plot(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], color = colors[filter_], linewidth = scatter_linewidth)
                         else:
-                            ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_])
-                            ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha)
-                            ax1.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
+                            ax1.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth, zorder = 1)
+                            if observatory == 'KCT':
+                                ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_], zorder = 5)
+                                ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 5)
+                            else:
+                                ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_], zorder = 2)
+                                ax1.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 3)
                     if UL:
                         if len(show_data_ul) > 0:
                             for x,y in zip(show_data_ul['obsdate'], show_data_ul['depth_5sig']+offsets[filter_]):
@@ -219,31 +224,38 @@ class ObservedPhot:
             ax1.invert_yaxis()
             
             #Color
-            ax2 = plt.subplot(gs[1], sharex = ax1)
+            ax2 = plt.subplot(gs[1])
             
             filt_data = self.get_filt_data(data_detected)
             if color_UB:
                 UB_tbl = self.helper.match_table(filt_data['U'], filt_data['B'], key = 'obsdate', tolerance = 1)
                 if len(UB_tbl) > 0:
                     UB_tbl['e_color'] = (UB_tbl['e_mag_1'] **2 + UB_tbl['e_mag_2'] **2)**(1/2)
-                    ax2.scatter(UB_tbl['obsdate_1'], UB_tbl['mag_1']-UB_tbl['mag_2']+1, label = 'U-B+1', facecolors = 'none',  edgecolors = 'blue', s = scatter_size, linewidth = scatter_linewidth)
-                    ax2.errorbar(UB_tbl['obsdate_1'], UB_tbl['mag_1']-UB_tbl['mag_2']+1,  UB_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c='k', capthick = errorbar_linewidth)
+                    ax2.errorbar(UB_tbl['obsdate_1'], UB_tbl['mag_1']-UB_tbl['mag_2']-0.5,  UB_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c='k', capthick = errorbar_linewidth, zorder = 1)
+                    ax2.scatter(UB_tbl['obsdate_1'], UB_tbl['mag_1']-UB_tbl['mag_2']-0.5, label = 'U-B-0.5', facecolors = 'cyan',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 2)
             if color_BV:
                 BV_tbl = self.helper.match_table(filt_data['B'], filt_data['V'], key = 'obsdate', tolerance = 1)
                 if len(BV_tbl) > 0:
                     BV_tbl['e_color'] = (BV_tbl['e_mag_1'] **2 + BV_tbl['e_mag_2'] **2)**(1/2)
-                    ax2.scatter(BV_tbl['obsdate_1'], BV_tbl['mag_1']-BV_tbl['mag_2'], label = 'B-V', facecolors = 'none',  edgecolors = 'green', s = scatter_size, linewidth = scatter_linewidth)
-                    ax2.errorbar(BV_tbl['obsdate_1'], BV_tbl['mag_1']-BV_tbl['mag_2'],  BV_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c='k', capthick = errorbar_linewidth)
+                    ax2.errorbar(BV_tbl['obsdate_1'], BV_tbl['mag_1']-BV_tbl['mag_2']+0.5,  BV_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c='k', capthick = errorbar_linewidth, zorder = 1)
+                    ax2.scatter(BV_tbl['obsdate_1'], BV_tbl['mag_1']-BV_tbl['mag_2']+0.5, label = 'B-V+0.5', facecolors = 'b',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 2)
             if color_gr:
                 gr_tbl = self.helper.match_table(filt_data['g'], filt_data['r'], key = 'obsdate', tolerance = 1)
                 if len(gr_tbl) > 0:
                     gr_tbl['e_color'] = (gr_tbl['e_mag_1'] **2 + gr_tbl['e_mag_2'] **2)**(1/2)
-                    ax2.scatter(gr_tbl['obsdate_1'], gr_tbl['mag_1']-gr_tbl['mag_2']-1, label = 'g-r-1', facecolors = 'none',  edgecolors = 'orange', s = scatter_size, linewidth = scatter_linewidth)
-                    ax2.errorbar(gr_tbl['obsdate_1'], gr_tbl['mag_1']-gr_tbl['mag_2']-1,  gr_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
+                    ax2.errorbar(gr_tbl['obsdate_1'], gr_tbl['mag_1']-gr_tbl['mag_2'],  gr_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth, zorder = 1)
+                    ax2.scatter(gr_tbl['obsdate_1'], gr_tbl['mag_1']-gr_tbl['mag_2'], label = 'g-r', facecolors = 'g',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 2)
+            if color_ug:
+                ug_tbl = self.helper.match_table(filt_data['u'], filt_data['g'], key = 'obsdate', tolerance = 1)
+                if len(ug_tbl) > 0:
+                    ug_tbl['e_color'] = (ug_tbl['e_mag_1'] **2 + ug_tbl['e_mag_2'] **2)**(1/2)
+                    ax2.errorbar(ug_tbl['obsdate_1'], ug_tbl['mag_1']-ug_tbl['mag_2'],  ug_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth, zorder = 1)
+                    ax2.scatter(ug_tbl['obsdate_1'], ug_tbl['mag_1']-ug_tbl['mag_2'], label = 'u-g', facecolors = 'magenta',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 2)
+
             ax2.set_xlabel('Days since first detection [MJD - 59529.3318]')
             ax2.set_ylabel('Color')
             ax2.set_xticks(np.min(data_detected['obsdate']) + np.arange(-20, 200, day_binsize), np.arange(-20, 200, day_binsize) )
-            ax2.set_ylim(-2, 2)
+            ax2.set_ylim(-1.5, 1.5)
             
             # legends
             sorted_keys = {k: v for k, v in labels.items()}
@@ -261,37 +273,21 @@ class ObservedPhot:
             #LC
             plt.gca().invert_yaxis()
             for filter_ in colors.keys():
-                for observatory in ['KCT','LSGT','RASA36']:#self.get_observatory():
+                for observatory in self.get_observatory():
                     show_data_detected = data_detected[(data_detected['filter'] == filter_) & (data_detected['observatory'] == observatory)]
                     show_data_ul = data_ul[(data_ul['filter'] == filter_) & (data_ul['observatory'] == observatory)]
                     if len(show_data_detected) > 0:
                         if line:
                             plt.plot(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], color = colors[filter_], linewidth = scatter_linewidth)
                         else:
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_])
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha)
-                            plt.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
+                            plt.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth, zorder = 1)
+                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = 'none',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, label = labels[filter_], zorder = 2)
+                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = markers[observatory], facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 3)
                     if UL:
                         if len(show_data_ul) > 0:
                             for x,y in zip(show_data_ul['obsdate'], show_data_ul['depth_5sig']+offsets[filter_]):
                                 plt.arrow(x=x,y=y,dx=0,dy=UL_linelength_ver, linewidth = UL_linewidth_ver, head_width = UL_headwidth, head_length = UL_headlength, color = colors[filter_], shape = 'full', alpha = UL_alpha)
                                 plt.arrow(x=x-UL_linelength_hor,y=y,dx=2*UL_linelength_hor,dy=0,linewidth = UL_linewidth_hor, head_width = 0, color = colors[filter_], alpha = UL_alpha)
-                for observatory in ['LasCumbres1m']:
-                    show_data_detected = data_detected[(data_detected['filter'] == filter_) & (data_detected['observatory'] == observatory)]
-                    show_data_ul = data_ul[(data_ul['filter'] == filter_) & (data_ul['observatory'] == observatory)]
-                    if len(show_data_detected) > 0:
-                        if line:
-                            plt.plot(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], color = colors[filter_], linewidth = scatter_linewidth)
-                        else:
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = '.', facecolors = 'none',  edgecolors = 'k', s = scatter_size*1.5, linewidth = scatter_linewidth, label = labels[filter_], alpha = scatter_alpha)
-                            plt.scatter(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], marker = '.', facecolors = colors[filter_],  edgecolors = 'k', s = scatter_size*1.5, linewidth = scatter_linewidth, alpha = scatter_alpha)
-                            plt.errorbar(show_data_detected['obsdate'], show_data_detected['mag']+offsets[filter_], show_data_detected['e_mag'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth)
-                    if UL:
-                        if len(show_data_ul) > 0:
-                            for x,y in zip(show_data_ul['obsdate'], show_data_ul['depth_5sig']+offsets[filter_]):
-                                plt.arrow(x=x,y=y,dx=0,dy=UL_linelength_ver, linewidth = UL_linewidth_ver, head_width = UL_headwidth, head_length = UL_headlength, color = colors[filter_], shape = 'full', alpha = UL_alpha)
-                                plt.arrow(x=x-UL_linelength_hor,y=y,dx=2*UL_linelength_hor,dy=0,linewidth = UL_linewidth_hor, head_width = 0, color = colors[filter_], alpha = UL_alpha)
-                    
             plt.xticks(phase_max + np.arange(-40, 200, day_binsize), np.arange(-40, 200, day_binsize) )
 
             # legends
@@ -314,14 +310,20 @@ class ObservedPhot:
 # %%
 if __name__ =='__main__':    
     plt.figure(dpi = 400, figsize =(9,7))
-    #filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
-    filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
+    filepath_phot = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
+    filepath_spec = '/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat'
+    #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 
-    tbl_all = ascii.read(filepath_all, format = 'fixed_width')
-    observed_data = ObservedPhot(tbl_all)
+    tbl_phot = ascii.read(filepath_phot, format = 'fixed_width')
+    tbl_spec = ascii.read(filepath_spec, format = 'fixed_width')
+    obs_phot = ObservedPhot(tbl_phot)
+    obs_spec = ObservedPhot(tbl_spec)
     #observed_data.exclude_observatory('Swope')
 
-    observed_data.show_lightcurve(UL = True, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True)
+    ax1, ax2 = obs_phot.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
+    ax3, ax4 = obs_spec.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
+    ax1.set_ylim(22, 6)
+    plt.xlim(59525, 59540)
     plt.show()
 # %%
 
@@ -381,3 +383,4 @@ if __name__ =='__main__':
         idx = list(spec.spec.keys())[i]
         spec.show_spec_date(idx, show_flux_unit= 'fnu', normalize = False, normalize_cenwl=6500, color = cmap((i+1)/num_spec), label = f'{i+1} th spectrum')
         plt.legend()
+        

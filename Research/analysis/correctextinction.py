@@ -157,7 +157,7 @@ if __name__ == '__main__':
     spec_file = '/data1/supernova_rawdata/SN2021aefx/photometry/all_spec.dat'
     C = CorrectExtinction(spec_file)
     C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
-    C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
+    #C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
     C.save()
 #%%
 if __name__ == '__main__':
@@ -171,6 +171,6 @@ if __name__ == '__main__':
     spec_file = '/data1/supernova_rawdata/SN2021aefx/photometry/all_photspec.dat'
     C = CorrectExtinction(spec_file)
     C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
-    #C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
+    C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
     C.save()
 # %%

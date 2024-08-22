@@ -268,7 +268,6 @@ def process_combination(args):
     result_tbl.write(f'/data1/supernova_model/result/Comp_fit_result/M%.1f/%.2f_%.1f_%.1f.fit'%(m_wd, rstar, m_wd, v9), format = 'ascii.fixed_width', overwrite = True)
 
 def main(fit_tbl):
-    start = time.time()
     os.makedirs(f'/data1/supernova_model/result/Comp_fit_result', exist_ok = True)
     #os.makedirs(f'/data7/yunyi/temp_supernova/result/Comp_fit_result', exist_ok=True)
     
@@ -282,31 +281,34 @@ def main(fit_tbl):
     with mp.Pool(processes=8) as pool:
         pool.map(process_combination, all_combinations)
 
-    result_tbl.remove_row(index=0)
-    print(time.time() - start)
 
 if __name__ == '__main__':
-    main(fit_tbl = fit_tbl)
-
-
-
+    pass
+    #main(fit_tbl = fit_tbl)
 #%%
-result_tbl.write('./CEI_fire_Result_1.txt', format = 'ascii.fixed_width')
-print(time.time() - start)
+'''
+import glob
+from astropy.table import vstack
+result_key = '/data1/supernova_model/result/Comp_fit_result/*/*.fit'
+files = glob.glob(result_key)
+result_tbl = Table()
+for file_ in files:
+    tbl = ascii.read(file_, format = 'fixed_width')
+    result_tbl = vstack([result_tbl, tbl])
+result_tbl.write('/data1/supernova_model/result/Comp_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
+'''
 #%%
-result_tbl = ascii.read('./CEI_fire_Result_1.txt', format = 'fixed_width')
-result_tbl.sort('chisq')
-#%%
-fit_filterset = 'UBgVri'
-i = 0
+result_tbl = ascii.read('/data1/supernova_model/result/Comp_fit_result.fit', format = 'fixed_width')
+fit_filterset = set(fit_tbl['filter'])
+#fit_filterset = 'UBgVri'
+i = 2
 result_values = result_tbl[i]
 exptime_CEI = result_values['exptime_FB']
-
 exptime_FB = result_values['exptime_CEI']
-color_key, offset_key, _, _, label_key = load_filt_keys()
-plt.figure(dpi = 300, figsize = (5, 8))
-#plt.gca().invert_yaxis()
-
+filter_key = fit_tbl.group_by('filter').groups.keys['filter']
+color_key, offset_key, _, _, label_key = helper.load_filt_keys()
+plt.figure(dpi = 300, figsize = (4.5, 6.5))
+plt.gca().invert_yaxis()
 phase_min_FB = np.max([59526, result_values['exptime_FB']])
 phase_min_CEI = np.max([59526, result_values['exptime_CEI']])
 phase_range_FB = np.arange(phase_min_FB, 59540, 0.1)
@@ -314,27 +316,42 @@ phase_range_CEI = np.arange(phase_min_CEI, 59540, 0.1)
 phase_range_CEI = np.arange(np.min([phase_min_FB, phase_min_CEI]), 59540, 0.1)
 
 
-CEI_spl = simulate_CEI_model(rstar = result_values['rstar'], m_wd = result_values['m_wd'], v9 = result_values['v9'])
-spl_allfilt_CEI = get_CEI_spline(CEI_spl, exptime_CEI = result_values['exptime_CEI'])
+CEI_model = CompanionInteractionK10(rstar = result_values['rstar'], m_wd = result_values['m_wd'], v9 = result_values['v9'])
+CEI_LC = CEI_model.get_LC(td = phase_range_CEI, filterset = 'UBVRIugri', search_directory = model_directory, save = True)
+spl_allfilt_CEI = get_CEI_spline(CEI_LC, exptime_CEI = result_values['exptime_CEI'], filterset = ''.join(filter_key))
 
+tbl_UL = observed_data.get_data_ul()
+tbl_obs = observed_data.get_data_detected()
+ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
+                            scatter_linewidth=0.5, 
+                            scatter_size=50, 
+                            scatter_alpha = 1,
+                            errorbar_linewidth=0.5, 
+                            errorbar_capsize=0.1, 
+                            color_UB = True,
+                            color_BV = True, 
+                            color_gr = True, 
+                            UL = True, 
+                            UL_alpha = 0.8,
+                            label = True, 
+                            label_location=4, 
+                            )
 for filter_ in fit_filterset:
-    #exptime_FB = out.params[f'exptime_{filter_}']
     amp = result_values[f'amplitude_{filter_}']
     alpha= result_values[f'alpha_{filter_}']
-    tbl_filter = observed_data.get_filt_data(observed_data.data)[filter_]
-    tbl_filter.sort('obsdate')
-    tbl_UL = tbl_filter[tbl_filter['status'] =='UL']
-    tbl_obs = tbl_filter[tbl_filter['status'] =='detected']
-    flux_FB = fireball_model(time = phase_range_CEI, amplitude = amp, alpha = alpha, exptime = exptime_FB)
+    flux_FB = fireball_model(time = phase_range_CEI, amplitude = amp, alpha = alpha, exptime = result_values['exptime_FB'])
     spl_CEI = spl_allfilt_CEI[filter_]
-    flux_CEI = mag_to_flux(spl_CEI(phase_range_CEI)+DM)
+    flux_CEI = helper.mag_to_flux(spl_CEI(phase_range_CEI)+DM)
     flux_both = flux_FB+ flux_CEI
-    mag_model = flux_to_mag(flux_FB, zp = ZP)
-    mag_DOM = flux_to_mag(flux_CEI, zp = ZP)
-    mag_both = flux_to_mag(flux_both, zp = ZP)
-    plt.plot(phase_range_CEI, mag_model + offset_key[filter_], c = color_key[filter_], label = rf'[{label_key[filter_]}] $\alpha = {round(alpha,2)}$', linestyle= '--', linewidth = 1)
-    plt.plot(phase_range_CEI, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= ':', linewidth = 1)
-    plt.plot(phase_range_CEI, mag_both + offset_key[filter_], c = color_key[filter_], linestyle= '-', linewidth = 1)
+    mag_model = helper.flux_to_mag(flux_FB, zp = ZP)
+    mag_DOM = helper.flux_to_mag(flux_CEI, zp = ZP)
+    mag_both = helper.flux_to_mag(flux_both, zp = ZP)
+    tbl_UL_filter = tbl_UL[tbl_UL['filter'] == filter_]
+    tbl_obs_filter = tbl_obs[tbl_obs['filter'] == filter_]
+    ax1.plot(phase_range_CEI, mag_model + offset_key[filter_], c = color_key[filter_], label = rf'[{label_key[filter_]}] $\alpha = {round(alpha,2)}$', linestyle= ':', linewidth = 1, alpha = 0.4)
+    ax1.plot(phase_range_CEI, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= '--', linewidth = 1, alpha = 0.4)
+    ax1.plot(phase_range_CEI, mag_both + offset_key[filter_], c = color_key[filter_], linestyle= '-', linewidth = 1, alpha = 1)
+    # For color plot 
     if filter_ == 'U':
         mag_U_model = mag_model
         mag_U_CEI = mag_DOM
@@ -355,64 +372,81 @@ for filter_ in fit_filterset:
         mag_r_model = mag_model
         mag_r_CEI = mag_DOM
         mag_r_both = mag_both
-#plt.legend(loc = 4)
-observed_data.show_lightcurve( day_binsize = 5, color_BV = False, color_gr = False, color_UB = False, UL = True, label = False, label_location=2, scatter_size= 40)
-#observed_data.show_lightcurve( day_binsize = 5, color_BV = True, color_gr = True, color_UB = True, UL = True, label = False, label_location=2, scatter_size= 120)
 
-'''
-plt.plot(phase_range_CEI, mag_U_model - mag_B_model, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1)
-plt.plot(phase_range_CEI, mag_B_model - mag_V_model, c = 'b', label = 'B-V', linestyle= '--', linewidth = 1)
-plt.plot(phase_range_CEI, mag_g_model - mag_r_model, c = 'g', label = 'g-r', linestyle= '--', linewidth = 1)
-plt.plot(phase_range_CEI, mag_U_CEI - mag_B_CEI, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1)
-plt.plot(phase_range_CEI, mag_B_CEI - mag_V_CEI, c = 'b', label = 'B-V', linestyle= ':', linewidth = 1)
-plt.plot(phase_range_CEI, mag_g_CEI - mag_r_CEI, c = 'g', label = 'g-r', linestyle= ':', linewidth = 1)
-'''
-#plt.plot(phase_range_CEI, mag_U_both - mag_B_both, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1)
-#plt.plot(phase_range_CEI, mag_B_both - mag_V_both, c = 'b', label = 'B-V', linestyle= '-', linewidth = 1)
-#plt.plot(phase_range_CEI, mag_g_both - mag_r_both, c = 'g', label = 'g-r', linestyle= '-', linewidth = 1)
-#plt.xticks(np.min(obs_tbl['obsdate']) + np.arange(-20, 200, 5), np.arange(-20, 200, 5) )
+#ax1.plot(0,0, '--', c='k', label = 'Power law')
+#ax1.plot(0,0, ':', c='k', label = 'Compansion-ejecta')
+#ax1.plot(0,0, '-', c='k', label = 'Power law + Companion-ejecta')
+#ax1.legend(loc = 3)
+ax2.plot(phase_range_CEI, mag_U_model - mag_B_model -0.5, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1, alpha = 0.4)
+ax2.plot(phase_range_CEI, mag_B_model - mag_V_model + 0.5, c = 'b', label = 'B-V', linestyle= ':', linewidth = 1, alpha = 0.4)
+ax2.plot(phase_range_CEI, mag_g_model - mag_r_model, c = 'g', label = 'g-r', linestyle= ':', linewidth = 1, alpha = 0.4)
+ax2.plot(phase_range_CEI, mag_U_CEI - mag_B_CEI -0.5, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1, alpha = 0.4)
+ax2.plot(phase_range_CEI, mag_B_CEI - mag_V_CEI +0.5, c = 'b', label = 'B-V', linestyle= '--', linewidth = 1, alpha = 0.4)
+ax2.plot(phase_range_CEI, mag_g_CEI - mag_r_CEI, c = 'g', label = 'g-r', linestyle= '--', linewidth = 1, alpha = 0.4)
+ax2.plot(phase_range_CEI, mag_U_both - mag_B_both -0.5, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1, alpha = 1)
+ax2.plot(phase_range_CEI, mag_B_both - mag_V_both +0.5, c = 'b', label = 'B-V', linestyle= '-', linewidth = 1, alpha = 1)
+ax2.plot(phase_range_CEI, mag_g_both - mag_r_both, c = 'g', label = 'g-r', linestyle= '-', linewidth = 1, alpha = 1)
+#ax2.yli(np.min(obs_tbl['obsdate']) + np.arange(-20, 200, 5), np.arange(-20, 200, 5) )
+ax1.set_xlim(phase_range_FB[0]-1, 59537)
+ax2.set_xlim(phase_range_FB[0]-1, 59537)
 
-# U band
-'''
-filter_ = 'U'
-tbl_filter = observed_data.get_filt_data(obs_tbl)[filter_]
-tbl_obs = tbl_filter[tbl_filter['status'] =='detected']
-tbl_UL = tbl_filter[tbl_filter['status'] =='UL']
-plt.scatter(tbl_obs['obsdate'], tbl_obs['mag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_])
-plt.scatter(tbl_UL['obsdate'], tbl_UL['mag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_], alpha = 0.2)
-
-
-spl_DEI = spl_allfilt_CEI[filter_]
-flux_DEI = mag_to_flux(spl_DEI(phase_range_CEI)+DM)
-mag_DOM = flux_to_mag(flux_DEI, zp = ZP)
-plt.plot(phase_range_CEI, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= ':', linewidth = 1)
-'''
-plt.xlim(phase_range_FB[0]-1, 59539)
-plt.ylim(22.5, 8)
-#plt.ylim(-1, 1.7)
+ax1.set_ylim(22.5, 8)
 #%%
-plt.figure(dpi  =300)
-plt.plot(0, 0, '--', c='k', label = 'Power law')
-plt.plot(0, 0, ':', c='k', label = 'DEI')
-plt.plot(0, 0, '-', c='k', label = 'Power law + DEI')
-plt.legend()
-# %%
 
+ax1.clear()
+show_idx = [0,3,7, 9, 10, 12]
+obs_spec = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat', format = 'fixed_width')
+obs_spec_phot = ObservedPhot(data_tbl  = obs_spec)
+obs_spec_phot.data.sort('obsdate')
+filt_spec_tbl = obs_spec_phot.get_filt_data(obs_spec_phot.data)
+UB_tbl = helper.match_table(filt_spec_tbl['U'], filt_spec_tbl['B'], key = 'obsdate')
+BV_tbl = helper.match_table(filt_spec_tbl['B'], filt_spec_tbl['V'], key = 'obsdate')
+gr_tbl = helper.match_table(filt_spec_tbl['g'], filt_spec_tbl['r'], key = 'obsdate')
 
-#%%
-pandas_tbl = result_tbl.to_pandas()
-import seaborn as sns
-drop_colnames = ['exptime_CEI', 'exptime_FB', 'alpha_B', 'amplitude_B',
-       'alpha_V', 'amplitude_V', 'alpha_g', 'amplitude_g', 'alpha_r',
-       'amplitude_r', 'alpha_i', 'amplitude_i', 'success', 'nfev', 'ndata',
-       'nvar', 'aic', 'bic']
-pd_tbl = pandas_tbl.drop(columns = drop_colnames)
-sns.heatmap(pd_tbl.corr())
-# %%
-plt.figure(figsize=(8, 8))
-# Store heatmap object in a variable to easily access it when you want to include more features (such as title).
-# Set the range of values to be displayed on the colormap from -1 to 1, and set the annotation to True to display the correlation values on the heatmap.
-heatmap = sns.heatmap(pd_tbl.corr(), vmin=-1, vmax=1, annot=True)
-# Give a title to the heatmap. Pad defines the distance of the title from the top of the heatmap.
-heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':10}, pad=12);
+import glob
+import matplotlib.cm as cm  # Import the colormap
+from Research.spectroscopy.spectroscopyfile import SpectroscopyFile
+from Research.spectroscopy import Spectrum
+from Research.spectroscopy import TimeSeriesSpectrum
+from Research.model import CompanionInteractionK10
+
+num_files = len(show_idx)  # Determine the number of files
+colormap = cm.get_cmap('cool', num_files)  # Choose a colormap and set the number of colors
+bb_temp = [11000, 6000, 8000, 8000, 9000, 10000]
+CEI_model = CompanionInteractionK10(rstar = 2.35, m_wd = 1.3, v9 = 0.9).get_LC(td = np.arange(0.1, 10, 0.1))
+exptime_CEI = 59528.97627959757
+CEI_model['phase'] = CEI_model['phase'] + exptime_CEI
+spl_temp,_ = helper.interpolate_spline(list(CEI_model['phase']), list(CEI_model['Temperature_eff']), show = False)
+
+for i, idx in enumerate(show_idx):
+    file_ = UB_tbl[idx]['filename_1']
+    obsdate = UB_tbl[idx]['obsdate_1']
+    specfile = SpectroscopyFile(file_)
+    flux = specfile.flux
+    wl = specfile.wavelength
+    spec = Spectrum(wl, flux, flux_unit='flamb')
+        
+    # Get a color from the colormap
+    color = colormap(i)
+    Planck = helper.planck
+    val = Planck(temperature=spl_temp(obsdate), wl_AA=wl)
+    spec_bb = Spectrum(wl, val['flamb'], flux_unit='flamb')
+    
+    # If spec.show() supports a color parameter
+    spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color=color, label = specfile.obsdate, offset = -2*i, axis = ax1, linewidth = 1)
+    if i < 2:
+        spec_bb.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color='black', offset = -2*i, axis = ax1, linestyle = '--', linewidth = 0.5)
+    ax2.scatter(BV_tbl['obsdate_1'][idx], BV_tbl['mag_1'][idx] - BV_tbl['mag_2'][idx] + 0.5, facecolor = 'b', edgecolor = color, marker = '*', s = 100, alpha = 1)
+    ax2.scatter(gr_tbl['obsdate_1'][idx], gr_tbl['mag_1'][idx] - gr_tbl['mag_2'][idx], facecolor = 'g', edgecolor = color, marker = '*', s = 100, alpha = 1)
+
+ax1.tick_params(axis='x', which='both', direction='in', top=True)
+ax2.tick_params(axis='x', which='both', direction='in', top=True)
+ax1.set_ylim(-10, 5.5)
+ax1.set_xlim(3000, 10000)
+ax1.set_xticks(np.arange(3000, 11000, 1000), np.arange(3000, 11000, 1000))
+# Move x-ticks to the top for ax1
+ax1.xaxis.tick_top()  # This moves the x-tick labels to the top of ax1
+ax1.xaxis.set_label_position('top')  # This moves the x-axis label to the top
+ax1.set_ylabel(rf'Normalized flux ($F_\lambda$) + offset')
+ax2.set_xlim(59528, 59537)
 # %%

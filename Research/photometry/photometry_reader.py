@@ -176,7 +176,7 @@ i = 12
 tbl_show_RASA36 = tbl_filters[i][tbl_filters[i]['observatory'] == 'RASA36']
 tbl_show_KCT = tbl_filters[i][tbl_filters[i]['observatory'] == 'KCT']
 tbl_show_LSGT = tbl_filters[i][tbl_filters[i]['observatory'] == 'LSGT']
-tbl_show_LC1 = tbl_filters[i][tbl_filters[i]['observatory'] == 'LasCumbres1m']
+tbl_show_LC1 = tbl_filters[i][tbl_filters[i]['observatory'] == 'LCO(H22)']
 tbl_show_SWIFT = tbl_filters[i][tbl_filters[i]['observatory'] == 'Swift']
 tbl_show_Swope = tbl_filters[i][tbl_filters[i]['observatory'] == 'Swope']
 tbl_show_en12 = tbl_filters[i][tbl_filters[i]['observatory'] == 'en12']

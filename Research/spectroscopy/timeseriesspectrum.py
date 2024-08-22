@@ -18,7 +18,7 @@ class TimeSeriesSpectrum:
                  flux_unit : str = 'flamb'
                  ):
         self._filelist = specfilelist
-        self._obsdate_data, self._wavelength_data, self._flux_data, self._headers = self._read_specfilelist()
+        self._obsdate_data, self._wavelength_data, self._flux_data, self._headers, self._filelist = self._read_specfilelist()
         if flux_unit.upper() in ['FNU', 'FLAMB', 'JY']:
            self._flux_unit = flux_unit
         else:
@@ -41,13 +41,15 @@ class TimeSeriesSpectrum:
         wavelength_data = list()
         flux_data = list()
         headerlist = list()
+        filenamelist = list()
         for file_ in self._filelist:
             specfile = SpectroscopyFile(file_)
             obsdate_data.append(specfile.obsdate)
             wavelength_data.append(specfile.wavelength)
             flux_data.append(specfile.flux)
             headerlist.append(specfile.header)
-        return obsdate_data, wavelength_data, flux_data, headerlist
+            filenamelist.append(file_)
+        return obsdate_data, wavelength_data, flux_data, headerlist, filenamelist
     
     def _get_all_spec(self):
         all_spectrum = list()
@@ -64,7 +66,8 @@ class TimeSeriesSpectrum:
         for filter_ in filterset:
             phot_tbl[filter_] = 0.0
             phot_tbl['observatory'] = '                 '
-        for i, (spec,hdr) in enumerate(zip(self.spectrum,self._headers)):
+            phot_tbl['file'] = '                                                                                                                                                                                                                                                                                       '
+        for i, (spec,hdr,file_) in enumerate(zip(self.spectrum,self._headers, self._filelist)):
             # set observatory 
             if 'OBSERVER' in hdr.keys():
                 observatory = hdr['OBSERVER']
@@ -76,15 +79,16 @@ class TimeSeriesSpectrum:
             for filter_ in filterset:
                 phot_tbl[filter_][i] = photometry[filter_]
                 phot_tbl['observatory'][i] = observatory
+                phot_tbl['file'][i] = file_
             
-        formatted_tbl = Table(names = ['obsdate', 'mag', 'e_mag', 'magsys', 'filter', 'depth_5sig', 'zp', 'observatory','detected'], dtype =[float, float, float, str, str, float, float, str, bool])
+        formatted_tbl = Table(names = ['obsdate', 'mag', 'e_mag', 'magsys', 'filter', 'depth_5sig', 'zp', 'observatory','detected', 'filename'], dtype =[float, float, float, str, str, float, float, str, bool, str])
         header = phot_tbl.colnames
         for data in phot_tbl:
             for filter_ in filterset:
                 if filter_ in 'UBVRI':
-                    formatted_tbl.add_row([data['obsdate'], data[filter_], 0.05, 'Vega', filter_ , None, None, data['observatory'], True])
+                    formatted_tbl.add_row([data['obsdate'], data[filter_], 0.05, 'Vega', filter_ , None, None, data['observatory'], True, data['file']])
                 else:
-                    formatted_tbl.add_row([data['obsdate'], data[filter_], 0.05, 'AB', filter_ , None, None, data['observatory'], True])
+                    formatted_tbl.add_row([data['obsdate'], data[filter_], 0.05, 'AB', filter_ , None, None, data['observatory'], True, data['file']])
         if save:
             formatted_tbl.write('timeseriesspec.synphot', format = 'ascii.fixed_width', overwrite = True)
             print('timeseriesspec.synphot is saved.')
@@ -123,7 +127,7 @@ if __name__ == '__main__':
     speckey = '/data1/supernova_rawdata/SN2021aefx/spectroscopy/WISeREP/ascii/*'
     filelist = glob.glob(speckey)
     A = TimeSeriesSpectrum(specfilelist = filelist, flux_unit = 'flamb')
-    #A.photometry(save = True)
+    A.photometry(save = True)
 #%%
     A.show_spec_date(59533, normalize = True)
     A.show_spec_date(59535, normalize = True)

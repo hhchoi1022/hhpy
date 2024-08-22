@@ -77,9 +77,13 @@ class Spectrum:
              normalize : bool = False,
              normalize_cenwl : int = 6700,
              normalize_wlwidth : int = 20,
+             linewidth : int = 1,
+             linestyle : str = '-',
              label : str = '',
              color : str = 'k',
-             log : bool = False):
+             log : bool = False,
+             offset : float = 0,
+             axis = None):
         if not show_flux_unit.upper() in ['FNU', 'FLAMB', 'JY', 'AB', 'MJY']:
             raise ValueError('%s is not registered as spectral flux unit'%show_flux_unit)
         if show_flux_unit.upper() == 'FNU':
@@ -118,12 +122,20 @@ class Spectrum:
             norm_spec = extract_region(spec, norm_region)
             spec /= np.mean(norm_spec.flux)
             flux_label = 'Normalized flux density'
-        if log:
-            plt.step( np.log10(spec.wavelength.value), np.log10(spec.flux.value), label = label, c = color)
+        if axis is None:
+            if log:
+                plt.step( np.log10(spec.wavelength.value), np.log10(spec.flux.value), label = label, c = color, linestyle = linestyle, linewidth = linewidth)
+            else:
+                plt.step(spec.wavelength, spec.flux + offset, label = label, c = color, linestyle = linestyle, linewidth = linewidth)
+            plt.xlabel(wavelength_label)
+            plt.ylabel(flux_label)
         else:
-            plt.step(spec.wavelength, spec.flux, label = label, c = color)
-        plt.xlabel(wavelength_label)
-        plt.ylabel(flux_label)
+            if log:
+                axis.step( np.log10(spec.wavelength.value), np.log10(spec.flux.value), label = label, c = color, linestyle = linestyle, linewidth = linewidth)
+            else:
+                axis.step(spec.wavelength, spec.flux + offset, label = label, c = color, linestyle = linestyle, linewidth = linewidth)
+            axis.set_xlabel(wavelength_label)
+            axis.set_ylabel(flux_label)
         
     def photometry(self,
                    filterset : str = 'UBVRIugri',
@@ -201,7 +213,7 @@ if __name__ == '__main__':
     wl = specfile.wavelength
     spec = Spectrum(wl, flux, flux_unit = 'flamb')
     #spec.show(show_flux_unit = 'flamb', normalize= False, smooth_factor = 11, log = False)
-    synth_phot_tbl = spec.photometry(visualize = True, visualize_unit = 'mag')
+    synth_phot_tbl = spec.photometry(visualize = True, visualize_unit = 'flux')
     print('specfile.obsdate: ',specfile.obsdate)
     print('g-r: ',synth_phot_tbl['g'] - synth_phot_tbl['r'])
     print('B-V: ',synth_phot_tbl['B'] - synth_phot_tbl['V'])
@@ -211,9 +223,10 @@ import numpy as np
 import matplotlib.cm as cm  # Import the colormap
 
 if __name__ == '__main__':
-    visualize_files = specfilelist[0:1]  # Choose the first 6 files to visualize
+    plt.figure(dpi = 300)
+    visualize_files =[specfilelist[0], specfilelist[4], specfilelist[6], specfilelist[8]] #specfilelist[0,6]  # Choose the first 6 files to visualize
     num_files = len(visualize_files)  # Determine the number of files
-    colormap = cm.get_cmap('viridis', num_files)  # Choose a colormap and set the number of colors
+    colormap = cm.get_cmap('jet', num_files)  # Choose a colormap and set the number of colors
 
     for i, file_ in enumerate(visualize_files):  # Loop over all files in specfilelist
         specfile = SpectroscopyFile(file_)
@@ -229,10 +242,10 @@ if __name__ == '__main__':
         color = colormap(i)
         
         # If spec.show() supports a color parameter
-        spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.04, normalize_cenwl=7500, color=color, label = specfile.obsdate)
+        spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.04, normalize_cenwl=7500, color=color, label = specfile.obsdate, offset = -2*i)
 
-        plt.axvline(4100, color='black')  # Vertical lines in black
-        plt.axvline(8400, color='black')
+        #plt.axvline(4100, color='black')  # Vertical lines in black
+        #plt.axvline(8400, color='black')
     
     plt.legend()
     plt.show()

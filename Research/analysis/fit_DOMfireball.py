@@ -3,8 +3,8 @@ import numpy as np
 from astropy.table import Table
 from astropy.io import ascii
 import matplotlib.pyplot as plt
-import sys
-sys.path.append('/data7/yunyi/temp_supernova/Gitrepo/')
+#import sys
+#sys.path.append('/data7/yunyi/temp_supernova/Gitrepo/')
 from Research.analysis.observedphot import ObservedPhot
 from lmfit import Parameters, minimize
 from scipy.interpolate import UnivariateSpline
@@ -16,8 +16,10 @@ import matplotlib
 helper = Helper()
 DM = 31.18
 ZP = 25
-filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
-model_directory = '/data7/yunyi/temp_supernova/DOM_model'
+filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
+model_directory = '/data1/supernova_model/DOM_model'
+#filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
+#model_directory = '/data7/yunyi/temp_supernova/DOM_model'
 fit_filterset = 'UBVugri'
 fit_start_mjd : int = 59529
 fit_end_mjd : int = 59537
@@ -55,23 +57,31 @@ fit_tbl['e_flux'] = fit_tbl['e_mag']*helper.mag_to_flux(fit_tbl['mag'])*2.303/2.
 fit_tbl['absmag'] = (fit_tbl['mag'] - DM).round(3)
 #%%
 # Visualize
-plt.figure(dpi = 400, figsize = (8, 8))
-ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
-                              scatter_linewidth=0.5, 
-                              scatter_size=50, 
-                              errorbar_linewidth=0.5, 
-                              errorbar_capsize=0.1, 
+plt.figure(dpi = 400, figsize = (6,6))
+ax1, ax2 = observed_data.show_lightcurve(day_binsize = 20,
+                              scatter_linewidth=0.6, 
+                              scatter_size=30, 
+                              scatter_alpha = 1,
+                              errorbar_linewidth=0.7, 
+                              errorbar_capsize= 3, 
                               color_UB = True,
                               color_BV = True, 
                               color_gr = True, 
                               UL = True, 
-                              UL_alpha = 0.8,
+                              UL_alpha = 0.5,
+                              UL_headlength= 0.3,
+                              UL_headwidth = 3,
+                              UL_linelength_hor= 1.5,
+                              UL_linelength_ver= 0.5,
                               label = True, 
                               label_location=0, 
                               )
-ax1.fill_betweenx(y = [ 30, 0], x1 = fit_start_mjd, x2 = fit_end_mjd, color = 'gray', alpha = 0.2)
+#ax1.fill_betweenx(y = [ 30, 0], x1 = fit_start_mjd, x2 = fit_end_mjd, color = 'gray', alpha = 0.2)
 ax1.set_ylim(22, 6)
-plt.xlim(59525, 59545)
+ax1.set_xlim(59520, 59720)
+ax2.set_ylim(-1.5, 1.8)
+ax2.set_xlim(59520, 59720)
+#plt.xlim(59525, 59540)
 #%% Define model
 def fireball_model(time, 
                    amplitude, 
@@ -258,14 +268,14 @@ import multiprocessing as mp
 
 # Define the ranges with rounding or conversion to integers where necessary
 range_E_exp = np.round(np.arange(0.8, 1.6, 0.2), 2)  # 10^51 ergs, rounded to 2 decimal places
-range_M_ej = np.round(np.arange(0.8, 1.6, 0.2), 2)   # solar mass, rounded to 2 decimal places
+range_M_ej = np.round(np.arange(0.6, 1.2, 0.2), 2)   # solar mass, rounded to 2 decimal places
 range_kappa = np.round([0.03, 0.05], 2)              # cm^2/g, rounded to 2 decimal places
-range_t_delay = np.round(np.arange(1e2, 1e4, 200), 0)  # s, rounded to 0 decimal places (integer-like)
+range_t_delay = np.round(np.arange(1e1, 2e2, 30), 0)  # s, rounded to 0 decimal places (integer-like)
 range_f_comp = np.round([1.5], 2)                    # compress fraction, rounded to 2 decimal places
-range_M_dom = np.round(np.arange(0.08, 0.16, 0.02), 2)  # solar mass, rounded to 2 decimal places
-range_v_dom = np.int_(np.round(np.arange(5e3, 10e3, 1e3), 0))  # km/s, rounded and converted to integer
-range_f_dom = np.round(np.arange(0.03, 0.16, 0.02), 2)  # fraction of DOM mass, rounded to 2 decimal places
-
+range_M_dom = np.round(np.arange(0.06, 0.12, 0.02), 2)  # solar mass, rounded to 2 decimal places
+range_v_dom = np.int_([5e3])  # km/s, rounded and converted to integer
+range_f_dom = np.round(np.arange(0.12, 0.30, 0.03), 2)  # fraction of DOM mass, rounded to 2 decimal places
+#%%
 def process_combination(args):
     E_exp, M_ej, kappa, t_delay, f_comp, M_dom, V_dom, f_dom, fit_tbl = args
     header_parameters = ['E_exp','M_ej','kappa','t_delay','f_comp','M_dom','V_dom','f_dom']
@@ -304,13 +314,14 @@ def process_combination(args):
         all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
         all_values = [all_data[colname] for colname in result_tbl.columns]
         result_tbl.add_row(vals=all_values)
-    os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+    os.makedirs(f'/data1/supernova_model/result/Comp_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+    #os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
     result_tbl.remove_row(index = 0)
-    result_tbl.write(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
+    result_tbl.write(f'/data1/supernova_model/result/Comp_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
+    #result_tbl.write(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
 
 def main(fit_tbl):
-    start = time.time()
-    os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result', exist_ok=True)
+    #os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result', exist_ok=True)
     
     # Prepare the list of all combinations of parameters
     all_combinations = [(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, V_dom, f_dom, fit_tbl)
@@ -324,32 +335,33 @@ def main(fit_tbl):
                         for f_dom in range_f_dom]
 
     # Use multiprocessing to process the combinations in parallel
-    with mp.Pool(processes=50) as pool:
+    with mp.Pool(processes=8) as pool:
         pool.map(process_combination, all_combinations)
 
-    result_tbl.remove_row(index=0)
     print(time.time() - start)
 
 if __name__ == '__main__':
     main(fit_tbl = fit_tbl)
+#%%
 
-
-
+import glob
+from astropy.table import vstack
+from tqdm import tqdm
+result_key = '/data1/supernova_model/result/DOM_fit_result/*/*/*.fit'
+files = glob.glob(result_key)
+result_tbl = Table()
+for file_ in tqdm(files):
+    tbl = ascii.read(file_, format = 'fixed_width')
+    result_tbl = vstack([result_tbl, tbl])
 #%%
-result_2 = result_tbl
+#result_tbl.sort('redchisqr')
+#result_tbl.write('/data1/supernova_model/result/DOM_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
 #%%
-result_tbl.write('./DOM_fire_Result_3.txt', format ='ascii.fixed_width')
 #%%
-result_tbl.sort('chisq')
-#%%
-result_tbl = ascii.read('./DOM_fire_Result_3.txt', format = 'fixed_width')
-fit_filterset = 'UBVgri'
-result_tbl.sort('chisq')
-#%%
-import matplotlib
-matplotlib.use('TkAgg')  # Or 'Agg', 'Qt5Agg', etc. depending on your system
-import matplotlib.pyplot as plt
-
+#import matplotlib#
+#matplotlib.use('TkAgg')  # Or 'Agg', 'Qt5Agg', etc. depending on your system
+#import matplotlib.pyplot as plt
+result_tbl = ascii.read('/data1/supernova_model/result/DOM_fit_result.fit', format = 'fixed_width')
 result_tbl.sort('chisq')
 i = 1
 result_values = result_tbl[i]
@@ -365,13 +377,27 @@ phase_range_FB = np.arange(phase_min_FB, 59540, 0.1)
 phase_range_DEI = np.arange(phase_min_DEI, 59540, 0.1)
 
 DOM_model = DOMInteractionL17(E_exp = result_values['E_exp'], M_ej = result_values['M_ej'], kappa = result_values['kappa'], t_delay = result_values['t_delay'], f_comp = result_values['f_comp'], M_dom = result_values['M_dom'], V_dom = result_values['V_dom'], f_dom = result_values['f_dom'])
-DOM_LC = DOM_model.get_LC(td = np.arange(0.1, 10, 0.1), filterset  = ''.join(filter_key), search_directory = model_directory, save = True, force_calculate= True)
+DOM_LC = DOM_model.get_LC(td = np.arange(0.01, 10, 0.01), filterset  = ''.join(filter_key), search_directory = model_directory, save = True, force_calculate= True)
 spl_allfilt_DEI = get_DEI_spline(DOM_LC, exptime_DEI = result_values['exptime_DEI'], filterset = ''.join(filter_key))
+
 
 tbl_UL = observed_data.get_data_ul()
 tbl_obs = observed_data.get_data_detected()
+ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
+                            scatter_linewidth=0.5, 
+                            scatter_size=50, 
+                            scatter_alpha = 1,
+                            errorbar_linewidth=0.5, 
+                            errorbar_capsize=0.1, 
+                            color_UB = True,
+                            color_BV = True, 
+                            color_gr = True, 
+                            UL = True, 
+                            UL_alpha = 0.8,
+                            label = True, 
+                            label_location=4, 
+                            )
 for filter_ in fit_filterset:
-    #exptime_FB = out.params[f'exptime_{filter_}']
     amp = result_values[f'amplitude_{filter_}']
     alpha= result_values[f'alpha_{filter_}']
     flux_FB = fireball_model(time = phase_range_DEI, amplitude = amp, alpha = alpha, exptime = result_values['exptime_FB'])
@@ -383,16 +409,9 @@ for filter_ in fit_filterset:
     mag_both = helper.flux_to_mag(flux_both, zp = ZP)
     tbl_UL_filter = tbl_UL[tbl_UL['filter'] == filter_]
     tbl_obs_filter = tbl_obs[tbl_obs['filter'] == filter_]
-    observed_data.show_lightcurve(day_binsize = 5, scatter_linewidth=0.5, scatter_size=40, errorbar_linewidth=0.5, errorbar_capsize=3, color_BV = False, color_gr = False, UL = True, label = True, label_location=0, color_UB = False)
-    #plt.axvline(exptime_FB, linestyle = '--', c='r')
-    #plt.axvline(exptime_DEI, linestyle = '--', c='b')
-    #plt.text(exptime_FB+0.1,20,'FB_EXPTIME = %.4f'%exptime_FB, c='r')
-    #plt.text(exptime_DEI+0.1,21,'DEI_EXPTIME = %.4f'%exptime_DEI, c='b')
-    #plt.scatter(tbl_obs_filter['obsdate'], tbl_obs_filter['mag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_])
-    #plt.scatter(tbl_UL_filter['obsdate'], tbl_UL_filter['mag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_], alpha = 0.2)
-    plt.plot(phase_range_DEI, mag_model + offset_key[filter_], c = color_key[filter_], label = rf'[{label_key[filter_]}] $\alpha = {round(alpha,2)}$', linestyle= '--', linewidth = 1)
-    plt.plot(phase_range_DEI, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= ':', linewidth = 1)
-    plt.plot(phase_range_DEI, mag_both + offset_key[filter_], c = color_key[filter_], linestyle= '-', linewidth = 1)
+    ax1.plot(phase_range_DEI, mag_model + offset_key[filter_], c = color_key[filter_], label = rf'[{label_key[filter_]}] $\alpha = {round(alpha,2)}$', linestyle= ':', linewidth = 1)
+    ax1.plot(phase_range_DEI, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= '--', linewidth = 1)
+    ax1.plot(phase_range_DEI, mag_both + offset_key[filter_], c = color_key[filter_], linestyle= '-', linewidth = 1)
     if filter_ == 'U':
         mag_U_model = mag_model
         mag_U_CEI = mag_DOM
@@ -416,22 +435,21 @@ for filter_ in fit_filterset:
 #plt.legend(loc = 4)
 #observed_data.show_lightcurve( day_binsize = 5, color_BV = False, color_gr = False, color_UB = False, UL = True, label = False, label_location=2, scatter_size= 120)
 #observed_data.show_lightcurve( day_binsize = 5, color_BV = True, color_gr = True, color_UB = True, UL = True, label = False, label_location=2, scatter_size= 120)
-'''
-plt.plot(phase_range_DEI, mag_U_model - mag_B_model, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1)
-plt.plot(phase_range_DEI, mag_B_model - mag_V_model, c = 'b', label = 'B-V', linestyle= '--', linewidth = 1)
+
+plt.plot(phase_range_DEI, mag_U_model - mag_B_model -0.5, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1)
+plt.plot(phase_range_DEI, mag_B_model - mag_V_model + 0.5, c = 'b', label = 'B-V', linestyle= '--', linewidth = 1)
 plt.plot(phase_range_DEI, mag_g_model - mag_r_model, c = 'g', label = 'g-r', linestyle= '--', linewidth = 1)
-plt.plot(phase_range_DEI, mag_U_CEI - mag_B_CEI, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1)
-plt.plot(phase_range_DEI, mag_B_CEI - mag_V_CEI, c = 'b', label = 'B-V', linestyle= ':', linewidth = 1)
+plt.plot(phase_range_DEI, mag_U_CEI - mag_B_CEI -0.5, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1)
+plt.plot(phase_range_DEI, mag_B_CEI - mag_V_CEI +0.5, c = 'b', label = 'B-V', linestyle= ':', linewidth = 1)
 plt.plot(phase_range_DEI, mag_g_CEI - mag_r_CEI, c = 'g', label = 'g-r', linestyle= ':', linewidth = 1)
-'''
-#plt.plot(phase_range_DEI, mag_U_both - mag_B_both, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1)
-#plt.plot(phase_range_DEI, mag_B_both - mag_V_both, c = 'b', label = 'B-V', linestyle= '-', linewidth = 1)
-#plt.plot(phase_range_DEI, mag_g_both - mag_r_both, c = 'g', label = 'g-r', linestyle= '-', linewidth = 1)
+plt.plot(phase_range_DEI, mag_U_both - mag_B_both-0.5, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1)
+plt.plot(phase_range_DEI, mag_B_both - mag_V_both+0.5, c = 'b', label = 'B-V', linestyle= '-', linewidth = 1)
+plt.plot(phase_range_DEI, mag_g_both - mag_r_both, c = 'g', label = 'g-r', linestyle= '-', linewidth = 1)
 #plt.ylim(-1, 1.7)
-
-plt.xticks(np.min(obs_tbl['obsdate']) + np.arange(-20, 200, 5), np.arange(-20, 200, 5) )
-
-# U band
+ax1.set_xlim(phase_range_FB[0]-1, 59537)
+ax2.set_xlim(phase_range_FB[0]-1, 59537)
+ax1.set_ylim(22.5, 8)
+#%%
 '''
 filter_ = 'U'
 tbl_filter = observed_data.get_filt_data(obs_tbl)[filter_]
@@ -469,4 +487,39 @@ plt.figure(figsize=(8, 8))
 heatmap = sns.heatmap(pd_tbl.corr(), vmin=-1, vmax=1, annot=True)
 # Give a title to the heatmap. Pad defines the distance of the title from the top of the heatmap.
 heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':10}, pad=12);
+import matplotlib.pyplot as plt
+import numpy as np
+#%%
+# Assuming reduced_chisq and x are from your data
+reduced_chisq = result_tbl['redchisqr']
+x = result_tbl['V_dom']
+
+# Calculate the median of the reduced chi-square values
+median_chisq = np.median(reduced_chisq)
+#%%
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Assuming 'result_tbl' is your dataframe and it contains columns for each parameter and 'redchisqr'
+parameters = ['E_exp', 'M_ej', 'kappa', 't_delay', 'f_comp', 
+              'M_dom', 'V_dom', 'f_dom']
+
+plt.figure(figsize=(20, 15))
+for i, param in enumerate(parameters):
+    # Define the desired y-axis limits
+    y_min = np.percentile(result_tbl['redchisqr'], 5)  # Lower bound at 5th percentile
+    y_max = np.percentile(result_tbl['redchisqr'], 10)  # Upper bound at 95th percentile
+
+    
+    plt.subplot(5, 2, i+1)  # Adjust the grid size depending on the number of parameters
+    plt.scatter(result_tbl[param], result_tbl['redchisqr'], alpha=0.01)
+    plt.xlabel(param)
+    plt.ylabel('Reduced Chi-Square')
+    plt.grid(True)
+    plt.title(f'Reduced Chi-Square vs {param}')
+    plt.ylim(0, y_max)  # Set the y-axis limits
+
+
+plt.tight_layout()
+plt.show()
 # %%

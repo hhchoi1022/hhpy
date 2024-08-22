@@ -58,7 +58,7 @@ from observedphot import ObservedPhot
 obs_tbl = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat', format = 'fixed_width')
 # obs_tbl = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_phot.dat', format = 'fixed_width')
 observed_data = ObservedPhot(obs_tbl, target = 'SN2021aefx')
-observed_data.exclude_observatory(['DLT40','LasCumbres0.4m','Swift', 'Swope','LasCumbres1m'])
+observed_data.exclude_observatory(['DLT40','LasCumbres0.4m','Swift', 'Swope(A22)','LCO(H22)'])
 observed_data.data['e_mag'][observed_data.data['e_mag']<0.01] = 0.03
 
 fit_tbl = observed_data.get_data_detected()
@@ -80,7 +80,7 @@ show_tbl = fit_tbl
 #%%
 phase_min = 59533
 phase_max = 59590
-remove_filter = ['B','V']
+remove_filter = ['U', 'u', 'B','V']
 fit_tbl = fit_tbl[(fit_tbl['obsdate'] > phase_min) & (fit_tbl['obsdate'] < phase_max)]
 fit_tbl = helper.remove_rows_table(fit_tbl, column_key='filter', remove_keys= remove_filter )
 formatted_fit_tbl = helper.SNcosmo_format(fit_tbl['obsdate'], fit_tbl['mag'], fit_tbl['e_mag'], fit_tbl['filter_sncosmo'], magsys = fit_tbl['magsys'], zp = 25)

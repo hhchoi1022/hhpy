@@ -132,6 +132,7 @@ alias hh='conda activate hhchoi1022'
 alias 37='conda activate py37'
 alias proton='ssh -p 22 hhchoi1022@proton.snu.ac.kr'
 alias lyman='ssh -p 22 hhchoi1022@lyman.snu.ac.kr'
+alias d="~/.dropbox-dist/dropboxd"
 
 
 # Add an "alert" alias for long running commands.  Use like so:
