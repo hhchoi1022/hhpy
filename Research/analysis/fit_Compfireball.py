@@ -325,7 +325,7 @@ tbl_obs = observed_data.get_data_detected()
 ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                             scatter_linewidth=0.5, 
                             scatter_size=50, 
-                            scatter_alpha = 1,
+                            scatter_alpha = 0.2,
                             errorbar_linewidth=0.5, 
                             errorbar_capsize=0.1, 
                             color_UB = True,
@@ -391,7 +391,6 @@ ax1.set_xlim(phase_range_FB[0]-1, 59537)
 ax2.set_xlim(phase_range_FB[0]-1, 59537)
 
 ax1.set_ylim(22.5, 8)
-#%%
 
 ax1.clear()
 show_idx = [0,3,7, 9, 10, 12]
@@ -417,7 +416,7 @@ CEI_model = CompanionInteractionK10(rstar = 2.35, m_wd = 1.3, v9 = 0.9).get_LC(t
 exptime_CEI = 59528.97627959757
 CEI_model['phase'] = CEI_model['phase'] + exptime_CEI
 spl_temp,_ = helper.interpolate_spline(list(CEI_model['phase']), list(CEI_model['Temperature_eff']), show = False)
-
+position_txt = [3, 0.3]
 for i, idx in enumerate(show_idx):
     file_ = UB_tbl[idx]['filename_1']
     obsdate = UB_tbl[idx]['obsdate_1']
@@ -429,15 +428,17 @@ for i, idx in enumerate(show_idx):
     # Get a color from the colormap
     color = colormap(i)
     Planck = helper.planck
-    val = Planck(temperature=spl_temp(obsdate), wl_AA=wl)
+    temp = spl_temp(obsdate)
+    val = Planck(temperature=temp, wl_AA=wl)
     spec_bb = Spectrum(wl, val['flamb'], flux_unit='flamb')
     
     # If spec.show() supports a color parameter
     spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color=color, label = specfile.obsdate, offset = -2*i, axis = ax1, linewidth = 1)
     if i < 2:
         spec_bb.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color='black', offset = -2*i, axis = ax1, linestyle = '--', linewidth = 0.5)
-    ax2.scatter(BV_tbl['obsdate_1'][idx], BV_tbl['mag_1'][idx] - BV_tbl['mag_2'][idx] + 0.5, facecolor = 'b', edgecolor = color, marker = '*', s = 100, alpha = 1)
-    ax2.scatter(gr_tbl['obsdate_1'][idx], gr_tbl['mag_1'][idx] - gr_tbl['mag_2'][idx], facecolor = 'g', edgecolor = color, marker = '*', s = 100, alpha = 1)
+        ax1.text(5000, position_txt[i], '%.0f K'%temp)
+    ax2.scatter(BV_tbl['obsdate_1'][idx], BV_tbl['mag_1'][idx] - BV_tbl['mag_2'][idx] + 0.5, facecolor = 'b', edgecolor = color, marker = '*', s = 150, alpha = 1, zorder = 10)
+    ax2.scatter(gr_tbl['obsdate_1'][idx], gr_tbl['mag_1'][idx] - gr_tbl['mag_2'][idx], facecolor = 'g', edgecolor = color, marker = '*', s = 150, alpha = 1, zorder = 10)
 
 ax1.tick_params(axis='x', which='both', direction='in', top=True)
 ax2.tick_params(axis='x', which='both', direction='in', top=True)
@@ -449,4 +450,57 @@ ax1.xaxis.tick_top()  # This moves the x-tick labels to the top of ax1
 ax1.xaxis.set_label_position('top')  # This moves the x-axis label to the top
 ax1.set_ylabel(rf'Normalized flux ($F_\lambda$) + offset')
 ax2.set_xlim(59528, 59537)
+# %%
+plt.figure(dpi = 300, figsize = (6,4))
+
+plt.plot(CEI_model['phase'], CEI_model['Temperature_eff'])
+plt.plot([-1,0.8855], [11391, 11391], color = 'r', linestyle = '--')
+plt.plot([0.8855,0.8855], [-3000, 11391], color = 'r', linestyle = '--')
+#plt.plot([0.08855,0], [0.8855, 11391], color = 'r', linestyle = '--')
+plt.xlim(-1,10)
+plt.ylim(-2000, 35000)
+#%%
+plt.figure(dpi = 300, figsize = (6,4))
+obsdate = UB_tbl[0]['obsdate_1'] - exptime_CEI
+CEI_model = CompanionInteractionK10(rstar = result_values['rstar'], m_wd = result_values['m_wd'], v9 = result_values['v9']).get_LC(td = np.arange(0.1, 10, 0.1))
+plt.plot(CEI_model['phase'], CEI_model['Temperature_eff'], color = 'k')
+temp = spl_temp(obsdate + exptime_CEI)
+plt.plot([-1,obsdate], [temp, temp], color = 'k', linestyle = '--')
+plt.plot([obsdate,obsdate], [-3000, temp], color = 'k', linestyle = '--')
+plt.xlabel('Days since the first detection [MJD - 59529.3318]')
+plt.ylabel('Effective temperature [K]')
+plt.xticks(np.array([0,2,4,6,8,10])+59529.3318-exptime_CEI, np.array([0,2,4,6,8,10]))
+#plt.plot([0.08855,0], [0.8855, 11391], color = 'r', linestyle = '--')
+plt.xlim(-1,10)
+plt.ylim(-2000, 35000)
+
+#%%
+
+fig = plt.figure(dpi = 300)
+mag_tbl = CEI_model
+ax1 = plt.subplot()
+ax1.plot(mag_tbl['phase'], mag_tbl['Luminosity_shock'], c='k')
+ax1.set_yscale('log')
+ax1.set_xticks(np.array([0,2,4,6,8,10])+59529.3318-exptime_CEI, np.array([0,2,4,6,8,10]))
+
+ax1.plot([-1,obsdate], [2.8e41, 2.8e41], color = 'k', linestyle = '--')
+ax1.set_yticks([1e41, 5e41, 1e42, 5e42, 1e43, 5e43], [1e41, 5e41, 1e42, 5e42, 1e43, 5e43])
+ax1.set_ylabel(r'$L_{shock}\ [erg/s]$', fontsize = 10)
+ax1.set_xlabel('Phase [day]')
+#ax1.set_ylim(5e40, 5e43)
+
+ax2 = ax1.twinx()
+ax2.plot([10,obsdate], [temp, temp], color = 'r', linestyle = '--')
+ax2.plot([obsdate,obsdate], [-3000, temp], color = 'k', linestyle = '-')
+ax2.plot(mag_tbl['phase'], mag_tbl['Temperature_eff'], c='r')
+ax2.set_ylabel(r'$T_{eff}\ [K]$', rotation = 270, c= 'r')
+ax2.set_yticks([5000,10000,15000,20000,25000,30000,35000], [5000,10000,15000,20000,25000,30000,35000], c= 'r')
+ax2.set_ylim(0, 35000)
+
+plt.plot(1, 1, c='k', label =r'$L_{shock}$')
+plt.plot(1, 1, c='r', label =r'$T_{eff}$')
+plt.legend()
+plt.xlim(-1,10)
+plt.ylim(-2000, 35000)
+
 # %%

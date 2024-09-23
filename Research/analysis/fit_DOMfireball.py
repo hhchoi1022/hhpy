@@ -14,7 +14,7 @@ import matplotlib
 #%matplotlib inline
 #%% Observation
 helper = Helper()
-DM = 31.18
+DM = 31.14
 ZP = 25
 filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
 model_directory = '/data1/supernova_model/DOM_model'
@@ -22,7 +22,7 @@ model_directory = '/data1/supernova_model/DOM_model'
 #model_directory = '/data7/yunyi/temp_supernova/DOM_model'
 fit_filterset = 'UBVugri'
 fit_start_mjd : int = 59529
-fit_end_mjd : int = 59537
+fit_end_mjd : int = 59538
 
 # Query data
 obs_tbl = ascii.read(filepath_all, format = 'fixed_width')
@@ -154,7 +154,7 @@ def fit_both(fit_tbl,
     # Fitting
     t_range = np.arange(0.1, 10, 0.1)
     DOM_model = DOMInteractionL17(E_exp = E_exp, M_ej = M_ej, kappa = kappa, M_dom = M_dom, V_dom = V_dom, f_dom = f_dom, t_delay = t_delay, f_comp = f_comp)
-    model_DEI = DOM_model.get_LC(td = t_range, filterset = ''.join(filter_key), search_directory = model_directory, save = True)
+    model_DEI = DOM_model.get_LC(td = t_range, filterset = ''.join(filter_key), search_directory = model_directory, save = False)
     out = minimize(chisq_both, fit_params_DEI_FB, args = (x_fit, y_fit, e_y_fit, filter_key, model_DEI), method = fit_method)
     return out
 
@@ -203,31 +203,39 @@ result_tbl = Table(names = tot_header)
 result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
 #%%
 import numpy as np
+
 # Define the ranges with rounding or conversion to integers where necessary
 range_E_exp = np.round(np.arange(0.8, 1.6, 0.2), 2)  # 10^51 ergs, rounded to 2 decimal places
-range_M_ej = np.round(np.arange(0.8, 1.6, 0.2), 2)   # solar mass, rounded to 2 decimal places
+range_M_ej = np.round(np.arange(0.6, 1.2, 0.2), 2)   # solar mass, rounded to 2 decimal places
 range_kappa = np.round([0.03, 0.05], 2)              # cm^2/g, rounded to 2 decimal places
-range_t_delay = np.round(np.arange(1e2, 1e4, 200), 0)  # s, rounded to 0 decimal places (integer-like)
+range_t_delay = np.round(np.arange(1e1, 2e2, 10), 0)  # s, rounded to 0 decimal places (integer-like)
 range_f_comp = np.round([1.5], 2)                    # compress fraction, rounded to 2 decimal places
-range_M_dom = np.round(np.arange(0.08, 0.16, 0.02), 2)  # solar mass, rounded to 2 decimal places
-range_v_dom = np.int_(np.round(np.arange(5e3, 10e3, 1e3), 0))  # km/s, rounded and converted to integer
-range_f_dom = np.round(np.arange(0.03, 0.16, 0.02), 2)  # fraction of DOM mass, rounded to 2 decimal places
-
-import time
-start = time.time()
-os.makedirs('./result/DOM_fit_result', exist_ok = True)
+range_M_dom = np.round(np.arange(0.06, 0.2, 0.02), 2)  # solar mass, rounded to 2 decimal places
+range_v_dom = np.int_([5e3])  # km/s, rounded and converted to integer
+range_f_dom = np.round(np.arange(0.05, 0.30, 0.03), 2)  # fraction of DOM mass, rounded to 2 decimal places
+tot_length = len(range_E_exp) * len(range_M_ej) * len(range_kappa) * len(range_t_delay) * len(range_f_comp) * len(range_M_dom) * len(range_v_dom) * len(range_f_dom)
+#%%
+i = 0
 for E_exp in range_E_exp:
-    result_tbl.write(f'./result/DOM_fit_result/Timestamp_E_exp_{E_exp}', format = 'ascii.fixed_width', overwrite = True)
     for M_ej in range_M_ej:
-        result_tbl.write(f'./result/DOM_fit_result/Timestamp_M_ej_{M_ej}', format = 'ascii.fixed_width', overwrite = True)
         for kappa in range_kappa:
             for t_delay in range_t_delay:
-                result_tbl.write(f'./result/DOM_fit_result/Timestamp_t_delay_{t_delay}', format = 'ascii.fixed_width', overwrite = True)
                 for f_comp in range_f_comp:
                     for M_dom in range_M_dom:
                         for V_dom in range_v_dom:
                             for f_dom in range_f_dom:
+                                print(f'{i}/{tot_length}th calculation is running')
                                 try:
+                                    header_parameters = ['E_exp','M_ej','kappa','t_delay','f_comp','M_dom','V_dom','f_dom']
+                                    header_fitvalues = ['exptime_DEI', 'exptime_FB']
+                                    header_fitconfig = ['success','nfev', 'ndata', 'nvar', 'chisq', 'redchisqr', 'aic', 'bic']
+                                    for filter_ in fit_filterset:
+                                        header_fitvalues.append(f'alpha_{filter_}')
+                                        header_fitvalues.append(f'amplitude_{filter_}')
+                                    tot_header = header_parameters + header_fitvalues + header_fitconfig
+                                    result_tbl = Table(names = tot_header)
+                                    result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
+                                    
                                     result = fit_both(fit_tbl = fit_tbl,
                                                       E_exp = E_exp,
                                                       M_ej = M_ej,
@@ -239,27 +247,26 @@ for E_exp in range_E_exp:
                                                       f_comp = f_comp,
                                                       fit_method = 'leastsq'
                                                       )
-                                    data_parameters = dict(E_exp = E_exp, M_ej = M_ej, kappa = kappa, t_delay = t_delay, f_comp = f_comp, M_dom = M_dom, V_dom = V_dom, f_dom = f_dom)
+                                    data_parameters = dict(E_exp=E_exp, M_ej=M_ej, kappa=kappa, t_delay=t_delay, f_comp=f_comp, M_dom=M_dom, V_dom=V_dom, f_dom=f_dom)
                                     data_fitvalues = result.params.valuesdict()
-                                    data_fitconfig = dict(success = result.success, nfev = result.nfev, ndata = result.ndata, nvar = result.nvarys, chisq = result.chisqr, redchisqr = result.redchi, aic = result.aic, bic = result.bic)
+                                    data_fitconfig = dict(success=result.success, nfev=result.nfev, ndata=result.ndata, nvar=result.nvarys, chisq=result.chisqr, redchisqr=result.redchi, aic=result.aic, bic=result.bic)
                                     all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
-                                    all_values = []
-                                    for colname in result_tbl.columns:
-                                        value = all_data[colname]
-                                        all_values.append(value)
-                                    result_tbl.add_row(vals = all_values)
+                                    all_values = [all_data[colname] for colname in result_tbl.columns]
+                                    result_tbl.add_row(vals=all_values)
                                 except:
-                                    data_parameters = dict(E_exp = E_exp, M_ej = M_ej, kappa = kappa, t_delay = t_delay, f_comp = f_comp, M_dom = M_dom, V_dom = V_dom, f_dom = f_dom)
-                                    data_fitvalues = {value : 99999 for value in header_fitvalues}
-                                    data_fitconfig = dict(success = False, nfev = 99999, ndata = 99999, nvar = 99999, chisq = 99999, redchisqr = 99999, aic = 99999, bic = 99999)
+                                    data_parameters = dict(E_exp=E_exp, M_ej=M_ej, kappa=kappa, t_delay=t_delay, f_comp=f_comp, M_dom=M_dom, V_dom=V_dom, f_dom=f_dom)
+                                    data_fitvalues = {value: 99999 for value in header_fitvalues}
+                                    data_fitconfig = dict(success=False, nfev=99999, ndata=99999, nvar=99999, chisq=99999, redchisqr=99999, aic=99999, bic=99999)
                                     all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
-                                    all_values = []
-                                    for colname in result_tbl.columns:
-                                        value = all_data[colname]
-                                        all_values.append(value)
-                                    result_tbl.add_row(vals = all_values)
-result_tbl.remove_row(index = 0)
-print(time.time() - start)
+                                    all_values = [all_data[colname] for colname in result_tbl.columns]
+                                    result_tbl.add_row(vals=all_values)
+                                os.makedirs(f'/data1/supernova_model/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+                                #os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+                                result_tbl.remove_row(index = 0)
+                                result_tbl.write(f'/data1/supernova_model/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
+                                print(f'Saved: /data1/supernova_model/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit ')  
+                                i += 1
+                                #result_tbl.write(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
 #%%
 import numpy as np
 import os
@@ -270,11 +277,12 @@ import multiprocessing as mp
 range_E_exp = np.round(np.arange(0.8, 1.6, 0.2), 2)  # 10^51 ergs, rounded to 2 decimal places
 range_M_ej = np.round(np.arange(0.6, 1.2, 0.2), 2)   # solar mass, rounded to 2 decimal places
 range_kappa = np.round([0.03, 0.05], 2)              # cm^2/g, rounded to 2 decimal places
-range_t_delay = np.round(np.arange(1e1, 2e2, 30), 0)  # s, rounded to 0 decimal places (integer-like)
+range_t_delay = np.round(np.arange(1e1, 2e2, 10), 0)  # s, rounded to 0 decimal places (integer-like)
 range_f_comp = np.round([1.5], 2)                    # compress fraction, rounded to 2 decimal places
-range_M_dom = np.round(np.arange(0.06, 0.12, 0.02), 2)  # solar mass, rounded to 2 decimal places
+range_M_dom = np.round(np.arange(0.06, 0.2, 0.02), 2)  # solar mass, rounded to 2 decimal places
 range_v_dom = np.int_([5e3])  # km/s, rounded and converted to integer
-range_f_dom = np.round(np.arange(0.12, 0.30, 0.03), 2)  # fraction of DOM mass, rounded to 2 decimal places
+range_f_dom = np.round(np.arange(0.05, 0.30, 0.03), 2)  # fraction of DOM mass, rounded to 2 decimal places
+len(range_E_exp) * len(range_M_ej) * len(range_kappa) * len(range_t_delay) * len(range_f_comp) * len(range_M_dom) * len(range_v_dom) * len(range_f_dom)
 #%%
 def process_combination(args):
     E_exp, M_ej, kappa, t_delay, f_comp, M_dom, V_dom, f_dom, fit_tbl = args
@@ -314,10 +322,10 @@ def process_combination(args):
         all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
         all_values = [all_data[colname] for colname in result_tbl.columns]
         result_tbl.add_row(vals=all_values)
-    os.makedirs(f'/data1/supernova_model/result/Comp_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
+    os.makedirs(f'/data1/supernova_model/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
     #os.makedirs(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}', exist_ok = True)
     result_tbl.remove_row(index = 0)
-    result_tbl.write(f'/data1/supernova_model/result/Comp_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
+    result_tbl.write(f'/data1/supernova_model/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
     #result_tbl.write(f'/data7/yunyi/temp_supernova/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit', format='ascii.fixed_width', overwrite=True)
 
 def main(fit_tbl):
@@ -335,7 +343,7 @@ def main(fit_tbl):
                         for f_dom in range_f_dom]
 
     # Use multiprocessing to process the combinations in parallel
-    with mp.Pool(processes=8) as pool:
+    with mp.Pool(processes=3) as pool:
         pool.map(process_combination, all_combinations)
 
     print(time.time() - start)
@@ -347,15 +355,16 @@ if __name__ == '__main__':
 import glob
 from astropy.table import vstack
 from tqdm import tqdm
-result_key = '/data1/supernova_model/result/DOM_fit_result/*/*/*.fit'
+result_key = '/data1/supernova_model/result/DOM_fit_result/*/*/*fit'
 files = glob.glob(result_key)
 result_tbl = Table()
 for file_ in tqdm(files):
     tbl = ascii.read(file_, format = 'fixed_width')
     result_tbl = vstack([result_tbl, tbl])
 #%%
-#result_tbl.sort('redchisqr')
-#result_tbl.write('/data1/supernova_model/result/DOM_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
+result_tbl.sort('redchisqr')
+#%%
+result_tbl.write('/data1/supernova_model/result/DOM_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
 #%%
 #%%
 #import matplotlib#
@@ -364,12 +373,14 @@ for file_ in tqdm(files):
 result_tbl = ascii.read('/data1/supernova_model/result/DOM_fit_result.fit', format = 'fixed_width')
 result_tbl.sort('chisq')
 i = 1
+
 result_values = result_tbl[i]
+
 exptime_DEI = result_values['exptime_DEI']
 exptime_FB = result_values['exptime_FB']
 filter_key = fit_tbl.group_by('filter').groups.keys['filter']
 color_key, offset_key, _, _, label_key = helper.load_filt_keys()
-plt.figure(dpi = 300, figsize = (5, 8))
+plt.figure(dpi = 300, figsize = (4.5,6.5))
 plt.gca().invert_yaxis()
 phase_min_FB = np.max([59526, result_values['exptime_FB']])
 phase_min_DEI = np.max([59526, result_values['exptime_DEI']])
@@ -380,13 +391,12 @@ DOM_model = DOMInteractionL17(E_exp = result_values['E_exp'], M_ej = result_valu
 DOM_LC = DOM_model.get_LC(td = np.arange(0.01, 10, 0.01), filterset  = ''.join(filter_key), search_directory = model_directory, save = True, force_calculate= True)
 spl_allfilt_DEI = get_DEI_spline(DOM_LC, exptime_DEI = result_values['exptime_DEI'], filterset = ''.join(filter_key))
 
-
 tbl_UL = observed_data.get_data_ul()
 tbl_obs = observed_data.get_data_detected()
 ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                             scatter_linewidth=0.5, 
                             scatter_size=50, 
-                            scatter_alpha = 1,
+                            scatter_alpha = 0.2,
                             errorbar_linewidth=0.5, 
                             errorbar_capsize=0.1, 
                             color_UB = True,
@@ -397,7 +407,7 @@ ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                             label = True, 
                             label_location=4, 
                             )
-for filter_ in fit_filterset:
+for filter_ in 'UBVgri':
     amp = result_values[f'amplitude_{filter_}']
     alpha= result_values[f'alpha_{filter_}']
     flux_FB = fireball_model(time = phase_range_DEI, amplitude = amp, alpha = alpha, exptime = result_values['exptime_FB'])
@@ -450,76 +460,83 @@ ax1.set_xlim(phase_range_FB[0]-1, 59537)
 ax2.set_xlim(phase_range_FB[0]-1, 59537)
 ax1.set_ylim(22.5, 8)
 #%%
-'''
-filter_ = 'U'
-tbl_filter = observed_data.get_filt_data(obs_tbl)[filter_]
-tbl_obs = tbl_filter[tbl_filter['status'] =='detected']
-tbl_UL = tbl_filter[tbl_filter['status'] =='UL']
-plt.scatter(tbl_obs['obsdate'], tbl_obs['mag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_])
-plt.scatter(tbl_UL['obsdate'], tbl_UL['mag']+offset_key[filter_], facecolor = 'none', edgecolor = color_key[filter_], alpha = 0.2)
 
+ax1.clear()
+show_idx = [0,3,7, 9, 10, 12]
+obs_spec = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat', format = 'fixed_width')
+obs_spec_phot = ObservedPhot(data_tbl  = obs_spec)
+obs_spec_phot.data.sort('obsdate')
+filt_spec_tbl = obs_spec_phot.get_filt_data(obs_spec_phot.data)
+UB_tbl = helper.match_table(filt_spec_tbl['U'], filt_spec_tbl['B'], key = 'obsdate')
+BV_tbl = helper.match_table(filt_spec_tbl['B'], filt_spec_tbl['V'], key = 'obsdate')
+gr_tbl = helper.match_table(filt_spec_tbl['g'], filt_spec_tbl['r'], key = 'obsdate')
 
-spl_DEI = spl_allfilt_DEI[filter_]
-flux_DEI = mag_to_flux(spl_DEI(phase_range_DEI)+DM)
-mag_DOM = flux_to_mag(flux_DEI, zp = ZP)
-plt.plot(phase_range_DEI, mag_DOM + offset_key[filter_], c = color_key[filter_], linestyle= ':', linewidth = 1)
-'''
+import glob
+import matplotlib.cm as cm  # Import the colormap
+from Research.spectroscopy.spectroscopyfile import SpectroscopyFile
+from Research.spectroscopy import Spectrum
+from Research.spectroscopy import TimeSeriesSpectrum
 
-plt.xlim(phase_range_FB[0]-3, 59540)
-plt.ylim(22.5, 8)
-plt.show()
-#plt.legend(loc = 4)
-# %%
+num_files = len(show_idx)  # Determine the number of files
+colormap = cm.get_cmap('cool', num_files)  # Choose a colormap and set the number of colors
+DEI_model = DOMInteractionL17(E_exp = result_values['E_exp'], M_ej = result_values['M_ej'], kappa = result_values['kappa'], t_delay = result_values['t_delay'], f_comp = result_values['f_comp'], M_dom = result_values['M_dom'], V_dom = result_values['V_dom'], f_dom = result_values['f_dom']).get_LC(td = np.arange(0.1, 10, 0.1))
 
-#%%
-pandas_tbl = result_tbl.to_pandas()
-import seaborn as sns
-drop_colnames = ['exptime_DEI', 'exptime_FB', 'alpha_B', 'amplitude_B',
-       'alpha_V', 'amplitude_V', 'alpha_g', 'amplitude_g', 'alpha_r',
-       'amplitude_r', 'alpha_i', 'amplitude_i', 'success', 'nfev', 'ndata',
-       'nvar', 'aic', 'bic']
-pd_tbl = pandas_tbl.drop(columns = drop_colnames)
-sns.heatmap(pd_tbl.corr())
-# %%
-plt.figure(figsize=(8, 8))
-# Store heatmap object in a variable to easily access it when you want to include more features (such as title).
-# Set the range of values to be displayed on the colormap from -1 to 1, and set the annotation to True to display the correlation values on the heatmap.
-heatmap = sns.heatmap(pd_tbl.corr(), vmin=-1, vmax=1, annot=True)
-# Give a title to the heatmap. Pad defines the distance of the title from the top of the heatmap.
-heatmap.set_title('Correlation Heatmap', fontdict={'fontsize':10}, pad=12);
-import matplotlib.pyplot as plt
-import numpy as np
-#%%
-# Assuming reduced_chisq and x are from your data
-reduced_chisq = result_tbl['redchisqr']
-x = result_tbl['V_dom']
-
-# Calculate the median of the reduced chi-square values
-median_chisq = np.median(reduced_chisq)
-#%%
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-# Assuming 'result_tbl' is your dataframe and it contains columns for each parameter and 'redchisqr'
-parameters = ['E_exp', 'M_ej', 'kappa', 't_delay', 'f_comp', 
-              'M_dom', 'V_dom', 'f_dom']
-
-plt.figure(figsize=(20, 15))
-for i, param in enumerate(parameters):
-    # Define the desired y-axis limits
-    y_min = np.percentile(result_tbl['redchisqr'], 5)  # Lower bound at 5th percentile
-    y_max = np.percentile(result_tbl['redchisqr'], 10)  # Upper bound at 95th percentile
-
+exptime_DEI = result_values['exptime_DEI']
+DEI_model['phase'] = DEI_model['phase'] + exptime_DEI
+spl_temp,_ = helper.interpolate_spline(list(DEI_model['phase']), list(DEI_model['Temperature_eff']), show = False)
+position_txt = [3, 0.3]
+for i, idx in enumerate(show_idx):
+    file_ = UB_tbl[idx]['filename_1']
+    obsdate = UB_tbl[idx]['obsdate_1']
+    specfile = SpectroscopyFile(file_)
+    flux = specfile.flux
+    wl = specfile.wavelength
+    spec = Spectrum(wl, flux, flux_unit='flamb')
+        
+    # Get a color from the colormap
+    color = colormap(i)
+    Planck = helper.planck
+    temp = spl_temp(obsdate)
+    val = Planck(temperature=temp, wl_AA=wl)
+    spec_bb = Spectrum(wl, val['flamb'], flux_unit='flamb')
     
-    plt.subplot(5, 2, i+1)  # Adjust the grid size depending on the number of parameters
-    plt.scatter(result_tbl[param], result_tbl['redchisqr'], alpha=0.01)
-    plt.xlabel(param)
-    plt.ylabel('Reduced Chi-Square')
-    plt.grid(True)
-    plt.title(f'Reduced Chi-Square vs {param}')
-    plt.ylim(0, y_max)  # Set the y-axis limits
+    # If spec.show() supports a color parameter
+    spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color=color, label = specfile.obsdate, offset = -2*i, axis = ax1, linewidth = 1)
+    if i < 2:
+        spec_bb.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color='black', offset = -2*i, axis = ax1, linestyle = '--', linewidth = 0.5)
+        ax1.text(5000, position_txt[i], '%.0f K'%temp)
+    ax2.scatter(BV_tbl['obsdate_1'][idx], BV_tbl['mag_1'][idx] - BV_tbl['mag_2'][idx] + 0.5, facecolor = 'b', edgecolor = color, marker = '*', s = 150, alpha = 1, zorder = 10)
+    ax2.scatter(gr_tbl['obsdate_1'][idx], gr_tbl['mag_1'][idx] - gr_tbl['mag_2'][idx], facecolor = 'g', edgecolor = color, marker = '*', s = 150, alpha = 1, zorder = 10)
 
+ax1.tick_params(axis='x', which='both', direction='in', top=True)
+ax2.tick_params(axis='x', which='both', direction='in', top=True)
+ax1.set_ylim(-10, 5.5)
+ax1.set_xlim(3000, 10000)
+ax1.set_xticks(np.arange(3000, 11000, 1000), np.arange(3000, 11000, 1000))
+# Move x-ticks to the top for ax1
+ax1.xaxis.tick_top()  # This moves the x-tick labels to the top of ax1
+ax1.xaxis.set_label_position('top')  # This moves the x-axis label to the top
+ax1.set_ylabel(rf'Normalized flux ($F_\lambda$) + offset')
+ax2.set_xlim(59528, 59537)
+# %%
+plt.figure(dpi = 300, figsize = (6,4))
+obsdate = UB_tbl[0]['obsdate_1'] - exptime_DEI
+DEI_model = DOMInteractionL17(E_exp = result_values['E_exp'], M_ej = result_values['M_ej'], kappa = result_values['kappa'], t_delay = result_values['t_delay'], f_comp = result_values['f_comp'], M_dom = result_values['M_dom'], V_dom = result_values['V_dom'], f_dom = result_values['f_dom']).get_LC(td = np.arange(0.1, 10, 0.1))
+plt.plot(DEI_model['phase'], DEI_model['Temperature_eff'], color = 'k')
+temp = spl_temp(obsdate + exptime_DEI)
+plt.plot([-1,obsdate], [temp, temp], color = 'k', linestyle = '--')
+plt.plot([obsdate,obsdate], [-3000, temp], color = 'k', linestyle = '--')
+plt.xlabel('Days since the first detection [MJD - 59529.3318]')
+plt.ylabel('Effective temperature [K]')
+plt.xticks(np.array([0,2,4,6,8,10])+59529.3318-exptime_DEI, np.array([0,2,4,6,8,10]))
+#plt.plot([0.08855,0], [0.8855, 11391], color = 'r', linestyle = '--')
+plt.xlim(-1,10)
+plt.ylim(-2000, 35000)
 
-plt.tight_layout()
-plt.show()
+# %%
+plt.figure(dpi = 300)
+plt.plot(0,0, '--', c='k', label = 'Power law')
+plt.plot(0,0, ':', c='k', label = 'DOM-ejecta')
+plt.plot(0,0, '-', c='k', label = 'Power law + DOM-ejecta')
+plt.legend(loc = 3)
 # %%

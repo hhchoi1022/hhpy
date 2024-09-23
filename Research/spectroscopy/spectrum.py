@@ -224,7 +224,7 @@ import matplotlib.cm as cm  # Import the colormap
 
 if __name__ == '__main__':
     plt.figure(dpi = 300)
-    visualize_files =[specfilelist[0], specfilelist[4], specfilelist[6], specfilelist[8]] #specfilelist[0,6]  # Choose the first 6 files to visualize
+    visualize_files =[specfilelist[-5],specfilelist[-6],specfilelist[-8],specfilelist[-10], specfilelist[-11],specfilelist[-12],specfilelist[-13]] #specfilelist[0,6]  # Choose the first 6 files to visualize
     num_files = len(visualize_files)  # Determine the number of files
     colormap = cm.get_cmap('jet', num_files)  # Choose a colormap and set the number of colors
 
@@ -242,8 +242,16 @@ if __name__ == '__main__':
         color = colormap(i)
         
         # If spec.show() supports a color parameter
-        spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.04, normalize_cenwl=7500, color=color, label = specfile.obsdate, offset = -2*i)
+        spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.04, normalize_cenwl=7500, color=color, label = rf'$t_0$ + {int(specfile.obsdate-59529.3318)}', offset = -2*i)
+        plt.axvline(6300, linestyle = '--', c= 'r', linewidth = 0.5)
+        plt.axvline(6364, linestyle = '--', c= 'r', linewidth = 0.5)
+        plt.axvline(5875, linestyle = '--', c= 'b', linewidth = 0.5)
+        plt.axvline(6678, linestyle = '--', c= 'b', linewidth = 0.5)
+        plt.axvline(6563, linestyle = '--', c= 'b', linewidth = 0.5)
+    plt.legend(ncol = 2)
 
+        
+        
         #plt.axvline(4100, color='black')  # Vertical lines in black
         #plt.axvline(8400, color='black')
     

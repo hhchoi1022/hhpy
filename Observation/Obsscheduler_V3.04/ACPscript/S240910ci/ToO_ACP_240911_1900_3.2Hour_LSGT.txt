@@ -1,0 +1,83 @@
+; Prepare for the observation (LSGT)
+
+; Targeting
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:12:06	-15:25:51
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:01:48	-13:21:21
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:11:46	-17:05:41
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	15:54:10	-10:45:32
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	15:47:09	-07:44:20
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:33:27	-21:36:32
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:12:06	-15:25:51
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:46:33	-24:27:43
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:40:11	-22:41:05
+
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:53:13	-24:22:15
+

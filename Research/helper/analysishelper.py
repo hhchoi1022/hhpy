@@ -153,10 +153,10 @@ class AnalysisHelper():
                         R = 'standard::r',
                         I = 'standard::i',
                         u = 'sdssu',
-                        g = 'sdssg',
-                        r = 'sdssr',
-                        i = 'sdssi',
-                        z = 'sdssz')
+                        g = 'ps1::g',
+                        r = 'ps1::r',
+                        i = 'ps1::i',
+                        z = 'ps1::z')
         
         pyphot_key = dict(
                         U = 'GROUND_JOHNSON_U',
@@ -165,9 +165,9 @@ class AnalysisHelper():
                         R = 'GROUND_COUSINS_R',
                         I = 'GROUND_COUSINS_I',
                         u = 'SDSS_u',
-                        g = 'SDSS_g',
-                        r = 'SDSS_r',
-                        i = 'SDSS_i',
+                        g = 'PS1_g',
+                        r = 'PS1_r',
+                        i = 'PS1_i',
                         z = 'SDSS_z')
 
         if filter_key ==None:    

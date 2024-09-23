@@ -1,0 +1,124 @@
+grid:
+  bin_width: 0.3
+  v_outer_max: 70.0
+  v_size: 100
+opacity:
+  form: exp
+  line_dir: /home/hhchoi1022/syn++/files/es-data/lines
+  log_tau_min: -2.0
+  ref_file: /home/hhchoi1022/syn++/files/es-data/refs.dat
+  v_ref: 25.0
+output:
+  max_wl: 9000
+  min_wl: 3300
+  wl_step: 10
+setups:
+- a0: 1.0
+  a1: 0.0
+  a2: 0.0
+  active:
+  - false
+  - false
+  - false
+  - false
+  - false
+  - false
+  - false
+  - false
+  - true
+  - false
+  - false
+  - false
+  - false
+  aux:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 8.0
+  - 1.0
+  - 1.0
+  - 10.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  ions:
+  - 600
+  - 601
+  - 800
+  - 1100
+  - 1200
+  - 1401
+  - 1402
+  - 1601
+  - 2001
+  - 2601
+  - 2602
+  - 2701
+  - 2801
+  log_tau:
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.7
+  - 0.1
+  - 0.1
+  - 1.5
+  - 0.1
+  - 0.1
+  - 0.1
+  - 0.1
+  t_phot: 9
+  temp:
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  v_max:
+  - 30.0
+  - 30.0
+  - 30.0
+  - 30.0
+  - 50.0
+  - 40.0
+  - 30.0
+  - 30.0
+  - 50.0
+  - 30.0
+  - 30.0
+  - 30.0
+  - 30.0
+  v_min:
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  v_outer: 50.0
+  v_phot: 40.0
+source:
+  mu_size: 10
+spectrum:
+  flatten: 'No'
+  p_size: 60

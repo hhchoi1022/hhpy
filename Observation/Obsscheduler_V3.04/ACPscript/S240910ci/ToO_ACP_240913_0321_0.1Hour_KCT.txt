@@ -1,0 +1,12 @@
+; Prepare for the observation
+
+; Targeting
+#skippreviews 
+#filteroffsets
+#count 1
+#interval 450
+#binning --
+#filter 
+autofocus	--	--
+
+#QUITAT 09/13/24 09:37:48

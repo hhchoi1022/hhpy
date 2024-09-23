@@ -1,0 +1,11 @@
+; Prepare for the observation (LSGT)
+
+; Targeting
+#skippreviews 
+#filteroffsets
+#count 1
+#interval 450
+#binning --
+#filter 
+autofocus	--	--
+

@@ -16,7 +16,9 @@ import matplotlib
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
 from astropy.io import ascii
-#matplotlib.use('Agg')
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning, message="overflow encountered in exp")
+matplotlib.use('Agg')
 #%%
 class Section(object): 
     """
@@ -398,37 +400,37 @@ class DOMInteractionL17(AnalysisHelper):
 # %%
 if __name__ == '__main__':
     def process_params(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, v_dom, f_dom, home_dir, td):
-        print(f'Start: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
+        #print(f'Start: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
         dirname = f'{home_dir}kappa{kappa}/E{E_exp}'
         filename = '%.1f_%.1f_%.2f_%.1f_%.1f_%.2f_%.1f_%.2f'%(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, v_dom, f_dom)
         if not os.path.exists(dirname): 
             os.makedirs(dirname, exist_ok = True) 
         filename_dat = os.path.join(dirname, f'{filename}.dat')
         if not os.path.exists(filename_dat):            
-            print(f'Start calculation: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
+            #print(f'Start calculation: E_exp = {E_exp}, M_ej = {M_ej}, kappa = {kappa}, t_delay = {t_delay}, f_comp = {f_comp}, M_dom = {M_dom}, v_dom = {v_dom}, f_dom = {f_dom}') 
             DOM = DOMInteractionL17(E_exp=E_exp, M_ej=M_ej, kappa=kappa, t_delay=t_delay, f_comp=f_comp, M_dom=M_dom, V_dom=v_dom, f_dom=f_dom)
             result, lightcurve, tempcurve = DOM.calc_magnitude(td=td, filterset='UBVRIugri', visualize = True)
             result.write(filename_dat, format='ascii.fixed_width', overwrite=True)
             lightcurve.savefig( os.path.join(dirname, f'{filename}_LC.png'))
             tempcurve.savefig( os.path.join(dirname, f'{filename}_TL.png'))
-            print(f'{home_dir}kappa{kappa}/E{E_exp}/{filename} is saved. ')
-
+            #print(f'{home_dir}kappa{kappa}/E{E_exp}/{filename} is saved. ')
+#%%
+from tqdm import tqdm
 if __name__ == '__main__':
-    #home_dir = '/home/hhchoi1022/Desktop/Gitrepo/Research/Supernova/DOM_model/'
-    home_dir = '/data7/yunyi/temp_supernova/Gitrepo/Research/model/DOM_model/' 
-    range_E_exp = np.arange(0.8, 1.6, 0.2) # 10^51 ergs
-    range_M_ej = np.arange(0.8, 1.6, 0.2) # solar mass
-    range_kappa = [0.03, 0.05] # cm2/g
-    range_t_delay = np.arange(1e2, 1e4, 200) # s
-    range_f_comp = [1.5] # compress fraction
-    range_M_dom = np.arange(0.08,0.16,0.02) # solar mass
-    range_v_dom = np.arange(5e3, 10e3, 1e3) # km/s
-    range_f_dom = np.arange(0.03, 0.16, 0.02) # fraction of DOM mass
+    home_dir = '/data1/supernova_model/DOM_model/'
+    #home_dir = '/data7/yunyi/temp_supernova/Gitrepo/Research/model/DOM_model/' 
+    range_E_exp = np.round(np.arange(0.8, 1.6, 0.2), 2)  # 10^51 ergs, rounded to 2 decimal places
+    range_M_ej = np.round(np.arange(0.6, 1.2, 0.2), 2)   # solar mass, rounded to 2 decimal places
+    range_kappa = np.round([0.03, 0.05], 2)              # cm^2/g, rounded to 2 decimal places
+    range_t_delay = np.round(np.arange(1e1, 2e2, 10), 0)  # s, rounded to 0 decimal places (integer-like)
+    range_f_comp = np.round([1.5], 2)                    # compress fraction, rounded to 2 decimal places
+    range_M_dom = np.round(np.arange(0.06, 0.2, 0.02), 2)  # solar mass, rounded to 2 decimal places
+    range_v_dom = np.int_([5e3])  # km/s, rounded and converted to integer
+    range_f_dom = np.round(np.arange(0.05, 0.25, 0.03), 2)  # fraction of DOM mass, rounded to 2 decimal places
     td = np.arange(0.1, 10, 0.1)
-    expected_time = len(range_E_exp) * len(range_M_ej) * len(range_kappa) * len(range_t_delay) * len(range_f_comp) * len(range_M_dom) * len(range_v_dom) * len(range_f_dom) * len(td) * 0.05 /3600
-    n_workers = 50 
+    expected_time = len(range_E_exp) * len(range_M_ej) * len(range_kappa) * len(range_t_delay) * len(range_f_comp) * len(range_M_dom) * len(range_v_dom) * len(range_f_dom) * 3 / 3600
+    n_workers = 6
     print('expected time: ', expected_time/n_workers, 'Hour')
-    
     
     param_combinations = [(E_exp, M_ej, kappa, t_delay, f_comp, M_dom, v_dom, f_dom)
                           for E_exp in range_E_exp
@@ -440,11 +442,17 @@ if __name__ == '__main__':
                           for v_dom in range_v_dom
                           for f_dom in range_f_dom]
     
-    with ProcessPoolExecutor(max_workers = n_workers) as executor:
+    with ProcessPoolExecutor(max_workers=n_workers) as executor:
         futures = [executor.submit(process_params, *params, home_dir, td) for params in param_combinations]
-        for future in as_completed(futures):
+        # Use tqdm to wrap the as_completed iterator for progress tracking
+        for future in tqdm(as_completed(futures), total=len(futures), desc="Processing Parameters"):
             try:
                 future.result()  # This will raise an exception if the function call raised one.
-            except:
-                pass
+            except Exception as e:
+                print(f"Generated an exception: {e}")
 
+
+
+# %%
+
+# %%

@@ -1,0 +1,19 @@
+; Prepare for the observation (LSGT)
+
+; Targeting
+#skippreviews 
+#filteroffsets
+#count 6
+#interval 180
+#binning 1
+#filter r
+S240910ci	16:55:12	-25:20:06
+
+#skippreviews 
+#filteroffsets
+#count 1
+#interval 450
+#binning --
+#filter 
+autofocus	--	--
+

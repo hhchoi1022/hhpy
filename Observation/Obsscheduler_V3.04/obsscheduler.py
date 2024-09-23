@@ -1061,7 +1061,7 @@ class ScriptMaker(mainConfig):
                         split_table = target_table[idx]
                         if len(split_table) > 0:
                             time_script = np.round((split_table[-1]['exec_end'] - split_table[0]['exec_start']).value * 24,1)
-                            filename = f'{savepath}{filename_prefix}ACP_{(ut_to_lt(split_table[0]["obs_start"].datetime)).strftime("%y%m%d_%H%M")}_{time_script}Hour_{self.obsdata.name_telescope}.txt'
+                            filename = f'{savepath}{filename_prefix}ACP_{(ut_to_lt(split_table[0]["exec_start"].datetime)).strftime("%y%m%d_%H%M")}_{time_script}Hour_{self.obsdata.name_telescope}.txt'
                             with open(filename, 'w') as f:
                                 f.write('; Prepare for the observation (LSGT)\n')
                                 f.write('\n; Targeting\n')
@@ -1087,7 +1087,7 @@ class ScriptMaker(mainConfig):
                         split_table = target_table[idx]
                         if len(split_table) > 0:
                             time_script = np.round((split_table[-1]['exec_end'] - split_table[0]['exec_start']).value * 24,1)
-                            filename = f'{savepath}{filename_prefix}ACP_{(ut_to_lt(split_table[0]["obs_start"].datetime)).strftime("%y%m%d_%H%M")}_{time_script}Hour_{self.obsdata.name_telescope}.txt'
+                            filename = f'{savepath}{filename_prefix}ACP_{(ut_to_lt(split_table[0]["exec_start"].datetime)).strftime("%y%m%d_%H%M")}_{time_script}Hour_{self.obsdata.name_telescope}.txt'
                             with open(filename, 'w') as f:
                                 f.write('; Prepare for the observation\n')
                                 f.write('\n; Targeting\n')
@@ -1282,27 +1282,10 @@ class ScriptMaker(mainConfig):
 ################################################################################################################################################################################################
 
 #%% SAMPLE Code (ToO)
-tiles = ascii.read('./SkyGridCatalog_KCT_90.csv')
-def find_cumulative_index(array, percentile):
-    total_sum = sum(array)
-    target_cumulative = total_sum * percentile  # 50% of the total sum
-
-    cumulative_sum = 0
-    for index, value in enumerate(array):
-        cumulative_sum += value
-        if cumulative_sum >= target_cumulative:
-            return index
-    # If the loop completes without finding a suitable index
-    return None
-idx_50 = find_cumulative_index(tiles['prob_vol_x_stmass'], 0.5)
-idx_90 = find_cumulative_index(tiles['prob_vol_x_stmass'], 0.9)
-data = tiles[idx_50:idx_90]
-
-
 if __name__ == '__main__':
     # dirlist = os.listdir('../Archive/')
-    # dirlist.sort()
-    target = 's230830b'
+    # dirlist.sort()s
+    target = 'S240910ci'
     name_project = 'GECKO'
     filename_prefix = 'ToO_'
     log_savepath = './log/'
@@ -1339,15 +1322,16 @@ if __name__ == '__main__':
     # print(f'len(targetted) = {len(get_isfile_and_data(target=target, name_telescope="KCT")["host"]["data"])}')
     
     
-    ####################### 
-    # KCT (ACP)
-    #######################
-    
-    name_telescope = 'KCT'
-    data = ascii.read('./SkyGridCatalog_KCT_90_select.csv')
+    name_telescope = '7DT'
+    name_project = 'GECKO'
+    #data = ascii.read('./SkyGridCatalog_KCT_90_select.csv')
+    #data = ascii.read('/home/hhchoi1022/S240910ci_UPDATE/HostGalaxyCatalog_90.csv')
+    #data = data[data['weight'] > np.percentile(data['weight'], 99)]
+    data = ascii.read('/home/hhchoi1022/S240910ci_UPDATE/SkyGridCatalog_7DT_90.csv')
+
     data['filter'] = "r"
     data['count'] = '6'
-    data['exptime'] = '300'
+    data['exptime'] = '100'
     date = Time.now()
     """
     Input
@@ -1362,7 +1346,91 @@ if __name__ == '__main__':
                                     date = date,
                                     name_project = name_project,
                                     name_telescope = name_telescope,
-                                    entire_night = False)
+                                    entire_night = True)
+    # Define target
+    scriptmaker_host = ScriptMaker(scheduler_host)
+    # Action
+    scriptmaker_host.write_ACPscript_KCT(filename_prefix= filename_prefix, savepath = ACP_savepath, shutdown = False, autofocus = False)
+    scriptmaker_host.write_log(n_target = 300, sort_keyword = 'rank', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
+    scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
+
+    scheduler_grid = ObsScheduler(target_db= data,
+                                    date = date,
+                                    name_project = name_project,
+                                    name_telescope = name_telescope,
+                                    entire_night = True)
+    # Define target
+    scriptmaker_grid = ScriptMaker(scheduler_grid)
+    # Action
+    scriptmaker_grid.write_ACPscript_KCT(filename_prefix= filename_prefix, savepath = ACP_savepath, shutdown = False, autofocus = False)
+    scriptmaker_grid.write_log(n_target = 300, sort_keyword = 'rank', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
+    scriptmaker_grid.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
+    # See log file to check the observability of the targets
+    plt.figure(dpi = 300)
+    plt.xlabel('ra')
+    plt.ylabel('dec')
+    plt.scatter(scheduler_grid.target.all['ra'], scheduler_grid.target.all['dec'], c = 'r', label ='grid', alpha = 0.3, s = 2)
+    plt.scatter(scriptmaker_grid.result.scheduled['ra'], scriptmaker_grid.result.scheduled['dec'], c = 'b', label =f'scheduled[grid],{len(scriptmaker_grid.result.scheduled)}')
+    #plt.scatter(scheduler_host.target.all['ra'], scheduler_host.target.all['dec'], c = 'b', label ='host', alpha = 0.1, s = 2)
+    #plt.scatter(scriptmaker_host.result.scheduled['ra'], scriptmaker_host.result.scheduled['dec'], c = 'r', label =f'scheduled[host],{len(scriptmaker_host.result.scheduled)}')
+    plt.legend()
+    maintarget = mainTarget(name_telescope=scheduler_host.name_telescope, name_project= scheduler_host.name_project, observer = scheduler_host.observer, target_ra = scheduler_host.target.all['ra'][0], target_dec = scheduler_host.target.all['dec'][0])
+    maintarget.staralt(utctime = date)
+    
+    ####################### 
+    # KCT (ACP)
+    #######################
+    
+    name_telescope = 'KCT'
+    #data = ascii.read('./SkyGridCatalog_KCT_90_select.csv')
+    data = ascii.read('/home/hhchoi1022/S240910ci_UPDATE/HostGalaxyCatalog_90.csv')
+    data = data[data['weight'] > np.percentile(data['weight'], 99)]
+    #data = ascii.read('/home/hhchoi1022/S240910ci_UPDATE/SkyGridCatalog_7DT_90.csv')
+
+    data['filter'] = "r"
+    data['count'] = '10'
+    data['exptime'] = '120'
+    date = Time.now() - 10*u.hour
+    """
+    Input
+        1. targetted observation (HostGalaxyCatalog_90.csv)
+        2. tiled obsevation (SkyGridCatalog_*_90.csv)
+    Output 
+        1. ACPscript
+        2. log
+    """
+
+    scheduler_host = ObsScheduler(target_db= data,
+                                    date = date,
+                                    name_project = name_project,
+                                    name_telescope = name_telescope,
+                                    entire_night = True)
+    coord_data = SkyCoord(data['ra'], data['dec'], unit = (u.deg, u.deg))
+    radeclist = [('16:03:31','-13:35:06'), ('16:00:00','-12:44:09'), ('16:01:46','-14:26:02')]
+    coords = []
+    from astropy.table import vstack
+    new_tbl = Table()
+
+    for radec in radeclist:
+        coord = SkyCoord(radec[0], radec[1], unit=(u.hourangle, u.deg))
+        coords.append(coord)
+        
+        # Find the index of the closest match in 'data'
+        sep = coord.separation(coord_data).degree
+        idx = np.argmin(sep)
+        print(sep[idx], idx)
+        target = data[idx]
+        
+        # Append the target row to the new table
+        if len(new_tbl) == 0:
+            # If new_tbl is empty, initialize it with the first row
+            new_tbl = Table(rows=[target], names=data.colnames)
+        else:
+            # Use vstack to add rows to new_tbl
+            new_tbl = vstack([new_tbl, Table(rows=[target], names=data.colnames)])
+
+        
+    
     # Define target
     scriptmaker_host = ScriptMaker(scheduler_host)
     # Action
@@ -1374,7 +1442,7 @@ if __name__ == '__main__':
                                     date = date,
                                     name_project = name_project,
                                     name_telescope = name_telescope,
-                                    entire_night = False)
+                                    entire_night = True)
     # Define target
     scriptmaker_grid = ScriptMaker(scheduler_grid)
     # Action
@@ -1398,10 +1466,13 @@ if __name__ == '__main__':
     #######################
     
     name_telescope = 'RASA36'
-    data = ascii.read('./test/SkyGridCatalog_RASA36_90.csv')
+    #data = ascii.read('./test/SkyGridCatalog_RASA36_90.csv')
+    data = ascii.read('/home/hhchoi1022/S240910ci_UPDATE/SkyGridCatalog_RASA36_90.csv')
+    data = ascii.read('/home/hhchoi1022/Desktop/Gitrepo/Observation/Obsscheduler_V3.04/RASA36_scheduled.ascii_fixed_width', format = 'fixed_width')
     #data = ascii.read('./SkyGridCatalog_RASA36_90_fromKMTNet.csv')
-    #data['count'] = '30'
-    #data['exptime'] = '60'
+    data['filter'] = 'r'
+    data['count'] = '20'
+    data['exptime'] = '60'
     date = Time.now()
 
     """
@@ -1420,7 +1491,7 @@ if __name__ == '__main__':
     # Define target
     scriptmaker_host = ScriptMaker(scheduler_host)
     # Action
-    scriptmaker_host.write_ACPscript_RASA36(filename_prefix= filename_prefix, savepath = ACP_savepath)
+    scriptmaker_host.write_ACPscript_RASA36(filename_prefix= filename_prefix, savepath = ACP_savepath, autofocus = False)
     rasalog = scriptmaker_host.write_log(n_target = 300, sort_keyword = 'rank', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = True)
     scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
 
@@ -1432,7 +1503,7 @@ if __name__ == '__main__':
     # Define target
     scriptmaker_grid = ScriptMaker(scheduler_grid)
     # Action
-    scriptmaker_grid.write_ACPscript_RASA36(filename_prefix= filename_prefix, savepath = ACP_savepath)
+    scriptmaker_grid.write_ACPscript_RASA36(filename_prefix= filename_prefix, savepath = ACP_savepath, autofocus = False)
     scriptmaker_grid.write_log(n_target = 300, sort_keyword = 'rank', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
     scriptmaker_grid.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
     # See log file to check the observability of the targets
@@ -1451,7 +1522,11 @@ if __name__ == '__main__':
     # LSGT (ACP)
     #######################
     name_telescope = 'LSGT'
-    data = ascii.read('./HostGalaxyCatalog_90.csv')
+    data = ascii.read('/home/hhchoi1022/S240910ci_PRELIMINARY/HostGalaxyCatalog_90.csv')
+    data = data[:500]
+    data['filter'] = "r"
+    data['count'] = '6'
+    data['exptime'] = 180
 
     """
     Input
@@ -1462,10 +1537,10 @@ if __name__ == '__main__':
         2. log
     """
     scheduler_host = ObsScheduler(target_db= data ,
-                                    date = date,
+                                    date = date + 1*u.day,
                                     name_project = name_project,
                                     name_telescope = name_telescope,
-                                    entire_night = False)
+                                    entire_night = True)
     # Define target
     scriptmaker_host = ScriptMaker(scheduler_host)
     # Action
@@ -1882,8 +1957,7 @@ if __name__ == '__main__':
     name_telescope = 'RASA36'
     project = 'IMSNG'
     filename_prefix = 'IMSNG_'
-    duplicate_when_empty = True
-    data = ascii.read('./alltarget_prior2.dat', format = 'fixed_width')
+    duplicate_when_empty = False
 
     """
     Input
@@ -1904,3 +1978,4 @@ if __name__ == '__main__':
     scriptmaker_host.write_ACPscript_RASA36(filename_prefix= filename_prefix, savepath = ACP_savepath, shutdown = True, duplicate_when_empty= duplicate_when_empty)
     scriptmaker_host.write_log(n_target = 300, sort_keyword = 'priority', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
     scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
+#%%

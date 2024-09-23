@@ -134,7 +134,7 @@ tbl_obs = observed_data.get_data_detected()
 ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                             scatter_linewidth=0.5, 
                             scatter_size=50, 
-                            scatter_alpha = 1,
+                            scatter_alpha = 0.2,
                             errorbar_linewidth=0, 
                             errorbar_capsize=0, 
                             color_UB = True,
@@ -173,7 +173,7 @@ ax2.plot(phase_range_FB, mag_g_model - mag_r_model, c = 'g', label = 'g-r', line
 ax1.set_xlim(59528, 59537)
 ax2.set_xlim(59528, 59537)
 ax1.set_ylim(22.5, 8)
-#%%
+
 ax1.clear()
 show_idx = [0,3,7, 9, 10, 12]
 obs_spec = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat', format = 'fixed_width')
@@ -219,17 +219,22 @@ for i, idx in enumerate(show_idx):
     spec.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color=color, label = specfile.obsdate, offset = -2*i, axis = ax1, linewidth = 1)
     if i < 0:
         spec_bb.show(show_flux_unit='flamb', normalize=True, smooth_factor=11, log=False, redshift=0.05, normalize_cenwl=7500, color='black', offset = -2*i, axis = ax1, linestyle = '--', linewidth = 0.5)
-    ax2.scatter(BV_tbl['obsdate_1'][idx], BV_tbl['mag_1'][idx] - BV_tbl['mag_2'][idx] + 0.5, facecolor = 'b', edgecolor = color, marker = '*', s = 100, alpha = 1)
-    ax2.scatter(gr_tbl['obsdate_1'][idx], gr_tbl['mag_1'][idx] - gr_tbl['mag_2'][idx], facecolor = 'g', edgecolor = color, marker = '*', s = 100, alpha = 1)
+    ax2.scatter(BV_tbl['obsdate_1'][idx], BV_tbl['mag_1'][idx] - BV_tbl['mag_2'][idx] + 0.5, facecolor = color, edgecolor = color, marker = '*', s = 200, alpha = 1, zorder = 10)
+    ax2.scatter(gr_tbl['obsdate_1'][idx], gr_tbl['mag_1'][idx] - gr_tbl['mag_2'][idx], facecolor = color, edgecolor = color, marker = '*', s = 200, alpha = 1, zorder = 10)
 
 ax1.tick_params(axis='x', which='both', direction='in', top=True)
 ax2.tick_params(axis='x', which='both', direction='in', top=True)
 ax1.set_ylim(-10, 5.5)
 ax1.set_xlim(3000, 10000)
 ax1.set_xticks(np.arange(3000, 11000, 1000), np.arange(3000, 11000, 1000))
-# Move x-ticks to the top for ax1
+# Move x-ticks to the top for ax12
 ax1.xaxis.tick_top()  # This moves the x-tick labels to the top of ax1
 ax1.xaxis.set_label_position('top')  # This moves the x-axis label to the top
 ax1.set_ylabel(rf'Normalized flux ($F_\lambda$) + offset')
 ax2.set_xlim(59528, 59537)
+# %%
+# %%
+plt.figure(dpi = 300)
+plt.plot(0,0, '-', c='k', label = 'Power law')
+plt.legend(loc = 3)
 # %%

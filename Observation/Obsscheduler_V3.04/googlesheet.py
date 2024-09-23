@@ -197,7 +197,7 @@ class GoogleSheet:
 
 #%%
 if __name__ == '__main__':
-    data_file = '/home/hhchoi1022/SkyGridCatalog_7DT_90.csv'
+    data_file = '/home/hhchoi1022/S240910ci_PRELIMINARY/SkyGridCatalog_7DT_90.csv'
     tbl = ascii.read(data_file)
     objnamelist = []
     for id_ in tbl['id']:

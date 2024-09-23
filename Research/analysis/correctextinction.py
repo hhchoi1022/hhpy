@@ -122,7 +122,7 @@ class CorrectExtinction:
 
 #%%
 if __name__ == '__main__':
-    ebv = 0.097  # Hosseinzadeh 2022
+    ebv = 0.1#097  # Hosseinzadeh 2022
     ra = 64.9708333
     dec = -54.9480556
 #%%
@@ -156,9 +156,9 @@ if __name__ == '__main__':
 if __name__ == '__main__':
     spec_file = '/data1/supernova_rawdata/SN2021aefx/photometry/all_spec.dat'
     C = CorrectExtinction(spec_file)
-    C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
-    #C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
-    C.save()
+    #C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
+    C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
+    #C.save()
 #%%
 if __name__ == '__main__':
     spec_file = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot.dat'
