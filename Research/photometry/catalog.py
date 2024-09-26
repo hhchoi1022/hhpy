@@ -65,9 +65,13 @@ class Catalog():
     
     def get_GAIA(self):
         def GAIA_format(GAIA_catalog) -> Table:
-            original = ('RA_ICRS', 'DE_ICRS', 'E_BP_RP_corr', 'Bmag', 'e_Bmag', 'BFlag', 'Vmag', 'e_Vmag', 'VFlag', 'Rmag', 'e_Rmag', 'RFlag', 'gmag', 'e_gmag', 'gFlag', 'rmag', 'e_rmag', 'rFlag', 'imag', 'e_imag', 'iFlag')
-            format_ = ('ra', 'dec', 'c_star', 'B_mag', 'e_B_mag', 'B_flag', 'V_mag', 'e_Vmag', 'V_flag', 'R_mag', 'e_Rmag', 'R_flag', 'g_mag', 'e_gmag', 'g_flag', 'r_mag', 'e_rmag', 'r_flag', 'i_mag', 'e_imag', 'i_flag')
+            original = ('RA_ICRS', 'DE_ICRS', 'Bmag', 'e_Bmag', 'BFlag', 'Vmag', 'e_Vmag', 'VFlag', 'Rmag', 'e_Rmag', 'RFlag', 'gmag', 'e_gmag', 'gFlag', 'rmag', 'e_rmag', 'rFlag', 'imag', 'e_imag', 'iFlag')
+            format_ = ('ra', 'dec', 'B_mag', 'e_B_mag', 'B_flag', 'V_mag', 'e_Vmag', 'V_flag', 'R_mag', 'e_Rmag', 'R_flag', 'g_mag', 'e_gmag', 'g_flag', 'r_mag', 'e_rmag', 'r_flag', 'i_mag', 'e_imag', 'i_flag')
             GAIA_catalog.rename_columns(original, format_)
+            if 'E_BP_RP_corr' in GAIA_catalog.colnames:
+                GAIA_catalog.rename_columns('E_BP_RP_corr', 'c_star')
+            else:
+                GAIA_catalog['c_star'] = 0
             formatted_catalog = self.match_digit_tbl(GAIA_catalog)
             return formatted_catalog
 
@@ -1176,3 +1180,4 @@ class Catalog():
                 ascii.write(data, path, format = 'csv', overwrite = True)
                 print(f"{catalog_name}/{self.fieldinfo['target']} saved: {path}")
             return data
+
