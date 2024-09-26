@@ -435,16 +435,17 @@ if __name__ == '__main__':
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-180448-g-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-181452-r-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits'
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/*60.fits'))
-    reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
+    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/Calib*120.fits'))
+    #reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
+    reference_image = None
     phot_helper = PhotometryHelper()
     sex_configfile = None
-    #telinfo = phot_helper.get_telinfo(telescope='KCT', ccd='STX16803')
+    telinfo = phot_helper.get_telinfo(telescope='KCT', ccd='STX16803')
     #telinfo = phot_helper.get_telinfo(telescope='LSGT', ccd='SNUCAMII')
-    telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
-    sex_configfile = '/home/hhchoi1022/Desktop/Gitrepo/Research/photometry/sextractor/RASA36_HIGH.config'
+    #telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
+    #sex_configfile = '/home/hhchoi1022/Desktop/Gitrepo/Research/photometry/sextractor/RASA36_HIGH.config'
 #%%
-    image = filelist[100]
+    image = filelist[0]
     im = Image(image, telescope_info=telinfo, reference_image = reference_image)
     #im.photometry(ra=64.9723704, dec=-54.9481347, trim_reference_image= True, trim_target_image= True, subtract = True, visualize= True)
     im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = 'PS1', check_zp_by_color = True)

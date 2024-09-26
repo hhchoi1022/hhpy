@@ -69,7 +69,7 @@ class Catalog():
             format_ = ('ra', 'dec', 'B_mag', 'e_B_mag', 'B_flag', 'V_mag', 'e_Vmag', 'V_flag', 'R_mag', 'e_Rmag', 'R_flag', 'g_mag', 'e_gmag', 'g_flag', 'r_mag', 'e_rmag', 'r_flag', 'i_mag', 'e_imag', 'i_flag')
             GAIA_catalog.rename_columns(original, format_)
             if 'E_BP_RP_corr' in GAIA_catalog.colnames:
-                GAIA_catalog.rename_columns('E_BP_RP_corr', 'c_star')
+                GAIA_catalog.rename_columns(['E_BP_RP_corr'], ['c_star'])
             else:
                 GAIA_catalog['c_star'] = 0
             formatted_catalog = self.match_digit_tbl(GAIA_catalog)
@@ -1181,3 +1181,5 @@ class Catalog():
                 print(f"{catalog_name}/{self.fieldinfo['target']} saved: {path}")
             return data
 
+
+# %%

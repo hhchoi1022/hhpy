@@ -7,7 +7,11 @@ Created on Wed Dec 29 15:26:17 2021
 """
 
 
-def astrometry(imkey, scalelow=0.6, scalehigh=0.8, overwrite=False) :
+def astrometry(imkey, 
+               scalelow=0.6, 
+               scalehigh=0.8, 
+               verwrite=False,
+               ):
     """
     1. Description
     : Solving WCS coordinates using Astrometry.net software. For better performance in especially B band images, --use-sextractor mode is added. This mode needs SExtractor configuration files. So please posit configuration files for your working directory. cpulimit 300 is also added to prevent too long processing time for bad images.

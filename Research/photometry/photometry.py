@@ -123,6 +123,8 @@ class Photometry(PhotometryHelper):
 
     def exclude_outlier(self, 
                         sigma : float = 5,
+                        depth_cut : float = None,
+                        seeing_cut : float = None,
                         depth_key : str = 'DEPTH5_APER_1_HH',
                         seeing_key : str = 'SEEING_HH',
                         move : bool = False, 
@@ -131,10 +133,11 @@ class Photometry(PhotometryHelper):
         import matplotlib.pyplot as plt
         all_tbl = self.get_imginfo(filelist = self.target_imagelist, keywords = [depth_key, seeing_key])
         masked_index = (all_tbl[depth_key].mask) | (all_tbl[seeing_key].mask)
+        masked_tbl = all_tbl[masked_index]
         all_tbl = all_tbl[~masked_index]
-        cut_index = (sigma_clip(list(all_tbl[depth_key]),sigma = sigma, maxiters= 5).mask) | (sigma_clip(list(all_tbl[seeing_key]),sigma = sigma, maxiters= 5).mask)
-        cut_tbl = all_tbl[cut_index]
-        selected_tbl = all_tbl[~cut_index]
+        select_index = ~(sigma_clip(list(all_tbl[depth_key]),sigma = sigma, maxiters= 5).mask) & ~(sigma_clip(list(all_tbl[seeing_key]),sigma = sigma, maxiters= 5).mask)
+        cut_tbl = all_tbl[~select_index]
+        selected_tbl = all_tbl[select_index]
         self.failed_imagelist['outlier'] = list(cut_tbl['file'])
         # Save
         save_path = os.path.join(self.photpath, 'photometry_log',datetime.now().strftime('%Y%m%d'))
