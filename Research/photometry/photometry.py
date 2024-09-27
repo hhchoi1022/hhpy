@@ -224,11 +224,7 @@ class Photometry(PhotometryHelper):
                 failed = False
                 im = Image(image=file_, telescope_info=self.telinfo, reference_image=tbl_group['file'][len(tbl_group['file']) // 2])
                 if zp_key not in im.header.keys():
-                    try:
-                        im.calculate_zeropoint()
-                    except:
-                        self.failed_imagelist['calculate'].append(file_)
-                        failed = True
+                    self.failed_imagelist['calculate'].append(file_)
                 try:
                     im.align()
                 except:
@@ -366,12 +362,12 @@ if __name__ == '__main__':
 #%% RASA36, continued...
 if __name__ == '__main__':    
     A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'HIGH'), reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits')
-    sex_configfile = '/home/hhchoi1022/Desktop/Gitrepo/Research/photometry/sextractor/RASA36_HIGH.config'
+    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
 #%% RASA36, continued...
 if __name__ == '__main__':    
     filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/MERGE/com*60.fits'))
     A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'MERGE'), reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-MERGE.com.fits')
-    sex_configfile = '/home/hhchoi1022/Desktop/Gitrepo/Research/photometry/sextractor/RASA36_MERGE.config'
+    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_MERGE.config'
 #%% Calculate ZP
 if __name__ == '__main__':    
     #A.calculate(sex_configfile = sex_configfile)
@@ -399,4 +395,13 @@ if __name__ == '__main__':
                         trim_size = 2000,
                         subtract = False,
                         visualize = True)
+# %%
+if __name__ == '__main__':    
+    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/cutout*60.fits'))
+    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'HIGH'), reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits')
+    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
+# %%
+if __name__ == '__main__':    
+    A.faster_calculate(sex_configfile = sex_configfile, num_processes = 6, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
+
 # %%
