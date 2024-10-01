@@ -14,6 +14,34 @@ import inspect
 
 # %%
 
+import signal
+import functools
+
+class TimeoutError(Exception):
+    pass
+
+class ActionFailedError(Exception):
+    pass
+
+def timeout(seconds=10, error_message="Function call timed out"):
+    def decorator(func):
+        def _handle_timeout(signum, frame):
+            raise TimeoutError(error_message)
+
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            # Set the timeout signal
+            signal.signal(signal.SIGALRM, _handle_timeout)
+            signal.alarm(seconds)
+            try:
+                result = func(*args, **kwargs)
+            finally:
+                # Disable the alarm after the function completes
+                signal.alarm(0)
+            return result
+        return wrapper
+    return decorator
+
 class PhotometryHelper():
 
     @property
@@ -612,7 +640,7 @@ class PhotometryHelper():
         cutouted_hdu.writeto(outputname, overwrite=True)
         return outputname
 
-    def align_img(self, target_img, reference_img, prefix='align_'):
+    def align_img(self, target_img, reference_img, prefix='align_', detection_sigma = 5):
         """
 
         parameters
@@ -651,7 +679,7 @@ class PhotometryHelper():
         tgt_data = tgt_data.byteswap().newbyteorder()
         ref_data = ref_data.byteswap().newbyteorder()
         try:
-            aligned_data, footprint = aa.register(tgt_data, ref_data, fill_value=0, detection_sigma=3, max_control_points=30)
+            aligned_data, footprint = aa.register(tgt_data, ref_data, fill_value=0, detection_sigma= detection_sigma, max_control_points=30)
             aligned_tgt = CCDData(aligned_data, header=tgt_hdr, unit='adu')
             outputname = f'{os.path.dirname(target_img)}/{prefix}{os.path.basename(target_img)}'
             fits.writeto(outputname, aligned_tgt.data, aligned_tgt.header, overwrite=True)
@@ -844,6 +872,81 @@ class PhotometryHelper():
         return outputname
 
     # Program running
+    @timeout(seconds = 15)
+    def run_astrometry(self,
+                       image, 
+                       sex_configfile : str,
+                       ra : float = None,
+                       dec : float = None,
+                       radius : float = None,
+                       scalelow : float = 0.6, 
+                       scalehigh : float = 0.8, 
+                       overwrite : bool = False,
+                       remove : bool = True
+                       ):
+        """
+        1. Description
+        : Solving WCS coordinates using Astrometry.net software. For better performance in especially B band images, --use-sextractor mode is added. This mode needs SExtractor configuration files. So please posit configuration files for your working directory. cpulimit 300 is also added to prevent too long processing time for bad images.
+        : scalelow and scalehigh for the range of pixscale estimation
+
+        2. History
+        2018.03    Created by G.Lim.
+        2018.12.18 Edited by G.Lim. SExtractor mode is added.
+        2018.12.21 Edited by G.Lim. Define SAO_astrometry function.
+        2020.03.01 --backend-config is added to have the system find INDEX files.
+        2021.12.29 Edited by HH.Choi.  
+        """
+        import os,sys
+        import glob
+        import subprocess
+        import numpy as np
+        
+        """
+        Running the Astrometry process with options to pass RA/Dec and a timeout.
+        """
+        try:
+            # Set up directories and copy configuration files
+            current_dir = os.getcwd()
+            sex_dir = self.sexpath
+            image_dir = os.path.dirname(image)
+            os.chdir(sex_dir)
+            os.system(f'cp {sex_configfile} {sex_dir}/*.param {sex_dir}/*.conv {sex_dir}/*.nnw {image_dir}')
+            
+            os.chdir(image_dir)
+            print(f'Solving WCS using Astrometry with RA/Dec of {ra}/{dec} and radius of {radius} arcmin')
+
+            # Building the command string
+            com = f'solve-field {image} --cpulimit 60 --overwrite --use-source-extractor --source-extractor-config {sex_configfile} --x-column X_IMAGE --y-column Y_IMAGE --sort-column MAG_AUTO --sort-ascending --scale-unit arcsecperpix --scale-low {str(scalelow)} --scale-high {str(scalehigh)} --no-remove-lines --uniformize 0 --no-plots --new-fits {os.path.join(image_dir,"a"+os.path.basename(image))} --temp-dir .'
+
+            if ra is not None and dec is not None:
+                com += f' --ra {ra} --dec {dec}'
+            if radius is not None:
+                com += f' --radius {radius}'
+            
+            print(f'Command to run: {com}')
+            
+            # Use subprocess.run with timeout
+            result = subprocess.run(com, shell=True, timeout=900, check=True, text=True, capture_output=True)
+            print(result.stdout)
+            print(result.stderr)
+
+            orinum = subprocess.check_output(f'ls C*.fits | wc -l', shell=True)
+            resnum = subprocess.check_output(f'ls a*.fits | wc -l', shell=True)
+            print(f"From {str(orinum[:-1])} files, {str(resnum[:-1])} files are solved.")
+            print("All done.")
+
+            # Clean up
+            if remove:
+                os.system(f'rm tmp* astrometry* *.conv default.nnw *.wcs *.rdls *.corr *.xyls *.solved *.axy *.match check.fits *.param {os.path.basename(sex_configfile)}')
+            print('Astrometry process is complete.')
+
+        except subprocess.TimeoutExpired:
+            print(f"The astrometry process exceeded the timeout limit.")
+            raise TimeoutError
+        except subprocess.CalledProcessError as e:
+            print(f"An error occurred while running the astrometry process: {e}")
+            raise ActionFailedError
+
 
     def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True):
         '''

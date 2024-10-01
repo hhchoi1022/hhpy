@@ -1,0 +1,24 @@
+{
+    "Execution Time": "2024-09-28 10:49:01",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051244-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051352-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051501-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051609-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051717-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051826-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-051934-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052042-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052151-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052259-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052407-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052516-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052625-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052733-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230904-052949-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230905-091417-r-60.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

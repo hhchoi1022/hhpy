@@ -1,0 +1,18 @@
+#   1 NUMBER                 Running object number                                     
+#   2 FLUX_APER              Flux vector within fixed circular aperture(s)              [count]
+#   7 FLUXERR_APER           RMS error vector for aperture flux(es)                     [count]
+#  12 MAG_APER               Fixed aperture magnitude vector                            [mag]
+#  17 MAGERR_APER            RMS error vector for fixed aperture mag.                   [mag]
+#  22 FWHM_IMAGE             FWHM assuming a gaussian core                              [pixel]
+#  23 FWHM_WORLD             FWHM assuming a gaussian core                              [deg]
+#  24 X_IMAGE                Object position along x                                    [pixel]
+#  25 Y_IMAGE                Object position along y                                    [pixel]
+#  26 X_WORLD                Barycenter position along world x axis                     [deg]
+#  27 Y_WORLD                Barycenter position along world y axis                     [deg]
+#  28 ALPHA_J2000            Right ascension of barycenter (J2000)                      [deg]
+#  29 DELTA_J2000            Declination of barycenter (J2000)                          [deg]
+#  30 FLAGS                  Extraction flags                                          
+#  31 CLASS_STAR             S/G classifier output                                     
+#  32 THRESHOLD              Detection threshold above background                       [count]
+         1      1419429      2003058      2456634            0            0     2121.303     3347.659     4581.348            0            0 -15.3803 -15.7542 -15.9759   0.0000   0.0000   0.0016   0.0018   0.0020   0.0000   0.0000    16.80   0.01101259   2049.7009   2042.3685   4.1578976449e+01  -3.0274508432e+01  41.5789764 -30.2745084   0  0.032      258.658
+         2 2.230026e+07 2.296144e+07 2.313888e+07            0            0     4291.943     5018.113     5897.271            0            0 -18.3708 -18.4025 -18.4109   0.0000   0.0000   0.0002   0.0002   0.0003   0.0000   0.0000    27.70   0.01816109   1161.7522   3861.0576   4.2985564855e+01  -3.0813020887e+01  42.9855649 -30.8130209   6  1.000      258.658

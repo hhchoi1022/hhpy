@@ -39,6 +39,51 @@ class Image(PhotometryHelper):
         self.depth_3 = dict()
         self.depth_5 = dict()
 
+    def astrometry(self,
+                   sex_configfile : str = None,
+                   ra : float = None,
+                   dec : float = None,
+                   radius : float = None,
+                   scalelow : float = 0.6, 
+                   scalehigh : float = 0.8, 
+                   overwrite : float =False, 
+                   remove : bool = True
+                   ):
+        if sex_configfile == None:
+            sex_configfile = f"{os.path.join(self.sexpath,self.telinfo['obs'])}.config"
+        if ra == None or dec == None:
+            try:
+                ra = float(self.header['RA'])
+                dec = float(self.header['DEC'])
+                radius = 2
+            except:                
+                try:
+                    coord = SkyCoord(ra=self.header['RA'], dec=self.header['DEC'], unit=(u.hourangle, u.deg))
+                    ra = coord.ra.value
+                    dec =coord.dec.value
+                    radius = 2
+                except:
+                    try:
+                        print('Searching RA, Dec from the header object name')
+                        self.catalog = Catalog(target_name=self.header['OBJECT'])
+                        ra = self.catalog.fieldinfo['ra']
+                        dec = self.catalog.fieldinfo['dec']
+                        radius = 2
+                    except:
+                        print('RA, Dec is not available in the header. Astrometry without central coordinate')
+                        pass
+        
+        self.run_astrometry(image = self.target_image, 
+                            sex_configfile = sex_configfile,
+                            ra = ra,
+                            dec = dec,
+                            radius = radius,
+                            scalelow = scalelow, 
+                            scalehigh = scalehigh, 
+                            overwrite = overwrite, 
+                            remove = remove
+                            )
+
     def calculate_zeropoint(self,
                             sex_configfile: str = None,  # Absolute Path
                             detect_threshold : float  = 3.0,
@@ -245,13 +290,15 @@ class Image(PhotometryHelper):
         
         self.calculated = True
 
-    def align(self):
+    def align(self, cutout : bool = True, cutout_size = 0.95, detection_sigma = 5):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image alignment')
-        self.target_image = self.align_img(target_img=self.target_image, reference_img=self.reference_image)
+        if cutout:
+            self.target_image = self.cutout_img(target_img = self.target_image, size = cutout_size, prefix = 'cutout_')
+        self.target_image = self.align_img(target_img=self.target_image, reference_img=self.reference_image, detection_sigma= detection_sigma)
         
-    def trim(self, size = 1500):
-        self.target_image = self.cutout_img(target_img = self.target_image, size = size)
+    def trim(self, size = 2000):
+        self.target_image = self.cutout_img(target_img = self.target_image, size = size, prefix = 'cutout_')
         
     def subtract(self,
                  align : bool = True,
@@ -262,7 +309,7 @@ class Image(PhotometryHelper):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image subtraction')
         if align:
-            self.align()
+            self.align(cutout = True)
         if trim_target_image:
             self.trim(size = trim_size)
         if trim_reference_image:
@@ -436,7 +483,9 @@ if __name__ == '__main__':
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-181452-r-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits'
     filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/Calib*120.fits'))
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/Calib*60.fits'))
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/sub_*60.fits'))
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/Calib*20211230*60.fits'))
+
     #reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
     reference_image = None
     phot_helper = PhotometryHelper()
@@ -446,9 +495,24 @@ if __name__ == '__main__':
     telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
     sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
 #%%
-    image = filelist[2]
+    image = filelist[0]
+#%%    
     im = Image(image, telescope_info=telinfo, reference_image = reference_image)
+    #im.trim(size = 0.9)
     #im.photometry(ra=64.9723704, dec=-54.9481347, trim_reference_image= True, trim_target_image= True, subtract = True, visualize= True)
-    im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None, check_zp_by_color = True)
-
+    #im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None, check_zp_by_color = True)
+    im.astrometry(sex_configfile = sex_configfile, overwrite = False)
+#%%
+    im.photometry(ra = 41.575542, 
+                dec = -30.239489, 
+                #filelist = filelist,
+                sex_configfile = sex_configfile,
+                detect_threshold = 1,
+                aperture_type = 'relative', # relative or absolute
+                aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
+                trim_target_image = True,
+                trim_reference_image = True,
+                trim_size = 2000,
+                subtract = True,
+                visualize = True)
  # %%

@@ -1,0 +1,26 @@
+{
+    "Execution Time": "2024-09-28 10:49:01",
+    "calculate": [
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-072352-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-072458-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-072605-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-072711-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-072818-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-072924-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073031-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073138-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073245-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073352-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073458-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073605-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073711-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073818-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-073925-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-074031-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-074138-r-60.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/Calib-RASA36-NGC1097-20230802-074245-r-60.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}
