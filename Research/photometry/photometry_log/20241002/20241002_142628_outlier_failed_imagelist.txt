@@ -1,0 +1,9 @@
+{
+    "Execution Time": "2024-10-02 14:26:22",
+    "astrometry": [],
+    "calculate": [],
+    "align": [],
+    "combine": [],
+    "photometry": [],
+    "outlier": []
+}

@@ -1,18 +1,20 @@
 #   1 NUMBER                 Running object number                                     
 #   2 FLUX_APER              Flux vector within fixed circular aperture(s)              [count]
 #   7 FLUXERR_APER           RMS error vector for aperture flux(es)                     [count]
-#  12 MAG_APER               Fixed aperture magnitude vector                            [mag]
-#  17 MAGERR_APER            RMS error vector for fixed aperture mag.                   [mag]
-#  22 FWHM_IMAGE             FWHM assuming a gaussian core                              [pixel]
-#  23 FWHM_WORLD             FWHM assuming a gaussian core                              [deg]
-#  24 X_IMAGE                Object position along x                                    [pixel]
-#  25 Y_IMAGE                Object position along y                                    [pixel]
-#  26 X_WORLD                Barycenter position along world x axis                     [deg]
-#  27 Y_WORLD                Barycenter position along world y axis                     [deg]
-#  28 ALPHA_J2000            Right ascension of barycenter (J2000)                      [deg]
-#  29 DELTA_J2000            Declination of barycenter (J2000)                          [deg]
-#  30 FLAGS                  Extraction flags                                          
-#  31 CLASS_STAR             S/G classifier output                                     
-#  32 THRESHOLD              Detection threshold above background                       [count]
-         1      1417894      2006984      2464640            0            0     2129.781     3362.983     4602.863            0            0 -15.3791 -15.7564 -15.9794   0.0000   0.0000   0.0016   0.0018   0.0020   0.0000   0.0000    16.69   0.01094156   2050.0513   2042.5734   4.1579001135e+01  -3.0274361461e+01  41.5790011 -30.2743615   0  0.031     260.4505
-         2  2.24055e+07 2.309145e+07 2.326813e+07            0            0     4304.137     5036.313     5920.984            0            0 -18.3759 -18.4086 -18.4169   0.0000   0.0000   0.0002   0.0002   0.0003   0.0000   0.0000    28.58   0.01873668   1161.9365   3861.2776   4.2985593929e+01  -3.0812955754e+01  42.9855939 -30.8129558   6  1.000     260.4505
+#  12 MAG_AUTO               Kron-like elliptical aperture magnitude                    [mag]
+#  13 MAGERR_AUTO            RMS error for AUTO magnitude                               [mag]
+#  14 MAG_APER               Fixed aperture magnitude vector                            [mag]
+#  19 MAGERR_APER            RMS error vector for fixed aperture mag.                   [mag]
+#  24 FWHM_IMAGE             FWHM assuming a gaussian core                              [pixel]
+#  25 FWHM_WORLD             FWHM assuming a gaussian core                              [deg]
+#  26 X_IMAGE                Object position along x                                    [pixel]
+#  27 Y_IMAGE                Object position along y                                    [pixel]
+#  28 X_WORLD                Barycenter position along world x axis                     [deg]
+#  29 Y_WORLD                Barycenter position along world y axis                     [deg]
+#  30 ALPHA_J2000            Right ascension of barycenter (J2000)                      [deg]
+#  31 DELTA_J2000            Declination of barycenter (J2000)                          [deg]
+#  32 FLAGS                  Extraction flags                                          
+#  33 CLASS_STAR             S/G classifier output                                     
+#  34 THRESHOLD              Detection threshold above background                       [count]
+         1      1414944      2003620      2460540            0            0     2124.783     3354.705      4590.99            0            0 -16.3733   0.0027 -15.3768 -15.7545 -15.9776   0.0000   0.0000   0.0016   0.0018   0.0020   0.0000   0.0000    16.69   0.01094156   2050.0513   2042.5734   4.1579001135e+01  -3.0274361461e+01  41.5790011 -30.2743615   0  0.031     260.4505
+         2 2.239631e+07 2.308953e+07  2.32667e+07            0            0     4301.183     5030.676     5911.604            0            0 -18.4068   0.0002 -18.3754 -18.4085 -18.4168   0.0000   0.0000   0.0002   0.0002   0.0003   0.0000   0.0000    28.58   0.01873668   1161.9365   3861.2776   4.2985593929e+01  -3.0812955754e+01  42.9855939 -30.8129558   6  1.000     260.4505

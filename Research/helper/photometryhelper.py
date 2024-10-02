@@ -587,6 +587,45 @@ class PhotometryHelper():
         return tbl
 
  # Image processing
+ 
+    def calculate_rotang(self, target_img, update_header : bool = False):
+        from astropy.io import fits
+        from astropy.wcs import WCS
+        import numpy as np
+        #fits_file = filelist[]
+        # Load the FITS file with the astrometry solution
+        #fits_file = im.target_image  # Replace with your actual solved FITS file
+        hdul = fits.open(target_img)
+        wcs = WCS(hdul[0].header)
+
+        # Define a pixel at the center of the image
+        ny, nx = hdul[0].data.shape
+        center_pixel = [nx // 2, ny // 2]
+
+        # Get the pixel coordinates offset along the y-axis (to simulate up direction)
+        north_pixel = [center_pixel[0], center_pixel[1] + 1]
+
+        # Convert these pixel positions to celestial coordinates (RA, Dec)
+        center_coord = wcs.pixel_to_world(*center_pixel)
+        north_coord = wcs.pixel_to_world(*north_pixel)
+
+        # Calculate the position angle (PA) between the north pixel and the center pixel
+        delta_ra = np.deg2rad(north_coord.ra.deg - center_coord.ra.deg) * np.cos(np.deg2rad(center_coord.dec.deg))
+        delta_dec = np.deg2rad(north_coord.dec.deg - center_coord.dec.deg)
+
+        pa_radians = np.arctan2(delta_ra, delta_dec)
+        pa_degrees = np.rad2deg(pa_radians)
+
+        # Adjust the angle to get the position angle from north
+        if pa_degrees < 0:
+            pa_degrees += 360
+        
+        if update_header:
+            hdul[0].header['ROTANG'] = pa_degrees
+            hdul.writeto(target_img, overwrite=True)
+
+        print(f"Camera rotation angle (Position Angle) toward North: {pa_degrees:.2f} degrees")
+        
 
     def cutout_img(self, target_img, size=0.9, prefix='cut_', xcenter=None, ycenter=None):
         '''
@@ -916,8 +955,13 @@ class PhotometryHelper():
             print(f'Solving WCS using Astrometry with RA/Dec of {ra}/{dec} and radius of {radius} arcmin')
 
             # Building the command string
-            com = f'solve-field {image} --cpulimit 60 --overwrite --use-source-extractor --source-extractor-config {sex_configfile} --x-column X_IMAGE --y-column Y_IMAGE --sort-column MAG_AUTO --sort-ascending --scale-unit arcsecperpix --scale-low {str(scalelow)} --scale-high {str(scalehigh)} --no-remove-lines --uniformize 0 --no-plots --new-fits {os.path.join(image_dir,"a"+os.path.basename(image))} --temp-dir .'
-
+            if overwrite:
+                new_filename = os.path.join(image_dir,os.path.basename(image))
+                com = f'solve-field {image} --cpulimit 60 --overwrite --use-source-extractor --source-extractor-config {sex_configfile} --x-column X_IMAGE --y-column Y_IMAGE --sort-column MAG_AUTO --sort-ascending --scale-unit arcsecperpix --scale-low {str(scalelow)} --scale-high {str(scalehigh)} --no-remove-lines --uniformize 0 --no-plots --new-fits {new_filename} --temp-dir .'
+            else:
+                new_filename = os.path.join(image_dir,"a"+os.path.basename(image))
+                com = f'solve-field {image} --cpulimit 60 --use-source-extractor --source-extractor-config {sex_configfile} --x-column X_IMAGE --y-column Y_IMAGE --sort-column MAG_AUTO --sort-ascending --scale-unit arcsecperpix --scale-low {str(scalelow)} --scale-high {str(scalehigh)} --no-remove-lines --uniformize 0 --no-plots --new-fits {new_filename} --temp-dir .'
+            
             if ra is not None and dec is not None:
                 com += f' --ra {ra} --dec {dec}'
             if radius is not None:
@@ -939,13 +983,14 @@ class PhotometryHelper():
             if remove:
                 os.system(f'rm tmp* astrometry* *.conv default.nnw *.wcs *.rdls *.corr *.xyls *.solved *.axy *.match check.fits *.param {os.path.basename(sex_configfile)}')
             print('Astrometry process is complete.')
+            return new_filename
 
         except subprocess.TimeoutExpired:
             print(f"The astrometry process exceeded the timeout limit.")
-            raise TimeoutError
+            return None
         except subprocess.CalledProcessError as e:
             print(f"An error occurred while running the astrometry process: {e}")
-            raise ActionFailedError
+            return None
 
 
     def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True):

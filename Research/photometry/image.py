@@ -73,16 +73,16 @@ class Image(PhotometryHelper):
                         print('RA, Dec is not available in the header. Astrometry without central coordinate')
                         pass
         
-        self.run_astrometry(image = self.target_image, 
-                            sex_configfile = sex_configfile,
-                            ra = ra,
-                            dec = dec,
-                            radius = radius,
-                            scalelow = scalelow, 
-                            scalehigh = scalehigh, 
-                            overwrite = overwrite, 
-                            remove = remove
-                            )
+        self.target_image = self.run_astrometry(image = self.target_image, 
+                                                sex_configfile = sex_configfile,
+                                                ra = ra,
+                                                dec = dec,
+                                                radius = radius,
+                                                scalelow = scalelow, 
+                                                scalehigh = scalehigh, 
+                                                overwrite = overwrite, 
+                                                remove = remove
+                                                )
 
     def calculate_zeropoint(self,
                             sex_configfile: str = None,  # Absolute Path
@@ -290,11 +290,11 @@ class Image(PhotometryHelper):
         
         self.calculated = True
 
-    def align(self, cutout : bool = True, cutout_size = 0.95, detection_sigma = 5):
+    def align(self, cut_outer : bool = False, outer_size = 0.95, detection_sigma = 5):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image alignment')
-        if cutout:
-            self.target_image = self.cutout_img(target_img = self.target_image, size = cutout_size, prefix = 'cutout_')
+        if cut_outer:
+            self.target_image = self.cutout_img(target_img = self.target_image, size = outer_size, prefix = 'cutouter_')
         self.target_image = self.align_img(target_img=self.target_image, reference_img=self.reference_image, detection_sigma= detection_sigma)
         
     def trim(self, size = 2000):
@@ -309,7 +309,7 @@ class Image(PhotometryHelper):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image subtraction')
         if align:
-            self.align(cutout = True)
+            self.align(cut_outer = False)
         if trim_target_image:
             self.trim(size = trim_size)
         if trim_reference_image:
@@ -484,7 +484,9 @@ if __name__ == '__main__':
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits'
     filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/Calib*120.fits'))
     filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/sub_*60.fits'))
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/Calib*20211230*60.fits'))
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/RASA36/r/Calib*202308*60.fits'))
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image_tmp/Calib*.fits'))
+
 
     #reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
     reference_image = None
@@ -494,6 +496,13 @@ if __name__ == '__main__':
     #telinfo = phot_helper.get_telinfo(telescope='LSGT', ccd='SNUCAMII')
     telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
     sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
+ # %%
+if __name__ == '__main__':
+    for image in filelist[0:3]:
+        print(image)
+        phot_helper.calculate_rotang(image, update_header = True)
+ 
+ #%%
 #%%
     image = filelist[0]
 #%%    
@@ -515,4 +524,3 @@ if __name__ == '__main__':
                 trim_size = 2000,
                 subtract = True,
                 visualize = True)
- # %%
