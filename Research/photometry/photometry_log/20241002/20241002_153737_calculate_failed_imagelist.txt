@@ -1,0 +1,13 @@
+{
+    "Execution Time": "2024-10-02 15:32:54",
+    "astrometry": [],
+    "calculate": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20240116-013624-r-120.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20240117-014539-r-120.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20240122-013309-r-120.fits",
+        "/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20240208-012613-r-120.fits"
+    ],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

@@ -1,0 +1,11 @@
+{
+    "Execution Time": "2024-10-03 18:48:12",
+    "astrometry": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/acom_align_Calib-RASA36-NGC1097-20230811-072108-r-60.fits"
+    ],
+    "calculate": [],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

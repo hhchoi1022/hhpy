@@ -1,0 +1,17 @@
+{
+    "Execution Time": "2024-10-04 19:06:44",
+    "astrometry": [],
+    "calculate": [],
+    "cutout": [],
+    "align": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231206-043258-r-60.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231208-042452-r-60.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231209-042111-r-60.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231213-040518-r-60.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231217-034946-r-60.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231218-033816-r-60.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com_align_Calib-RASA36-NGC1097-20231226-031906-r-60.fits"
+    ],
+    "combine": [],
+    "photometry": []
+}

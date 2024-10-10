@@ -5,12 +5,15 @@ from astropy.io import ascii
 from astropy.coordinates import SkyCoord
 from astropy.time import Time
 from astropy.table import Table
+from astropy.wcs import WCS
 
 from tqdm import tqdm
 import os
 import numpy as np
 from astropy.table import unique
 import inspect
+import subprocess
+import re
 
 # %%
 
@@ -56,6 +59,14 @@ class PhotometryHelper():
 
         return path_dir
 
+    @property
+    def scamppath(self):
+        return os.path.join(self.photpath, 'scamp')
+    
+    @property  
+    def swarppath(self):
+        return os.path.join(self.photpath, 'swarp')
+    
     @property
     def sexpath(self):
         return os.path.join(self.photpath, 'sextractor')
@@ -103,7 +114,7 @@ class PhotometryHelper():
         result_tbl = join(match_tbl, result_tbl, keys = 'file', join_type = 'inner')
         return result_tbl
 
-    def get_telinfo(self, telescope: str = None, ccd: str = None, readoutmode: str = None, key_observatory='obs', key_ccd='ccd', obsinfo_file=None):
+    def get_telinfo(self, telescope: str = None, ccd: str = None, readoutmode: str = None, key_observatory='obs', key_ccd='ccd', key_mode = 'mode', obsinfo_file=None):
         '''
         parameters
         ----------
@@ -143,27 +154,33 @@ class PhotometryHelper():
             raise AttributeError(
                 f'{telescope} information not exist.\n available :{set(all_obsinfo[key_observatory])}')
 
-        # RASA36
-        if telescope == 'RASA36':
-            if readoutmode == None:
-                readoutmode = input(
-                    'RASA36 has multiple readout modes for observation. Please select one. (High/Merge)')
-            if readoutmode in ['merge', 'Merge', 'MERGE']:
-                obs_info = obs_info[obs_info['gain'] > 10]
-            if readoutmode in ['high', 'High', 'HIGH']:
-                obs_info = obs_info[obs_info['gain'] < 10]
+        if ccd != None:
+            obs_info = obs_info[obs_info[key_ccd] == ccd]
             if output_valid_func(obs_info):
                 return obs_info[0]
-        # Other observatories (Single CCD)
-        if output_valid_func(obs_info):
-            return obs_info[0]
+        
+        if readoutmode != None:
+            if readoutmode.upper() == 'MERGE':
+                obs_info = obs_info[obs_info['mode'] == 'MERGE']
+            if readoutmode.upper() == 'HIGH':
+                obs_info = obs_info[obs_info['mode'] == 'HIGH']
+            if readoutmode.upper() == 'LOW':
+                obs_info = obs_info[obs_info['mode'] == 'HIGH']
+            if output_valid_func(obs_info):
+                return obs_info[0]
+        
         # Other observatories (Multiple CCDs)
         else:
-            if (ccd == None) & (len(obs_info) > 1):
+            if len(set(obs_info[key_ccd])) > 1:
                 ccd = input(
                     f'Multiple CCDs of the observatory is found. Choose the CCD : {set(obs_info[key_ccd])}')
-            obs_info = all_obsinfo[(all_obsinfo[key_observatory] == telescope) & (
-                all_obsinfo[key_ccd] == ccd)]
+                obs_info = all_obsinfo[(all_obsinfo[key_observatory] == telescope) & (all_obsinfo[key_ccd] == ccd)]
+                
+            if len(set(obs_info[key_mode])) > 1:
+                mode = input(
+                    f'Multiple modes of the observatory is found. Choose the readout mode : {set(obs_info[key_mode])}')
+                obs_info = all_obsinfo[(all_obsinfo[key_observatory] == telescope) & (all_obsinfo[key_mode] == mode)]
+            
             if output_valid_func(obs_info):
                 return obs_info[0]
 
@@ -724,7 +741,7 @@ class PhotometryHelper():
             fits.writeto(outputname, aligned_tgt.data, aligned_tgt.header, overwrite=True)
             return outputname
         except:
-            raise ValueError('List of matching triangles exhausted before an acceptable transformation was found')
+            raise ActionFailedError('Failed to align the image. Check the image quality and the detection_sigma value.')
 
     def combine_img(self,
                     filelist,
@@ -732,7 +749,7 @@ class PhotometryHelper():
                     combine='median',
                     scale='multiply',
                     prefix='com_',
-                    zp_key='ZP_0',
+                    zp_key='ZP5_1',
 
                     # Clipping
                     clip_sigma_low=2,
@@ -814,7 +831,7 @@ class PhotometryHelper():
                 zp = inim.header[zp_key]
                 zp_diff = zp - zp_median
                 ccdlist[i].data = ccdlist[i].data * 100 ** (-zp_diff/5)
-
+            
         elif (scale == 'zero'):
             averages = [np.mean(ccddata) for ccddata in ccdlist]
             delvalues = averages - averages[0]
@@ -944,6 +961,7 @@ class PhotometryHelper():
         Running the Astrometry process with options to pass RA/Dec and a timeout.
         """
         try:
+            print('Start Astrometry process...=====================')
             # Set up directories and copy configuration files
             current_dir = os.getcwd()
             sex_dir = self.sexpath
@@ -977,12 +995,11 @@ class PhotometryHelper():
             orinum = subprocess.check_output(f'ls C*.fits | wc -l', shell=True)
             resnum = subprocess.check_output(f'ls a*.fits | wc -l', shell=True)
             print(f"From {str(orinum[:-1])} files, {str(resnum[:-1])} files are solved.")
-            print("All done.")
 
             # Clean up
             if remove:
                 os.system(f'rm tmp* astrometry* *.conv default.nnw *.wcs *.rdls *.corr *.xyls *.solved *.axy *.match check.fits *.param {os.path.basename(sex_configfile)}')
-            print('Astrometry process is complete.')
+            print('Astrometry process finished=====================')
             return new_filename
 
         except subprocess.TimeoutExpired:
@@ -992,28 +1009,36 @@ class PhotometryHelper():
             print(f"An error occurred while running the astrometry process: {e}")
             return None
 
-
-    def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True):
-        '''
-        parameters
+    def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True, print_progress : bool = True):
+        """
+        Parameters
         ----------
         1. image : str
-                        abspath of the target image
-        2. conf_param : dict
-                        configuration parameters in dict format. can be load by load_sexconfig()
-        3. sexpath : str
-                        source-extractor directory
-        returns 
-        -------
-        1. result : astropy.table
-                        source extractor result
+                Absolute path of the target image.
+        2. sex_params : dict
+                Configuration parameters in dict format. Can be loaded by load_sexconfig().
+        3. sex_configfile : str
+                Path to the SExtractor configuration file.
+        4. return_result : bool
+                If True, returns the result as an astropy table.
 
-        notes 
+        Returns
         -------
-        -----
-        '''
+        1. result : astropy.table.Table or str
+                    Source extractor result as a table or the catalog file path.
+
+        Notes
+        -------
+        This method runs SExtractor on the specified image using the provided configuration and parameters.
+        """
+        if print_progress:
+            print('Start SExtractor process...=====================')
+
+        # Switch to the SExtractor directory
         current_path = os.getcwd()
         os.chdir(self.sexpath)
+        
+        # Load and apply SExtractor parameters
         all_params = self.load_sexconfig(sex_configfile)
         sexparams_str = ''
 
@@ -1021,13 +1046,124 @@ class PhotometryHelper():
             for key, value in sex_params.items():
                 sexparams_str += f'-{key} {value} '
                 all_params[key] = value
-        os.system(f'source-extractor {image} -c {sex_configfile} {sexparams_str}')
-        if return_result:
-            sexresult = ascii.read(all_params['CATALOG_NAME'])
+
+        # Command to run SExtractor
+        command = f"source-extractor {image} -c {sex_configfile} {sexparams_str}"
+
+        try:
+            # Run the SExtractor command using subprocess.run
+            subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if print_progress:
+                print("SExtractor process finished=====================")
+
+            if return_result:
+                # Read the catalog produced by SExtractor
+                sexresult = ascii.read(all_params['CATALOG_NAME'])
+                os.chdir(current_path)
+                return sexresult
+            else:
+                return all_params['CATALOG_NAME']
+        except:
+            if print_progress:
+                print(f"Error during SExtractor execution")
             os.chdir(current_path)
-            return sexresult
-        else:
-            return all_params['CATALOG_NAME']
+            return None
+
+        
+    def run_scamp(self, filelist : str or list, sex_configfile : str, scamp_configfile : str = None, update_files : bool = True, print_progress : bool = True):
+        
+        if isinstance(filelist, str):
+            filelist = [filelist]
+        
+        if print_progress:
+            print(f'Start SCAMP process on {len(filelist)} images...=====================')
+        sex_output_images = dict()
+        for image in tqdm(filelist, desc='Running Source extractor...'):
+            sex_params = dict()
+            sex_params['CATALOG_NAME'] = f"{self.scamppath}/result/{os.path.basename(image).split('.')[0]}.sexcat"
+            sex_params['PARAMETERS_NAME'] = f'{self.sexpath}/scamp.param'
+            output_file = self.run_sextractor(image = image, sex_configfile = sex_configfile, sex_params = sex_params, return_result = False, print_progress = False)
+            sex_output_images[image] = output_file
+        
+        if scamp_configfile is None:
+            scamp_configfile = os.path.join(self.scamppath, 'default.scamp')
+        
+        # Sort out if the sextractor failed
+        sex_output_images = {key: value for key, value in sex_output_images.items() if value is not None}
+        scamp_output_images = {key: value.replace('.sexcat', '.head') for key, value in sex_output_images.items()}
+
+        all_images_str = ' '.join(sex_output_images.values())
+        command = f'scamp {all_images_str} -c {scamp_configfile}'
+        
+        try:
+            current_path = os.getcwd()
+            os.chdir(os.path.join(self.scamppath,'result'))
+            # Run the SExtractor command using subprocess.run
+            subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            if print_progress:
+                print("SCAMP process finished=====================")
+
+            if update_files:
+                def sanitize_header(header: fits.Header) -> fits.Header:
+                    """
+                    Sanitize a FITS header by removing or cleaning non-ASCII and non-printable characters.
+                    
+                    Parameters:
+                    header (fits.Header): The FITS header to be sanitized.
+                    
+                    Returns:
+                    fits.Header: The sanitized header.
+                    """
+                    sanitized_header = fits.Header()
+                    
+                    # Loop through each header card and sanitize it
+                    for card in header.cards:
+                        key, value, comment = card
+                        if isinstance(value, str):
+                            # Remove non-ASCII characters from the value
+                            value = re.sub(r'[^\x20-\x7E]+', '', value)
+                        
+                        # Add sanitized card to the new header
+                        sanitized_header[key] = (value, comment)
+                    
+                    return sanitized_header
+
+                def update_fits_with_head(image_file: str, head_file: str):
+                    """
+                    Update the WCS and other relevant header information in a FITS file using a SCAMP-generated .head file.
+                    
+                    Parameters:
+                    image_file (str): Path to the FITS image file to be updated.
+                    head_file (str): Path to the SCAMP-generated .head file with updated WCS and other parameters.
+                    """
+                    # Read the header from the .head file
+                    with open(head_file, 'r') as head:
+                        head_content = head.read()
+
+                    # Convert the head file content to an astropy header object
+                    head_header = fits.Header.fromstring(head_content, sep='\n')
+                    
+                    # Sanitize the header to remove non-ASCII characters
+                    head_header = sanitize_header(head_header)
+
+                    # Open the FITS image and update its header with WCS information from the .head file
+                    with fits.open(image_file, mode='update') as hdu:
+                        # Update the header of the primary HDU (index 0) with the sanitized WCS-related keys
+                        hdu[0].header.update(head_header)
+                        hdu.flush()  # Write changes to disk
+
+                    print(f"Updated WCS and relevant header information for {image_file} using {head_file}")
+
+                
+                for image, header in scamp_output_images.items():
+                    update_fits_with_head(image, header)
+            else:
+                return scamp_output_images.values()
+        except:
+            print(f"Error during SCAMP execution")
+            return
+        finally:
+            os.chdir(current_path)
 
     def run_ds9(self, filelist, shell: str = '/bin/bash'):
         import subprocess
@@ -1083,26 +1219,40 @@ class PhotometryHelper():
         output_file_path = os.path.join(self.photpath, output_file_name)
         write_ds9(regions, output_file_path)
         return output_file_path
+    
+    def visualize_image(self, filename : str):
+        from astropy.visualization import ImageNormalize, ZScaleInterval
+        import matplotlib.pyplot as plt
+        data = fits.getdata(filename)
+        zscale_interval = ZScaleInterval()
+        norm = ImageNormalize(data, interval=zscale_interval)
 
+        # Plot the normalized image
+        plt.imshow(data, cmap='gray', norm=norm, origin='lower')
+        plt.colorbar()
+        plt.title(f'{os.path.basename(filename)}')
+        plt.show()
         
 
 # %%
 if __name__ == '__main__':
-    A = PhotometryHelper()
-    file_key = '/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/align*120.fits'
-
     import glob
-    filelist = glob.glob(file_key)
-    fileinfo = A.get_imginfo(filelist)
-    B = A.group_table(fileinfo, 'jd', 0.1)
-    C = A.binning_table(tbl=B, key='jd', tolerance=0.1)
-    C = A.transpose_table(tbl=B, id_col_name='ID')
-
-    from catalog import Catalog
-    C = Catalog()
-    from astropy.coordinates import SkyCoord
-    obj_cat = SkyCoord(C.SMSS.data['ra'], C.SMSS.data['dec'], unit='deg')
-    obj2_cat = SkyCoord(C.APASS.data['ra'], C.APASS.data['dec'], unit='deg')
-    D = A.cross_match(obj_cat, obj2_cat, 1)
-
+    A = PhotometryHelper()
+    file_ = '/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/com_align_Calib-RASA36-NGC1097-20210719-091118-r-60.fits'
+    #file1 = '/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/align_com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20230801-075323-r-120.fits'
+    #file2 = '/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/cut_Ref-KCT_STX16803-NGC1097-r-5400.com.fits'
+    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.scampconfig'
+    filelist = glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image_tmp/cutout*.fits')
+    #sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/KCT.config'
+    #A.run_astrometry(image = file1, sex_configfile = sex_configfile)
+    #A.run_scamp(filelist = file_, sex_configfile = sex_configfile)
+    
+    #sex_params = dict()
+    #sex_params['CATALOG_NAME'] = f"{A.scamppath}/catalog/{os.path.basename(file_).split('.')[0]}.cat"
+    #sex_params['PARAMETERS_NAME'] = f'{A.sexpath}/scamp.param'
+    target_img = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib-KCT_STX16803-NGC1097-20230927-062948-g-120.fits'
+    reference_img = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib-KCT_STX16803-NGC1097-20230927-063834-g-120.fits'
+    A.visualize_image(target_img)
+    A.visualize_image(reference_img)
+    #A.align_img(target_img, reference_img)
 # %%

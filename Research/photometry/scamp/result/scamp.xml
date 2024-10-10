@@ -1,0 +1,1595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///usr/share/scamp/scamp.xsl"?>
+<VOTABLE version="1.1"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.ivoa.net/xml/VOTable/v1.1"
+ xmlns:stc="http://www.ivoa.net/xml/STC/v1.10">
+<DESCRIPTION>produced by SCAMP</DESCRIPTION>
+<!-- VOTable description at http://www.ivoa.net/Documents/latest/VOT.html -->
+<RESOURCE ID="SCAMP" name="align_cutout_com_align_Calib-RASA36-NGC1097-20230901-053741-r-60.sexcat">
+ <DESCRIPTION>Data related to SCAMP</DESCRIPTION>
+ <INFO name="QUERY_STATUS" value="OK" />
+ <COOSYS ID="J2000" equinox="J2000" epoch="2000.0" system="ICRS"/>
+ <RESOURCE ID="MetaData" name="MetaData">
+  <DESCRIPTION>SCAMP meta-data</DESCRIPTION>
+  <INFO name="QUERY_STATUS" value="OK" />
+  <PARAM name="Software" datatype="char" arraysize="*" ucd="meta.title;meta.software" value="SCAMP"/>
+  <PARAM name="Version" datatype="char" arraysize="*" ucd="meta.version;meta.software" value="2.10.0"/>
+  <PARAM name="Soft_URL" datatype="char" arraysize="*" ucd="meta.ref.url;meta.software" value="http://astromatic.net/software/scamp"/>
+  <PARAM name="Soft_Auth" datatype="char" arraysize="*" ucd="meta.bib.author;meta.software" value="Emmanuel Bertin"/>
+  <PARAM name="Soft_Ref" datatype="char" arraysize="*" ucd="meta.bib.bibcode;meta.software" value="2006ASPC..351..112B"/>
+  <PARAM name="NThreads" datatype="int" ucd="meta.number;meta.software" value="12"/>
+  <PARAM name="Date" datatype="char" arraysize="*" ucd="time.end;meta.software" value="2024-10-03"/>
+  <PARAM name="Time" datatype="char" arraysize="*" ucd="time.end;meta.software" value="17:14:37"/>
+  <PARAM name="Duration" datatype="float" ucd="time.duration;meta.software" value="223" unit="s"/>
+  <PARAM name="User" datatype="char" arraysize="*" ucd="meta.curation" value="hhchoi1022"/>
+  <PARAM name="Host" datatype="char" arraysize="*" ucd="meta.curation" value="(null)"/>
+  <PARAM name="Path" datatype="char" arraysize="*" ucd="meta.dataset" value="/home/hhchoi1022/hhpy/Research/photometry/scamp/result"/>
+  <TABLE ID="Fields" name="Fields">
+   <DESCRIPTION>Data gathered by SCAMP for every  input catalog</DESCRIPTION>
+   <!-- NFields may be 0 if an error occurred early in the processing -->
+   <PARAM name="NFields" datatype="int" ucd="meta.number;meta.dataset" value="119"/>
+   <FIELD name="Catalog_Number" datatype="int" ucd="meta.record;meta.table;meta.file"/>
+   <FIELD name="Catalog_Name" datatype="char" arraysize="*" ucd="meta.id;meta.table;meta.file"/>
+   <FIELD name="Image_Ident" datatype="char" arraysize="*" ucd="meta.id;obs.field"/>
+   <FIELD name="NExtensions" datatype="int" ucd="meta.record"/>
+   <FIELD name="NAxis" datatype="int" ucd="pos.wcs.naxis"/>
+   <FIELD name="Lng_Axis" datatype="int" ucd="meta.id;pos.eq.ra"/>
+   <FIELD name="Lat_Axis" datatype="int" ucd="meta.id;pos.eq.dec"/>
+   <FIELD name="Ext_Header" datatype="boolean" ucd="meta.code"/>
+   <FIELD name="NDetect" datatype="int" ucd="meta.number;src"/>
+   <FIELD name="Group" datatype="int" ucd="meta.id.parent;meta.dataset"/>
+   <FIELD name="Astr_Instrum" datatype="char" arraysize="*" ucd="meta.id.parent;meta.dataset"/>
+   <FIELD name="Phot_Instrum" datatype="char" arraysize="*" ucd="meta.id.parent;meta.dataset"/>
+   <FIELD name="Photom_Flag" datatype="boolean" ucd="meta.code;phot"/>
+   <FIELD name="Photom_Link" datatype="boolean" ucd="meta.code;phot"/>
+   <FIELD name="Observation_Date" datatype="double" ucd="time.epoch;obs.field" unit="yr"/>
+   <FIELD name="Exposure_Time" datatype="float" ucd="time.duration;obs.exposure"/>
+   <FIELD name="AirMass" datatype="float" ucd="obs.airMass"/>
+   <FIELD name="Field_Coordinates" datatype="double" arraysize="2" ucd="pos.eq.ra;pos.eq.dec;obs.field" unit="deg"/>
+   <FIELD name="Pixel_Scale" datatype="float" arraysize="2"  ucd="instr.scale;instr.pixel;stat.mean" unit="arcsec"/>
+   <FIELD name="Max_Radius" datatype="float" ucd="phys.size.radius" unit="arcmin"/>
+   <FIELD name="ZeroPoint_Corr" datatype="float" ucd="phot.mag;phot.calib;arith.zp" unit="mag"/>
+   <!-- =========== MATCHing statistics =========== -->
+   <FIELD name="DPixelScale" datatype="float" ucd="instr.scale;instr.pixel;arith.ratio"/>
+   <FIELD name="DPosAngle" datatype="float" ucd="pos.posAng;obs.image;arith.diff" unit="deg"/>
+   <FIELD name="AS_Contrast" datatype="float" ucd="stat.correlation;arith.ratio"/>
+   <FIELD name="DX" datatype="float" ucd="pos.eq.ra;arith.diff" unit="deg"/>
+   <FIELD name="DY" datatype="float" ucd="pos.eq.dec;arith.diff" unit="deg"/>
+   <FIELD name="XY_Contrast" datatype="float" ucd="stat.correlation;arith.ratio"/>
+   <FIELD name="Shear" datatype="float" ucd="phys.size.axisRatio;obs.image"/>
+   <FIELD name="Shear_PosAngle" datatype="float" ucd="pos.posAng;obs.image" unit="deg"/>
+   <!-- =========== Astrometric statistics =========== -->
+   <FIELD name="Chi2_Internal" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="NDeg_Internal" datatype="int" ucd="stat.fit.dof"/>
+   <FIELD name="Chi2_Internal_HighSN" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="NDeg_Internal_HighSN" datatype="int" ucd="stat.fit.dof"/>
+   <FIELD name="AstromOffset_Reference" datatype="float" arraysize="2" ucd="pos.eq.ra;pos.eq.dec;arith.diff;obs.field" unit="arcsec"/>
+   <FIELD name="AstromSigma_Reference" datatype="float" arraysize="2" ucd="stat.stdev;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromCorr_Reference" datatype="float" ucd="stat.correlation;pos.eq;obs.field"/>
+   <FIELD name="Chi2_Reference" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="NDeg_Reference" datatype="int" ucd="stat.fit.dof"/>
+   <FIELD name="AstromOffset_Reference_HighSN" datatype="float" arraysize="2" ucd="pos.eq.ra;pos.eq.dec;arith.diff;obs.field" unit="arcsec"/>
+   <FIELD name="AstromSigma_Reference_HighSN" datatype="float" arraysize="2" ucd="stat.stdev;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromCorr_Reference_HighSN" datatype="float" ucd="stat.correlation;pos.eq;obs.field"/>
+   <FIELD name="Chi2_Reference_HighSN" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="NDeg_Reference_HighSN" datatype="int" ucd="stat.fit.dof"/>
+   <DATA><TABLEDATA>
+    <TR>
+     <TD>1</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230901-053741-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>602</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.665288813</TD><TD>1020.000</TD><TD>1.25</TD><TD>41.59405533 -30.28975583</TD>
+     <TD>2.36017  2.36017</TD><TD>69.5608</TD><TD>0.120312</TD>
+     <TD>1</TD><TD>0</TD><TD>0.0284507</TD>
+     <TD>0.0126689</TD><TD>-0.0133725</TD><TD>0.470838</TD><TD>0</TD><TD>0</TD>
+     <TD>3.98532</TD><TD>2143</TD><TD>7.05774</TD><TD>361</TD>
+     <TD>-0.0897523 -0.0119468</TD><TD>0.280104 0.0343185</TD><TD>0.555557</TD><TD>3.96729</TD><TD>2</TD><TD>-0.0897523 -0.0119468</TD><TD>0.280104 0.0343185</TD><TD>0.555557</TD><TD>3.96729</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>2</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230913-060841-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>502</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.698169411</TD><TD>60.000</TD><TD>1.10</TD><TD>41.58363324 -30.27499891</TD>
+     <TD>2.3209  2.3209</TD><TD>70.6774</TD><TD>0.195242</TD>
+     <TD>0.952924</TD><TD>1.63641</TD><TD>0.032113</TD>
+     <TD>0.00213393</TD><TD>0.00098572</TD><TD>0.388713</TD><TD>0.0678519</TD><TD>42.4224</TD>
+     <TD>22.3154</TD><TD>27</TD><TD>0</TD><TD>0</TD>
+     <TD>-0.0406203 0.0579301</TD><TD>0.607078 0.422252</TD><TD>0.602072</TD><TD>3.97242</TD><TD>3</TD><TD>-0.132523 0.0860345</TD><TD>0.837062 0.593755</TD><TD>0.465543</TD><TD>5.72975</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>3</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230914-054441-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1762</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.700896178</TD><TD>1080.000</TD><TD>1.10</TD><TD>41.57609165 -30.27755238</TD>
+     <TD>2.36091  2.36091</TD><TD>69.5712</TD><TD>-0.160833</TD>
+     <TD>0.999788</TD><TD>-0.0238749</TD><TD>0.0147941</TD>
+     <TD>-0.00521041</TD><TD>-0.00128029</TD><TD>0.573495</TD><TD>0.00112209</TD><TD>81.8375</TD>
+     <TD>1.13796</TD><TD>15310</TD><TD>5.59917</TD><TD>1589</TD>
+     <TD>0.691421 -0.194464</TD><TD>1.49942 1.25334</TD><TD>0.0326232</TD><TD>83.8122</TD><TD>13</TD><TD>0.141395 -1.39805</TD><TD>1.35891 1.88603</TD><TD>-0.27894</TD><TD>195.926</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>4</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230915-050812-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1759</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.703564722</TD><TD>1080.000</TD><TD>1.17</TD><TD>41.5750276 -30.26100694</TD>
+     <TD>2.36008  2.36008</TD><TD>69.5552</TD><TD>-2.04167</TD>
+     <TD>0.999892</TD><TD>-0.0165756</TD><TD>0.0157153</TD>
+     <TD>-0.00644921</TD><TD>0.015308</TD><TD>0.451168</TD><TD>0.000353158</TD><TD>88.5581</TD>
+     <TD>1.31042</TD><TD>6341</TD><TD>6.72686</TD><TD>621</TD>
+     <TD>-0.183148 0.547544</TD><TD>1.82553 1.73488</TD><TD>-0.0488135</TD><TD>114.112</TD><TD>10</TD><TD>-0.454025 0.381998</TD><TD>1.63218 3.08544</TD><TD>0.31066</TD><TD>217.568</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>5</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230916-052524-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1725</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.706335204</TD><TD>1080.000</TD><TD>1.12</TD><TD>41.57504916 -30.2610017</TD>
+     <TD>2.36005  2.36005</TD><TD>69.5524</TD><TD>-2.04429</TD>
+     <TD>0.99978</TD><TD>-0.0210947</TD><TD>0.015656</TD>
+     <TD>-0.00644308</TD><TD>0.015278</TD><TD>0.501653</TD><TD>0.000436877</TD><TD>6.78465</TD>
+     <TD>2.30841</TD><TD>6341</TD><TD>15.8441</TD><TD>625</TD>
+     <TD>-0.108647 0.537417</TD><TD>1.81728 1.73182</TD><TD>-0.0480462</TD><TD>107.347</TD><TD>10</TD><TD>-0.427188 0.359084</TD><TD>1.5601 3.06519</TD><TD>0.300541</TD><TD>207.126</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>6</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230917-042806-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1688</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.708964062</TD><TD>1080.000</TD><TD>1.27</TD><TD>41.57499869 -30.26099586</TD>
+     <TD>2.36001  2.36001</TD><TD>69.556</TD><TD>-2.11795</TD>
+     <TD>0.999797</TD><TD>-0.00856996</TD><TD>0.0166079</TD>
+     <TD>-0.00648054</TD><TD>0.0152635</TD><TD>0.569656</TD><TD>0.000288011</TD><TD>87.2924</TD>
+     <TD>2.37197</TD><TD>6244</TD><TD>15.0833</TD><TD>608</TD>
+     <TD>-0.228139 0.555754</TD><TD>1.86568 1.75737</TD><TD>-0.0893246</TD><TD>119.586</TD><TD>10</TD><TD>-0.493529 0.366252</TD><TD>1.61823 3.08026</TD><TD>0.288126</TD><TD>217.153</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>7</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20230922-042755-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>680</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.722641573</TD><TD>420.000</TD><TD>1.20</TD><TD>41.56952445 -30.27901378</TD>
+     <TD>2.35986  2.35986</TD><TD>69.531</TD><TD>-0.00641099</TD>
+     <TD>0.999128</TD><TD>0.0118551</TD><TD>0.029354</TD>
+     <TD>-0.0127675</TD><TD>-0.00280909</TD><TD>0.509248</TD><TD>0.00171308</TD><TD>79.004</TD>
+     <TD>5.377</TD><TD>658</TD><TD>29.4083</TD><TD>60</TD>
+     <TD>-0.281127 0.27628</TD><TD>0.511797 0.836526</TD><TD>-0.752532</TD><TD>23.1551</TD><TD>5</TD><TD>-0.0881401 0.51384</TD><TD>0 0</TD><TD>-0.00813165</TD><TD>18.5174</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>8</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231004-074817-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1613</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.755915261</TD><TD>1080.000</TD><TD>1.10</TD><TD>41.59371292 -30.27095827</TD>
+     <TD>2.36043  2.36043</TD><TD>69.5737</TD><TD>-0.629434</TD>
+     <TD>0.999977</TD><TD>-0.00442128</TD><TD>0.0157203</TD>
+     <TD>0.012251</TD><TD>0.00549282</TD><TD>0.56504</TD><TD>0.000215324</TD><TD>18.8057</TD>
+     <TD>6.68752</TD><TD>1523</TD><TD>37.6425</TD><TD>161</TD>
+     <TD>-0.961668 0.287485</TD><TD>1.86911 1.57112</TD><TD>0.044768</TD><TD>53.9467</TD><TD>9</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>9</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231006-043556-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1585</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.761023620</TD><TD>1080.000</TD><TD>1.03</TD><TD>41.57927168 -30.27510245</TD>
+     <TD>2.35807  2.35807</TD><TD>69.4494</TD><TD>-0.021289</TD>
+     <TD>0.998181</TD><TD>0.00183519</TD><TD>0.0157516</TD>
+     <TD>-0.00203324</TD><TD>0.0015773</TD><TD>0.514231</TD><TD>0.00182996</TD><TD>61.9816</TD>
+     <TD>1.34479</TD><TD>9219</TD><TD>8.40445</TD><TD>863</TD>
+     <TD>-0.0798779 -0.25733</TD><TD>1.10283 1.07944</TD><TD>0.0785349</TD><TD>13.8001</TD><TD>12</TD><TD>0.000211661 -0.864622</TD><TD>1.44666 1.02635</TD><TD>0.269282</TD><TD>15.018</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>10</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231008-042918-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1771</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.766486675</TD><TD>1080.000</TD><TD>1.03</TD><TD>41.57423879 -30.27449829</TD>
+     <TD>2.36031  2.36031</TD><TD>69.5467</TD><TD>-0.138173</TD>
+     <TD>0.999889</TD><TD>-0.00805287</TD><TD>0.015336</TD>
+     <TD>-0.0070757</TD><TD>0.00182921</TD><TD>0.544032</TD><TD>0.000464601</TD><TD>41.9735</TD>
+     <TD>29.1728</TD><TD>31</TD><TD>0</TD><TD>0</TD>
+     <TD>-0.409827 1.16428</TD><TD>1.32666 1.71226</TD><TD>-0.117903</TD><TD>49.5277</TD><TD>7</TD><TD>-0.241855 0.921536</TD><TD>0.64634 1.42634</TD><TD>-0.595667</TD><TD>18.7951</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>11</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231009-044216-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1750</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.769249410</TD><TD>1080.000</TD><TD>1.02</TD><TD>41.57479849 -30.26093019</TD>
+     <TD>2.35987  2.35987</TD><TD>69.551</TD><TD>-2.07404</TD>
+     <TD>0.999834</TD><TD>-0.00822986</TD><TD>0.0160212</TD>
+     <TD>-0.00633043</TD><TD>0.0151857</TD><TD>0.470539</TD><TD>0.000480294</TD><TD>78.3259</TD>
+     <TD>5.29668</TD><TD>6314</TD><TD>36.374</TD><TD>621</TD>
+     <TD>-0.13029 0.458433</TD><TD>1.83691 1.64379</TD><TD>-0.0174535</TD><TD>112.508</TD><TD>10</TD><TD>-0.461548 0.269462</TD><TD>1.63988 2.90974</TD><TD>0.385493</TD><TD>213.203</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>12</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231010-070208-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1526</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.772310941</TD><TD>1020.000</TD><TD>1.19</TD><TD>41.5937124 -30.270946</TD>
+     <TD>2.36045  2.36045</TD><TD>69.5738</TD><TD>-0.561088</TD>
+     <TD>0.999992</TD><TD>-0.0112854</TD><TD>0.0160909</TD>
+     <TD>0.0122816</TD><TD>0.00549716</TD><TD>0.506324</TD><TD>0.000297513</TD><TD>32.8599</TD>
+     <TD>6.55453</TD><TD>1564</TD><TD>28.6118</TD><TD>159</TD>
+     <TD>-0.824569 0.664561</TD><TD>1.86107 1.30536</TD><TD>-0.178035</TD><TD>59.6952</TD><TD>8</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>13</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231012-065457-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1708</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.777770948</TD><TD>1020.000</TD><TD>1.19</TD><TD>41.57503779 -30.2623619</TD>
+     <TD>2.36039  2.36039</TD><TD>69.5493</TD><TD>-2.49374</TD>
+     <TD>0.999832</TD><TD>-0.00627447</TD><TD>0.0150177</TD>
+     <TD>-0.00631868</TD><TD>0.0143632</TD><TD>0.595907</TD><TD>0.000437704</TD><TD>33.6126</TD>
+     <TD>1.84751</TD><TD>6154</TD><TD>6.89436</TD><TD>573</TD>
+     <TD>0.0582016 -0.192218</TD><TD>1.59339 1.08436</TD><TD>-0.0670924</TD><TD>52.3545</TD><TD>12</TD><TD>0.0293455 -0.358123</TD><TD>0.1571 0.358321</TD><TD>-0.17036</TD><TD>11.9641</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>14</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231013-080940-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1437</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.780570491</TD><TD>360.000</TD><TD>1.21</TD><TD>41.58193096 -30.29062288</TD>
+     <TD>2.36067  2.36067</TD><TD>69.5936</TD><TD>2.00862</TD>
+     <TD>0.99991</TD><TD>0.00566481</TD><TD>0.0145416</TD>
+     <TD>0.000777125</TD><TD>-0.0142304</TD><TD>0.547229</TD><TD>0.000550715</TD><TD>40.6831</TD>
+     <TD>1.82824</TD><TD>1396</TD><TD>1.73553</TD><TD>150</TD>
+     <TD>-0.142742 0.323251</TD><TD>1.44683 1.90703</TD><TD>0.0331566</TD><TD>89.3604</TD><TD>11</TD><TD>0.713316 1.70016</TD><TD>1.81825 2.85179</TD><TD>-0.135362</TD><TD>85.8614</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>15</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231014-061823-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1773</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.783095812</TD><TD>1080.000</TD><TD>1.01</TD><TD>41.57505043 -30.26101657</TD>
+     <TD>2.3601  2.3601</TD><TD>69.5548</TD><TD>-2.07104</TD>
+     <TD>0.999883</TD><TD>-0.00215431</TD><TD>0.0158226</TD>
+     <TD>-0.00649701</TD><TD>0.0153105</TD><TD>0.505814</TD><TD>0.000390766</TD><TD>1.1531</TD>
+     <TD>1.38971</TD><TD>6384</TD><TD>6.79739</TD><TD>618</TD>
+     <TD>-0.192421 0.525107</TD><TD>1.83993 1.73658</TD><TD>-0.0788649</TD><TD>110.021</TD><TD>10</TD><TD>-0.433469 0.3482</TD><TD>1.58398 3.04828</TD><TD>0.31172</TD><TD>209.587</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>16</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231015-021335-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1690</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.785734206</TD><TD>2160.000</TD><TD>1.23</TD><TD>41.57509717 -30.26229914</TD>
+     <TD>2.36018  2.36018</TD><TD>69.5496</TD><TD>-3.37879</TD>
+     <TD>1.00003</TD><TD>-0.00732633</TD><TD>0.0154273</TD>
+     <TD>-0.0063424</TD><TD>0.0142511</TD><TD>0.565148</TD><TD>0.0002108</TD><TD>64.6474</TD>
+     <TD>1.85612</TD><TD>6221</TD><TD>7.741</TD><TD>578</TD>
+     <TD>0.0840445 -0.301265</TD><TD>1.57658 1.10862</TD><TD>-0.137145</TD><TD>45.5246</TD><TD>12</TD><TD>0.0765041 -0.51717</TD><TD>0.213619 0.631275</TD><TD>-0.025697</TD><TD>6.9736</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>17</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231018-021525-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1528</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.793585264</TD><TD>1080.000</TD><TD>1.31</TD><TD>41.57613098 -30.27755652</TD>
+     <TD>2.36109  2.36109</TD><TD>69.5787</TD><TD>-0.19467</TD>
+     <TD>0.999775</TD><TD>-0.030564</TD><TD>0.0163236</TD>
+     <TD>-0.00520311</TD><TD>-0.00127456</TD><TD>0.537313</TD><TD>0.00126162</TD><TD>81.3572</TD>
+     <TD>0.682675</TD><TD>14496</TD><TD>3.19311</TD><TD>1544</TD>
+     <TD>0.670711 -0.270515</TD><TD>1.43182 1.18314</TD><TD>-0.0657576</TD><TD>72.3061</TD><TD>13</TD><TD>0.392408 -0.959139</TD><TD>1.615 1.44787</TD><TD>-0.601861</TD><TD>204.576</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>18</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231026-045738-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1301</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.815796447</TD><TD>1080.000</TD><TD>1.00</TD><TD>41.59375452 -30.29011151</TD>
+     <TD>2.35958  2.35958</TD><TD>69.5369</TD><TD>-2.87808</TD>
+     <TD>0.999529</TD><TD>-0.0283317</TD><TD>0.0202294</TD>
+     <TD>0.0122473</TD><TD>-0.0137872</TD><TD>0.452803</TD><TD>0.0007269</TD><TD>2.02145</TD>
+     <TD>1.39074</TD><TD>4023</TD><TD>3.66533</TD><TD>544</TD>
+     <TD>-0.16388 0.175903</TD><TD>1.10444 1.34923</TD><TD>-0.549233</TD><TD>44.7252</TD><TD>9</TD><TD>-0.143283 0.0457821</TD><TD>0.319699 0.0562351</TD><TD>-0.112875</TD><TD>5.86381</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>19</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231027-022424-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>977</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.818311999</TD><TD>1200.000</TD><TD>1.36</TD><TD>41.59439259 -30.28966892</TD>
+     <TD>2.35864  2.35864</TD><TD>69.4987</TD><TD>-3.01332</TD>
+     <TD>0.998929</TD><TD>-0.018721</TD><TD>0.0222056</TD>
+     <TD>0.0121982</TD><TD>-0.0136262</TD><TD>0.542659</TD><TD>0.000824381</TD><TD>76.4932</TD>
+     <TD>1.82256</TD><TD>3414</TD><TD>4.8983</TD><TD>536</TD>
+     <TD>0.176366 -0.0207041</TD><TD>0.88422 0.15094</TD><TD>0.333526</TD><TD>15.1758</TD><TD>6</TD><TD>-0.139901 0.0150601</TD><TD>0.342596 0.0779562</TD><TD>-0.0552203</TD><TD>6.29403</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>20</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231031-073320-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1241</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.829775680</TD><TD>900.000</TD><TD>1.27</TD><TD>41.57604631 -30.2778369</TD>
+     <TD>2.3597  2.3597</TD><TD>69.5402</TD><TD>-0.0233517</TD>
+     <TD>0.999704</TD><TD>0.00490409</TD><TD>0.0177575</TD>
+     <TD>-0.00522352</TD><TD>-0.00123417</TD><TD>0.588193</TD><TD>0.000359102</TD><TD>0.236221</TD>
+     <TD>1.04432</TD><TD>12133</TD><TD>3.84817</TD><TD>1543</TD>
+     <TD>0.535694 -0.314515</TD><TD>1.46537 1.33984</TD><TD>-0.150056</TD><TD>103.978</TD><TD>10</TD><TD>0.407531 -0.994048</TD><TD>1.68292 1.51711</TD><TD>-0.603577</TD><TD>229.819</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>21</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231102-070858-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1424</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.835210999</TD><TD>1080.000</TD><TD>1.22</TD><TD>41.5761343 -30.27752712</TD>
+     <TD>2.36103  2.36103</TD><TD>69.5734</TD><TD>-0.243897</TD>
+     <TD>0.999876</TD><TD>-0.0250113</TD><TD>0.0159644</TD>
+     <TD>-0.00520015</TD><TD>-0.00125726</TD><TD>0.575324</TD><TD>0.00110456</TD><TD>83.4406</TD>
+     <TD>1.02196</TD><TD>13756</TD><TD>4.38619</TD><TD>1543</TD>
+     <TD>0.709049 -0.274778</TD><TD>1.44344 1.26372</TD><TD>-0.0168456</TD><TD>79.0545</TD><TD>13</TD><TD>0.417584 -1.01458</TD><TD>1.55209 1.44969</TD><TD>-0.608204</TD><TD>203.101</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>22</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231103-052647-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1658</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.837754584</TD><TD>1080.000</TD><TD>1.03</TD><TD>41.57500769 -30.26225301</TD>
+     <TD>2.36016  2.36016</TD><TD>69.5529</TD><TD>-2.57667</TD>
+     <TD>1.00001</TD><TD>-0.00473552</TD><TD>0.0164558</TD>
+     <TD>-0.00627719</TD><TD>0.0141869</TD><TD>0.586183</TD><TD>0.000118037</TD><TD>32.2373</TD>
+     <TD>2.87996</TD><TD>6166</TD><TD>16.7419</TD><TD>592</TD>
+     <TD>0.126438 -0.305788</TD><TD>1.57324 1.12038</TD><TD>-0.151978</TD><TD>53.4523</TD><TD>12</TD><TD>0.0456734 -0.46782</TD><TD>0.181932 0.555663</TD><TD>0.049806</TD><TD>5.70619</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>23</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231104-052657-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1671</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.840492764</TD><TD>1080.000</TD><TD>1.04</TD><TD>41.57932719 -30.27507949</TD>
+     <TD>2.35821  2.35821</TD><TD>69.4579</TD><TD>0.119734</TD>
+     <TD>0.998442</TD><TD>0.0124521</TD><TD>0.0165114</TD>
+     <TD>-0.00210171</TD><TD>0.00159188</TD><TD>0.595782</TD><TD>0.00174655</TD><TD>66.6288</TD>
+     <TD>1.0946</TD><TD>9524</TD><TD>5.39563</TD><TD>932</TD>
+     <TD>-0.278455 -0.330308</TD><TD>1.27762 1.0612</TD><TD>0.211056</TD><TD>18.0156</TD><TD>13</TD><TD>-0.0612879 -0.70589</TD><TD>1.42768 0.931729</TD><TD>0.358574</TD><TD>12.9301</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>24</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231105-052907-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1661</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.843234745</TD><TD>1080.000</TD><TD>1.04</TD><TD>41.58470716 -30.27845425</TD>
+     <TD>2.35916  2.35916</TD><TD>69.5284</TD><TD>0.0773281</TD>
+     <TD>0.999391</TD><TD>-0.0135763</TD><TD>0.0163611</TD>
+     <TD>0.00364354</TD><TD>-0.0024767</TD><TD>0.482038</TD><TD>0.000672181</TD><TD>86.4878</TD>
+     <TD>88.9508</TD><TD>146</TD><TD>225.11</TD><TD>20</TD>
+     <TD>0.344021 -0.0648675</TD><TD>1.69767 1.00473</TD><TD>0.475862</TD><TD>53.9116</TD><TD>8</TD><TD>-0.128079 -0.297429</TD><TD>0.468065 0.805076</TD><TD>0.59911</TD><TD>36.9848</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>25</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231106-052913-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1701</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.845972847</TD><TD>1080.000</TD><TD>1.05</TD><TD>41.56283547 -30.28099358</TD>
+     <TD>2.35929  2.35929</TD><TD>69.5569</TD><TD>-2.92494</TD>
+     <TD>0.999488</TD><TD>-0.0204112</TD><TD>0.015388</TD>
+     <TD>-0.0183626</TD><TD>-0.00466514</TD><TD>0.508936</TD><TD>0.000778256</TD><TD>45.3412</TD>
+     <TD>46.4359</TD><TD>1883</TD><TD>249.54</TD><TD>173</TD>
+     <TD>-0.340606 -0.224895</TD><TD>1.57169 0.992653</TD><TD>0.039804</TD><TD>67.5384</TD><TD>5</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>26</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231107-053036-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1736</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.848713244</TD><TD>1080.000</TD><TD>1.05</TD><TD>41.57921956 -30.27497025</TD>
+     <TD>2.35904  2.35904</TD><TD>69.5158</TD><TD>0.0892389</TD>
+     <TD>0.99945</TD><TD>0.00647172</TD><TD>0.0159044</TD>
+     <TD>-0.00221298</TD><TD>0.00155853</TD><TD>0.560811</TD><TD>0.000498567</TD><TD>74.9137</TD>
+     <TD>1.05186</TD><TD>9663</TD><TD>5.13721</TD><TD>934</TD>
+     <TD>-0.231534 -0.343068</TD><TD>1.27576 1.12397</TD><TD>0.172418</TD><TD>19.6986</TD><TD>13</TD><TD>0.0254068 -0.710491</TD><TD>1.4909 0.903525</TD><TD>0.295443</TD><TD>14.0071</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>27</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231108-052803-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1745</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.851446309</TD><TD>1080.000</TD><TD>1.06</TD><TD>41.57923884 -30.27498122</TD>
+     <TD>2.35897  2.35897</TD><TD>69.5089</TD><TD>0.117401</TD>
+     <TD>0.999354</TD><TD>0.00256137</TD><TD>0.0151488</TD>
+     <TD>-0.0022314</TD><TD>0.00153927</TD><TD>0.580098</TD><TD>0.000736285</TD><TD>73.4487</TD>
+     <TD>1.18657</TD><TD>9656</TD><TD>6.3054</TD><TD>934</TD>
+     <TD>-0.25763 -0.354281</TD><TD>1.29143 1.13387</TD><TD>0.169342</TD><TD>19.0596</TD><TD>13</TD><TD>0.0506513 -0.821992</TD><TD>1.48494 0.960218</TD><TD>0.229099</TD><TD>15.1883</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>28</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231111-051616-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1654</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.859637427</TD><TD>1080.000</TD><TD>1.06</TD><TD>41.58876248 -30.28302016</TD>
+     <TD>2.36004  2.36004</TD><TD>69.5519</TD><TD>0.252667</TD>
+     <TD>0.999992</TD><TD>-0.0108029</TD><TD>0.0149992</TD>
+     <TD>0.00736203</TD><TD>-0.00661379</TD><TD>0.530364</TD><TD>0.000275241</TD><TD>85.8427</TD>
+     <TD>69.2238</TD><TD>39</TD><TD>196.605</TD><TD>3</TD>
+     <TD>0.101114 0.401178</TD><TD>1.96782 1.17711</TD><TD>0.255567</TD><TD>115.486</TD><TD>13</TD><TD>-0.221036 0.0189801</TD><TD>0 0</TD><TD>-0.000753248</TD><TD>5.53427</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>29</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231112-043903-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1698</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.862304537</TD><TD>1080.000</TD><TD>1.02</TD><TD>41.57932353 -30.27509329</TD>
+     <TD>2.35747  2.35747</TD><TD>69.4769</TD><TD>0.0400492</TD>
+     <TD>0.99806</TD><TD>0.03548</TD><TD>0.0152613</TD>
+     <TD>-0.00212905</TD><TD>0.0015164</TD><TD>0.46624</TD><TD>0.0019201</TD><TD>88.359</TD>
+     <TD>1.32943</TD><TD>9527</TD><TD>7.70271</TD><TD>918</TD>
+     <TD>-0.304227 -0.15871</TD><TD>1.2657 1.25119</TD><TD>0.10693</TD><TD>18.6252</TD><TD>14</TD><TD>-0.0323649 -0.701871</TD><TD>1.51083 0.860904</TD><TD>0.306938</TD><TD>13.7214</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>30</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231117-041805-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1686</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.875953980</TD><TD>1080.000</TD><TD>1.02</TD><TD>41.57931678 -30.27507868</TD>
+     <TD>2.35779  2.35779</TD><TD>69.4389</TD><TD>0.0482951</TD>
+     <TD>0.998088</TD><TD>0.0134306</TD><TD>0.0156917</TD>
+     <TD>-0.00202875</TD><TD>0.00158166</TD><TD>0.527795</TD><TD>0.00204881</TD><TD>66.668</TD>
+     <TD>1.13353</TD><TD>9573</TD><TD>5.40276</TD><TD>918</TD>
+     <TD>-0.0495089 -0.263904</TD><TD>1.18157 1.07217</TD><TD>0.0049159</TD><TD>18.617</TD><TD>12</TD><TD>0.0129891 -0.713611</TD><TD>1.47453 0.906443</TD><TD>0.30136</TD><TD>13.7613</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>31</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231118-045949-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1716</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.878771164</TD><TD>1080.000</TD><TD>1.07</TD><TD>41.57507963 -30.26222903</TD>
+     <TD>2.36004  2.36004</TD><TD>69.5592</TD><TD>-2.6528</TD>
+     <TD>0.999995</TD><TD>-0.00923532</TD><TD>0.0160406</TD>
+     <TD>-0.00634263</TD><TD>0.0141813</TD><TD>0.486886</TD><TD>0.000199338</TD><TD>32.6871</TD>
+     <TD>2.87063</TD><TD>6272</TD><TD>15.9862</TD><TD>592</TD>
+     <TD>0.142632 -0.231915</TD><TD>1.58256 1.11882</TD><TD>-0.120474</TD><TD>64.2711</TD><TD>12</TD><TD>0.0247167 -0.366066</TD><TD>0.199078 0.366079</TD><TD>-0.128354</TD><TD>12.9434</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>32</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231119-045537-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1692</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.881501070</TD><TD>1080.000</TD><TD>1.07</TD><TD>41.57509696 -30.26227251</TD>
+     <TD>2.36024  2.36024</TD><TD>69.5506</TD><TD>-2.63808</TD>
+     <TD>1.00006</TD><TD>-0.0159834</TD><TD>0.0162595</TD>
+     <TD>-0.00635984</TD><TD>0.0142258</TD><TD>0.53644</TD><TD>0.000278572</TD><TD>60.9682</TD>
+     <TD>2.80442</TD><TD>6265</TD><TD>15.9557</TD><TD>592</TD>
+     <TD>0.117057 -0.193281</TD><TD>1.58221 1.09101</TD><TD>-0.150913</TD><TD>59.2951</TD><TD>12</TD><TD>0.0233786 -0.389262</TD><TD>0.159141 0.390305</TD><TD>-0.182645</TD><TD>14.0243</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>33</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231120-045229-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1447</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.884232997</TD><TD>1080.000</TD><TD>1.07</TD><TD>41.57926695 -30.27508055</TD>
+     <TD>2.357  2.357</TD><TD>69.3875</TD><TD>0.0691953</TD>
+     <TD>0.997436</TD><TD>0.0110287</TD><TD>0.0171773</TD>
+     <TD>-0.00196778</TD><TD>0.00162966</TD><TD>0.549194</TD><TD>0.00280815</TD><TD>62.7065</TD>
+     <TD>1.74477</TD><TD>8596</TD><TD>8.90812</TD><TD>932</TD>
+     <TD>-0.218516 -0.239987</TD><TD>1.16536 1.15621</TD><TD>0.0820241</TD><TD>20.1031</TD><TD>11</TD><TD>0.0216497 -0.69026</TD><TD>1.44232 0.851773</TD><TD>0.280755</TD><TD>13.0504</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>34</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231121-041710-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1407</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.886885346</TD><TD>540.000</TD><TD>1.02</TD><TD>41.59350075 -30.29010899</TD>
+     <TD>2.35998  2.35998</TD><TD>69.5406</TD><TD>-2.2303</TD>
+     <TD>0.999608</TD><TD>-0.0309845</TD><TD>0.0153421</TD>
+     <TD>0.0125259</TD><TD>-0.0138253</TD><TD>0.492099</TD><TD>0.00101584</TD><TD>6.31337</TD>
+     <TD>1.99671</TD><TD>4158</TD><TD>5.40104</TD><TD>542</TD>
+     <TD>-0.199617 0.222553</TD><TD>1.13425 1.38805</TD><TD>-0.597629</TD><TD>50.2311</TD><TD>9</TD><TD>-0.170566 0.0625197</TD><TD>0.368826 0.0716973</TD><TD>-0.59374</TD><TD>8.00992</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>35</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231122-033325-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1377</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.889558328</TD><TD>1080.000</TD><TD>1.01</TD><TD>41.58214638 -30.29061183</TD>
+     <TD>2.35928  2.35928</TD><TD>69.5212</TD><TD>0.749436</TD>
+     <TD>0.999488</TD><TD>-0.0130862</TD><TD>0.0151693</TD>
+     <TD>0.0007069</TD><TD>-0.0144986</TD><TD>0.464001</TD><TD>0.000410118</TD><TD>46.7769</TD>
+     <TD>1.73253</TD><TD>1409</TD><TD>1.73553</TD><TD>150</TD>
+     <TD>-0.185785 0.164237</TD><TD>1.54902 1.94386</TD><TD>0.0406223</TD><TD>95.5866</TD><TD>10</TD><TD>0.708009 1.69186</TD><TD>1.81485 2.82338</TD><TD>-0.134799</TD><TD>84.6779</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>36</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231123-023151-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1279</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.892179093</TD><TD>1080.000</TD><TD>1.01</TD><TD>41.56272688 -30.28151208</TD>
+     <TD>2.35829  2.35829</TD><TD>69.5024</TD><TD>-2.90795</TD>
+     <TD>0.999849</TD><TD>0.00737493</TD><TD>0.0182326</TD>
+     <TD>-0.0186674</TD><TD>-0.00513836</TD><TD>0.530959</TD><TD>9.52484e-05</TD><TD>5.22675</TD>
+     <TD>70.7258</TD><TD>783</TD><TD>373.167</TD><TD>83</TD>
+     <TD>0.254447 0.0124158</TD><TD>1.09262 0.51497</TD><TD>-0.397422</TD><TD>18.2333</TD><TD>6</TD><TD>-0.317827 0.739279</TD><TD>0 0</TD><TD>-0.0421869</TD><TD>41.4419</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>37</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231205-045008-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1721</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.925296169</TD><TD>1080.000</TD><TD>1.20</TD><TD>41.5910993 -30.2630201</TD>
+     <TD>2.3603  2.3603</TD><TD>69.5545</TD><TD>-0.294778</TD>
+     <TD>1.00013</TD><TD>0.000371503</TD><TD>0.0161828</TD>
+     <TD>0.00953405</TD><TD>0.0133687</TD><TD>0.568142</TD><TD>0.000171422</TD><TD>33.5794</TD>
+     <TD>25.2765</TD><TD>1786</TD><TD>139.508</TD><TD>155</TD>
+     <TD>0.236299 -0.372677</TD><TD>1.61299 1.97123</TD><TD>-0.0889664</TD><TD>169.167</TD><TD>16</TD><TD>-1.41424 1.2971</TD><TD>0 0</TD><TD>-0.329362</TD><TD>319.836</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>38</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231206-043258-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1726</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.928002026</TD><TD>1080.000</TD><TD>1.17</TD><TD>41.59114902 -30.26309228</TD>
+     <TD>2.36007  2.36007</TD><TD>69.5484</TD><TD>-0.256274</TD>
+     <TD>0.999919</TD><TD>0.00228267</TD><TD>0.0152933</TD>
+     <TD>0.00958659</TD><TD>0.0134501</TD><TD>0.571488</TD><TD>0.00021422</TD><TD>31.6384</TD>
+     <TD>24.883</TD><TD>1709</TD><TD>152.129</TD><TD>154</TD>
+     <TD>0.143816 -0.279188</TD><TD>1.53198 1.9288</TD><TD>-0.0231301</TD><TD>137.494</TD><TD>14</TD><TD>-1.25981 1.24635</TD><TD>0 0</TD><TD>-0.281918</TD><TD>261.836</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>39</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231208-042452-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1680</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.933461763</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.599575 -30.26881525</TD>
+     <TD>2.36003  2.36003</TD><TD>69.5384</TD><TD>2.62787</TD>
+     <TD>0.999759</TD><TD>0.020819</TD><TD>0.0159249</TD>
+     <TD>0.0179427</TD><TD>0.0074208</TD><TD>0.552547</TD><TD>0.000599734</TD><TD>24.4086</TD>
+     <TD>0.452356</TD><TD>5023</TD><TD>1.25382</TD><TD>447</TD>
+     <TD>0.734763 -0.101723</TD><TD>1.76923 1.20486</TD><TD>0.215368</TD><TD>25.3172</TD><TD>10</TD><TD>-0.0403889 0.0879858</TD><TD>0 0</TD><TD>-0.000638046</TD><TD>0.994579</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>40</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231209-042111-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1698</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.936192590</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.59958199 -30.2688077</TD>
+     <TD>2.36006  2.36006</TD><TD>69.5398</TD><TD>2.63334</TD>
+     <TD>0.999778</TD><TD>0.0195143</TD><TD>0.0148025</TD>
+     <TD>0.017962</TD><TD>0.00743958</TD><TD>0.537421</TD><TD>0.000581939</TD><TD>23.214</TD>
+     <TD>0.479404</TD><TD>5044</TD><TD>1.3273</TD><TD>448</TD>
+     <TD>0.709019 -0.0944226</TD><TD>1.75207 1.1665</TD><TD>0.244122</TD><TD>25.5509</TD><TD>10</TD><TD>-0.0398638 0.076617</TD><TD>0 0</TD><TD>-0.00054838</TD><TD>0.787901</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>41</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231211-041329-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1688</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.941653648</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.59948181 -30.26880606</TD>
+     <TD>2.35997  2.35997</TD><TD>69.5461</TD><TD>2.60607</TD>
+     <TD>0.999835</TD><TD>0.0117096</TD><TD>0.0147278</TD>
+     <TD>0.0180286</TD><TD>0.00747909</TD><TD>0.594201</TD><TD>0.000421842</TD><TD>9.99002</TD>
+     <TD>0.452299</TD><TD>5039</TD><TD>1.19136</TD><TD>447</TD>
+     <TD>0.702178 -0.0823457</TD><TD>1.73123 1.18736</TD><TD>0.203799</TD><TD>25.6441</TD><TD>10</TD><TD>-0.0442424 0.0604532</TD><TD>0 0</TD><TD>-0.000480215</TD><TD>0.578098</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>42</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231212-040908-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1696</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.944383225</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.59949268 -30.26878071</TD>
+     <TD>2.36  2.36</TD><TD>69.5477</TD><TD>2.60423</TD>
+     <TD>0.999889</TD><TD>0.0123176</TD><TD>0.0146199</TD>
+     <TD>0.0180372</TD><TD>0.00750745</TD><TD>0.573196</TD><TD>0.000383583</TD><TD>7.60797</TD>
+     <TD>0.521051</TD><TD>5045</TD><TD>1.71362</TD><TD>444</TD>
+     <TD>0.746347 -0.0851026</TD><TD>1.75106 1.20002</TD><TD>0.200288</TD><TD>25.3809</TD><TD>10</TD><TD>-0.0595484 0.0649562</TD><TD>0 0</TD><TD>-0.000694494</TD><TD>0.779332</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>43</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231213-040518-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1689</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.947113801</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.57615112 -30.27751224</TD>
+     <TD>2.35996  2.35996</TD><TD>69.5698</TD><TD>-0.211578</TD>
+     <TD>0.999682</TD><TD>-0.00142834</TD><TD>0.015131</TD>
+     <TD>-0.00515204</TD><TD>-0.00118431</TD><TD>0.535076</TD><TD>0.000727622</TD><TD>20.6706</TD>
+     <TD>0.674162</TD><TD>15133</TD><TD>3.22936</TD><TD>1550</TD>
+     <TD>0.736076 -0.186648</TD><TD>1.52163 1.23296</TD><TD>0.0320468</TD><TD>80.9918</TD><TD>13</TD><TD>0.406203 -0.940628</TD><TD>1.73598 1.41752</TD><TD>-0.597734</TD><TD>224.27</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>44</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231215-035747-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1706</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.952575155</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.57605701 -30.27704813</TD>
+     <TD>2.35923  2.35923</TD><TD>69.5225</TD><TD>-0.21233</TD>
+     <TD>0.999582</TD><TD>-0.0226597</TD><TD>0.0155119</TD>
+     <TD>-0.00526936</TD><TD>-0.00100695</TD><TD>0.511458</TD><TD>0.000375309</TD><TD>16.3421</TD>
+     <TD>0.632813</TD><TD>15233</TD><TD>2.79552</TD><TD>1556</TD>
+     <TD>0.589363 -0.332621</TD><TD>1.38192 1.23772</TD><TD>-0.140173</TD><TD>36.5819</TD><TD>12</TD><TD>0.40875 -0.986442</TD><TD>1.67495 1.54679</TD><TD>-0.617803</TD><TD>30.828</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>45</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231216-035418-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1624</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.955306459</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.57616435 -30.27748278</TD>
+     <TD>2.35954  2.35954</TD><TD>69.5532</TD><TD>-0.275484</TD>
+     <TD>0.999713</TD><TD>0.00746422</TD><TD>0.0151664</TD>
+     <TD>-0.00516468</TD><TD>-0.00121924</TD><TD>0.553418</TD><TD>0.000393189</TD><TD>43.1473</TD>
+     <TD>0.693381</TD><TD>14889</TD><TD>3.19118</TD><TD>1502</TD>
+     <TD>0.736453 -0.201534</TD><TD>1.5138 1.25992</TD><TD>0.0286982</TD><TD>78.2065</TD><TD>13</TD><TD>0.370436 -0.953914</TD><TD>1.62327 1.44964</TD><TD>-0.592846</TD><TD>209.312</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>46</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231217-034946-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1630</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.958035645</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.59454814 -30.28974315</TD>
+     <TD>2.35849  2.35849</TD><TD>69.4975</TD><TD>-2.99332</TD>
+     <TD>0.99898</TD><TD>0.0150665</TD><TD>0.0152459</TD>
+     <TD>0.0127307</TD><TD>-0.013231</TD><TD>0.468169</TD><TD>0.000828031</TD><TD>75.9597</TD>
+     <TD>1.46517</TD><TD>4155</TD><TD>4.61118</TD><TD>529</TD>
+     <TD>-0.0269179 -0.114408</TD><TD>1.14669 1.67319</TD><TD>-0.614164</TD><TD>50.8531</TD><TD>10</TD><TD>-0.125519 0.106235</TD><TD>0.255228 0.111949</TD><TD>-0.460434</TD><TD>4.52657</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>47</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231218-033816-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1658</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.960751631</TD><TD>1080.000</TD><TD>1.14</TD><TD>41.57609482 -30.27721536</TD>
+     <TD>2.35954  2.35954</TD><TD>69.5411</TD><TD>-0.215224</TD>
+     <TD>0.999772</TD><TD>-0.0122825</TD><TD>0.0159008</TD>
+     <TD>-0.00521551</TD><TD>-0.00103039</TD><TD>0.538712</TD><TD>0.000165167</TD><TD>1.3166</TD>
+     <TD>0.734025</TD><TD>15128</TD><TD>3.48839</TD><TD>1556</TD>
+     <TD>0.704964 -0.31808</TD><TD>1.44687 1.17851</TD><TD>-0.152203</TD><TD>82.771</TD><TD>13</TD><TD>0.408035 -0.967169</TD><TD>1.70943 1.54654</TD><TD>-0.611437</TD><TD>238.824</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>48</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231220-021305-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1708</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.966065452</TD><TD>1080.000</TD><TD>1.02</TD><TD>41.57615083 -30.27755059</TD>
+     <TD>2.3598  2.3598</TD><TD>69.5629</TD><TD>-0.0125783</TD>
+     <TD>0.999695</TD><TD>0.00891945</TD><TD>0.0153443</TD>
+     <TD>-0.00525989</TD><TD>-0.00118456</TD><TD>0.534484</TD><TD>0.000636771</TD><TD>19.4109</TD>
+     <TD>0.613961</TD><TD>15187</TD><TD>2.6732</TD><TD>1609</TD>
+     <TD>0.837761 -0.195174</TD><TD>1.57689 1.22882</TD><TD>-0.00332829</TD><TD>81.3507</TD><TD>14</TD><TD>0.215945 -1.3656</TD><TD>1.43725 1.8413</TD><TD>-0.341989</TD><TD>205.546</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>49</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231221-023433-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1565</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.968844038</TD><TD>1080.000</TD><TD>1.05</TD><TD>41.57611958 -30.27748764</TD>
+     <TD>2.35942  2.35942</TD><TD>69.5477</TD><TD>-0.0255091</TD>
+     <TD>0.999708</TD><TD>0.00915286</TD><TD>0.0166905</TD>
+     <TD>-0.00523621</TD><TD>-0.00114872</TD><TD>0.562825</TD><TD>0.000334685</TD><TD>42.1453</TD>
+     <TD>0.92669</TD><TD>14738</TD><TD>3.84454</TD><TD>1609</TD>
+     <TD>0.724657 -0.478839</TD><TD>1.45139 1.33439</TD><TD>-0.279693</TD><TD>86.0404</TD><TD>14</TD><TD>0.203957 -1.37</TD><TD>1.42232 1.91121</TD><TD>-0.365535</TD><TD>217.246</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>50</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231222-041914-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1502</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.971780890</TD><TD>1080.000</TD><TD>1.32</TD><TD>41.56928611 -30.27400909</TD>
+     <TD>2.36026  2.36026</TD><TD>69.5366</TD><TD>0.000870864</TD>
+     <TD>0.99995</TD><TD>0.00387552</TD><TD>0.0158441</TD>
+     <TD>-0.0120216</TD><TD>0.00225899</TD><TD>0.613592</TD><TD>0.000591333</TD><TD>35.9098</TD>
+     <TD>1.41574</TD><TD>48240</TD><TD>7.35053</TD><TD>6172</TD>
+     <TD>0.0155606 -0.297393</TD><TD>1.11811 0.953082</TD><TD>0.379849</TD><TD>19.6135</TD><TD>14</TD><TD>-0.0775537 -0.458257</TD><TD>0.163623 1.0153</TD><TD>0.606802</TD><TD>4.52854</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>51</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231223-025645-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1448</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.974361994</TD><TD>1080.000</TD><TD>1.10</TD><TD>41.57601292 -30.27704633</TD>
+     <TD>2.35873  2.35873</TD><TD>69.5181</TD><TD>-0.0217775</TD>
+     <TD>0.999141</TD><TD>-0.0245494</TD><TD>0.0182971</TD>
+     <TD>-0.00510722</TD><TD>-0.0011477</TD><TD>0.579223</TD><TD>0.000844032</TD><TD>86.5659</TD>
+     <TD>0.795869</TD><TD>13845</TD><TD>3.23081</TD><TD>1608</TD>
+     <TD>0.655169 -0.386226</TD><TD>1.38351 1.20686</TD><TD>-0.142992</TD><TD>76.7547</TD><TD>14</TD><TD>0.174595 -1.33952</TD><TD>1.39976 1.83335</TD><TD>-0.32657</TD><TD>197.838</TD><TD>4</TD>
+    </TR>
+    <TR>
+     <TD>52</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231224-032206-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1428</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.977148047</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.56941206 -30.27407804</TD>
+     <TD>2.36003  2.36003</TD><TD>69.5415</TD><TD>0.0309141</TD>
+     <TD>0.999876</TD><TD>0.00411481</TD><TD>0.0180166</TD>
+     <TD>-0.0119747</TD><TD>0.00235271</TD><TD>0.638209</TD><TD>0.000389248</TD><TD>34.4088</TD>
+     <TD>1.08569</TD><TD>47351</TD><TD>4.62343</TD><TD>6172</TD>
+     <TD>0.0434782 -0.385881</TD><TD>1.12204 1.23871</TD><TD>0.357259</TD><TD>20.7303</TD><TD>14</TD><TD>-0.0844606 -0.462278</TD><TD>0.175651 0.994952</TD><TD>0.611621</TD><TD>4.24312</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>53</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231225-031822-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1433</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.979878784</TD><TD>1080.000</TD><TD>1.16</TD><TD>41.56940256 -30.274073</TD>
+     <TD>2.3601  2.3601</TD><TD>69.5436</TD><TD>-0.00584942</TD>
+     <TD>0.999981</TD><TD>0.00462793</TD><TD>0.0182554</TD>
+     <TD>-0.0119694</TD><TD>0.00232497</TD><TD>0.60973</TD><TD>0.000390657</TD><TD>29.0161</TD>
+     <TD>1.33638</TD><TD>47499</TD><TD>5.44283</TD><TD>6172</TD>
+     <TD>0.0614797 -0.255221</TD><TD>1.08612 0.838408</TD><TD>0.289521</TD><TD>20.7778</TD><TD>14</TD><TD>-0.0310323 -0.504754</TD><TD>0.167828 0.953475</TD><TD>0.514762</TD><TD>3.7624</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>54</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231226-031906-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1180</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.982618012</TD><TD>1080.000</TD><TD>1.17</TD><TD>41.56941281 -30.27408871</TD>
+     <TD>2.36005  2.36005</TD><TD>69.5403</TD><TD>0.0255598</TD>
+     <TD>0.999871</TD><TD>0.00431621</TD><TD>0.0199381</TD>
+     <TD>-0.0119693</TD><TD>0.0023449</TD><TD>0.622766</TD><TD>0.000465079</TD><TD>31.3296</TD>
+     <TD>1.18046</TD><TD>43234</TD><TD>4.46669</TD><TD>6160</TD>
+     <TD>0.0385794 -0.235824</TD><TD>1.11364 0.833236</TD><TD>0.335372</TD><TD>17.7837</TD><TD>14</TD><TD>-0.125554 -0.441174</TD><TD>0.165938 1.08528</TD><TD>0.606268</TD><TD>5.82564</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>55</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231227-031944-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1170</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.985357102</TD><TD>1080.000</TD><TD>1.19</TD><TD>41.56938679 -30.27407599</TD>
+     <TD>2.36006  2.36006</TD><TD>69.5416</TD><TD>-0.0509424</TD>
+     <TD>0.999929</TD><TD>-0.00471187</TD><TD>0.0200819</TD>
+     <TD>-0.0120203</TD><TD>0.0022788</TD><TD>0.65379</TD><TD>0.00036717</TD><TD>31.0412</TD>
+     <TD>1.12953</TD><TD>43007</TD><TD>4.34151</TD><TD>6140</TD>
+     <TD>0.0247691 -0.275363</TD><TD>1.07826 0.910328</TD><TD>0.352345</TD><TD>17.6236</TD><TD>14</TD><TD>-0.0918606 -0.449399</TD><TD>0.199172 1.07999</TD><TD>0.595328</TD><TD>5.60425</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>56</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231230-032048-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1557</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.993572686</TD><TD>1080.000</TD><TD>1.22</TD><TD>41.56941035 -30.27407453</TD>
+     <TD>2.36006  2.36006</TD><TD>69.5393</TD><TD>-0.00485907</TD>
+     <TD>0.999865</TD><TD>0.000791789</TD><TD>0.0160682</TD>
+     <TD>-0.0119608</TD><TD>0.00230275</TD><TD>0.558776</TD><TD>0.00045968</TD><TD>35.3322</TD>
+     <TD>1.09923</TD><TD>48835</TD><TD>4.61545</TD><TD>6172</TD>
+     <TD>0.057202 -0.319882</TD><TD>1.07916 1.12211</TD><TD>0.343403</TD><TD>20.4843</TD><TD>14</TD><TD>-0.0815454 -0.453935</TD><TD>0.136779 1.11726</TD><TD>0.609024</TD><TD>6.07533</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>57</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20231231-031732-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1477</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.996304319</TD><TD>1080.000</TD><TD>1.23</TD><TD>41.56938982 -30.27407773</TD>
+     <TD>2.36015  2.36015</TD><TD>69.5431</TD><TD>-0.0559907</TD>
+     <TD>0.999893</TD><TD>-0.00103319</TD><TD>0.0158608</TD>
+     <TD>-0.0119838</TD><TD>0.0023064</TD><TD>0.629535</TD><TD>0.000419319</TD><TD>32.5088</TD>
+     <TD>1.27581</TD><TD>48354</TD><TD>5.43941</TD><TD>6149</TD>
+     <TD>0.0273884 -0.317212</TD><TD>1.0842 1.12562</TD><TD>0.379956</TD><TD>21.8328</TD><TD>14</TD><TD>-0.11632 -0.474345</TD><TD>0.235392 1.12858</TD><TD>0.602122</TD><TD>6.09503</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>58</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240101-031333-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1580</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2023.999022396</TD><TD>720.000</TD><TD>1.21</TD><TD>41.56269901 -30.28168292</TD>
+     <TD>2.35939  2.35939</TD><TD>69.5255</TD><TD>-2.37147</TD>
+     <TD>0.999574</TD><TD>0.00388411</TD><TD>0.0151792</TD>
+     <TD>-0.0186192</TD><TD>-0.00517301</TD><TD>0.573497</TD><TD>0.00055921</TD><TD>78.3695</TD>
+     <TD>53.2873</TD><TD>4593</TD><TD>242.452</TD><TD>512</TD>
+     <TD>0.444277 0.770722</TD><TD>1.55172 1.4555</TD><TD>0.122364</TD><TD>48.1798</TD><TD>8</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>59</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240102-042249-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1536</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.001904130</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.58423613 -30.26682902</TD>
+     <TD>2.35991  2.35991</TD><TD>69.5388</TD><TD>0.374371</TD>
+     <TD>0.999883</TD><TD>0.00360873</TD><TD>0.0167853</TD>
+     <TD>0.0027762</TD><TD>0.00948344</TD><TD>0.551059</TD><TD>0.000120394</TD><TD>49.6838</TD>
+     <TD>1.45293</TD><TD>2994</TD><TD>5.30904</TD><TD>312</TD>
+     <TD>0.143518 -0.0670291</TD><TD>1.75644 1.51857</TD><TD>0.107488</TD><TD>146.92</TD><TD>11</TD><TD>-1.46508 -1.06953</TD><TD>1.5677 2.33797</TD><TD>0.585732</TD><TD>409.848</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>60</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240103-041852-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1563</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.004634383</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.5698388 -30.27380133</TD>
+     <TD>2.36032  2.36032</TD><TD>69.5642</TD><TD>-0.0942306</TD>
+     <TD>0.999936</TD><TD>-0.00358291</TD><TD>0.0162756</TD>
+     <TD>-0.0119156</TD><TD>0.00253495</TD><TD>0.585988</TD><TD>0.00033462</TD><TD>22.4102</TD>
+     <TD>1.33273</TD><TD>49013</TD><TD>5.70301</TD><TD>6151</TD>
+     <TD>0.135438 -0.155142</TD><TD>1.1056 0.966872</TD><TD>0.425208</TD><TD>24.231</TD><TD>15</TD><TD>-0.0692719 -0.590199</TD><TD>0.21171 1.07776</TD><TD>0.574517</TD><TD>4.70816</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>61</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240104-041503-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1701</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.007365011</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.56938513 -30.27406133</TD>
+     <TD>2.3601  2.3601</TD><TD>69.5383</TD><TD>-0.0856473</TD>
+     <TD>0.999843</TD><TD>0.0038333</TD><TD>0.0153809</TD>
+     <TD>-0.0119466</TD><TD>0.00237595</TD><TD>0.528183</TD><TD>0.000393785</TD><TD>23.7208</TD>
+     <TD>1.26889</TD><TD>49509</TD><TD>5.56144</TD><TD>6136</TD>
+     <TD>0.0281746 -0.261254</TD><TD>1.07617 0.955597</TD><TD>0.405354</TD><TD>22.0793</TD><TD>14</TD><TD>-0.103877 -0.516697</TD><TD>0.240511 1.10687</TD><TD>0.600426</TD><TD>5.33725</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>62</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240106-042759-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1507</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.012928793</TD><TD>1080.000</TD><TD>2.32</TD><TD>41.59084703 -30.261712</TD>
+     <TD>2.36034  2.36034</TD><TD>69.5012</TD><TD>-0.0566487</TD>
+     <TD>0.999591</TD><TD>-0.0150174</TD><TD>0.0183818</TD>
+     <TD>0.00970752</TD><TD>0.0144815</TD><TD>0.495868</TD><TD>0.0010464</TD><TD>51.8578</TD>
+     <TD>26.4593</TD><TD>1529</TD><TD>130.111</TD><TD>163</TD>
+     <TD>-1.06134 -0.104728</TD><TD>1.87892 2.00328</TD><TD>0.276099</TD><TD>138.307</TD><TD>8</TD><TD>-0.338184 -0.322745</TD><TD>0.883228 0.549417</TD><TD>-0.148875</TD><TD>48.0143</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>63</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240112-035829-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1771</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.029236270</TD><TD>1080.000</TD><TD>1.69</TD><TD>41.56982205 -30.27381579</TD>
+     <TD>2.36017  2.36017</TD><TD>69.5547</TD><TD>-0.114732</TD>
+     <TD>0.999895</TD><TD>-0.00475829</TD><TD>0.0146866</TD>
+     <TD>-0.0118814</TD><TD>0.00260575</TD><TD>0.595564</TD><TD>0.000238034</TD><TD>24.4578</TD>
+     <TD>1.40656</TD><TD>49777</TD><TD>5.98209</TD><TD>6141</TD>
+     <TD>0.0483447 -0.294346</TD><TD>1.07087 0.950905</TD><TD>0.328622</TD><TD>21.365</TD><TD>14</TD><TD>-0.0859497 -0.430632</TD><TD>0.14306 1.08661</TD><TD>0.605073</TD><TD>5.92895</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>64</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240113-035451-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1751</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.031967249</TD><TD>1080.000</TD><TD>1.69</TD><TD>41.56980344 -30.27379497</TD>
+     <TD>2.36068  2.36068</TD><TD>69.5785</TD><TD>-0.115877</TD>
+     <TD>0.999952</TD><TD>-0.00632479</TD><TD>0.0149996</TD>
+     <TD>-0.0118254</TD><TD>0.00255601</TD><TD>0.614756</TD><TD>0.000431798</TD><TD>52.1108</TD>
+     <TD>1.21285</TD><TD>49753</TD><TD>5.63021</TD><TD>6103</TD>
+     <TD>0.144416 -0.220992</TD><TD>1.12453 1.10698</TD><TD>0.452711</TD><TD>19.4417</TD><TD>15</TD><TD>-0.0354708 -0.435853</TD><TD>0.13263 0.992686</TD><TD>0.550288</TD><TD>4.4867</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>65</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240114-035058-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1815</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.034697726</TD><TD>1080.000</TD><TD>1.70</TD><TD>41.56980011 -30.27377966</TD>
+     <TD>2.36068  2.36068</TD><TD>69.5761</TD><TD>-0.0891312</TD>
+     <TD>1.00001</TD><TD>-0.00644278</TD><TD>0.0146027</TD>
+     <TD>-0.0118302</TD><TD>0.00254554</TD><TD>0.591962</TD><TD>0.000403965</TD><TD>51.8265</TD>
+     <TD>1.2016</TD><TD>49806</TD><TD>5.19752</TD><TD>6144</TD>
+     <TD>0.122361 -0.0580499</TD><TD>1.18322 1.18107</TD><TD>0.389261</TD><TD>22.2335</TD><TD>16</TD><TD>-0.108871 -0.485674</TD><TD>0.165869 1.06438</TD><TD>0.63516</TD><TD>4.93221</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>66</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240116-024316-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1782</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.040044691</TD><TD>1080.000</TD><TD>1.33</TD><TD>41.59222531 -30.2721199</TD>
+     <TD>2.36028  2.36028</TD><TD>69.5588</TD><TD>-0.0173851</TD>
+     <TD>1.00008</TD><TD>-0.0101741</TD><TD>0.0151964</TD>
+     <TD>0.010605</TD><TD>0.00436581</TD><TD>0.563094</TD><TD>0.000119137</TD><TD>85.1921</TD>
+     <TD>3.27512</TD><TD>2891</TD><TD>12.5525</TD><TD>338</TD>
+     <TD>-0.0113597 0.128479</TD><TD>1.82244 1.32743</TD><TD>-0.0618175</TD><TD>38.9603</TD><TD>10</TD><TD>-0.232059 -0.068385</TD><TD>0.282356 0.240908</TD><TD>-0.0398254</TD><TD>9.30062</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>67</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240117-025910-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1669</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.042813319</TD><TD>1080.000</TD><TD>1.43</TD><TD>41.59226964 -30.27207562</TD>
+     <TD>2.36032  2.36032</TD><TD>69.5565</TD><TD>-0.02138</TD>
+     <TD>1.00015</TD><TD>-0.007611</TD><TD>0.0167615</TD>
+     <TD>0.0106189</TD><TD>0.00430442</TD><TD>0.577145</TD><TD>5.56117e-05</TD><TD>36.1508</TD>
+     <TD>3.21257</TD><TD>2886</TD><TD>12.3318</TD><TD>338</TD>
+     <TD>-0.0046342 0.16329</TD><TD>1.8445 1.3431</TD><TD>-0.107679</TD><TD>40.5971</TD><TD>10</TD><TD>-0.191822 -0.0832432</TD><TD>0.243729 0.339676</TD><TD>-0.106178</TD><TD>10.7827</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>68</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240118-030509-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1609</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.045562015</TD><TD>1080.000</TD><TD>1.48</TD><TD>41.58422391 -30.26688682</TD>
+     <TD>2.35956  2.35956</TD><TD>69.5268</TD><TD>0.347519</TD>
+     <TD>0.999596</TD><TD>-0.00536701</TD><TD>0.0160626</TD>
+     <TD>0.00283333</TD><TD>0.00954766</TD><TD>0.542692</TD><TD>0.000387941</TD><TD>20.3156</TD>
+     <TD>1.17481</TD><TD>3031</TD><TD>4.22947</TD><TD>312</TD>
+     <TD>0.209586 -0.0580233</TD><TD>1.82776 1.56681</TD><TD>0.0917159</TD><TD>148.439</TD><TD>11</TD><TD>-1.45986 -1.09814</TD><TD>1.60734 2.41187</TD><TD>0.599806</TD><TD>420.524</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>69</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240119-030041-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1581</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.048291340</TD><TD>1080.000</TD><TD>1.48</TD><TD>41.56930659 -30.27400356</TD>
+     <TD>2.36056  2.36056</TD><TD>69.5448</TD><TD>-0.110304</TD>
+     <TD>0.99987</TD><TD>0.0039139</TD><TD>0.0155324</TD>
+     <TD>-0.0118096</TD><TD>0.00235457</TD><TD>0.568216</TD><TD>0.000746153</TD><TD>23.7972</TD>
+     <TD>1.44164</TD><TD>48901</TD><TD>6.06612</TD><TD>6141</TD>
+     <TD>0.0371511 -0.251485</TD><TD>1.07556 0.944355</TD><TD>0.398575</TD><TD>22.6993</TD><TD>14</TD><TD>-0.129047 -0.423562</TD><TD>0.218932 1.01189</TD><TD>0.61355</TD><TD>4.92778</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>70</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240120-032752-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1397</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.051080881</TD><TD>1080.000</TD><TD>1.70</TD><TD>41.56982182 -30.2738433</TD>
+     <TD>2.36052  2.36052</TD><TD>69.5711</TD><TD>-0.140778</TD>
+     <TD>0.999971</TD><TD>0.00104137</TD><TD>0.0166637</TD>
+     <TD>-0.0118055</TD><TD>0.00257794</TD><TD>0.696438</TD><TD>0.000368747</TD><TD>62.4744</TD>
+     <TD>1.31958</TD><TD>47235</TD><TD>5.69392</TD><TD>6016</TD>
+     <TD>0.0353646 -0.317435</TD><TD>1.08718 1.08564</TD><TD>0.404101</TD><TD>20.4803</TD><TD>14</TD><TD>-0.0840628 -0.414532</TD><TD>0.153865 1.0901</TD><TD>0.595078</TD><TD>6.23908</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>71</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240121-032355-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1348</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.053811274</TD><TD>1080.000</TD><TD>1.70</TD><TD>41.56986364 -30.27384268</TD>
+     <TD>2.36069  2.36069</TD><TD>69.5773</TD><TD>-0.151954</TD>
+     <TD>1.00001</TD><TD>-0.000151803</TD><TD>0.016086</TD>
+     <TD>-0.0117821</TD><TD>0.0025605</TD><TD>0.573039</TD><TD>0.000419739</TD><TD>60.8469</TD>
+     <TD>1.26267</TD><TD>46408</TD><TD>5.39152</TD><TD>6016</TD>
+     <TD>0.0392567 -0.277273</TD><TD>1.06136 0.992547</TD><TD>0.383847</TD><TD>18.5626</TD><TD>14</TD><TD>0.00206101 -0.530264</TD><TD>0.238409 1.09073</TD><TD>0.432717</TD><TD>5.66347</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>72</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240123-031614-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1205</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.059272315</TD><TD>1080.000</TD><TD>1.70</TD><TD>41.56963823 -30.27411999</TD>
+     <TD>2.35966  2.35966</TD><TD>69.535</TD><TD>-0.111498</TD>
+     <TD>0.999459</TD><TD>0.0134388</TD><TD>0.0183068</TD>
+     <TD>-0.0117211</TD><TD>0.00285915</TD><TD>0.611378</TD><TD>0.000621064</TD><TD>87.8555</TD>
+     <TD>1.2977</TD><TD>43835</TD><TD>5.21002</TD><TD>6016</TD>
+     <TD>0.0483254 -0.252049</TD><TD>1.05305 0.891798</TD><TD>0.353093</TD><TD>17.9058</TD><TD>14</TD><TD>-0.067567 -0.389724</TD><TD>0.131352 1.02179</TD><TD>0.59256</TD><TD>5.4504</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>73</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240124-025657-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1249</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.061973518</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.59230294 -30.27207272</TD>
+     <TD>2.36029  2.36029</TD><TD>69.5553</TD><TD>-0.0459731</TD>
+     <TD>1.00005</TD><TD>-2.29636e-05</TD><TD>0.0188017</TD>
+     <TD>0.0109645</TD><TD>0.00421508</TD><TD>0.568734</TD><TD>7.20016e-05</TD><TD>84.5845</TD>
+     <TD>3.39982</TD><TD>2463</TD><TD>11.9122</TD><TD>332</TD>
+     <TD>0.644814 0.331561</TD><TD>2.08312 1.14771</TD><TD>-0.233328</TD><TD>45.0299</TD><TD>7</TD><TD>-0.218326 -0.0460205</TD><TD>0.254693 0.293772</TD><TD>-0.120017</TD><TD>9.78661</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>74</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240125-025242-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1101</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.064703262</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.56941035 -30.27398119</TD>
+     <TD>2.36021  2.36021</TD><TD>69.5278</TD><TD>-0.138507</TD>
+     <TD>0.999733</TD><TD>0.0080621</TD><TD>0.0222039</TD>
+     <TD>-0.0118946</TD><TD>0.00240959</TD><TD>0.587277</TD><TD>0.000714097</TD><TD>44.1203</TD>
+     <TD>1.32211</TD><TD>41245</TD><TD>4.75577</TD><TD>5998</TD>
+     <TD>0.167632 -0.0758115</TD><TD>1.01824 0.515822</TD><TD>0.117225</TD><TD>17.3231</TD><TD>13</TD><TD>-0.125798 -0.381281</TD><TD>0.188674 1.06335</TD><TD>0.586936</TD><TD>6.39432</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>75</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240130-023324-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1230</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.078355832</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.56980836 -30.27380072</TD>
+     <TD>2.36075  2.36075</TD><TD>69.5773</TD><TD>-0.129422</TD>
+     <TD>1.00014</TD><TD>-0.00209946</TD><TD>0.0168087</TD>
+     <TD>-0.0118075</TD><TD>0.00248949</TD><TD>0.629332</TD><TD>0.000295862</TD><TD>64.4398</TD>
+     <TD>1.21833</TD><TD>44790</TD><TD>5.11511</TD><TD>6015</TD>
+     <TD>0.0407677 -0.264144</TD><TD>1.08588 0.931811</TD><TD>0.361687</TD><TD>18.0325</TD><TD>14</TD><TD>-0.0983704 -0.465229</TD><TD>0.164026 1.10074</TD><TD>0.616084</TD><TD>5.67295</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>76</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240131-022923-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1291</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.081086072</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.5698248 -30.2738777</TD>
+     <TD>2.36005  2.36005</TD><TD>69.5489</TD><TD>-0.112616</TD>
+     <TD>0.999877</TD><TD>-0.00180539</TD><TD>0.016277</TD>
+     <TD>-0.0118371</TD><TD>0.00249091</TD><TD>0.61803</TD><TD>0.000263045</TD><TD>87.5237</TD>
+     <TD>1.19312</TD><TD>45820</TD><TD>4.95432</TD><TD>6028</TD>
+     <TD>0.170829 -0.0836512</TD><TD>1.0898 0.511494</TD><TD>0.077264</TD><TD>17.6723</TD><TD>13</TD><TD>-0.150623 -0.466333</TD><TD>0.25894 1.03886</TD><TD>0.624541</TD><TD>4.87218</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>77</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240202-022126-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1754</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.086546608</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.59753162 -30.284486</TD>
+     <TD>2.35971  2.35971</TD><TD>69.5471</TD><TD>-1.73607</TD>
+     <TD>0.999712</TD><TD>0.00445227</TD><TD>0.0146061</TD>
+     <TD>0.0161161</TD><TD>-0.00795253</TD><TD>0.56979</TD><TD>0.000331347</TD><TD>60.1566</TD>
+     <TD>2.95996</TD><TD>1639</TD><TD>3.44121</TD><TD>147</TD>
+     <TD>0.0676906 0.104158</TD><TD>1.88837 1.29895</TD><TD>-0.0329111</TD><TD>213.337</TD><TD>7</TD><TD>-0.338777 -0.320066</TD><TD>2.53915 1.61631</TD><TD>-0.459296</TD><TD>493.607</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>78</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240204-021337-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1596</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.092007430</TD><TD>1080.000</TD><TD>1.58</TD><TD>41.58418605 -30.26691556</TD>
+     <TD>2.35987  2.35987</TD><TD>69.5363</TD><TD>0.242108</TD>
+     <TD>0.999842</TD><TD>-0.00271499</TD><TD>0.0153606</TD>
+     <TD>0.00284038</TD><TD>0.009548</TD><TD>0.594107</TD><TD>0.000198113</TD><TD>36.8116</TD>
+     <TD>1.24464</TD><TD>3007</TD><TD>4.97458</TD><TD>294</TD>
+     <TD>0.194898 -0.133321</TD><TD>1.79063 1.54755</TD><TD>0.0866877</TD><TD>131.027</TD><TD>11</TD><TD>-1.42642 -1.0673</TD><TD>1.61747 2.35502</TD><TD>0.609806</TD><TD>384.399</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>79</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240205-022415-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1171</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.094763577</TD><TD>1020.000</TD><TD>1.69</TD><TD>41.56981919 -30.27383247</TD>
+     <TD>2.36043  2.36043</TD><TD>69.5641</TD><TD>-0.51428</TD>
+     <TD>1.00004</TD><TD>-0.00222233</TD><TD>0.0174522</TD>
+     <TD>-0.0118582</TD><TD>0.00246234</TD><TD>0.543444</TD><TD>0.000196215</TD><TD>32.806</TD>
+     <TD>1.14379</TD><TD>43131</TD><TD>5.65594</TD><TD>4705</TD>
+     <TD>0.153744 -0.0969706</TD><TD>1.07321 0.509857</TD><TD>-0.0225391</TD><TD>11.6862</TD><TD>13</TD><TD>0.0424772 0.114301</TD><TD>0 0</TD><TD>0.000871729</TD><TD>0.80159</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>80</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240206-021311-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1579</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.097482418</TD><TD>1080.000</TD><TD>1.64</TD><TD>41.59754212 -30.28435834</TD>
+     <TD>2.35978  2.35978</TD><TD>69.5425</TD><TD>-1.81229</TD>
+     <TD>0.999848</TD><TD>0.00035447</TD><TD>0.0169872</TD>
+     <TD>0.0160671</TD><TD>-0.00798287</TD><TD>0.590133</TD><TD>0.000164985</TD><TD>61.6247</TD>
+     <TD>2.69674</TD><TD>1623</TD><TD>3.44121</TD><TD>147</TD>
+     <TD>0.0726567 0.105943</TD><TD>1.89471 1.23958</TD><TD>-0.057443</TD><TD>200.114</TD><TD>7</TD><TD>-0.358261 -0.323378</TD><TD>2.48202 1.55925</TD><TD>-0.454071</TD><TD>464.536</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>81</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240207-020826-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1604</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.100211132</TD><TD>1080.000</TD><TD>1.63</TD><TD>41.56367619 -30.25978817</TD>
+     <TD>2.35962  2.35962</TD><TD>69.5224</TD><TD>-0.0359074</TD>
+     <TD>0.999593</TD><TD>-0.0099692</TD><TD>0.0150396</TD>
+     <TD>-0.0177615</TD><TD>0.0168645</TD><TD>0.589345</TD><TD>0.000563835</TD><TD>17.5804</TD>
+     <TD>31.4473</TD><TD>51</TD><TD>0</TD><TD>0</TD>
+     <TD>0.394864 0.22069</TD><TD>1.57561 1.16393</TD><TD>-0.00557618</TD><TD>73.756</TD><TD>11</TD><TD>0.613158 -0.471189</TD><TD>0 0</TD><TD>-0.0518734</TD><TD>5.38676</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>82</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240211-020854-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1718</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.111163536</TD><TD>1080.000</TD><TD>1.77</TD><TD>41.56182568 -30.28208793</TD>
+     <TD>2.36095  2.36095</TD><TD>69.5893</TD><TD>-2.97191</TD>
+     <TD>1</TD><TD>-0.0258174</TD><TD>0.0152343</TD>
+     <TD>-0.0193113</TD><TD>-0.00571018</TD><TD>0.607698</TD><TD>0.000715787</TD><TD>25.7732</TD>
+     <TD>6.67556</TD><TD>8716</TD><TD>28.4903</TD><TD>963</TD>
+     <TD>-0.188298 0.14949</TD><TD>1.83077 1.60978</TD><TD>0.348332</TD><TD>50.5688</TD><TD>15</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>83</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240212-012957-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1747</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.113827310</TD><TD>1080.000</TD><TD>1.50</TD><TD>41.5906164 -30.26243716</TD>
+     <TD>2.36014  2.36014</TD><TD>69.553</TD><TD>-0.0775965</TD>
+     <TD>0.999847</TD><TD>-0.00770218</TD><TD>0.0143007</TD>
+     <TD>0.00933713</TD><TD>0.0137387</TD><TD>0.537459</TD><TD>0.000520573</TD><TD>86.3721</TD>
+     <TD>29.6122</TD><TD>1622</TD><TD>150.251</TD><TD>168</TD>
+     <TD>-0.814735 0.0642035</TD><TD>1.56287 2.05973</TD><TD>0.330888</TD><TD>125.279</TD><TD>10</TD><TD>-0.549218 -0.222463</TD><TD>1.24674 0.582395</TD><TD>-0.246563</TD><TD>72.2873</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>84</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240213-014040-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1656</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.116585543</TD><TD>1080.000</TD><TD>1.60</TD><TD>41.56179586 -30.28191309</TD>
+     <TD>2.35998  2.35998</TD><TD>69.5655</TD><TD>-2.9215</TD>
+     <TD>0.999679</TD><TD>-0.0282629</TD><TD>0.0171084</TD>
+     <TD>-0.0193106</TD><TD>-0.00555149</TD><TD>0.595888</TD><TD>0.000675761</TD><TD>57.8073</TD>
+     <TD>6.62981</TD><TD>8685</TD><TD>29.0768</TD><TD>967</TD>
+     <TD>-0.207763 0.115324</TD><TD>1.93922 1.67992</TD><TD>0.337423</TD><TD>54.3964</TD><TD>14</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>85</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240214-013751-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1614</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.119318409</TD><TD>1080.000</TD><TD>1.61</TD><TD>41.56176381 -30.28190199</TD>
+     <TD>2.3601  2.3601</TD><TD>69.5711</TD><TD>-2.93965</TD>
+     <TD>0.999704</TD><TD>-0.0267369</TD><TD>0.0165425</TD>
+     <TD>-0.0193149</TD><TD>-0.00554378</TD><TD>0.618517</TD><TD>0.000754575</TD><TD>59.753</TD>
+     <TD>6.6689</TD><TD>8641</TD><TD>29.0605</TD><TD>970</TD>
+     <TD>-0.192656 0.110554</TD><TD>1.89826 1.65024</TD><TD>0.361486</TD><TD>52.9188</TD><TD>14</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>86</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240215-013242-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1543</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.122046114</TD><TD>1080.000</TD><TD>1.60</TD><TD>41.56177827 -30.28193729</TD>
+     <TD>2.36007  2.36007</TD><TD>69.5701</TD><TD>-2.93469</TD>
+     <TD>0.999698</TD><TD>-0.0242327</TD><TD>0.0179293</TD>
+     <TD>-0.019299</TD><TD>-0.00554647</TD><TD>0.594622</TD><TD>0.000771375</TD><TD>60.8473</TD>
+     <TD>7.13411</TD><TD>8439</TD><TD>30.1621</TD><TD>961</TD>
+     <TD>-0.484809 0.165541</TD><TD>1.70783 1.67446</TD><TD>0.469271</TD><TD>53.4533</TD><TD>13</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>87</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240217-021438-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1445</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.127601573</TD><TD>1080.000</TD><TD>2.10</TD><TD>41.56976585 -30.27379311</TD>
+     <TD>2.36033  2.36033</TD><TD>69.5572</TD><TD>-0.178755</TD>
+     <TD>0.999837</TD><TD>0.00526909</TD><TD>0.0151197</TD>
+     <TD>-0.0116315</TD><TD>0.0026145</TD><TD>0.563772</TD><TD>0.0003716</TD><TD>57.1834</TD>
+     <TD>1.22046</TD><TD>48041</TD><TD>5.29397</TD><TD>6015</TD>
+     <TD>0.0203365 -0.226614</TD><TD>1.14521 0.818429</TD><TD>0.43612</TD><TD>19.1976</TD><TD>14</TD><TD>-0.135926 -0.416835</TD><TD>0.22693 1.00857</TD><TD>0.612141</TD><TD>4.97238</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>88</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240219-012212-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1308</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.132977559</TD><TD>1080.000</TD><TD>1.64</TD><TD>41.5697414 -30.27377092</TD>
+     <TD>2.36055  2.36055</TD><TD>69.5688</TD><TD>-0.185388</TD>
+     <TD>1.00012</TD><TD>-0.000753892</TD><TD>0.0183485</TD>
+     <TD>-0.0116613</TD><TD>0.00251348</TD><TD>0.620178</TD><TD>0.000235778</TD><TD>58.0798</TD>
+     <TD>1.15621</TD><TD>46127</TD><TD>4.8712</TD><TD>5959</TD>
+     <TD>0.0290103 -0.265543</TD><TD>1.10135 0.849369</TD><TD>0.357867</TD><TD>18.1029</TD><TD>14</TD><TD>-0.0653485 -0.451932</TD><TD>0.191605 1.08589</TD><TD>0.569324</TD><TD>5.71987</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>89</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240220-011735-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1094</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.135706565</TD><TD>1080.000</TD><TD>1.63</TD><TD>41.56972669 -30.27376468</TD>
+     <TD>2.36024  2.36024</TD><TD>69.5498</TD><TD>-0.22104</TD>
+     <TD>1.00006</TD><TD>-0.00668512</TD><TD>0.0205968</TD>
+     <TD>-0.0116333</TD><TD>0.00247529</TD><TD>0.596038</TD><TD>0.000119639</TD><TD>77.0051</TD>
+     <TD>1.24475</TD><TD>41154</TD><TD>4.66213</TD><TD>5819</TD>
+     <TD>0.187993 -0.112333</TD><TD>1.0737 0.532427</TD><TD>0.0256742</TD><TD>15.1844</TD><TD>13</TD><TD>-0.0655209 -0.44434</TD><TD>0.19356 1.05724</TD><TD>0.56918</TD><TD>5.36629</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>90</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240221-011418-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>808</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.138432549</TD><TD>900.000</TD><TD>1.64</TD><TD>41.56975595 -30.27377304</TD>
+     <TD>2.36063  2.36063</TD><TD>69.5651</TD><TD>-0.0878342</TD>
+     <TD>1.00021</TD><TD>-0.0055821</TD><TD>0.0245981</TD>
+     <TD>-0.0116303</TD><TD>0.0024257</TD><TD>0.639975</TD><TD>0.000186808</TD><TD>84.8962</TD>
+     <TD>1.71967</TD><TD>31860</TD><TD>5.51507</TD><TD>5322</TD>
+     <TD>-0.0943586 -0.0880593</TD><TD>0.444574 0.520021</TD><TD>-0.277946</TD><TD>6.80551</TD><TD>12</TD><TD>0.07867 0.204428</TD><TD>0 0</TD><TD>0.00288753</TD><TD>2.64213</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>91</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240222-010334-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1031</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.141180145</TD><TD>1080.000</TD><TD>1.80</TD><TD>41.56975551 -30.2737779</TD>
+     <TD>2.3602  2.3602</TD><TD>69.5488</TD><TD>-0.256846</TD>
+     <TD>0.999983</TD><TD>-0.00547768</TD><TD>0.0211694</TD>
+     <TD>-0.0116544</TD><TD>0.00246138</TD><TD>0.616887</TD><TD>0.000186953</TD><TD>17.6895</TD>
+     <TD>1.32192</TD><TD>39308</TD><TD>5.01272</TD><TD>5702</TD>
+     <TD>-0.0954374 -0.133481</TD><TD>0.490829 0.543686</TD><TD>-0.147812</TD><TD>7.46849</TD><TD>12</TD><TD>-0.0496848 -0.403793</TD><TD>0.187702 0.956834</TD><TD>0.548833</TD><TD>4.42725</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>92</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240223-010038-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>812</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.143911177</TD><TD>960.000</TD><TD>1.82</TD><TD>41.56970352 -30.27374952</TD>
+     <TD>2.36029  2.36029</TD><TD>69.5492</TD><TD>-0.168511</TD>
+     <TD>1.00001</TD><TD>-0.00215758</TD><TD>0.0275366</TD>
+     <TD>-0.0116315</TD><TD>0.00242885</TD><TD>0.58494</TD><TD>0.000148635</TD><TD>8.07984</TD>
+     <TD>1.40983</TD><TD>32141</TD><TD>4.63911</TD><TD>5132</TD>
+     <TD>-0.127147 -0.159575</TD><TD>0.492612 0.545801</TD><TD>-0.276302</TD><TD>6.69412</TD><TD>12</TD><TD>0.01738 0.178275</TD><TD>0 0</TD><TD>0.000556309</TD><TD>1.7081</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>93</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240224-005623-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>814</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.146642087</TD><TD>1080.000</TD><TD>1.81</TD><TD>41.56975175 -30.27375814</TD>
+     <TD>2.36058  2.36058</TD><TD>69.5648</TD><TD>-0.187421</TD>
+     <TD>1.00011</TD><TD>0.00834261</TD><TD>0.0267134</TD>
+     <TD>-0.0115402</TD><TD>0.00246728</TD><TD>0.557364</TD><TD>0.000275795</TD><TD>52.96</TD>
+     <TD>1.49363</TD><TD>32207</TD><TD>4.6484</TD><TD>5622</TD>
+     <TD>-0.11017 -0.200182</TD><TD>0.518861 0.560356</TD><TD>-0.111775</TD><TD>7.14094</TD><TD>12</TD><TD>-0.0406035 -0.421857</TD><TD>0.139558 1.02486</TD><TD>0.555723</TD><TD>5.02321</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>94</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240225-010729-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>820</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.149401187</TD><TD>1080.000</TD><TD>1.97</TD><TD>41.56191628 -30.28207394</TD>
+     <TD>2.36074  2.36074</TD><TD>69.5698</TD><TD>-2.95032</TD>
+     <TD>1.00004</TD><TD>-0.00362931</TD><TD>0.0238617</TD>
+     <TD>-0.0192658</TD><TD>-0.00568736</TD><TD>0.598369</TD><TD>0.00045758</TD><TD>31.2801</TD>
+     <TD>10.1724</TD><TD>5256</TD><TD>31.4547</TD><TD>903</TD>
+     <TD>-0.544492 -0.32921</TD><TD>1.73492 1.66625</TD><TD>0.609526</TD><TD>46.322</TD><TD>9</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>95</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240226-010406-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>821</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.152135157</TD><TD>1080.000</TD><TD>2.01</TD><TD>41.5698377 -30.27376811</TD>
+     <TD>2.36038  2.36038</TD><TD>69.5532</TD><TD>-0.177472</TD>
+     <TD>0.99985</TD><TD>0.00119204</TD><TD>0.0257176</TD>
+     <TD>-0.0118151</TD><TD>0.00246297</TD><TD>0.585588</TD><TD>0.000461892</TD><TD>17.7392</TD>
+     <TD>1.83105</TD><TD>32385</TD><TD>6.18313</TD><TD>5635</TD>
+     <TD>-0.109783 -0.178819</TD><TD>0.563062 0.532699</TD><TD>0.0188572</TD><TD>7.46377</TD><TD>12</TD><TD>-0.0303707 -0.435701</TD><TD>0.121359 0.972112</TD><TD>0.544908</TD><TD>4.13896</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>96</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240227-005945-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>845</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.154864838</TD><TD>1080.000</TD><TD>2.01</TD><TD>41.56977631 -30.27373103</TD>
+     <TD>2.36007  2.36007</TD><TD>69.5445</TD><TD>-0.132364</TD>
+     <TD>0.999797</TD><TD>-0.00928446</TD><TD>0.0243567</TD>
+     <TD>-0.0116801</TD><TD>0.00247319</TD><TD>0.572728</TD><TD>0.000384579</TD><TD>31.4756</TD>
+     <TD>2.72834</TD><TD>33110</TD><TD>10.0525</TD><TD>5695</TD>
+     <TD>-0.0919156 -0.186695</TD><TD>0.656798 0.567884</TD><TD>0.116896</TD><TD>8.07005</TD><TD>12</TD><TD>-0.0431125 -0.446944</TD><TD>0.0830751 0.938269</TD><TD>0.622999</TD><TD>3.54947</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>97</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240228-005604-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>908</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.157595923</TD><TD>1080.000</TD><TD>2.01</TD><TD>41.56976777 -30.27373739</TD>
+     <TD>2.36015  2.36015</TD><TD>69.5473</TD><TD>-0.16063</TD>
+     <TD>0.999777</TD><TD>-0.00904669</TD><TD>0.0263181</TD>
+     <TD>-0.0116652</TD><TD>0.00247972</TD><TD>0.532502</TD><TD>0.000385036</TD><TD>31.2097</TD>
+     <TD>1.59952</TD><TD>35191</TD><TD>5.87025</TD><TD>5770</TD>
+     <TD>-0.101613 -0.22116</TD><TD>0.611757 0.560717</TD><TD>0.0800844</TD><TD>8.12431</TD><TD>12</TD><TD>-0.0195571 -0.416373</TD><TD>0.121212 0.971024</TD><TD>0.514967</TD><TD>4.31293</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>98</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240229-005141-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1294</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.160325231</TD><TD>1080.000</TD><TD>2.01</TD><TD>41.56988258 -30.27371208</TD>
+     <TD>2.3599  2.3599</TD><TD>69.5359</TD><TD>-0.121576</TD>
+     <TD>0.99972</TD><TD>0.00682231</TD><TD>0.0181763</TD>
+     <TD>-0.01178</TD><TD>0.00253044</TD><TD>0.502279</TD><TD>0.00048875</TD><TD>14.3452</TD>
+     <TD>2.07157</TD><TD>45414</TD><TD>10.6065</TD><TD>5970</TD>
+     <TD>0.143472 -0.386352</TD><TD>1.12306 1.17445</TD><TD>0.315985</TD><TD>10.8849</TD><TD>13</TD><TD>-0.0237741 -0.426263</TD><TD>0.0986147 0.962669</TD><TD>0.541838</TD><TD>4.00071</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>99</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240301-004755-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1326</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.163055809</TD><TD>1080.000</TD><TD>2.01</TD><TD>41.56894921 -30.28744949</TD>
+     <TD>2.36015  2.36015</TD><TD>69.5266</TD><TD>-1.54154</TD>
+     <TD>0.999922</TD><TD>-0.00919444</TD><TD>0.0170806</TD>
+     <TD>-0.0123632</TD><TD>-0.0109804</TD><TD>0.48417</TD><TD>0.000179702</TD><TD>55.3539</TD>
+     <TD>8.85376</TD><TD>24</TD><TD>0</TD><TD>0</TD>
+     <TD>0.200169 -0.161928</TD><TD>1.68096 1.5715</TD><TD>0.348882</TD><TD>54.9675</TD><TD>11</TD><TD>-0.11565 0.783823</TD><TD>0 0</TD><TD>-0.0162758</TD><TD>43.8993</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>100</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240302-003909-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1296</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.165776976</TD><TD>1080.000</TD><TD>1.95</TD><TD>41.5698603 -30.27377534</TD>
+     <TD>2.36  2.36</TD><TD>69.5411</TD><TD>-0.159114</TD>
+     <TD>0.999708</TD><TD>0.000589115</TD><TD>0.0176236</TD>
+     <TD>-0.0117856</TD><TD>0.0025591</TD><TD>0.511443</TD><TD>0.000582581</TD><TD>16.1808</TD>
+     <TD>2.06698</TD><TD>45556</TD><TD>11.4335</TD><TD>5881</TD>
+     <TD>0.0957325 -0.367071</TD><TD>1.13051 1.12118</TD><TD>0.350413</TD><TD>10.712</TD><TD>13</TD><TD>0.0116977 -0.431258</TD><TD>0.125395 0.984017</TD><TD>0.40658</TD><TD>4.40703</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>101</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240303-003809-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1307</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.168512961</TD><TD>1080.000</TD><TD>1.98</TD><TD>41.5630667 -30.28114029</TD>
+     <TD>2.35902  2.35902</TD><TD>69.4883</TD><TD>-2.93291</TD>
+     <TD>0.999583</TD><TD>-0.00359093</TD><TD>0.0162312</TD>
+     <TD>-0.0183661</TD><TD>-0.00450863</TD><TD>0.531428</TD><TD>0.000761452</TD><TD>73.7194</TD>
+     <TD>50.8425</TD><TD>1097</TD><TD>253.731</TD><TD>127</TD>
+     <TD>0.361112 0.00269473</TD><TD>1.28097 1.4493</TD><TD>0.582135</TD><TD>30.6778</TD><TD>5</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>102</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240304-003709-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1251</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.171248736</TD><TD>1080.000</TD><TD>2.02</TD><TD>41.5698555 -30.27372376</TD>
+     <TD>2.35994  2.35994</TD><TD>69.5342</TD><TD>-0.173938</TD>
+     <TD>0.999707</TD><TD>0.00769807</TD><TD>0.0182355</TD>
+     <TD>-0.0117673</TD><TD>0.00252438</TD><TD>0.483037</TD><TD>0.000466415</TD><TD>10.3275</TD>
+     <TD>1.68385</TD><TD>44893</TD><TD>8.29588</TD><TD>5857</TD>
+     <TD>0.0211378 -0.446818</TD><TD>1.20598 1.21488</TD><TD>0.392519</TD><TD>13.2668</TD><TD>14</TD><TD>-0.0308909 -0.442721</TD><TD>0.133221 0.99139</TD><TD>0.538731</TD><TD>4.27633</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>103</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240305-003512-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1318</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.173983175</TD><TD>1080.000</TD><TD>2.04</TD><TD>41.56968783 -30.27891877</TD>
+     <TD>2.35967  2.35967</TD><TD>69.5161</TD><TD>0.0809094</TD>
+     <TD>0.999824</TD><TD>0.00212876</TD><TD>0.0160277</TD>
+     <TD>-0.0118266</TD><TD>-0.00278483</TD><TD>0.520676</TD><TD>0.000771169</TD><TD>84.8057</TD>
+     <TD>5.03683</TD><TD>698</TD><TD>29.4083</TD><TD>60</TD>
+     <TD>0.0678215 0.143721</TD><TD>0.446181 1.85021</TD><TD>-0.600322</TD><TD>18.2043</TD><TD>6</TD><TD>-0.107188 0.488825</TD><TD>0 0</TD><TD>-0.00940753</TD><TD>17.3094</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>104</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240306-003412-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1286</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.176718730</TD><TD>1080.000</TD><TD>2.06</TD><TD>41.56984876 -30.27375427</TD>
+     <TD>2.36006  2.36006</TD><TD>69.5394</TD><TD>-0.213391</TD>
+     <TD>0.999727</TD><TD>0.00306923</TD><TD>0.0181015</TD>
+     <TD>-0.0117857</TD><TD>0.00257126</TD><TD>0.461533</TD><TD>0.00052573</TD><TD>13.4549</TD>
+     <TD>1.7646</TD><TD>45512</TD><TD>9.17903</TD><TD>5817</TD>
+     <TD>0.0420872 -0.434013</TD><TD>1.21484 1.23634</TD><TD>0.402787</TD><TD>14.5516</TD><TD>14</TD><TD>-0.00797198 -0.409834</TD><TD>0.136436 0.985569</TD><TD>0.478241</TD><TD>4.61844</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>105</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240307-003309-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1314</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.179454433</TD><TD>1080.000</TD><TD>2.09</TD><TD>41.56984819 -30.27377069</TD>
+     <TD>2.36009  2.36009</TD><TD>69.5414</TD><TD>-0.165006</TD>
+     <TD>0.999637</TD><TD>0.00496017</TD><TD>0.0171367</TD>
+     <TD>-0.0117622</TD><TD>0.00258817</TD><TD>0.50631</TD><TD>0.000613588</TD><TD>11.6011</TD>
+     <TD>1.81774</TD><TD>46005</TD><TD>9.14702</TD><TD>5898</TD>
+     <TD>0.0358077 -0.371835</TD><TD>1.15641 1.09246</TD><TD>0.426877</TD><TD>14.4458</TD><TD>14</TD><TD>-0.0701502 -0.434432</TD><TD>0.150579 0.978168</TD><TD>0.603304</TD><TD>4.17284</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>106</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240308-003203-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1250</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.182189816</TD><TD>1080.000</TD><TD>2.12</TD><TD>41.56983925 -30.27375426</TD>
+     <TD>2.36004  2.36004</TD><TD>69.5393</TD><TD>-0.222969</TD>
+     <TD>0.999607</TD><TD>0.00378852</TD><TD>0.0173335</TD>
+     <TD>-0.0117974</TD><TD>0.00259181</TD><TD>0.486061</TD><TD>0.000598287</TD><TD>12.9802</TD>
+     <TD>1.61493</TD><TD>44752</TD><TD>7.71046</TD><TD>5705</TD>
+     <TD>0.0149929 -0.418817</TD><TD>1.17199 1.19635</TD><TD>0.411464</TD><TD>13.6228</TD><TD>14</TD><TD>-0.0429019 -0.428145</TD><TD>0.117334 0.987157</TD><TD>0.577913</TD><TD>4.31076</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>107</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240312-003214-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1541</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.193115272</TD><TD>1080.000</TD><TD>1.99</TD><TD>41.56194162 -30.28208241</TD>
+     <TD>2.36075  2.36075</TD><TD>69.5767</TD><TD>-3.0031</TD>
+     <TD>0.999909</TD><TD>-0.00288259</TD><TD>0.0167586</TD>
+     <TD>-0.0194861</TD><TD>-0.0056629</TD><TD>0.696014</TD><TD>0.000554007</TD><TD>27.0667</TD>
+     <TD>6.46447</TD><TD>8473</TD><TD>27.636</TD><TD>948</TD>
+     <TD>-0.184142 0.122447</TD><TD>1.96923 1.63493</TD><TD>0.363514</TD><TD>52.0646</TD><TD>14</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+    <TR>
+     <TD>108</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240313-003032-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1580</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.195850338</TD><TD>1080.000</TD><TD>2.03</TD><TD>41.56988789 -30.27383057</TD>
+     <TD>2.36054  2.36054</TD><TD>69.5649</TD><TD>-0.235801</TD>
+     <TD>0.999892</TD><TD>0.0019993</TD><TD>0.0164129</TD>
+     <TD>-0.0116977</TD><TD>0.00269001</TD><TD>0.636084</TD><TD>0.000348654</TD><TD>39.0579</TD>
+     <TD>1.31476</TD><TD>49005</TD><TD>6.01979</TD><TD>5907</TD>
+     <TD>0.0559888 -0.286617</TD><TD>1.06581 1.05262</TD><TD>0.395872</TD><TD>19.1877</TD><TD>14</TD><TD>-0.0599589 -0.515714</TD><TD>0.162526 1.09265</TD><TD>0.583834</TD><TD>5.0555</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>109</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240318-002347-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1297</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.209526216</TD><TD>1080.000</TD><TD>2.20</TD><TD>41.56980181 -30.27372841</TD>
+     <TD>2.36089  2.36089</TD><TD>69.5694</TD><TD>-0.280058</TD>
+     <TD>0.999977</TD><TD>-0.00496455</TD><TD>0.0159973</TD>
+     <TD>-0.0117784</TD><TD>0.0026292</TD><TD>0.645461</TD><TD>0.000340019</TD><TD>51.4252</TD>
+     <TD>1.30216</TD><TD>45895</TD><TD>5.83677</TD><TD>5754</TD>
+     <TD>0.0668418 -0.300484</TD><TD>1.14966 0.945143</TD><TD>0.274867</TD><TD>20.1338</TD><TD>14</TD><TD>-0.068727 -0.514007</TD><TD>0.124742 1.00201</TD><TD>0.64081</TD><TD>3.95491</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>110</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240319-002240-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1196</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.212261991</TD><TD>1080.000</TD><TD>2.24</TD><TD>41.56978024 -30.27373761</TD>
+     <TD>2.36084  2.36084</TD><TD>69.5709</TD><TD>-0.319928</TD>
+     <TD>0.99983</TD><TD>0.00296385</TD><TD>0.0194109</TD>
+     <TD>-0.0116253</TD><TD>0.00267233</TD><TD>0.658792</TD><TD>0.000468762</TD><TD>51.9714</TD>
+     <TD>1.66904</TD><TD>43749</TD><TD>7.29424</TD><TD>5584</TD>
+     <TD>0.0689903 -0.209808</TD><TD>1.16245 0.761147</TD><TD>0.344981</TD><TD>20.1829</TD><TD>14</TD><TD>0.024847 0.212787</TD><TD>0 0</TD><TD>0.000949284</TD><TD>2.53873</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>111</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240320-002144-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1129</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.214998039</TD><TD>1080.000</TD><TD>2.29</TD><TD>41.56981854 -30.27376507</TD>
+     <TD>2.36083  2.36083</TD><TD>69.57</TD><TD>-0.29884</TD>
+     <TD>0.999729</TD><TD>0.00162877</TD><TD>0.0185583</TD>
+     <TD>-0.0116043</TD><TD>0.00259973</TD><TD>0.618082</TD><TD>0.00068267</TD><TD>67.9161</TD>
+     <TD>1.34744</TD><TD>42010</TD><TD>6.0316</TD><TD>5533</TD>
+     <TD>0.193282 -0.100915</TD><TD>1.06057 0.51998</TD><TD>0.097035</TD><TD>16.2991</TD><TD>13</TD><TD>0.0800952 0.138193</TD><TD>0 0</TD><TD>0.00198734</TD><TD>1.40605</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>112</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240322-001824-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>923</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.220467399</TD><TD>1080.000</TD><TD>2.37</TD><TD>41.56979107 -30.2737316</TD>
+     <TD>2.36089  2.36089</TD><TD>69.5701</TD><TD>-0.300823</TD>
+     <TD>0.999772</TD><TD>0.0106197</TD><TD>0.0236038</TD>
+     <TD>-0.0115598</TD><TD>0.00262662</TD><TD>0.625616</TD><TD>0.000517207</TD><TD>50.1385</TD>
+     <TD>1.75568</TD><TD>35728</TD><TD>6.65154</TD><TD>5484</TD>
+     <TD>-0.0571532 -0.104501</TD><TD>0.423829 0.544406</TD><TD>-0.295278</TD><TD>7.85096</TD><TD>12</TD><TD>0.0958395 0.228046</TD><TD>0 0</TD><TD>0.00392414</TD><TD>3.37882</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>113</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240324-001011-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>722</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.225924948</TD><TD>780.000</TD><TD>2.36</TD><TD>41.58312299 -30.27786324</TD>
+     <TD>2.36177  2.36177</TD><TD>69.6166</TD><TD>0.399803</TD>
+     <TD>0.999621</TD><TD>0.0517947</TD><TD>0.0278544</TD>
+     <TD>0.00157414</TD><TD>-0.00192545</TD><TD>0.5611</TD><TD>0.00179962</TD><TD>69.4199</TD>
+     <TD>10.2403</TD><TD>1476</TD><TD>27.0588</TD><TD>269</TD>
+     <TD>0.127036 0.084011</TD><TD>0.187968 0.280903</TD><TD>0.635872</TD><TD>4.38122</TD><TD>3</TD><TD>0.105296 0.161556</TD><TD>0 0</TD><TD>0.0030543</TD><TD>3.49842</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>114</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240325-000813-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>711</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.228656150</TD><TD>720.000</TD><TD>2.36</TD><TD>41.58317266 -30.27781365</TD>
+     <TD>2.36208  2.36208</TD><TD>69.6261</TD><TD>0.428838</TD>
+     <TD>0.999619</TD><TD>0.055678</TD><TD>0.0265262</TD>
+     <TD>0.00154284</TD><TD>-0.00195311</TD><TD>0.51877</TD><TD>0.00191545</TD><TD>71.749</TD>
+     <TD>10.4086</TD><TD>1441</TD><TD>30.8892</TD><TD>268</TD>
+     <TD>0.121257 0.0848046</TD><TD>0.212064 0.265225</TD><TD>0.691228</TD><TD>4.76605</TD><TD>3</TD><TD>0.102913 0.114796</TD><TD>0 0</TD><TD>0.00212117</TD><TD>2.31756</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>115</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240326-000718-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>732</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.231387041</TD><TD>600.000</TD><TD>2.36</TD><TD>41.58315765 -30.27806615</TD>
+     <TD>2.3614  2.3614</TD><TD>69.5919</TD><TD>0.637527</TD>
+     <TD>0.999213</TD><TD>0.0389153</TD><TD>0.0247249</TD>
+     <TD>0.00154947</TD><TD>-0.00172103</TD><TD>0.567945</TD><TD>0.00228972</TD><TD>80.2734</TD>
+     <TD>10.2264</TD><TD>1471</TD><TD>27.5184</TD><TD>268</TD>
+     <TD>0.0966632 0.0902608</TD><TD>0.207114 0.268986</TD><TD>0.709128</TD><TD>4.09747</TD><TD>3</TD><TD>0.0945414 0.117211</TD><TD>0 0</TD><TD>0.00198962</TD><TD>2.18424</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>116</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240327-000615-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>758</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.234119057</TD><TD>540.000</TD><TD>2.36</TD><TD>41.59907011 -30.2609509</TD>
+     <TD>2.35854  2.35854</TD><TD>69.4819</TD><TD>-2.31244</TD>
+     <TD>0.999906</TD><TD>-0.0264626</TD><TD>0.0240363</TD>
+     <TD>0.0177877</TD><TD>0.0160017</TD><TD>0.484607</TD><TD>0.000825185</TD><TD>87.3913</TD>
+     <TD>14.5672</TD><TD>49</TD><TD>0</TD><TD>0</TD>
+     <TD>-0.204804 -0.220419</TD><TD>1.54909 1.49997</TD><TD>0.575379</TD><TD>189.562</TD><TD>9</TD><TD>0.951637 1.10861</TD><TD>1.16007 1.93301</TD><TD>0.706785</TD><TD>385.253</TD><TD>3</TD>
+    </TR>
+    <TR>
+     <TD>117</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240330-000129-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1062</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.242311703</TD><TD>300.000</TD><TD>2.36</TD><TD>41.57402406 -30.26120279</TD>
+     <TD>2.36039  2.36039</TD><TD>69.5227</TD><TD>-1.10966</TD>
+     <TD>0.9996</TD><TD>0.0209453</TD><TD>0.0196945</TD>
+     <TD>-0.00725243</TD><TD>0.0152737</TD><TD>0.419964</TD><TD>0.000718376</TD><TD>25.3306</TD>
+     <TD>33.8624</TD><TD>180</TD><TD>154.523</TD><TD>10</TD>
+     <TD>0.520129 8.86499e-05</TD><TD>1.10761 0.355551</TD><TD>0.246815</TD><TD>10.6673</TD><TD>4</TD><TD>0.101117 0.270694</TD><TD>0 0</TD><TD>0.00491453</TD><TD>6.8979</TD><TD>1</TD>
+    </TR>
+    <TR>
+     <TD>118</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240330-235940-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>1008</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.245042018</TD><TD>180.000</TD><TD>2.36</TD><TD>41.58182249 -30.27583645</TD>
+     <TD>2.35914  2.35914</TD><TD>69.5024</TD><TD>1.85082</TD>
+     <TD>0.999185</TD><TD>-0.0019386</TD><TD>0.0205955</TD>
+     <TD>0.000333381</TD><TD>0.000540472</TD><TD>0.45082</TD><TD>0.000420472</TD><TD>6.07272</TD>
+     <TD>38.5695</TD><TD>128</TD><TD>285.255</TD><TD>8</TD>
+     <TD>-0.284504 0.0355357</TD><TD>1.20238 1.08189</TD><TD>0.269529</TD><TD>99.6344</TD><TD>6</TD><TD>-0.937422 0.941104</TD><TD>1.62226 1.02987</TD><TD>-0.362312</TD><TD>85.1337</TD><TD>2</TD>
+    </TR>
+    <TR>
+     <TD>119</TD><TD>align_cutout_com_align_Calib-RASA36-NGC1097-20240331-235840-r-60.sexcat</TD><TD>NGC1097</TD>
+     <TD>1</TD><TD>2</TD><TD>0</TD><TD>1</TD><TD>F</TD>
+     <TD>800</TD><TD>1</TD><TD>A1</TD><TD>P1</TD><TD>F</TD><TD>F</TD>
+     <TD>2024.247773912</TD><TD>60.000</TD><TD>2.37</TD><TD>41.56232864 -30.28215651</TD>
+     <TD>2.36137  2.36137</TD><TD>69.6019</TD><TD>0.0666001</TD>
+     <TD>0.999606</TD><TD>-0.0307898</TD><TD>0.0243039</TD>
+     <TD>-0.0196974</TD><TD>-0.00567962</TD><TD>0.469291</TD><TD>0.00146948</TD><TD>70.6783</TD>
+     <TD>13.9833</TD><TD>5045</TD><TD>43.362</TD><TD>845</TD>
+     <TD>-0.535503 -0.262079</TD><TD>1.75514 1.67594</TD><TD>0.596544</TD><TD>65.4716</TD><TD>9</TD><TD>0 0</TD><TD>0 0</TD><TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+   </TABLEDATA></DATA>
+  </TABLE>
+  <TABLE ID="FGroups" name="FGroups">
+   <DESCRIPTION>Data gathered by SCAMP for every  group of fields found</DESCRIPTION>
+   <PARAM name="NFGroups" datatype="int" ucd="meta.number;meta.dataset" value="1"/>
+   <FIELD name="Name" datatype="char" arraysize="*" ucd="meta.id;meta.dataset"/>
+   <FIELD name="Index" datatype="int" ucd="meta.record;meta.dataset"/>
+   <FIELD name="NFields" datatype="int" ucd="meta.number;meta.dataset"/>
+   <FIELD name="NAxis" datatype="int" ucd="pos.wcs.naxis"/>
+   <FIELD name="Lng_Axis" datatype="int" ucd="meta.id;pos.eq.ra"/>
+   <FIELD name="Lat_Axis" datatype="int" ucd="meta.id;pos.eq.de"/>
+   <FIELD name="Field_Coordinates" datatype="double" arraysize="2" ucd="pos.eq.ra;pos.eq.dec;obs.field" unit="deg"/>
+   <FIELD name="Pixel_Scale" datatype="float" arraysize="2"  ucd="instr.pixel;obs.field;stat.mean" unit="arcsec"/>
+   <FIELD name="Max_Radius" datatype="float" ucd="phys.size.radius;obs.field" unit="arcmin"/>
+   <!-- =========== Astrometric statistics =========== -->
+   <FIELD name="AstRef_Catalog" datatype="char" arraysize="*" ucd="meta.id;meta.dataset"/>
+   <FIELD name="AstRef_Band" datatype="char" arraysize="*" ucd="instr.bandpass"/>
+   <FIELD name="AstromSigma_Internal" datatype="float" arraysize="2" ucd="stat.stdev;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromCorr_Internal" datatype="float" ucd="stat.correlation;pos.eq;obs.field"/>
+   <FIELD name="AstromChi2_Internal" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="AstromNDets_Internal" datatype="int" ucd="meta.number;src"/>
+   <FIELD name="AstromSigma_Internal_HighSN" datatype="float" arraysize="2" ucd="stat.stdev;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromCorr_Internal_HighSN" datatype="float" ucd="stat.correlation;pos.eq;obs.field"/>
+   <FIELD name="AstromChi2_Internal_HighSN" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="AstromNDets_Internal_HighSN" datatype="int" ucd="meta.number;src"/>
+   <FIELD name="AstromOffset_Reference" datatype="float" arraysize="2" ucd="arith.diff;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromSigma_Reference" datatype="float" arraysize="2" ucd="stat.stdev;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromCorr_Reference" datatype="float" ucd="stat.correlation;pos.eq;obs.field"/>
+   <FIELD name="AstromChi2_Reference" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="AstromNDets_Reference" datatype="int" ucd="meta.number;src"/>
+   <FIELD name="AstromOffset_Reference_HighSN" datatype="float" arraysize="2" ucd="arith.diff;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromSigma_Reference_HighSN" datatype="float" arraysize="2" ucd="stat.stDev;pos.eq;obs.field" unit="arcsec"/>
+   <FIELD name="AstromCorr_Reference_HighSN" datatype="float" ucd="stat.correlation;pos.eq;obs.field"/>
+   <FIELD name="AstromChi2_Reference_HighSN" datatype="float" ucd="stat.fit.chi2"/>
+   <FIELD name="AstromNDets_Reference_HighSN" datatype="int" ucd="meta.number;src"/>
+   <!-- =========== Photometric statistics =========== -->
+   <PARAM name="NPhotInstru" datatype="int" ucd="meta.number;meta.em" value="1"/>
+   <FIELD name="PhotInstru_Name" datatype="char" arraysize="*" ucd="meta.id;instr.bandpass"/>
+   <FIELD name="PhotSigma_Internal" datatype="float" arraysize="1" ucd="stat.error;phot.mag" unit="mag"/>
+   <FIELD name="PhotChi2_Internal" datatype="float" arraysize="1" ucd="stat.chi2;phot.mag" unit="mag"/>
+   <FIELD name="PhotNDets_Internal" datatype="int" arraysize="1" ucd="meta.number;src"/>
+   <FIELD name="PhotSigma_Internal_HighSN" datatype="float" arraysize="1" ucd="stat.error;phot.mag" unit="mag"/>
+   <FIELD name="PhotChi2_Internal_HighSN" datatype="float" arraysize="1" ucd="stat.chi2;phot.mag" unit="mag"/>
+   <FIELD name="PhotNDets_Internal_HighSN" datatype="int" arraysize="1" ucd="meta.number;src"/>
+   <FIELD name="PhotSigma_Reference" datatype="float" arraysize="1" ucd="stat.error;phot.mag" unit="mag"/>
+   <FIELD name="PhotChi2_Reference" datatype="float" arraysize="1" ucd="stat.chi2;phot.mag" unit="mag"/>
+   <FIELD name="PhotNDets_Reference" datatype="int" arraysize="1" ucd="meta.number;src"/>
+   <FIELD name="PhotSigma_Reference_HighSN" datatype="float" arraysize="1" ucd="stat.error;phot.mag" unit="mag"/>
+   <FIELD name="PhotChi2_Reference_HighSN" datatype="float" arraysize="1" ucd="stat.chi2;phot.mag" unit="mag"/>
+   <FIELD name="PhotNDets_Reference_HighSN" datatype="int" arraysize="1" ucd="meta.number;src"/>
+   <DATA><TABLEDATA>
+   <TR>
+     <TD>G1</TD><TD>1</TD><TD>119</TD>
+     <TD>2</TD><TD>0</TD><TD>1</TD>
+     <TD>41.58138666 -30.27638374</TD><TD>2.36  2.36</TD><TD>69.5631</TD>
+     <TD>2MASS</TD><TD>J</TD>
+     <TD>0.20269 0.212754</TD><TD>-0.239405</TD><TD>1.87339</TD><TD>146573</TD>
+     <TD>0.191942 0.216127</TD><TD>-2.31192</TD><TD>7.9417</TD><TD>16553</TD>
+     <TD>0.0465115 0.0410191</TD><TD>1.51141 1.38404</TD><TD>0.101658</TD><TD>47.7811</TD><TD>262</TD>
+     <TD>-0.137741 0.0339774</TD><TD>0.956244 1.27433</TD><TD>0.579009</TD><TD>83.1139</TD><TD>46</TD>
+     <TD>P1</TD>
+     <TD>0.129436</TD><TD>82.9973</TD><TD>145682</TD>
+     <TD>0.0697558</TD><TD>578.581</TD><TD>16493</TD>
+     <TD>0</TD><TD>0</TD><TD>0</TD>
+     <TD>0</TD><TD>0</TD><TD>0</TD>
+    </TR>
+   </TABLEDATA></DATA>
+  </TABLE>
+  <TABLE ID="Astrometric_Instruments" name="Astrometric_Instruments">
+   <DESCRIPTION>Data gathered by SCAMP for every  astrometric instrument identified</DESCRIPTION>
+   <PARAM name="NAstromInstru" datatype="int" ucd="meta.number;meta.dataset" value="1"/>
+   <FIELD name="Name" datatype="char" arraysize="*" ucd="meta.id;meta.dataset"/>
+   <FIELD name="Index" datatype="int" ucd="meta.record;meta.dataset"/>
+   <FIELD name="NFields" datatype="int" ucd="meta.number;meta.dataset"/>
+   <FIELD name="NExtensions" datatype="int" ucd="meta.number;meta.dataset"/>
+   <FIELD name="NKeys" datatype="int" ucd="meta.number"/>
+   <FIELD name="Keys" datatype="char" arraysize="*" ucd="meta.note"/>
+   <DATA><TABLEDATA>
+    <TR>
+     <TD>A1</TD><TD>1</TD><TD>119</TD><TD>1</TD>
+     <TD>2</TD><TD>FILTER  = 'r       '            ,QRUNID  =                       </TD>
+    </TR>
+   </TABLEDATA></DATA>
+  </TABLE>
+  <TABLE ID="Photometric_Instruments" name="Photometric_Instruments">
+   <DESCRIPTION>Data gathered by SCAMP for every  photometric instrument identified</DESCRIPTION>
+   <PARAM name="NPhotomInstru" datatype="int" ucd="meta.number;meta.dataset" value="1"/>
+   <FIELD name="Name" datatype="char" arraysize="*" ucd="meta.id;meta.dataset"/>
+   <FIELD name="Index" datatype="int" ucd="meta.record;meta.dataset"/>
+   <FIELD name="NFields" datatype="int" ucd="meta.number;meta.dataset"/>
+   <FIELD name="MagZeroPoint_Output" datatype="float" ucd="phot.mag;phot.calib;arith.zp" unit="mag"/>
+   <FIELD name="NKeys" datatype="int" ucd="meta.number"/>
+   <FIELD name="Keys" datatype="char" arraysize="*" ucd="meta.note"/>
+   <DATA><TABLEDATA>
+    <TR>
+     <TD>P1</TD><TD>1</TD><TD>119</TD><TD>0</TD>
+     <TD>1</TD><TD>FILTER  = 'r       '            </TD>
+    </TR>
+   </TABLEDATA></DATA>
+  </TABLE>
+  <TABLE ID="Warnings" name="Warnings">
+   <DESCRIPTION>SCAMP warnings (limited to the last 1000)</DESCRIPTION>
+   <FIELD name="Date" datatype="char" arraysize="*" ucd="meta;time.end"/>
+   <FIELD name="Time" datatype="char" arraysize="*" ucd="meta;time.end"/>
+   <FIELD name="Msg" datatype="char" arraysize="*" ucd="meta"/>
+   <DATA><TABLEDATA>
+    <TR><TD>2024-10-03</TD><TD>17:10:54</TD><TD>This executable has been compiled using a version of the ATLAS library without sPerformance will be degraded.</TD></TR>
+   </TABLEDATA></DATA>
+  </TABLE>
+  <RESOURCE ID="Config" name="Config">
+   <DESCRIPTION>SCAMP configuration</DESCRIPTION>
+   <PARAM name="Command_Line" datatype="char" arraysize="*" ucd="obs.param" value="scamp /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230901-053741-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230913-060841-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230914-054441-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230915-050812-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230916-052524-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230917-042806-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20230922-042755-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231004-074817-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231006-043556-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231008-042918-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231009-044216-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231010-070208-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231012-065457-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231013-080940-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231014-061823-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231015-021335-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231018-021525-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231026-045738-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231027-022424-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231031-073320-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231102-070858-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231103-052647-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231104-052657-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231105-052907-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231106-052913-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231107-053036-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231108-052803-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231111-051616-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231112-043903-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231117-041805-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231118-045949-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231119-045537-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231120-045229-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231121-041710-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231122-033325-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231123-023151-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231205-045008-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231206-043258-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231208-042452-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231209-042111-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231211-041329-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231212-040908-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231213-040518-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231215-035747-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231216-035418-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231217-034946-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231218-033816-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231220-021305-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231221-023433-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231222-041914-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231223-025645-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231224-032206-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231225-031822-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231226-031906-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231227-031944-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231230-032048-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20231231-031732-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240101-031333-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240102-042249-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240103-041852-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240104-041503-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240106-042759-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240112-035829-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240113-035451-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240114-035058-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240116-024316-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240117-025910-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240118-030509-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240119-030041-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240120-032752-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240121-032355-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240123-031614-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240124-025657-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240125-025242-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240130-023324-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240131-022923-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240202-022126-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240204-021337-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240205-022415-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240206-021311-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240207-020826-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240211-020854-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240212-012957-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240213-014040-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240214-013751-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240215-013242-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240217-021438-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240219-012212-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240220-011735-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240221-011418-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240222-010334-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240223-010038-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240224-005623-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240225-010729-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240226-010406-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240227-005945-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240228-005604-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240229-005141-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240301-004755-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240302-003909-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240303-003809-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240304-003709-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240305-003512-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240306-003412-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240307-003309-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240308-003203-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240312-003214-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240313-003032-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240318-002347-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240319-002240-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240320-002144-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240322-001824-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240324-001011-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240325-000813-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240326-000718-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240327-000615-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240330-000129-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240330-235940-r-60.sexcat /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/result/align_cutout_com_align_Calib-RASA36-NGC1097-20240331-235840-r-60.sexcat -c /home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/default.scamp"/>
+   <PARAM name="Prefs_Name" datatype="char" arraysize="*" ucd="obs.param;meta.file" value="/home/hhchoi1022/hhpy/Research/helper/../photometry/scamp/default.scamp"/>
+   <PARAM name="Ref_Server" datatype="char" arraysize="*" ucd="meta.ref.url" value="vizier.unistra.fr"/>
+   <PARAM name="Ref_TimeOut" unit="s" datatype="double" arraysize="1" ucd="meta;time.duration" value="10"/>
+   <PARAM name="AstRef_Catalog" datatype="char" arraysize="*" ucd="meta.code;meta.file" value="2MASS"/>
+   <PARAM name="AstRef_Band" datatype="char" arraysize="*" ucd="instr.bandpass" value="DEFAULT"/>
+   <PARAM name="AstRefCat_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file;meta.dataset" value="astrefcat.cat"/>
+   <PARAM name="AstRefCent_Keys" datatype="char" arraysize="*" ucd="meta.id;pos.eq" value="X_WORLD,Y_WORLD"/>
+   <PARAM name="AstRefErr_Keys" datatype="char" arraysize="*" ucd="meta.id;pos.errorEllipse" value="ERRA_WORLD,ERRB_WORLD,ERRTHETA_WORLD"/>
+   <PARAM name="AstRefMag_Key" datatype="char" arraysize="*" ucd="meta.id;phot.mag" value="MAG"/>
+   <PARAM name="AstRefMagErr_Key" datatype="char" arraysize="*" ucd="meta.id;phot.mag" value="MAGERR"/>
+   <PARAM name="AstRefObsDate_Key" datatype="char" arraysize="*" ucd="meta.id;time.epoch" value="OBSDATE"/>
+   <PARAM name="AstRefMag_Limits" unit="mag" datatype="double" arraysize="2" ucd="phot.mag;stat.min;stat.max;obs.param" value="-99 99"/>
+   <PARAM name="Save_RefCatalog" datatype="boolean" ucd="meta.code" value="F"/>
+   <PARAM name="RefOut_CatPath" datatype="char" arraysize="*" ucd="meta.id;meta.file" value="."/>
+   <PARAM name="MergedOutCat_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file;meta.dataset" value="merged.cat"/>
+   <PARAM name="MergedOutCat_Type" datatype="char" arraysize="*" ucd="meta.code;meta.dataset" value="NONE"/>
+   <PARAM name="Save_DGeoMap" datatype="boolean" ucd="meta.code" value="F"/>
+   <PARAM name="DGeoMap_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file;meta.dataset" value="dgeo.fits"/>
+   <PARAM name="DGeoMap_Step" unit="pix" datatype="int" ucd="meta.number" value="2"/>
+   <PARAM name="DGeoMap_NNearest" datatype="int" ucd="meta.number" value="21"/>
+   <PARAM name="FullOutCat_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file;meta.dataset" value="full.cat"/>
+   <PARAM name="FullOutCat_Type" datatype="char" arraysize="*" ucd="meta.code;meta.dataset" value="NONE"/>
+   <PARAM name="Match" datatype="boolean" ucd="meta.code;obs.param" value="T"/>
+   <PARAM name="Match_NMax" datatype="int" ucd="meta.number;src;obs.param" value="0"/>
+   <PARAM name="PixScale_MaxErr" datatype="double" ucd="instr.precision;instr.pixel;obs.param" value="1.2"/>
+   <PARAM name="PosAngle_MaxErr" unit="deg" datatype="double" ucd="instr.precision;pos.posAng;obs.param" value="5"/>
+   <PARAM name="Position_MaxErr" unit="arcmin" datatype="double" arraysize="2" ucd="instr.precision;pos.eq;obs.param" value="0.0166667 0.0166667"/>
+   <PARAM name="Match_Resol" unit="arcsec" datatype="double" ucd="stat.param;phys.angSize" value="0"/>
+   <PARAM name="Match_Flipped" datatype="boolean" ucd="instr.param;obs.param" value="F"/>
+   <PARAM name="Mosaic_Type" datatype="char" arraysize="*" ucd="instr.param;obs.param" value="UNCHANGED"/>
+   <PARAM name="FixFocalPlane_NMin" datatype="int" ucd="meta.number;src;obs.param" value="1"/>
+   <PARAM name="CrossId_Radius" unit="arcsec" datatype="double" ucd="pos.angDistance;stat.max" value="3"/>
+   <PARAM name="Solve_Astrom" datatype="boolean" ucd="meta.code;obs.param" value="T"/>
+   <PARAM name="Projection_Type" datatype="char" arraysize="*" ucd="instr.param;obs.param" value="SAME"/>
+   <PARAM name="AstrInstru_Key" datatype="char" arraysize="*" ucd="meta.id;instr.setup;pos" value="FILTER,QRUNID"/>
+   <PARAM name="Stability_Type" datatype="char" arraysize="*" ucd="instr.param;obs.param" value="INSTRUMENT"/>
+   <PARAM name="Centroid_Keys" datatype="char" arraysize="*" ucd="meta.id;pos.barycenter;src" value="XWIN_IMAGE,YWIN_IMAGE"/>
+   <PARAM name="CentroidErr_Keys" datatype="char" arraysize="*" ucd="meta.id;pos.errorEllipse;src" value="ERRAWIN_IMAGE,ERRBWIN_IMAGE,ERRTHETAWIN_IMAGE"/>
+   <PARAM name="Distort_Keys" datatype="char" arraysize="*" ucd="meta.id;stat.fit.param;src" value="XWIN_IMAGE,YWIN_IMAGE"/>
+   <PARAM name="Distort_Groups" datatype="int" arraysize="2" ucd="meta.id;stat.fit.param" value="1 1"/>
+   <PARAM name="Distort_Degrees" datatype="int" arraysize="1" ucd="meta.id;stat.fit.param" value="3"/>
+   <PARAM name="FocDistort_Degree" datatype="int" ucd="meta.id;stat.fit.param" value="1"/>
+   <PARAM name="Astref_Weight" datatype="double" ucd="meta.id;stat.fit.param" value="1"/>
+   <PARAM name="AstrAccuracy_Type" datatype="char" arraysize="*" ucd="instr.param;obs.param" value="SIGMA-PIXEL"/>
+   <PARAM name="AstrAccuracy_Key" datatype="char" arraysize="*" ucd="meta.id;stat.fit.param;src" value="ASTRACCU"/>
+   <PARAM name="Astr_Accuracy" datatype="double" ucd="meta.id;stat.param;pos" value="0.01"/>
+   <PARAM name="AstrClip_NSigma" datatype="double" ucd="meta.id;stat.param;pos" value="3"/>
+   <PARAM name="Compute_Parallaxes" datatype="boolean" ucd="meta.code;obs.param" value="F"/>
+   <PARAM name="Compute_ProperMotions" datatype="boolean" ucd="meta.code;obs.param" value="F"/>
+   <PARAM name="Correct_ColourShifts" datatype="boolean" ucd="meta.code;obs.param" value="F"/>
+   <PARAM name="Include_AstRefCatalog" datatype="boolean" ucd="meta.code;obs.param" value="T"/>
+   <PARAM name="Astr_FlagsMask" datatype="int" ucd="meta.code.qual" value="252"/>
+   <PARAM name="Astr_ImaFlagsMask" datatype="int" ucd="meta.code.qual" value="0"/>
+   <PARAM name="Solve_Photom" datatype="boolean" ucd="meta.code;phot.calib;obs.param" value="T"/>
+   <PARAM name="MagZero_Out" unit="mag" datatype="double" arraysize="1" ucd="arith.zp;phot.calib;obs.param" value="0"/>
+   <PARAM name="MagZero_IntErr" unit="mag" datatype="double" arraysize="1" ucd="stat.error;phot.mag;obs.param" value="0.01"/>
+   <PARAM name="MagZero_RefErr" unit="mag" datatype="double" arraysize="1" ucd="stat.error;phot.calib;obs.param" value="0.03"/>
+   <PARAM name="PhotInstru_Key" datatype="char" arraysize="*" ucd="meta.id;instr.setup;phot.calib" value="FILTER"/>
+   <PARAM name="MagZero_Key" datatype="char" arraysize="*" ucd="meta.id;arith.zp;phot.calib" value="PHOT_C"/>
+   <PARAM name="ExpoTime_Key" datatype="char" arraysize="*" ucd="meta.id;time.duration.expo" value="EXPTIME"/>
+   <PARAM name="AirMass_Key" datatype="char" arraysize="*" ucd="meta.id;obs.airmass" value="AIRMASS"/>
+   <PARAM name="Extinct_Key" datatype="char" arraysize="*" ucd="meta.id;obs.atmos.extinction" value="PHOT_K"/>
+   <PARAM name="PhotomFlag_Key" datatype="char" arraysize="*" ucd="meta.id;obs.atmos" value="PHOTFLAG"/>
+   <PARAM name="PhotFlux_Key" datatype="char" arraysize="*" ucd="meta.id;phot.flux;src" value="FLUX_AUTO"/>
+   <PARAM name="PhotFluxerr_Key" datatype="char" arraysize="*" ucd="meta.id;phot.flux;src" value="FLUXERR_AUTO"/>
+   <PARAM name="PhotClip_NSigma" datatype="double" ucd="meta.id;stat.param;phot" value="3"/>
+   <PARAM name="Phot_Accuracy" datatype="double" ucd="meta.id;stat.param;phot" value="0.001"/>
+   <PARAM name="Phot_FlagsMask" datatype="int" ucd="meta.code.qual" value="252"/>
+   <PARAM name="Phot_ImaFlagsMask" datatype="int" ucd="meta.code.qual" value="0"/>
+   <PARAM name="SN_Thresholds" datatype="double" arraysize="2" ucd="stat.snr;stat.min;phot.flux;obs.param" value="10 100"/>
+   <PARAM name="FWHM_Thresholds" datatype="double" arraysize="2" ucd="phys.size.diameter;stat.min;instr.det.psf;obs.param" value="0 100"/>
+   <PARAM name="Ellipticity_Max" datatype="double" ucd="src.ellipticity;stat.max;obs.param" value="0.5"/>
+   <PARAM name="Flags_Mask" datatype="int" ucd="meta.code.qual" value="240"/>
+   <PARAM name="WeightFlags_Mask" datatype="int" ucd="meta.code.qual" value="0"/>
+   <PARAM name="ImaFlags_Mask" datatype="int" ucd="meta.code.qual" value="0"/>
+   <PARAM name="AHeader_Global" datatype="char" arraysize="*" ucd="meta.id;meta.file" value="scamp.ahead"/>
+   <PARAM name="AHeader_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file" value=""/>
+   <PARAM name="AHeader_Suffix" datatype="char" arraysize="*" ucd="meta.id.part;meta.file" value=".ahead"/>
+   <PARAM name="Header_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file" value=""/>
+   <PARAM name="Header_Suffix" datatype="char" arraysize="*" ucd="meta.id.part;meta.file" value=".head"/>
+   <PARAM name="Header_Type" datatype="char" arraysize="*" ucd="meta.code;meta.file" value="NORMAL"/>
+   <PARAM name="CheckPlot_CKey" datatype="char" arraysize="*" ucd="meta.id;meta.code" value="SCAMPCOL"/>
+   <PARAM name="CheckPlot_Dev" datatype="char" arraysize="*" ucd="meta.code" value="NULL"/>
+   <PARAM name="CheckPlot_Res" datatype="int" arraysize="1" ucd="meta.number;meta" value="0"/>
+   <PARAM name="CheckPlot_AntiAlias" datatype="boolean" ucd="meta.code" value="F"/>
+   <PARAM name="CheckPlot_Type" datatype="char" arraysize="*" ucd="meta.code" value="FGROUPS,DISTORTION,ASTR_INTERROR2D,ASTR_INTERROR1D,ASTR_REFERROR2D,ASTR_REFERROR1D,ASTR_CHI2,PHOT_ERROR"/>
+   <PARAM name="CheckPlot_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file" value="fgroups,distort,astr_interror2d,astr_interror1d,astr_referror2d,astr_referror1d,astr_chi2,psphot_error"/>
+   <PARAM name="CheckImage_Type" datatype="char" arraysize="*" ucd="meta.code" value="NONE"/>
+   <PARAM name="CheckImage_Name" datatype="char" arraysize="*" ucd="meta.id;meta.file;meta.fits" value="check.fits"/>
+   <PARAM name="Verbose_Type" datatype="char" arraysize="*" ucd="meta.code" value="NORMAL"/>
+   <PARAM name="Write_XML" datatype="boolean" ucd="meta.code" value="T"/>
+   <PARAM name="XSL_URL" datatype="char" arraysize="*" ucd="meta.ref.url" value="file:///usr/share/scamp/scamp.xsl"/>
+   <PARAM name="NThreads" datatype="int" ucd="meta.number;meta.software" value="12"/>
+  </RESOURCE>
+ </RESOURCE>
+</RESOURCE>
+</VOTABLE>

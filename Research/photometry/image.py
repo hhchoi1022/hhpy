@@ -39,6 +39,19 @@ class Image(PhotometryHelper):
         self.depth_3 = dict()
         self.depth_5 = dict()
 
+    def scamp(self, 
+              sex_configfile : str = None,
+              scamp_configfile : str = None,
+              print_progress : bool = True):
+        if sex_configfile == None:
+            sex_configfile = f"{os.path.join(self.sexpath,self.telinfo['obs'])}.scampconfig"
+        result = self.run_scamp(filelist = self.target_image,
+                                sex_configfile = sex_configfile,
+                                scamp_configfile = scamp_configfile,
+                                update_files = True,
+                                print_progress = print_progress
+                                )
+        
     def astrometry(self,
                    sex_configfile : str = None,
                    ra : float = None,
@@ -98,16 +111,17 @@ class Image(PhotometryHelper):
                             check_zp_by_color : bool = False
                             ):
         '''
-        sex_configfile : str = None # Absolute Path
-        detect_threshold : float  = 3.0
-        aperture_type : str = 'relative'
-        aperture_sizes : list = [1.5, 2.5, 3.5]
-        ref_catalog_name : str = 'APASS'
-        ref_catalog_conversion: str = 'PS1'
-        ref_maxmag = 16
-        ref_minmag = 12
-        visualize : bool = True
-        update_header = True
+        sex_configfile: str = sex_configfile  # Absolute Path
+        detect_threshold : float  = 3.0,
+        aperture_type : str = 'relative', # relative or absolute
+        aperture_sizes : list = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
+        ref_catalog_name: str = 'APASS',
+        ref_catalog_conversion: str = None,
+        ref_maxmag=16,
+        ref_minmag=12,
+        visualize: bool = True,
+        update_header : bool = True,
+        check_zp_by_color : bool = True
         '''
 
         if sex_configfile == None:
@@ -116,11 +130,13 @@ class Image(PhotometryHelper):
         sex_params['CATALOG_NAME'] = f"{self.sexpath}/result/{os.path.basename(self.target_image).split('.')[0]}.cat"
         os.makedirs(os.path.dirname(sex_params['CATALOG_NAME']), exist_ok=True)
         
-        # Run source-extractor with the default configuration files 
+        # Run source-extractor with the default configuration files
         obs_catalog_temp1 = self.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True)
+        source_idx = obs_catalog_temp1['FWHM_IMAGE'] * self.telinfo['pixelscale'] > 1.8
+        obs_catalog_temp1_source = obs_catalog_temp1[source_idx]
         
         # Applying rough point source criteria
-        _, seeing_temp, _ = sigma_clipped_stats(data=obs_catalog_temp1['FWHM_IMAGE'], sigma_lower=3, sigma_upper=2, maxiters=5, cenfunc='median', stdfunc='std')
+        _, seeing_temp, _ = sigma_clipped_stats(data=obs_catalog_temp1_source['FWHM_IMAGE'], sigma_lower=3, sigma_upper=2, maxiters=5, cenfunc='median', stdfunc='std')
         seeing_temp_pixel = np.round(seeing_temp, 2)
         seeing_temp_arcsec = np.round(seeing_temp_pixel * self.telinfo['pixelscale'], 2)
         
@@ -295,25 +311,26 @@ class Image(PhotometryHelper):
             raise ValueError('Reference image is requred for image alignment')
         if cut_outer:
             self.target_image = self.cutout_img(target_img = self.target_image, size = outer_size, prefix = 'cutouter_')
+            self.reference_image = self.cutout_img(target_img = self.reference_image, size = outer_size, prefix = 'cutouter_')
         self.target_image = self.align_img(target_img=self.target_image, reference_img=self.reference_image, detection_sigma= detection_sigma)
         
-    def trim(self, size = 2000):
-        self.target_image = self.cutout_img(target_img = self.target_image, size = size, prefix = 'cutout_')
+    def cutout(self, cutout_size = 2000):
+        self.target_image = self.cutout_img(target_img = self.target_image, size = cutout_size, prefix = 'cutout_')
         
     def subtract(self,
                  align : bool = True,
-                 trim_target_image : bool = True,
-                 trim_reference_image : bool = True,
-                 trim_size : int = 1500,
+                 cutout_target_image : bool = True,
+                 cutout_reference_image : bool = True,
+                 cutout_size : int = 1500,
                  ):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image subtraction')
         if align:
             self.align(cut_outer = False)
-        if trim_target_image:
-            self.trim(size = trim_size)
-        if trim_reference_image:
-            self.reference_image = self.cutout_img(target_img = self.reference_image, size = trim_size)
+        if cutout_target_image:
+            self.cutout(cutout_size = cutout_size)
+        if cutout_reference_image:
+            self.reference_image = self.cutout_img(target_img = self.reference_image, size = cutout_size)
         self.target_image = self.subtract_img(target_img=self.target_image, reference_img=self.reference_image)
         
     def photometry(self,
@@ -323,9 +340,10 @@ class Image(PhotometryHelper):
                    detect_threshold : float  = 3.0,
                    aperture_type : str = 'relative', # relative or absolute
                    aperture_sizes : list = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                   trim_target_image : bool = True,
-                   trim_reference_image : bool = False,
-                   trim_size : int = 1500,
+                   cutout_target_image : bool = True,
+                   cutout_reference_image : bool = False,
+                   cutout_size : int = 1500,
+                   align : bool = True,
                    subtract : bool = True,
                    visualize : bool = True,
                    ):
@@ -336,9 +354,10 @@ class Image(PhotometryHelper):
         detect_threshold : float  = 3.0
         aperture_type : str = 'relative'
         aperture_sizes : list = [1.5, 2.5, 3.5]
-        trim_target_image : bool = True
-        trim_reference_image : bool = True
-        trim_size : int = 1500
+        cutout_target_image : bool = True
+        cutout_reference_image : bool = True
+        cutout_size : int = 1500
+        align : bool = True,
         subtract : bool = True
         visualize : bool = True
         '''
@@ -363,7 +382,7 @@ class Image(PhotometryHelper):
             raise ValueError('Zeropoint information is not available in the header. Run calculate_zeropoint()')             
             
         if subtract:
-            self.subtract(trim_target_image = trim_target_image, trim_reference_image = trim_reference_image, trim_size = trim_size)
+            self.subtract(align = align, cutout_target_image = cutout_target_image, cutout_reference_image = cutout_reference_image, cutout_size = cutout_size)
         
         # source-extractor configuration
         if sex_configfile == None:
@@ -469,10 +488,51 @@ class Image(PhotometryHelper):
 
         
         
-        
+#%% KCT
 
+if __name__ == '__main__':
+    import json
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib*20230927*120.fits'))
+    #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/r/com*-r-180.fits'))
 
-# %%
+    #filename = '20241002_153737_calculate_failed_imagelist.txt'
+    #with open(f'/home/hhchoi1022/hhpy/Research/photometry/photometry_log/20241002/{filename}', 'r') as file_:
+    #    data = json.load(file_)
+    #filelist = data['calculate']
+    
+    #reference_image = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/Ref-KCT_STX16803-NGC1097-r-5400.com.fits'
+    reference_image = filelist[3]
+    phot_helper = PhotometryHelper()
+    telinfo = phot_helper.get_telinfo(telescope='KCT', ccd='STX16803')
+    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/KCT.config'
+    #phot_helper.get_telinfo(telescope = 'LSGT', ccd = 'ASI1600MM')
+    #sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/LSGT_ASI1600MM.config'
+#%%
+if __name__ == '__main__':
+    image = filelist[0]
+    #image = reference_image
+    im = Image(image, telescope_info=telinfo, reference_image = reference_image)
+    im.align(cut_outer = True)
+    #im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
+    #A.faster_calculate(sex_configfile = sex_configfile, num_processes = 6, 
+
+#%%
+if __name__ == '__main__':
+    im.photometry(ra = 41.575542, 
+                dec = -30.239489, 
+                #filelist = filelist,
+                sex_configfile = sex_configfile,
+                detect_threshold = 3,
+                aperture_type = 'relative', # relative or absolute
+                aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
+                cutout_target_image = True,
+                cutout_reference_image = True,
+                cutout_size = 2000,
+                align = False,
+                subtract = True,
+                visualize = True)
+
+# %% RASA36
 if __name__ == '__main__':
     #filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/*-120.fits'))
     #reference_image='/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-g-4440.com.fits'
@@ -482,20 +542,20 @@ if __name__ == '__main__':
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-180448-g-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-181452-r-540.com.fits'
     #reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits'
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/Calib*120.fits'))
     filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/sub_*60.fits'))
     filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/RASA36/r/Calib*202308*60.fits'))
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image_tmp/Calib*.fits'))
-
-
-    #reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/com*.fits'))
+    import json
+    filename = '20241002_153737_calculate_failed_imagelist.txt'
+    with open(f'/home/hhchoi1022/hhpy/Research/photometry/photometry_log/20241002/{filename}', 'r') as file_:
+        data = json.load(file_)
+    filelist = data['calculate']
     reference_image = None
+    #reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits'
     phot_helper = PhotometryHelper()
-    sex_configfile = None
-    #telinfo = phot_helper.get_telinfo(telescope='KCT', ccd='STX16803')
-    #telinfo = phot_helper.get_telinfo(telescope='LSGT', ccd='SNUCAMII')
     telinfo = phot_helper.get_telinfo(telescope='RASA36', ccd='KL4040', readoutmode = 'HIGH')
     sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
+
  # %%
 if __name__ == '__main__':
     for image in filelist[0:3]:
@@ -507,10 +567,22 @@ if __name__ == '__main__':
     image = filelist[0]
 #%%    
     im = Image(image, telescope_info=telinfo, reference_image = reference_image)
-    #im.trim(size = 0.9)
-    #im.photometry(ra=64.9723704, dec=-54.9481347, trim_reference_image= True, trim_target_image= True, subtract = True, visualize= True)
+    im.photometry(ra = 41.575542, 
+                dec = -30.239489, 
+                #filelist = filelist,
+                sex_configfile = sex_configfile,
+                detect_threshold = 3,
+                aperture_type = 'relative', # relative or absolute
+                aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
+                cutout_target_image = True,
+                cutout_reference_image = True,
+                cutout_size = 2000,
+                subtract = True,
+                visualize = True)
+    #im.cutout(size = 0.9)
+    #im.photometry(ra=64.9723704, dec=-54.9481347, cutout_reference_image= True, cutout_target_image= True, subtract = True, visualize= True)
     #im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None, check_zp_by_color = True)
-    im.astrometry(sex_configfile = sex_configfile, overwrite = False)
+    #im.astrometry(sex_configfile = sex_configfile, overwrite = False)
 #%%
     im.photometry(ra = 41.575542, 
                 dec = -30.239489, 
@@ -519,8 +591,18 @@ if __name__ == '__main__':
                 detect_threshold = 1,
                 aperture_type = 'relative', # relative or absolute
                 aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                trim_target_image = True,
-                trim_reference_image = True,
-                trim_size = 2000,
+                cutout_target_image = True,
+                cutout_reference_image = True,
+                cutout_size = 2000,
                 subtract = True,
                 visualize = True)
+
+
+
+#%%
+
+from astropy.io import ascii
+
+# %%
+ascii.read("/data1/supernova_rawdata/SN2023rve/analysis/ATLAS.dat")
+# %%

@@ -1,0 +1,11 @@
+{
+    "Execution Time": "2024-10-03 21:58:08",
+    "astrometry": [],
+    "calculate": [],
+    "cutout": [],
+    "align": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/r/Calib-LSGT_ASI1600MM-NGC1097-20230912-150327-r-180.fits"
+    ],
+    "combine": [],
+    "photometry": []
+}

@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib import gridspec
 import numpy as np
 from Research.helper import Helper
+from astropy.time import Time
 #%%
 
 class ObservedPhot:
@@ -156,30 +157,50 @@ class ObservedPhot:
     
     def show_lightcurve(self,
                         dpi = 300,
-                        figsize = (8,6),
-                        phase_max = 59547.2325,
-                        scatter_size = 40,
-                        scatter_linewidth = 0.5,
-                        errorbar_linewidth = 0.5,
-                        errorbar_capsize = 3,
+                        figsize = (12,8),
+                        phase_format = 'datetime',
+                        phase_min = None,
+                        phase_max = None,
+                        phase_binsize : int = 5,
+                        mag_min = None,
+                        mag_max = None,
+                        mag_binsize : float = 2,
+                        scatter_size = 20,
+                        scatter_linewidth = 0.02,
+                        errorbar_linewidth = 0.02,
+                        errorbar_capsize = 0.02,
                         scatter_alpha : float = 0.4,
                         line : bool = False,
                         label : bool = False,
-                        day_binsize : int = 5,
                         label_location = 'upper right',
                         color_UB : bool = False,
                         color_BV : bool = False,
                         color_ug : bool = False,
-                        color_gr : bool = True,
+                        color_gr : bool = False,
                         UL : bool = False,
-                        UL_linewidth_ver : float = 0.5,
-                        UL_linewidth_hor : float = 0.5,
-                        UL_linelength_ver : float = 0.6,
-                        UL_linelength_hor : float = 0.3,
-                        UL_headlength : float = 0.3,
-                        UL_headwidth : float = 0.3,
+                        UL_linewidth_ver : float = 0.03,
+                        UL_linewidth_hor : float = 0.03,
+                        UL_linelength_ver : float = 0.01,
+                        UL_linelength_hor : float = 0.02,
+                        UL_headlength : float = 0.015,
+                        UL_headwidth : float = 0.03,
                         UL_alpha : float = 0.5):
         import matplotlib.patches as mpatches
+        
+        # Set x axis
+        if phase_min is None:
+            phase_min = np.min(self.get_data_detected()['obsdate'])-10
+        if phase_max is None:
+            phase_max = np.max(self.get_data_detected()['obsdate'])+10
+        if phase_format.upper() == 'DATETIME':
+            dates = [Time(t, format='mjd').datetime.strftime('%Y-%m-%d') for t in np.arange(phase_min, phase_max, phase_binsize)]
+        else:
+            dates = np.arange(phase_min, phase_max, phase_binsize).astype(int)
+        if mag_min is None:
+            mag_min = int(np.min(self.get_data_detected()['mag']))-1
+        if mag_max is None:
+            mag_max = int(np.max(self.get_data_detected()['mag']))+1
+        mags = np.arange(mag_min, mag_max, mag_binsize)
 
         # UL
         data_detected = self.get_data_detected()
@@ -218,13 +239,14 @@ class ObservedPhot:
                             for x,y in zip(show_data_ul['obsdate'], show_data_ul['depth_5sig']+offsets[filter_]):
                                 ax1.arrow(x=x,y=y,dx=0,dy=UL_linelength_ver, linewidth = UL_linewidth_ver, head_width = UL_headwidth, head_length = UL_headlength, color = colors[filter_], shape = 'full', alpha = UL_alpha)
                                 ax1.arrow(x=x-UL_linelength_hor,y=y,dx=2*UL_linelength_hor,dy=0,linewidth = UL_linewidth_hor, head_width = 0, color = colors[filter_], alpha = UL_alpha)
-
             ax1.set_ylabel('Apparent magnitude [AB]')
-            ax1.set_xticks([0], [0])
             ax1.invert_yaxis()
+            ax1.set_xlim(phase_min, phase_max)
+            ax1.set_yticks(mags, mags)
+            ax1.set_ylim(mag_max, mag_min)
             
             #Color
-            ax2 = plt.subplot(gs[1])
+            ax2 = plt.subplot(gs[1], sharex = ax1)
             
             filt_data = self.get_filt_data(data_detected)
             if color_UB:
@@ -252,10 +274,11 @@ class ObservedPhot:
                     ax2.errorbar(ug_tbl['obsdate_1'], ug_tbl['mag_1']-ug_tbl['mag_2'],  ug_tbl['e_color'] , fmt = 'none', elinewidth = errorbar_linewidth, capsize = errorbar_capsize, c = 'k', capthick = errorbar_linewidth, zorder = 1)
                     ax2.scatter(ug_tbl['obsdate_1'], ug_tbl['mag_1']-ug_tbl['mag_2'], label = 'u-g', facecolors = 'magenta',  edgecolors = 'k', s = scatter_size, linewidth = scatter_linewidth, alpha = scatter_alpha, zorder = 2)
 
-            ax2.set_xlabel('Days since first detection [MJD - 59529.3318]')
+            plt.xlabel('Phase [days]')
             ax2.set_ylabel('Color')
-            ax2.set_xticks(np.min(data_detected['obsdate']) + np.arange(-20, 200, day_binsize), np.arange(-20, 200, day_binsize) )
-            ax2.set_ylim(-1.5, 1.5)
+            ax2.set_xticks(np.arange(phase_min, phase_max, phase_binsize), dates, rotation = 45)
+            ax2.set_ylim(-1.5, 2)
+            ax2.set_xlim(phase_min, phase_max)
             
             # legends
             sorted_keys = {k: v for k, v in labels.items()}
@@ -288,8 +311,10 @@ class ObservedPhot:
                             for x,y in zip(show_data_ul['obsdate'], show_data_ul['depth_5sig']+offsets[filter_]):
                                 plt.arrow(x=x,y=y,dx=0,dy=UL_linelength_ver, linewidth = UL_linewidth_ver, head_width = UL_headwidth, head_length = UL_headlength, color = colors[filter_], shape = 'full', alpha = UL_alpha)
                                 plt.arrow(x=x-UL_linelength_hor,y=y,dx=2*UL_linelength_hor,dy=0,linewidth = UL_linewidth_hor, head_width = 0, color = colors[filter_], alpha = UL_alpha)
-            plt.xticks(phase_max + np.arange(-40, 200, day_binsize), np.arange(-40, 200, day_binsize) )
-
+            plt.xticks(np.arange(phase_min, phase_max, phase_binsize), dates, rotation = 45)
+            plt.xlim(phase_min,phase_max)
+            plt.yticks(mags, mags)
+            plt.ylim(mag_max, mag_min)
             # legends
             #sorted_keys = {k: v for k, v in sorted(labels.items(), key=lambda item: item[1])}
             sorted_keys = {k: v for k, v in labels.items()}
@@ -300,7 +325,6 @@ class ObservedPhot:
             if label:
                 plt.legend(rows + columns, name_rows + name_columns, loc=label_location, ncol = 2)
             
-            #plt.xlabel('Days since first detection [MJD - 59529.3318]')
             plt.xlabel('Phase [days]')
             plt.ylabel('Apparent Magnitude [AB]')
             
@@ -312,6 +336,7 @@ if __name__ =='__main__':
     plt.figure(dpi = 400, figsize =(9,7))
     filepath_phot = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
     filepath_spec = '/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat'
+
     #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 
     tbl_phot = ascii.read(filepath_phot, format = 'fixed_width')
@@ -326,8 +351,47 @@ if __name__ =='__main__':
     plt.xlim(59525, 59540)
     plt.show()
 # %%
-
-                
+if __name__ == '__main__':
+    from astropy.table import vstack
+    filepath_imsng = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/all_IMSNG.dat'
+    filepath_atlas = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/ATLAS_new.dat'
+    filepath_7DT = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/all_7DT.dat'
+    
+    tbl_IMSNG = ascii.read(filepath_imsng, format = 'fixed_width')
+    tbl_ATLAS = ascii.read(filepath_atlas, format = 'fixed_width')
+    tbl_7DT = ascii.read(filepath_7DT, format = 'fixed_width')
+    tbl_all = vstack([tbl_IMSNG, tbl_ATLAS, tbl_7DT])
+    obs_all = ObservedPhot(tbl_all)
+    obs_all.show_lightcurve(dpi = 300,
+                            figsize = (12,8),
+                            phase_format = 'datetime',
+                            phase_min = 60180,
+                            phase_max = 60390,
+                            phase_binsize  = 50,
+                            mag_min = 12,
+                            mag_max = 22,
+                            mag_binsize  = 2,
+                            scatter_size = 60,
+                            scatter_linewidth = 0.4,
+                            errorbar_linewidth = 0.02,
+                            errorbar_capsize = 0.02,
+                            scatter_alpha = 1,
+                            line = False,
+                            label = True,
+                            label_location = 'upper right',
+                            color_UB = False,
+                            color_BV = False,
+                            color_ug = False,
+                            color_gr = False,
+                            UL = True,
+                            UL_linewidth_ver = 1,
+                            UL_linewidth_hor = 1,
+                            UL_linelength_ver = 0.5,
+                            UL_linelength_hor = 2.5,
+                            UL_headlength = 0.2,
+                            UL_headwidth = 3,
+                            UL_alpha = 0.5)
+                    
 
     
     
@@ -371,7 +435,7 @@ if __name__ =='__main__':
     plt.figure(dpi = 500, figsize = (8,6))
     observed_spec = ObservedPhot(tbl4)
     observed_spec.show_lightcurve(scatter_size = 80)
-    observed_data.show_lightcurve(label = True, label_location=0, UL= True, UL_headwidth=0.3, UL_linelength_ver=0.5, UL_alpha = 0.3, color_BV = False, color_gr = False, day_binsize= 5)
+    observed_data.show_lightcurve(label = True, label_location=0, UL= True, UL_headwidth=0.3, UL_linelength_ver=0.5, UL_alpha = 0.3, color_BV = False, color_gr = False, phase_binsize= 5)
     
     plt.xlim(59525, 59540)
     plt.ylim(24, 5)

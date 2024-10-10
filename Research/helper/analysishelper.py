@@ -131,7 +131,9 @@ class AnalysisHelper():
                         g = 'lightseagreen',
                         r = 'orange',
                         i = 'lightcoral',
-                        z = 'gray'
+                        z = 'gray',
+                        ATLAS_c = 'darkcyan',
+                        ATLAS_o = 'darkorange',
                         )
         offset_key = dict(
                         U = -3, 
@@ -143,7 +145,9 @@ class AnalysisHelper():
                         g = -1,
                         r = 1,
                         i = 2,
-                        z = 5
+                        z = 5,
+                        ATLAS_c = -1.5,
+                        ATLAS_o = 1.5,
                         )
         
         salt2_key = dict(
@@ -156,7 +160,10 @@ class AnalysisHelper():
                         g = 'ps1::g',
                         r = 'ps1::r',
                         i = 'ps1::i',
-                        z = 'ps1::z')
+                        z = 'ps1::z',
+                        ATLAS_c = 'atlasc',
+                        ATLAS_o = 'atlaso'
+                        )
         
         pyphot_key = dict(
                         U = 'GROUND_JOHNSON_U',
@@ -168,7 +175,10 @@ class AnalysisHelper():
                         g = 'PS1_g',
                         r = 'PS1_r',
                         i = 'PS1_i',
-                        z = 'SDSS_z')
+                        z = 'SDSS_z',
+                        ATLAS_c = 'sdssg',
+                        ATLAS_o = 'sdssr'
+                        )
 
         if filter_key ==None:    
             filter_key = [
@@ -181,7 +191,9 @@ class AnalysisHelper():
                         'g',
                         'r',
                         'i',
-                        'z'
+                        'z',
+                        'ATLAS_c',
+                        'ATLAS_o'
                         ]
         result_color = {k: color_key[k] for k in filter_key if k in color_key}
         result_offset = {k: offset_key[k] for k in filter_key if k in offset_key}

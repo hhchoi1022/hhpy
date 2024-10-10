@@ -1,0 +1,26 @@
+{
+    "Execution Time": "2024-10-09 13:39:18",
+    "astrometry": [],
+    "calculate": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230706-100959-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230801-074406-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230801-074623-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230801-075055-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230802-074523-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230802-074739-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230802-074956-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230802-075212-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230802-075428-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230813-071003-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230813-071436-g-120.fits"
+    ],
+    "cutout": [],
+    "align": [],
+    "combine": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230706-101442-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230801-075055-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230802-075428-g-120.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aCalib-KCT_STX16803-NGC1097-20230813-071653-g-120.fits"
+    ],
+    "photometry": []
+}

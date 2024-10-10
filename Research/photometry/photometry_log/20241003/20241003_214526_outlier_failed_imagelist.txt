@@ -1,0 +1,33 @@
+{
+    "Execution Time": "2024-10-03 21:45:05",
+    "astrometry": [],
+    "calculate": [],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "photometry": [],
+    "outlier": [
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230613-193458-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230613-193811-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230613-194124-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230617-192724-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230617-193038-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230617-193353-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230623-181206-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230626-182935-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230626-183248-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230626-183602-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230719-173220-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230719-173534-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230719-173848-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230808-184125-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230808-184438-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230808-184754-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230810-174049-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230810-174407-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230810-174731-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230823-174941-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230823-175257-r-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/Calib-LSGT_ASI1600MM-NGC1097-20230823-175614-r-180.fits"
+    ]
+}

@@ -9,6 +9,7 @@ from astropy.table import Table
 from astropy.io import ascii
 import numpy as np
 from astropy.table import join
+from astropy.time import Time
 
 #%%
 class GoogleSheet:
@@ -38,7 +39,7 @@ class GoogleSheet:
     
     def __init__(self,
                  spreadsheet_url : str = 'https://docs.google.com/spreadsheets/d/1KaRax8XIg7QnlZqi2XCynRb_zfYFI3zKj0z4o7X7WXg/edit#gid=0',
-                 authorize_json_file : str = '/home/hhchoi1022/.config/googlesheet/reference-324714-709b903fecb3.json',
+                 authorize_json_file : str = '/home/hhchoi1022/.config/googlesheet/targetdb-423908-00074d90e5fc.json',
                  scope = [
                  'https://spreadsheets.google.com/feeds',
                  'https://www.googleapis.com/auth/drive'
@@ -188,127 +189,39 @@ class GoogleSheet:
     @property
     def address_sheets(self):
         address_dict = dict()
+        address_dict['targetlist'] = 'https://docs.google.com/spreadsheets/d/1UorU7P_UMr22Luw6q6GLQYk4-YicGRATwCePRxkx2Ms/edit?usp=sharing'
         address_dict['ccdinfo'] = 'https://docs.google.com/spreadsheets/d/1YkDkxdYxT6o4oGePELgk_MossrQWpFepeVz0NKy794s/edit#gid=0'
         address_dict['allbricqs'] = 'https://docs.google.com/spreadsheets/d/15QmTtXJodcKb238hVV_dPszupOFs2udYUNE-2ibHoQw/edit#gid=0'
-        address_dict['targetlist'] = 'https://docs.google.com/spreadsheets/d/1KaRax8XIg7QnlZqi2XCynRb_zfYFI3zKj0z4o7X7WXg/edit#gid=1930204366'   
         address_dict['serverroom'] = 'https://docs.google.com/spreadsheets/d/1tg-k55hgBGZ3GFH7O6uylVBOYLXbsIgyagakYj8nQEw/edit#gid=1609450750' 
         return address_dict
     
 
 #%%
 if __name__ == '__main__':
-    data_file = '/home/hhchoi1022/S240910ci_PRELIMINARY/SkyGridCatalog_7DT_90.csv'
+    data_file = '/home/hhchoi1022/code/GECKO/SkyGridCatalog_7DT_90.csv'
+    #data_file = '/home/hhchoi1022/S240910ci_PRELIMINARY/SkyGridCatalog_7DT_90.csv'
     tbl = ascii.read(data_file)
     objnamelist = []
     for id_ in tbl['id']:
         objnamelist.append('T%.5d'%id_)
-    tbl['obj'] = objnamelist
     gs = GoogleSheet((GoogleSheet().address_sheets['targetlist']))
-    format_tbl = gs.get_sheet_data(sheet_name = 'format_ToO', format_ = 'Table')
-    common_colnames = set(format_tbl.colnames).intersection(tbl.colnames)
-    format_tbl['ra'] = format_tbl['ra'].astype('float')
-    format_tbl['dec'] = format_tbl['dec'].astype('float')
-    format_tbl['weight'] = format_tbl['weight'].astype('float')
-    format_tbl['note'] = format_tbl['note'].astype('int')
-    merged_tbl = join(format_tbl, tbl, keys = common_colnames, join_type = 'outer')
-    merged_tbl = merged_tbl[merged_tbl['obj'] != 'target_example']
-    for colname in merged_tbl.colnames:
-        merged_tbl[colname] = merged_tbl[colname].astype(str)
-    merged_tbl['mode'] = 'r' ############## Default filter 
-    merged_tbl['exptime'] = '120' ############## Default exposure time for single frame 
-    merged_tbl['binning'] = '1' ############## Default binning 
-    sheet_name = merged_tbl['obj'][0] +'_ToO'
-    #gs.write_sheet_data(sheet_name = sheet_name, data  =merged_tbl, append= False, clear_header = False)
-#%%
-if __name__ == '__main__':
-    tile_file = '/home/hhchoi1022/tcspy/utils/databases/sky-grid and tiling/7-DT/displaycenter.txt'
-    tile_data = ascii.read(tile_file)
-    def calculate_closest_tile(ra, dec, catalog_tile):
-        from astropy.coordinates import SkyCoord
-        coord = SkyCoord(ra = ra, dec = dec, unit = 'deg')
-        distances = np.sqrt((catalog_tile['ra'] - coord.ra.value)**2 + (catalog_tile['dec'] - coord.dec.value)**2)
-        idx_closest = np.argmin(distances)
-        return catalog_tile[idx_closest], distances[idx_closest]
-    print(calculate_closest_tile(ra = 129.6288621, dec = -32.9435806, catalog_tile = tile_data))
-    #%%
-
-
-'''
-from astropy.io import fits
-data_file ='/home/hhchoi1022/Downloads/scTOO_20240423_SAAO.request.cat'
-tbl = ascii.read(data_file)
-tbl.rename_column('col7', 'obj')
-tbl.rename_column('col3', 'ra_hms')
-tbl.rename_column('col4', 'dec_dms')
-gs = GoogleSheet((GoogleSheet().address_sheets['targetlist']))
-format_tbl = gs.get_sheet_data(sheet_name = 'format_ToO', format_ = 'Table')
-common_colnames = set(format_tbl.colnames).intersection(tbl.colnames)
-format_tbl['ra'] = format_tbl['ra'].astype('float')
-format_tbl['dec'] = format_tbl['dec'].astype('float')
-#format_tbl['weight'] = format_tbl['weight'].astype('float')
-#format_tbl['note'] = format_tbl['note'].astype('int')
-merged_tbl = join(format_tbl, tbl, keys = common_colnames, join_type = 'outer')
-merged_tbl = merged_tbl[merged_tbl['obj'] != 'target_example']
-for colname in merged_tbl.colnames:
-    merged_tbl[colname] = merged_tbl[colname].astype(str)
-merged_tbl['mode'] = 'r,i' ############## Default filter 
-merged_tbl['exptime'] = '120' ############## Default exposure time for single frame 
-merged_tbl['binning'] = '1' ############## Default binning 
-sheet_name = merged_tbl['obj'][0] +'_ToO'
-#%%
-gs.write_sheet_data(sheet_name = sheet_name, data  =merged_tbl, append= False, clear_header = False)
-
-
-
-
-#%%
-tile_file = '/home/hhchoi1022/tcspy/utils/databases/sky-grid and tiling/7-DT/displaycenter.txt'
-tile_data = ascii.read(tile_file)
-# %%
-size1=  7
-#size2= 7
-ra_idx1 = (tile_data['ra'] > (120.76172 -size1)) & (tile_data['ra'] < (120.76172 +size1))
-dec_idx1 = (tile_data['dec'] > (-25.53038 -size1)) & (tile_data['dec'] < (-25.53038 +size1))
-#ra_idx2 = (tile_data['ra'] > (120.76172 -size2)) & (tile_data['ra'] < (120.76172 +size2))
-#dec_idx2 = (tile_data['dec'] > (-25.53038 -size2)) & (tile_data['dec'] < (-25.53038 +size2))
-tbl = tile_data[(ra_idx1 & dec_idx1)]# & ra_idx2 & dec_idx2]
-objname = ['T'+'%.5d'%tilenum for tilenum in tbl['id']]
-tbl['obj'] = objname
-gs = GoogleSheet((GoogleSheet().address_sheets['targetlist']))
-format_tbl = gs.get_sheet_data(sheet_name = 'format_ToO', format_ = 'Table')
-common_colnames = set(format_tbl.colnames).intersection(tbl.colnames)
-format_tbl['ra'] = format_tbl['ra'].astype('float')
-format_tbl['dec'] = format_tbl['dec'].astype('float')
-#format_tbl['weight'] = format_tbl['weight'].astype('float')
-#format_tbl['note'] = format_tbl['note'].astype('int')
-merged_tbl = join(format_tbl, tbl, keys = common_colnames, join_type = 'outer')
-merged_tbl = merged_tbl[merged_tbl['obj'] != 'target_example']
-for colname in merged_tbl.colnames:
-    merged_tbl[colname] = merged_tbl[colname].astype(str)
-merged_tbl['mode'] = 'r' ############## Default filter 
-merged_tbl['exptime'] = '120' ############## Default exposure time for single frame 
-merged_tbl['count'] = '3' ############## Default exposure time for single frame 
-merged_tbl['binning'] = '1' ############## Default binning 
-sheet_name = 'S240422ed' +'_ToO'
-#%%
-gs.write_sheet_data(sheet_name = sheet_name, data  =merged_tbl, append= False, clear_header = True)
-# %%
-gs = GoogleSheet((GoogleSheet().address_sheets['targetlist']))
-tile_data = gs.get_sheet_data(sheet_name = 'autofocus_ToO', format_ = 'Table')
+    
+    new_tbl = Table()
+    new_tbl['objname'] = objnamelist
+    new_tbl['RA'] = tbl['ra']
+    new_tbl['De'] = tbl['dec']
+    new_tbl['exptime'] = 100
+    new_tbl['count'] = 3
+    new_tbl['obsmode'] = 'Spec'
+    new_tbl['filter'] = None
+    new_tbl['specmode'] = 'specall'
+    new_tbl['ntelescope'] = None
+    new_tbl['group'] = tbl['rank'] + 10
+    new_tbl['priority'] = tbl['prob_vol_x_stmass']
+    new_tbl['binning'] = 1
+    new_tbl['gain'] = 2750
+    new_tbl['objtype'] = 'GECKO'
+    sheet_name = Time.now().datetime.strftime('%Y%m%d')
+    gs.write_sheet_data(sheet_name = sheet_name, data  =new_tbl, append= False, clear_header = False)
 
 # %%
-ra_idx = (tile_data['ra'].astype(float) > (120.76172 -size)) & (tile_data['ra'].astype(float) < (120.76172 +size))
-dec_idx = (tile_data['dec'].astype(float) > -25.53038 -size) & (tile_data['dec'].astype(float) < -25.53038 +size)
-# %%
-np.sum(ra_idx & dec_idx)
-# %%
-#%%
-from astropy.io import ascii
-from astropy.coordinates import SkyCoord
-tile_file = '/home/hhchoi1022/tcspy/utils/databases/sky-grid and tiling/7-DT/displaycenter.txt'
-tile_data = ascii.read(tile_file)
-coord = tile_data[11874]
-skycoord = SkyCoord(ra=coord['ra'], dec=coord['dec'], unit='deg')
-print(skycoord.to_string(style = 'hmsdms'))
-# %%
-'''

@@ -293,6 +293,7 @@ plt.show()
 
 output_filelist = []
 # KCT in g band
+'''
 output_file = write_photometry_file(
                                     key='/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT*/g/*.phot',
                                     savepath='/mnt/data1/supernova_rawdata/SN2023rve/analysis/IMSNG_KCT_g.dat',
@@ -300,6 +301,7 @@ output_file = write_photometry_file(
                                     observatory='KCT'
                                     )   
 output_filelist.append(output_file)
+'''
 # KCT in r band
 output_file = write_photometry_file(
                                     key='/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT*/r/*.phot',
@@ -309,11 +311,21 @@ output_file = write_photometry_file(
                                     )
 output_filelist.append(output_file)
 # RASA36 in r band 
+
 output_file = write_photometry_file(
                                     key='/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/*.phot',
                                     savepath='/mnt/data1/supernova_rawdata/SN2023rve/analysis/IMSNG_RASA36_r.dat',
                                     filter_='r',
                                     observatory='RASA36'
+                                    )
+output_filelist.append(output_file)
+
+# LSGT in r band 
+output_file = write_photometry_file(
+                                    key='/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/r/*.phot',
+                                    savepath='/mnt/data1/supernova_rawdata/SN2023rve/analysis/IMSNG_LSGT_r.dat',
+                                    filter_='r',
+                                    observatory='LSGT'
                                     )
 output_filelist.append(output_file)
 # %%
@@ -332,22 +344,32 @@ i = 0
 
 tbl_show_RASA36 = tbl_filters[i][tbl_filters[i]['observatory'] == 'RASA36']
 tbl_show_KCT = tbl_filters[i][tbl_filters[i]['observatory'] == 'KCT']
-#tbl_show_LSGT = tbl_filters[i][tbl_filters[i]['observatory'] == 'LSGT']
+tbl_show_LSGT = tbl_filters[i][tbl_filters[i]['observatory'] == 'LSGT']
 
+plt.figure(dpi = 300, figsize = (8,5))
 plt.title(f'filter = {tbl_filters[i][0]["filter"]}')
 # Black = RASA36
-plt.scatter(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], facecolor = 'none', edgecolor = 'k',  s = 50, marker = 's')
+plt.scatter(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], facecolor = 'none', edgecolor = 'k',  s = 50, marker = 'o')
 plt.errorbar(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], tbl_show_RASA36['e_mag'], fmt = 'none', c= 'k')
 # Red = KCT
-plt.scatter(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 'o')
-plt.errorbar(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'], tbl_show_KCT['e_mag'], fmt = 'none', c= 'r')
+#plt.scatter(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 'o')
+#plt.errorbar(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'], tbl_show_KCT['e_mag'], fmt = 'none', c= 'r')
+# Red = LSGT
+plt.scatter(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 's')
+plt.errorbar(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], tbl_show_LSGT['e_mag'], fmt = 'none', c= 'r')
 # Blue = LSGT
+plt.scatter(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['depth_5sig'], facecolor = 'none', edgecolor = 'k',  s = 50, marker = 'o', alpha = 0.3)
+plt.errorbar(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['depth_5sig'], tbl_show_RASA36['e_mag'], fmt = 'none', c= 'k', alpha = 0.3)
+# Red = KCT
+plt.scatter(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['depth_5sig'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 'o', alpha = 0.3)
+plt.errorbar(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['depth_5sig'], tbl_show_KCT['e_mag'], fmt = 'none', c= 'r', alpha = 0.3)
+
 #plt.scatter(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], facecolor = 'none', edgecolor = 'b', s = 50, marker = 'o')
 #plt.errorbar(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], tbl_show_LSGT['e_mag'], fmt = 'none', c= 'b', marker = 'o')
 
 plt.grid()
-plt.xlim(datetime(year = 2023, month = 9, day = 1), datetime(year = 2024, month = 6, day = 10))
+#plt.xlim(datetime(year = 2023, month = 10, day = 1), datetime(year = 2024, month = 1, day = 10))
 #plt.xlim(datetime(year = 2022, month = 1, day = 10), datetime(year = 2022, month = 4, day = 20))
-#plt.ylim(14.5,15.5)
+plt.ylim(22,13.5)
 import numpy as np
 # %%
