@@ -17,12 +17,12 @@ class mainObserver:
     See more info : https://astroplan.readthedocs.io
     '''
     def __init__(self, 
-                 OBSERVER_LATITUDE : str, 
-                 OBSERVER_LONGITUDE : str, 
-                 OBSERVER_ELEVATION : str, 
-                 OBSERVER_TIMEZONE : str,
-                 OBSERVER_NAME : str = None,
-                 OBSERVER_OBSERVATORY : str = None,
+                 OBSERVER_LATITUDE : str = 36.1648, 
+                 OBSERVER_LONGITUDE : str = 128.9766, 
+                 OBSERVER_ELEVATION : str = 1162, 
+                 OBSERVER_TIMEZONE : str = "Asia/Seoul",
+                 OBSERVER_NAME : str = "Yunyi Choi & Hyeonho Choi",
+                 OBSERVER_OBSERVATORY : str = "BOAO",
                  **kwargs
                  ):
         """
