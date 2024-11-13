@@ -14,15 +14,15 @@ import matplotlib
 #%matplotlib inline
 #%% Observation
 helper = Helper()
-DM = 31.14
+DM = 31.17
 ZP = 25
 filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
 model_directory = '/data1/supernova_model/DOM_model'
 #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 #model_directory = '/data7/yunyi/temp_supernova/DOM_model'
-fit_filterset = 'UBVugri'
+fit_filterset = 'BVgri'
 fit_start_mjd : int = 59529
-fit_end_mjd : int = 59538
+fit_end_mjd : int = 59537
 
 # Query data
 obs_tbl = ascii.read(filepath_all, format = 'fixed_width')
@@ -58,7 +58,7 @@ fit_tbl['absmag'] = (fit_tbl['mag'] - DM).round(3)
 #%%
 # Visualize
 plt.figure(dpi = 400, figsize = (6,6))
-ax1, ax2 = observed_data.show_lightcurve(day_binsize = 20,
+ax1, ax2 = observed_data.show_lightcurve(phase_binsize = 20,
                               scatter_linewidth=0.6, 
                               scatter_size=30, 
                               scatter_alpha = 1,
@@ -295,6 +295,9 @@ def process_combination(args):
     tot_header = header_parameters + header_fitvalues + header_fitconfig
     result_tbl = Table(names = tot_header)
     result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
+    if os.path.exists(f'/data1/supernova_model/result/DOM_fit_result/kappa{kappa}/E{E_exp}/{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom}.fit'):
+        print(f'{E_exp}_{M_ej}_{kappa}_{t_delay}_{f_comp}_{M_dom}_{V_dom}_{f_dom} is already calculated')
+        return
     try:
         print('Start calculation: ', E_exp, M_ej, kappa, t_delay, f_comp, M_dom, V_dom, f_dom)
         result = fit_both(
@@ -343,7 +346,7 @@ def main(fit_tbl):
                         for f_dom in range_f_dom]
 
     # Use multiprocessing to process the combinations in parallel
-    with mp.Pool(processes=3) as pool:
+    with mp.Pool(processes=6) as pool:
         pool.map(process_combination, all_combinations)
 
     print(time.time() - start)
@@ -364,8 +367,8 @@ for file_ in tqdm(files):
 #%%
 result_tbl.sort('redchisqr')
 #%%
-result_tbl.write('/data1/supernova_model/result/DOM_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
-#%%
+result_tbl.write('/data1/supernova_model/result/DOM_fit_result_BVgri.fit', format = 'ascii.fixed_width', overwrite = True)
+r#%%
 #%%
 #import matplotlib#
 #matplotlib.use('TkAgg')  # Or 'Agg', 'Qt5Agg', etc. depending on your system

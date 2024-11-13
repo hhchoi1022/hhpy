@@ -1172,7 +1172,8 @@ class Catalog():
             raise ValueError(f'{catalog_name} is not registered')                       
         
         if not data:
-            print(f"{catalog_name} cannot query {self.fieldinfo['target']}.")
+            pass
+            #print(f"{catalog_name} cannot query {self.fieldinfo['target']}.")
         else:
             if save:
                 os.makedirs(os.path.join(self.catpath, catalog_name), exist_ok=True)

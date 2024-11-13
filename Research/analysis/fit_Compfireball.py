@@ -12,13 +12,12 @@ from observedphot import ObservedPhot
 from lmfit import Parameters, minimize
 #%% Observation
 helper = Helper()
-DM = 31.18
+DM = 31.17
 ZP = 25
 filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
 model_directory = '/data1/supernova_model/Comp_model'
 #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 #model_directory = '/data7/yunyi/temp_supernova/DOM_model'
-
 fit_filterset = 'UBVugri'
 fit_start_mjd : int = 59529
 fit_end_mjd : int = 59537
@@ -58,19 +57,19 @@ fit_tbl['absmag'] = (fit_tbl['mag'] - DM).round(3)
 #%%
 # Visualize
 plt.figure(dpi = 400, figsize = (8, 8))
-ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
-                              scatter_linewidth=0.5, 
-                              scatter_size=50, 
-                              errorbar_linewidth=0.5, 
-                              errorbar_capsize=0.1, 
-                              color_UB = True,
-                              color_BV = True, 
-                              color_gr = True, 
-                              UL = True, 
-                              UL_alpha = 0.8,
-                              label = True, 
-                              label_location=0, 
-                              )
+ax1, ax2 = observed_data.show_lightcurve(phase_binsize = 5,
+                                         scatter_linewidth=0.5, 
+                                         scatter_size=50, 
+                                         errorbar_linewidth=0.5, 
+                                         errorbar_capsize=0.1, 
+                                         color_UB = True,
+                                         color_BV = True, 
+                                         color_gr = True, 
+                                         UL = True, 
+                                         UL_alpha = 0.8,
+                                         label = True, 
+                                         label_location=0, 
+                                         )
 ax1.fill_betweenx(y = [ 30, 0], x1 = fit_start_mjd, x2 = fit_end_mjd, color = 'gray', alpha = 0.2)
 ax1.set_ylim(22, 6)
 plt.xlim(59525, 59545)
@@ -240,6 +239,9 @@ def process_combination(args):
     tot_header = header_parameters + header_fitvalues + header_fitconfig
     result_tbl = Table(names = tot_header)
     result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
+    if os.path.exists(f'/data1/supernova_model/result/Comp_fit_result/M%.1f/%.2f_%.1f_%.1f.fit'%(m_wd, rstar, m_wd, v9)):
+        print('Already calculated: ', rstar, m_wd, v9)
+        return
     try:
         print('Start calculation: ', rstar, m_wd, v9)
         result = fit_both(fit_tbl=fit_tbl,
@@ -283,20 +285,19 @@ def main(fit_tbl):
 
 
 if __name__ == '__main__':
-    pass
-    #main(fit_tbl = fit_tbl)
-#%%
-'''
+    main(fit_tbl = fit_tbl)
+ & #%%
 import glob
 from astropy.table import vstack
-result_key = '/data1/supernova_model/result/Comp_fit_result/*/*.fit'
+result_key = '/data1/supernova_model/result/Comp_fit_result_BVgri/*/*.fit'
 files = glob.glob(result_key)
 result_tbl = Table()
 for file_ in files:
     tbl = ascii.read(file_, format = 'fixed_width')
     result_tbl = vstack([result_tbl, tbl])
-result_tbl.write('/data1/supernova_model/result/Comp_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
-'''
+result_tbl.sort('redchisqr')
+result_tbl.write('/data1/supernova_model/result/Comp_fit_result_BVgri.fit', format = 'ascii.fixed_width', overwrite = True)
+
 #%%
 result_tbl = ascii.read('/data1/supernova_model/result/Comp_fit_result.fit', format = 'fixed_width')
 fit_filterset = set(fit_tbl['filter'])

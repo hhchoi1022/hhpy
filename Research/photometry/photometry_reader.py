@@ -293,7 +293,6 @@ plt.show()
 
 output_filelist = []
 # KCT in g band
-'''
 output_file = write_photometry_file(
                                     key='/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT*/g/*.phot',
                                     savepath='/mnt/data1/supernova_rawdata/SN2023rve/analysis/IMSNG_KCT_g.dat',
@@ -301,7 +300,6 @@ output_file = write_photometry_file(
                                     observatory='KCT'
                                     )   
 output_filelist.append(output_file)
-'''
 # KCT in r band
 output_file = write_photometry_file(
                                     key='/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT*/r/*.phot',
@@ -340,7 +338,7 @@ tbl_filters = tbl_phot.group_by('filter').groups
 # %%
 import matplotlib.pyplot as plt
 
-i = 0
+i = 1
 
 tbl_show_RASA36 = tbl_filters[i][tbl_filters[i]['observatory'] == 'RASA36']
 tbl_show_KCT = tbl_filters[i][tbl_filters[i]['observatory'] == 'KCT']
@@ -352,8 +350,8 @@ plt.title(f'filter = {tbl_filters[i][0]["filter"]}')
 plt.scatter(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], facecolor = 'none', edgecolor = 'k',  s = 50, marker = 'o')
 plt.errorbar(Time(tbl_show_RASA36['obsdate'], format = 'mjd').datetime, tbl_show_RASA36['mag'], tbl_show_RASA36['e_mag'], fmt = 'none', c= 'k')
 # Red = KCT
-#plt.scatter(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 'o')
-#plt.errorbar(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'], tbl_show_KCT['e_mag'], fmt = 'none', c= 'r')
+plt.scatter(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 'o')
+plt.errorbar(Time(tbl_show_KCT['obsdate'], format = 'mjd').datetime, tbl_show_KCT['mag'], tbl_show_KCT['e_mag'], fmt = 'none', c= 'r')
 # Red = LSGT
 plt.scatter(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'],facecolor = 'none', edgecolor = 'r', s = 50, marker = 's')
 plt.errorbar(Time(tbl_show_LSGT['obsdate'], format = 'mjd').datetime, tbl_show_LSGT['mag'], tbl_show_LSGT['e_mag'], fmt = 'none', c= 'r')

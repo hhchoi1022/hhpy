@@ -1,0 +1,24 @@
+#   1 NUMBER                 Running object number                                     
+#   2 FLUX_APER              Flux vector within fixed circular aperture(s)              [count]
+#   7 FLUXERR_APER           RMS error vector for aperture flux(es)                     [count]
+#  12 MAG_AUTO               Kron-like elliptical aperture magnitude                    [mag]
+#  13 MAGERR_AUTO            RMS error for AUTO magnitude                               [mag]
+#  14 MAG_APER               Fixed aperture magnitude vector                            [mag]
+#  19 MAGERR_APER            RMS error vector for fixed aperture mag.                   [mag]
+#  24 FWHM_IMAGE             FWHM assuming a gaussian core                              [pixel]
+#  25 FWHM_WORLD             FWHM assuming a gaussian core                              [deg]
+#  26 X_IMAGE                Object position along x                                    [pixel]
+#  27 Y_IMAGE                Object position along y                                    [pixel]
+#  28 X_WORLD                Barycenter position along world x axis                     [deg]
+#  29 Y_WORLD                Barycenter position along world y axis                     [deg]
+#  30 ALPHA_J2000            Right ascension of barycenter (J2000)                      [deg]
+#  31 DELTA_J2000            Declination of barycenter (J2000)                          [deg]
+#  32 FLAGS                  Extraction flags                                          
+#  33 CLASS_STAR             S/G classifier output                                     
+#  34 THRESHOLD              Detection threshold above background                       [count]
+         1     517201.4       520363     515329.9            0            0      621.762     628.5795     632.9736            0            0 -14.2949   0.0013 -14.2841 -14.2908 -14.2802   0.0000   0.0000   0.0013   0.0013   0.0013   0.0000   0.0000     3.87 0.0007784222   1138.9150     37.1932   6.5029220519e+01  -5.4692047688e+01  65.0292205 -54.6920477   0  1.000     30.42217
+         2     206.6832    -1433.696    -1282.932            0            0     60.37674     98.35978       137.69            0            0  -7.4075   0.0664  -5.7883  99.0000  99.0000   0.0000   0.0000   0.3172  99.0000  99.0000   0.0000   0.0000     3.14 0.0006314924   1804.2142    171.1981   6.4798908732e+01  -5.4722233192e+01  64.7989087 -54.7222332   0  0.623     30.42217
+         3     626611.4     645149.6       639402            0            0     683.8425     698.2838     701.8121            0            0 -14.5248   0.0012 -14.4925 -14.5242 -14.5144   0.0000   0.0000   0.0012   0.0012   0.0012   0.0000   0.0000     4.51 0.0009061841   1632.1989   1017.9988   6.4865844574e+01  -5.4891629764e+01  64.8658446 -54.8916298   0  1.000     30.42217
+         4     11309.42     6693.589     5562.101            0            0     108.8721     120.8813     151.7674            0            0 -10.1064   0.0110 -10.1336  -9.5641  -9.3631   0.0000   0.0000   0.0105   0.0196   0.0296   0.0000   0.0000     2.19 0.0004404136   2014.2168   1354.0680   6.4734916875e+01  -5.4960920923e+01  64.7349169 -54.9609209   0  0.965     30.42217
+         5     3252.419    -2552.847    -4157.068            0            0     76.63326      98.2133     137.4807            0            0  -8.4122   0.0408  -8.7805  99.0000  99.0000   0.0000   0.0000   0.0256  99.0000  99.0000   0.0000   0.0000     3.25 0.0006544471   1029.2538   2129.5093   6.5087108073e+01  -5.5111967571e+01  65.0871081 -55.1119676   0  0.961     30.42217
+         6     39140.52      66244.3     93827.62            0            0     180.2138     242.3387     297.3746            0            0 -13.6522   0.0019 -11.4816 -12.0529 -12.4308   0.0000   0.0000   0.0050   0.0040   0.0034   0.0000   0.0000    20.33  0.004088119   1332.4032   2466.4397   6.4983613929e+01  -5.5181271319e+01  64.9836139 -55.1812713  16  0.998     30.42217

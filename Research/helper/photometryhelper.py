@@ -14,7 +14,10 @@ from astropy.table import unique
 import inspect
 import subprocess
 import re
+import warnings
 
+# Suppress all warnings
+warnings.filterwarnings('ignore')
 # %%
 
 import signal
@@ -76,6 +79,10 @@ class PhotometryHelper():
             PhotometryHelper, predicate=inspect.isfunction) if not name.startswith('_')]
         txt = '[Methods]\n'+''.join(methods)
         return txt
+    
+    def print(self, string, do_print : bool = False):
+        print(string) if do_print else None
+        
     # Load information
 
     def get_imginfo(self, filelist, keywords=['jd', 'group', 'filter', 'exptime', 'object', 'telescop', 'instrume', 'ra', 'dec', 'xbinning', 'ybinning', 'imagetyp']):
@@ -605,13 +612,12 @@ class PhotometryHelper():
 
  # Image processing
  
-    def calculate_rotang(self, target_img, update_header : bool = False):
+    def calculate_rotang(self, target_img, update_header : bool = False, print_output : bool = False):
         from astropy.io import fits
         from astropy.wcs import WCS
         import numpy as np
         #fits_file = filelist[]
         # Load the FITS file with the astrometry solution
-        #fits_file = im.target_image  # Replace with your actual solved FITS file
         hdul = fits.open(target_img)
         wcs = WCS(hdul[0].header)
 
@@ -640,11 +646,11 @@ class PhotometryHelper():
         if update_header:
             hdul[0].header['ROTANG'] = pa_degrees
             hdul.writeto(target_img, overwrite=True)
-
-        print(f"Camera rotation angle (Position Angle) toward North: {pa_degrees:.2f} degrees")
+        hdul.close()
+        self.print(f"Camera rotation angle (Position Angle) toward North: {pa_degrees:.2f} degrees", print_output)
         
 
-    def cutout_img(self, target_img, size=0.9, prefix='cut_', xcenter=None, ycenter=None):
+    def cutout_img(self, target_img, size=0.9, prefix='cut_', xcenter=None, ycenter=None, print_output: bool = True):
         '''
         parameters
         ----------
@@ -673,8 +679,10 @@ class PhotometryHelper():
         '''
         from astropy.wcs import WCS
         from astropy.nddata import Cutout2D
-
-        hdu = fits.open(target_img)[0]
+            
+        self.print('Start image cutout... \n', print_output)
+        hdul = fits.open(target_img)
+        hdu = hdul[0]
         wcs = WCS(hdu.header)
         if size < 1:
             size = size*int(len(hdu.data))
@@ -694,9 +702,11 @@ class PhotometryHelper():
         cutouted_hdu.header['NAXIS2'] = int(size)
         outputname = f'{os.path.dirname(target_img)}/{prefix}{os.path.basename(target_img)}'
         cutouted_hdu.writeto(outputname, overwrite=True)
+        hdul.close()
+        self.print('Image cutout complete \n', print_output)
         return outputname
 
-    def align_img(self, target_img, reference_img, prefix='align_', detection_sigma = 5):
+    def align_img(self, target_img, reference_img, prefix='align_', detection_sigma = 5, print_output: bool = True):
         """
 
         parameters
@@ -722,8 +732,15 @@ class PhotometryHelper():
         from ccdproc import CCDData
         from astropy.wcs import WCS
 
-        tgt_data, tgt_hdr = fits.getdata(target_img, header=True)
-        ref_data, ref_hdr = fits.getdata(reference_img, header=True)
+        self.print('Start image alignment... \n', print_output)
+        tgt_hdul = fits.open(target_img)
+        ref_hdul = fits.open(reference_img)
+        tgt_hdu = tgt_hdul[0]
+        ref_hdu = ref_hdul[0]
+        tgt_data = tgt_hdu.data
+        ref_data = ref_hdu.data
+        tgt_hdr = tgt_hdu.header
+        ref_hdr = ref_hdu.header
         
         ref_wcs = WCS(ref_hdr)
         wcs_hdr = ref_wcs.to_header(relax = True)
@@ -739,25 +756,31 @@ class PhotometryHelper():
             aligned_tgt = CCDData(aligned_data, header=tgt_hdr, unit='adu')
             outputname = f'{os.path.dirname(target_img)}/{prefix}{os.path.basename(target_img)}'
             fits.writeto(outputname, aligned_tgt.data, aligned_tgt.header, overwrite=True)
+            self.print('Image alignment complete \n', print_output)
             return outputname
         except:
+            self.print('Failed to align the image. Check the image quality and the detection_sigma value.', print_output)
             raise ActionFailedError('Failed to align the image. Check the image quality and the detection_sigma value.')
-
+        finally:    
+            tgt_hdul.close()
+            ref_hdul.close()
+        
     def combine_img(self,
                     filelist,
-                    clip='extrema',
-                    combine='median',
-                    scale='multiply',
-                    prefix='com_',
-                    zp_key='ZP5_1',
-
-                    # Clipping
-                    clip_sigma_low=2,
-                    clip_sigma_high=5,
-                    clip_minmax_min=3,
-                    clip_minmax_max=3,
-                    clip_extrema_nlow=1,
-                    clip_extrema_nhigh=1,
+                    combine_method: str = 'median',
+                    scale: str = 'multiply',
+                    prefix: str = 'com_',
+                    zp_key: str ='ZP5_1',
+                    print_output: bool = True,
+                    
+                    # Clipping parameters
+                    clip: str = 'extrema',
+                    clip_sigma_low: int = 2,
+                    clip_sigma_high: int = 5,
+                    clip_minmax_min: int = 3,
+                    clip_minmax_max: int = 3,
+                    clip_extrema_nlow: int = 1,
+                    clip_extrema_nhigh: int = 1,
                     ):
         '''
         parameters
@@ -801,10 +824,9 @@ class PhotometryHelper():
 
         if len(filelist) <3:
             clip = None
-            print('Number of filelist is lower than the minimum. Skip clipping process... \n')
-            
-        print('Combining... \n')
-        print(60*'=')
+            self.print('Number of filelist is lower than the minimum. Skip clipping process... \n', print_output)
+        
+        self.print('Start image combine... \n', print_output)
 
         ccdlist = []
         hdrlist = []
@@ -848,11 +870,11 @@ class PhotometryHelper():
             combiner.clip_extrema(nlow=clip_extrema_nlow, nhigh=clip_extrema_nhigh)
 
         # Combining
-        if combine == 'median':
+        if combine_method == 'median':
             combined = combiner.median_combine(median_func=self.bn_median)
-        if combine == 'mean':
+        if combine_method == 'mean':
             combined = combiner.average_combine()
-        if combine == 'sum':
+        if combine_method == 'sum':
             combined = combiner.sum_combine()
 
         combined.header = hdr
@@ -866,14 +888,15 @@ class PhotometryHelper():
         init_mean, init_std = np.mean(ccdlist[0].data), np.std(ccdlist[0].data)
         fin_mean, fin_std = np.mean(combined.data), np.std(combined.data)
 
-        print('Combine complete \n')
-        print('Combine information')
-        print(60*'=')
-        print(f'Ncombine = {len(filelist)}')
-        print(f'method   = {clip}(clipping), {combine}(combining)')
-        print(f'mean     = {round(init_mean,3)} >>> {round(fin_mean,3)}')
-        print(f'std      = {round(init_std,3)} >>> {round(fin_std,3)}')
-        print(f'image path = {outputname}')
+
+        self.print('Combine complete \n',print_output)
+        self.print('Combine information',print_output)
+        self.print(60*'=',print_output)
+        self.print(f'Ncombine = {len(filelist)}',print_output)
+        self.print(f'method   = {clip}(clipping), {combine_method}(combining)',print_output)
+        self.print(f'mean     = {round(init_mean,3)} >>> {round(fin_mean,3)}',print_output)
+        self.print(f'std      = {round(init_std,3)} >>> {round(fin_std,3)}',print_output)
+        self.print(f'image path = {outputname}',print_output)
         return outputname
 
     def subtract_img(self,
@@ -887,7 +910,8 @@ class PhotometryHelper():
                      tu=600000000,
                      tl=-100000,
                      v=0,
-                     ng='3 3 1.0 2 0.7 1 0.4'
+                     ng='3 3 1.0 2 0.7 1 0.4',
+                     print_output=True
                      ):
         '''
         parameters
@@ -921,11 +945,143 @@ class PhotometryHelper():
         For more information : https://github.com/acbecker/hotpants
         -----
         '''
+        self.print('Start image subtraction...', print_output)
         outputname = f'{os.path.dirname(target_img)}/{prefix}{os.path.basename(target_img)}'
         if method == 'hotpants':
-            os.system(
-                f'hotpants -c t -n i -inim {target_img} -tmplim {reference_img} -outim {outputname} -iu {iu} -il {il} -tu {tu} -tl {tl} -v {v} -ng {ng} > .out && rm -rf .out')
+            command = f'hotpants -c t -n i -inim {target_img} -tmplim {reference_img} -outim {outputname} -iu {iu} -il {il} -tu {tu} -tl {tl} -v {v} -ng {ng} > .out && rm -rf .out'
+            
+            result = subprocess.run(command, shell=True, timeout=900, check=True, text=True, capture_output=True)
+
+        self.print(f"Image subtraction completed. Output saved to {outputname}", print_output)      
         return outputname
+
+    def subtract_background(self, 
+                            target_img: str,
+                            apply_2D_bkg: bool = True,
+                            mask_sources: bool = False,
+                            mask_source_size_in_pixel : int = 10,
+                            bkg_estimator: str = 'median', # mean, median, sextractor, 
+                            bkg_sigma: float = 3.0, 
+                            bkg_box_size: int = 300, 
+                            bkg_filter_size: int = 3, 
+                            prefix : str = 'subbkg_',
+                            update_header: bool = True,
+                            visualize: bool = False,
+                            print_output: bool = True):
+        """
+        target_img: str
+        mask_sources: bool = True
+        mask_source_size_in_pixel : int = 10
+        bkg_estimator: str = 'median' # mean, median, sextractor
+        bkg_sigma: float = 3.0
+        bkg_box_size: int = 50
+        bkg_filter_size: int = 3
+        prefix : str = 'subbkg_'
+        update_header: bool = True
+        visualize: bool = True
+        Subtract background from the image using sigma-clipped statistics.
+        
+        Parameters
+        ----------
+        bkg_sigma : float, optional
+            The sigma level for sigma clipping in background estimation, by default 3.0
+        bkg_box_size : int, optional
+            Size of the box used for local background estimation, by default 50
+        bkg_filter_size : int, optional
+            Size of the filter used to smooth the background estimation, by default 3
+        update_header : bool, optional
+            Whether to update the FITS header with the background subtraction info, by default True
+        """
+        from photutils.background import Background2D, MedianBackground, MeanBackground, SExtractorBackground
+        from astropy.stats import SigmaClip, sigma_clipped_stats
+        from photutils.segmentation import detect_threshold, detect_sources
+        from photutils.utils import circular_footprint
+        import matplotlib.pyplot as plt
+
+        self.print(f"Start background subtraction...", print_output)
+
+        # Load the image data
+        hdul = fits.open(target_img)
+        hdu = hdul[0]
+        data = hdu.data
+
+        # Create a mask for sources in the image
+        mask = None
+        if mask_sources & apply_2D_bkg:
+            sigma_clip = SigmaClip(sigma=3.0)
+            threshold = detect_threshold(data, nsigma = bkg_sigma, sigma_clip=sigma_clip)
+            segment_img = detect_sources(data, threshold, npixels=mask_source_size_in_pixel)
+            footprint = circular_footprint(radius=mask_source_size_in_pixel)
+            mask = segment_img.make_source_mask(footprint=footprint)
+
+        # Estimate background using sigma-clipped statistics
+        bkg_estimator_dict = dict(MEAN=MeanBackground, MEDIAN=MedianBackground, SEXTRACTOR=SExtractorBackground)
+        bkg_estimator = bkg_estimator_dict[bkg_estimator.upper()]
+        if apply_2D_bkg:
+            bkg = Background2D(data, (bkg_box_size, bkg_box_size), mask = mask, 
+                               filter_size=(bkg_filter_size, bkg_filter_size),
+                               sigma_clip= SigmaClip(sigma=3.0), 
+                               bkg_estimator=bkg_estimator())
+            bkg_value = bkg.background
+            bkg_value_median = bkg.background_median
+            bkg_rms = bkg.background_rms_median
+        else:
+            # Global background estimation
+            clipped_data = sigma_clipped_stats(data, sigma=bkg_sigma)
+            bkg_value = clipped_data[1] if bkg_estimator == 'median' else clipped_data[0]
+            bkg_value_median = clipped_data[0]
+            bkg_rms = clipped_data[2]
+
+        # Subtract background from image
+        data_bkg_subtracted = data - bkg_value
+
+        # Update FITS header (optional)
+        if update_header:
+            hdu.header['BKG_TIME'] = (Time.now().isot, 'Time of background subtraction')
+            hdu.header['BKG_SUB'] = (True, 'Background subtracted')
+            hdu.header['BKG_BOX'] = (bkg_box_size, 'Background estimation box size')
+            hdu.header['BKG_FILT'] = (bkg_filter_size, 'Background filter size')
+            hdu.header['BKG_SIG'] = (bkg_sigma, 'Sigma clipping level for background')
+
+        # Save the background-subtracted image (optional, overwrite or new file)
+        hdul.close()
+        output_filename = f'{os.path.dirname(target_img)}/{prefix}{os.path.basename(target_img)}'
+        hdu.data = data_bkg_subtracted
+        hdu.writeto(output_filename, overwrite=True)
+
+        if visualize:
+            # Plot the background-subtracted image
+            from mpl_toolkits.axes_grid1 import make_axes_locatable
+            import numpy as np
+
+            fig, ax = plt.subplots(1, 3, figsize=(12, 6))
+            divider = make_axes_locatable(ax[0])
+            cax = divider.append_axes('right', size='5%', pad=0.05)
+            im0 = ax[0].imshow(data, origin='lower', cmap='Greys_r', vmin=bkg_value_median, vmax=bkg_value_median + 1 * bkg_rms)
+            ax[0].set_title('Original Image')
+            fig.colorbar(im0, cax=cax, orientation='vertical')
+            
+            if apply_2D_bkg:
+                bkg_img = bkg.background
+            else:
+                bkg_img = np.full(data.shape, bkg_value)
+
+            divider = make_axes_locatable(ax[1])
+            cax = divider.append_axes('right', size='5%', pad=0.05)
+            im1 = ax[1].imshow(bkg_img, origin='lower', cmap='Greys_r', vmin=bkg_value_median, vmax=bkg_value_median + 1 * bkg_rms)
+            ax[1].set_title('Background')
+            fig.colorbar(im1, cax=cax, orientation='vertical')
+
+            divider = make_axes_locatable(ax[2])
+            cax = divider.append_axes('right', size='5%', pad=0.05)
+            im2 = ax[2].imshow(data_bkg_subtracted, origin='lower', cmap='Greys_r', vmin=0, vmax= bkg_rms)
+            ax[2].set_title('Background-Subtracted Image')
+            fig.colorbar(im2, cax=cax, orientation='vertical')
+            plt.tight_layout()
+            plt.show()
+            
+        self.print(f"Background subtraction completed. Output saved to {output_filename}", print_output)      
+        return output_filename
 
     # Program running
     @timeout(seconds = 15)
@@ -937,8 +1093,10 @@ class PhotometryHelper():
                        radius : float = None,
                        scalelow : float = 0.6, 
                        scalehigh : float = 0.8, 
+                       prefix : str = 'astrometry_',
                        overwrite : bool = False,
-                       remove : bool = True
+                       remove : bool = True,
+                       print_output : bool = True
                        ):
         """
         1. Description
@@ -961,7 +1119,7 @@ class PhotometryHelper():
         Running the Astrometry process with options to pass RA/Dec and a timeout.
         """
         try:
-            print('Start Astrometry process...=====================')
+            self.print('Start Astrometry process...=====================', print_output)
             # Set up directories and copy configuration files
             current_dir = os.getcwd()
             sex_dir = self.sexpath
@@ -970,14 +1128,14 @@ class PhotometryHelper():
             os.system(f'cp {sex_configfile} {sex_dir}/*.param {sex_dir}/*.conv {sex_dir}/*.nnw {image_dir}')
             
             os.chdir(image_dir)
-            print(f'Solving WCS using Astrometry with RA/Dec of {ra}/{dec} and radius of {radius} arcmin')
+            self.print(f'Solving WCS using Astrometry with RA/Dec of {ra}/{dec} and radius of {radius} arcmin', print_output)
 
             # Building the command string
             if overwrite:
                 new_filename = os.path.join(image_dir,os.path.basename(image))
                 com = f'solve-field {image} --cpulimit 60 --overwrite --use-source-extractor --source-extractor-config {sex_configfile} --x-column X_IMAGE --y-column Y_IMAGE --sort-column MAG_AUTO --sort-ascending --scale-unit arcsecperpix --scale-low {str(scalelow)} --scale-high {str(scalehigh)} --no-remove-lines --uniformize 0 --no-plots --new-fits {new_filename} --temp-dir .'
             else:
-                new_filename = os.path.join(image_dir,"a"+os.path.basename(image))
+                new_filename = os.path.join(image_dir, prefix + os.path.basename(image))
                 com = f'solve-field {image} --cpulimit 60 --use-source-extractor --source-extractor-config {sex_configfile} --x-column X_IMAGE --y-column Y_IMAGE --sort-column MAG_AUTO --sort-ascending --scale-unit arcsecperpix --scale-low {str(scalelow)} --scale-high {str(scalehigh)} --no-remove-lines --uniformize 0 --no-plots --new-fits {new_filename} --temp-dir .'
             
             if ra is not None and dec is not None:
@@ -985,31 +1143,28 @@ class PhotometryHelper():
             if radius is not None:
                 com += f' --radius {radius}'
             
-            print(f'Command to run: {com}')
-            
             # Use subprocess.run with timeout
             result = subprocess.run(com, shell=True, timeout=900, check=True, text=True, capture_output=True)
-            print(result.stdout)
-            print(result.stderr)
-
             orinum = subprocess.check_output(f'ls C*.fits | wc -l', shell=True)
             resnum = subprocess.check_output(f'ls a*.fits | wc -l', shell=True)
-            print(f"From {str(orinum[:-1])} files, {str(resnum[:-1])} files are solved.")
-
+            
             # Clean up
             if remove:
-                os.system(f'rm tmp* astrometry* *.conv default.nnw *.wcs *.rdls *.corr *.xyls *.solved *.axy *.match check.fits *.param {os.path.basename(sex_configfile)}')
-            print('Astrometry process finished=====================')
+                os.system(f'rm tmp* *.conv default.nnw *.wcs *.rdls *.corr *.xyls *.solved *.axy *.match check.fits *.param {os.path.basename(sex_configfile)}')
+            self.print('Astrometry process finished=====================', print_output)
             return new_filename
 
         except subprocess.TimeoutExpired:
-            print(f"The astrometry process exceeded the timeout limit.")
+            self.print(f"The astrometry process exceeded the timeout limit.", print_output)
             return None
         except subprocess.CalledProcessError as e:
-            print(f"An error occurred while running the astrometry process: {e}")
+            self.print(f"An error occurred while running the astrometry process: {e}", print_output)
+            return None
+        except:
+            self.print(f"An unknown error occurred while running the astrometry process.", print_output)
             return None
 
-    def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True, print_progress : bool = True):
+    def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True, print_output : bool = True):
         """
         Parameters
         ----------
@@ -1031,8 +1186,7 @@ class PhotometryHelper():
         -------
         This method runs SExtractor on the specified image using the provided configuration and parameters.
         """
-        if print_progress:
-            print('Start SExtractor process...=====================')
+        self.print('Start SExtractor process...=====================', print_output)
 
         # Switch to the SExtractor directory
         current_path = os.getcwd()
@@ -1053,8 +1207,7 @@ class PhotometryHelper():
         try:
             # Run the SExtractor command using subprocess.run
             subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            if print_progress:
-                print("SExtractor process finished=====================")
+            self.print("SExtractor process finished=====================", print_output)
 
             if return_result:
                 # Read the catalog produced by SExtractor
@@ -1064,25 +1217,23 @@ class PhotometryHelper():
             else:
                 return all_params['CATALOG_NAME']
         except:
-            if print_progress:
-                print(f"Error during SExtractor execution")
+            self.print(f"Error during SExtractor execution", print_output)
             os.chdir(current_path)
             return None
 
         
-    def run_scamp(self, filelist : str or list, sex_configfile : str, scamp_configfile : str = None, update_files : bool = True, print_progress : bool = True):
+    def run_scamp(self, filelist : str or list, sex_configfile : str, scamp_configfile : str = None, update_files : bool = True, print_output : bool = True):
         
         if isinstance(filelist, str):
             filelist = [filelist]
         
-        if print_progress:
-            print(f'Start SCAMP process on {len(filelist)} images...=====================')
+        self.print(f'Start SCAMP process on {len(filelist)} images...=====================', print_output)
         sex_output_images = dict()
         for image in tqdm(filelist, desc='Running Source extractor...'):
             sex_params = dict()
             sex_params['CATALOG_NAME'] = f"{self.scamppath}/result/{os.path.basename(image).split('.')[0]}.sexcat"
             sex_params['PARAMETERS_NAME'] = f'{self.sexpath}/scamp.param'
-            output_file = self.run_sextractor(image = image, sex_configfile = sex_configfile, sex_params = sex_params, return_result = False, print_progress = False)
+            output_file = self.run_sextractor(image = image, sex_configfile = sex_configfile, sex_params = sex_params, return_result = False, print_output = False)
             sex_output_images[image] = output_file
         
         if scamp_configfile is None:
@@ -1100,8 +1251,7 @@ class PhotometryHelper():
             os.chdir(os.path.join(self.scamppath,'result'))
             # Run the SExtractor command using subprocess.run
             subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            if print_progress:
-                print("SCAMP process finished=====================")
+            self.print("SCAMP process finished=====================", print_output)
 
             if update_files:
                 def sanitize_header(header: fits.Header) -> fits.Header:
@@ -1147,12 +1297,11 @@ class PhotometryHelper():
                     head_header = sanitize_header(head_header)
 
                     # Open the FITS image and update its header with WCS information from the .head file
-                    with fits.open(image_file, mode='update') as hdu:
-                        # Update the header of the primary HDU (index 0) with the sanitized WCS-related keys
-                        hdu[0].header.update(head_header)
-                        hdu.flush()  # Write changes to disk
-
-                    print(f"Updated WCS and relevant header information for {image_file} using {head_file}")
+                    hdul = fits.open(image_file)
+                    hdul[0].header.update(head_header)
+                    hdul.flush()
+                    hdul.close()
+                    self.print(f"Updated WCS and relevant header information for {image_file} using {head_file}", print_output)
 
                 
                 for image, header in scamp_output_images.items():
@@ -1160,7 +1309,7 @@ class PhotometryHelper():
             else:
                 return scamp_output_images.values()
         except:
-            print(f"Error during SCAMP execution")
+            self.print(f"Error during SCAMP execution", print_output)
             return
         finally:
             os.chdir(current_path)
@@ -1250,9 +1399,11 @@ if __name__ == '__main__':
     #sex_params = dict()
     #sex_params['CATALOG_NAME'] = f"{A.scamppath}/catalog/{os.path.basename(file_).split('.')[0]}.cat"
     #sex_params['PARAMETERS_NAME'] = f'{A.sexpath}/scamp.param'
-    target_img = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib-KCT_STX16803-NGC1097-20230927-062948-g-120.fits'
+    target_img = glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib*.fits')[10]
     reference_img = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib-KCT_STX16803-NGC1097-20230927-063834-g-120.fits'
     A.visualize_image(target_img)
     A.visualize_image(reference_img)
     #A.align_img(target_img, reference_img)
+#%%
+    A.subtract_bkg(reference_img, apply_2D_bkg = True, mask_sources = False,  bkg_estimator = 'SEXTRACTOR',  visualize = True, bkg_box_size = 300)
 # %%

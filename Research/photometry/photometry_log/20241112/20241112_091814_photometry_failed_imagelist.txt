@@ -1,0 +1,4 @@
+{
+    "subbkg": [],
+    "astrometry": [],
+    "calculate": 

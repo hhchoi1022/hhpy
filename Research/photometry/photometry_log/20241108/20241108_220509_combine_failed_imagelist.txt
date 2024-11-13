@@ -1,0 +1,31 @@
+{
+    "Execution Time": "2024-11-08 22:02:54",
+    "subbkg": [],
+    "astrometry": [],
+    "calculate": [],
+    "cutout": [],
+    "align": [],
+    "combine": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211023-071210-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211023-071426-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211023-071643-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211023-071900-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211023-072116-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211024-082922-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211024-083139-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211024-083355-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211024-083612-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211024-083829-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211025-082419-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211025-082636-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211025-082853-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211025-083109-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211025-083326-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211026-082430-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211026-082647-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211026-082904-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211026-083120-r-120.fits",
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/align_subbkg_Calib-KCT_STX16803-NGC1566-20211026-083337-r-120.fits"
+    ],
+    "photometry": []
+}

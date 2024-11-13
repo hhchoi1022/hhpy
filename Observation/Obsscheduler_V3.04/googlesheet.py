@@ -198,7 +198,7 @@ class GoogleSheet:
 
 #%%
 if __name__ == '__main__':
-    data_file = '/home/hhchoi1022/code/GECKO/SkyGridCatalog_7DT_90.csv'
+    data_file = '/home/hhchoi1022/code/GECKO/S240925n_update/SkyGridCatalog_7DT_90.csv'
     #data_file = '/home/hhchoi1022/S240910ci_PRELIMINARY/SkyGridCatalog_7DT_90.csv'
     tbl = ascii.read(data_file)
     objnamelist = []
@@ -221,6 +221,7 @@ if __name__ == '__main__':
     new_tbl['binning'] = 1
     new_tbl['gain'] = 2750
     new_tbl['objtype'] = 'GECKO'
+    new_tbl['note'] = 'S240925n'
     sheet_name = Time.now().datetime.strftime('%Y%m%d')
     gs.write_sheet_data(sheet_name = sheet_name, data  =new_tbl, append= False, clear_header = False)
 

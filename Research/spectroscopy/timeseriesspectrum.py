@@ -127,14 +127,19 @@ if __name__ == '__main__':
     speckey = '/data1/supernova_rawdata/SN2021aefx/spectroscopy/WISeREP/ascii/*'
     filelist = glob.glob(speckey)
     A = TimeSeriesSpectrum(specfilelist = filelist, flux_unit = 'flamb')
-    A.photometry(save = True)
+    #A.photometry(save = True)
 #%%
-    A.show_spec_date(59533, normalize = True)
-    A.show_spec_date(59535, normalize = True)
-    A.show_spec_date(59536, normalize = True)
+    norm_cenwl = 5500
+    A.show_spec_date(59529, normalize = True, normalize_cenwl = norm_cenwl, normalize_wlwidth = 20)
+    A.show_spec_date(59530.5, normalize = True, normalize_cenwl = norm_cenwl, normalize_wlwidth = 20)
+    A.show_spec_date(59531.5, normalize = True, normalize_cenwl = norm_cenwl, normalize_wlwidth = 20)
+    #A.show_spec_date(59533, normalize = True)
+    #A.show_spec_date(59533, normalize = True)
 
     plt.legend()
 
     #A.show_spec_date(59536, normalize = True)
+
+# %%
 
 # %%

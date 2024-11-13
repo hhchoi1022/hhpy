@@ -1,0 +1,11 @@
+{
+    "subbkg": [],
+    "astrometry": [],
+    "calculate": [
+        "/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/subbkg_Calib-KCT_STX16803-NGC1566-20221108-054117-r-120.fits"
+    ],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

@@ -1,0 +1,17 @@
+{
+    "subbkg": [],
+    "astrometry": {
+        "subbkg": [],
+        "astrometry": [],
+        "calculate": [],
+        "cutout": [],
+        "align": [],
+        "combine": [],
+        "photometry": []
+    },
+    "calculate": [],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "photometry": []
+}

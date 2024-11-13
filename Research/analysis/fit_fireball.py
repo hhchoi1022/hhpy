@@ -23,7 +23,7 @@ import matplotlib
 #%matplotlib inline
 #%% Observation
 helper = Helper()
-DM = 31.18
+DM = 31.17
 ZP = 25
 filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
 model_directory = '/data1/supernova_model/FB_model'

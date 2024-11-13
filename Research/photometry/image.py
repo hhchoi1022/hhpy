@@ -1,6 +1,7 @@
 
 # %%
 import glob
+import inspect
 
 from astropy.io import fits
 import os
@@ -9,27 +10,26 @@ from astropy.stats import sigma_clipped_stats, sigma_clip
 import numpy as np
 from astropy.table import Table
 from astropy.time import Time
-
 from Research.photometry import Catalog
-from Research.helper import PhotometryHelper
+from Research.helper import Helper
 # %%
 
 
-class Image(PhotometryHelper):
+class Image:
 
     def __init__(self,
                  image: str,
                  telescope_info: dict = None,
                  reference_image : str = None
                  ):
-        super().__init__()
         # Image information
+        self.helper = Helper()
         self.original_image = image
         self.target_image = image
         self.reference_image = reference_image
         self.header = fits.getheader(self.original_image)
         if telescope_info == None:
-            telescope_info = self.get_telinfo()
+            telescope_info = self.helper.get_telinfo()
         self.telinfo = telescope_info
 
         self.catalog = None
@@ -39,18 +39,26 @@ class Image(PhotometryHelper):
         self.depth_3 = dict()
         self.depth_5 = dict()
 
+    def __repr__(self):
+        methods = [f'Image.{name}()\n' for name, method in inspect.getmembers(
+            Image, predicate=inspect.isfunction) if not name.startswith('_')]
+        txt = '[Methods]\n'+''.join(methods)
+        return txt
+
     def scamp(self, 
               sex_configfile : str = None,
               scamp_configfile : str = None,
-              print_progress : bool = True):
+              print_output : bool = True):
+        self.helper.print(f'Start running SCAMP...', print_output)
         if sex_configfile == None:
-            sex_configfile = f"{os.path.join(self.sexpath,self.telinfo['obs'])}.scampconfig"
-        result = self.run_scamp(filelist = self.target_image,
-                                sex_configfile = sex_configfile,
-                                scamp_configfile = scamp_configfile,
-                                update_files = True,
-                                print_progress = print_progress
-                                )
+            sex_configfile = f"{os.path.join(self.helper.sexpath,self.telinfo['obs'])}.scampconfig"
+        result = self.helper.run_scamp(filelist = self.target_image,
+                                       sex_configfile = sex_configfile,
+                                       scamp_configfile = scamp_configfile,
+                                       update_files = True,
+                                       print_output = False
+                                       )
+        self.helper.print(f'SCAMP is finished', print_output)
         
     def astrometry(self,
                    sex_configfile : str = None,
@@ -60,10 +68,12 @@ class Image(PhotometryHelper):
                    scalelow : float = 0.6, 
                    scalehigh : float = 0.8, 
                    overwrite : float =False, 
-                   remove : bool = True
+                   remove : bool = True,
+                   print_output : bool = True
                    ):
         if sex_configfile == None:
-            sex_configfile = f"{os.path.join(self.sexpath,self.telinfo['obs'])}.config"
+            sex_configfile = f"{os.path.join(self.helper.sexpath,self.telinfo['obs'])}.config"
+        self.helper.print(f'Astrometry is started for {self.target_image}', print_output)
         if ra == None or dec == None:
             try:
                 ra = float(self.header['RA'])
@@ -77,38 +87,40 @@ class Image(PhotometryHelper):
                     radius = 2
                 except:
                     try:
-                        print('Searching RA, Dec from the header object name')
+                        self.helper.print('Searching RA, Dec from the header object name', print_output)
                         self.catalog = Catalog(target_name=self.header['OBJECT'])
                         ra = self.catalog.fieldinfo['ra']
                         dec = self.catalog.fieldinfo['dec']
                         radius = 2
                     except:
-                        print('RA, Dec is not available in the header. Astrometry without central coordinate')
+                        self.helper.print('RA, Dec is not available in the header. Astrometry without central coordinate', print_output)
                         pass
         
-        self.target_image = self.run_astrometry(image = self.target_image, 
-                                                sex_configfile = sex_configfile,
-                                                ra = ra,
-                                                dec = dec,
-                                                radius = radius,
-                                                scalelow = scalelow, 
-                                                scalehigh = scalehigh, 
-                                                overwrite = overwrite, 
-                                                remove = remove
-                                                )
+        self.target_image = self.helper.run_astrometry(image = self.target_image, 
+                                                       sex_configfile = sex_configfile,
+                                                       ra = ra,
+                                                       dec = dec,
+                                                       radius = radius,
+                                                       scalelow = scalelow, 
+                                                       scalehigh = scalehigh, 
+                                                       overwrite = overwrite, 
+                                                       remove = remove,
+                                                       print_output = False)
+        self.helper.print(f'Astrometry is finished for {self.target_image}', print_output)
 
     def calculate_zeropoint(self,
                             sex_configfile: str = None,  # Absolute Path
                             detect_threshold : float  = 3.0,
                             aperture_type : str = 'relative', # relative or absolute
                             aperture_sizes : list = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                            ref_catalog_name: str = 'SDSS',
-                            ref_catalog_conversion: str = 'SDSS',
+                            ref_catalog_name: str = 'APASS',
+                            ref_catalog_conversion: str = None,
                             ref_maxmag=16,
                             ref_minmag=12,
                             visualize: bool = True,
                             update_header : bool = True,
-                            check_zp_by_color : bool = False
+                            check_zp_by_color : bool = False,
+                            print_output : bool = True
                             ):
         '''
         sex_configfile: str = sex_configfile  # Absolute Path
@@ -124,14 +136,15 @@ class Image(PhotometryHelper):
         check_zp_by_color : bool = True
         '''
 
+        self.helper.print(f'Calculating zeropoint for {self.target_image}', print_output)
         if sex_configfile == None:
-            sex_configfile = f"{os.path.join(self.sexpath,self.telinfo['obs'])}.config"
+            sex_configfile = f"{os.path.join(self.helper.sexpath,self.telinfo['obs'])}.config"
         sex_params = dict()
-        sex_params['CATALOG_NAME'] = f"{self.sexpath}/result/{os.path.basename(self.target_image).split('.')[0]}.cat"
+        sex_params['CATALOG_NAME'] = f"{self.helper.sexpath}/result/{os.path.basename(self.target_image).split('.')[0]}.cat"
         os.makedirs(os.path.dirname(sex_params['CATALOG_NAME']), exist_ok=True)
         
         # Run source-extractor with the default configuration files
-        obs_catalog_temp1 = self.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True)
+        obs_catalog_temp1 = self.helper.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True, print_output = False)
         source_idx = obs_catalog_temp1['FWHM_IMAGE'] * self.telinfo['pixelscale'] > 1.8
         obs_catalog_temp1_source = obs_catalog_temp1[source_idx]
         
@@ -143,7 +156,7 @@ class Image(PhotometryHelper):
         # Run source-extractor with the updated FWHM information
         sex_params['SEEING_FWHM'] = str(seeing_temp_arcsec)
         sex_params['DETECT_MINAREA'] = str(int(np.pi * (seeing_temp_pixel/2)**2))
-        obs_catalog_temp2 = self.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True)        
+        obs_catalog_temp2 = self.helper.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True, print_output = False)        
         
         # Applying detailed point source criteria
         star_idx1 = (obs_catalog_temp2['FLAGS'] < 4) & (obs_catalog_temp2['CLASS_STAR'] > 0.8) & (obs_catalog_temp2['FWHM_WORLD']*3600 < seeing_temp_arcsec*1.5)
@@ -166,7 +179,7 @@ class Image(PhotometryHelper):
             aperture_size_list = [str(aperture_factor / self.telinfo['pixelscale']) for aperture_factor in aperture_sizes]
         sex_params['PHOT_APERTURES'] = ','.join(aperture_size_list)
         
-        obs_catalog = self.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True)        
+        obs_catalog = self.helper.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True, print_output = False)        
         # Applying detailed point source criteria
         star_idx = (obs_catalog['FLAGS'] < 4) & (obs_catalog['CLASS_STAR'] > 0.9) #& (obs_catalog['FWHM_WORLD']*3600 < self.seeing*1.2)
         obs_catalog_star = obs_catalog[star_idx]
@@ -189,7 +202,7 @@ class Image(PhotometryHelper):
                 raise KeyError(f"Conversion catalog {ref_catalog_conversion} is not available: Available conversion of {ref_catalog_name} = [{list(self.catalog.dict[ref_catalog_name].conversion.keys())}]")
         
         ## Cross-match obs_catalog & sky_catalog
-        idx_obs, idx_ref, dist_second = self.cross_match(obj_catalog=SkyCoord(obs_catalog_star['ALPHA_J2000'], obs_catalog_star['DELTA_J2000'], unit='deg'), sky_catalog=SkyCoord(ra=ref_catalog['ra'], dec=ref_catalog['dec'], unit='deg'), max_distance_second= self.seeing * 2)
+        idx_obs, idx_ref, dist_second = self.helper.cross_match(obj_catalog=SkyCoord(obs_catalog_star['ALPHA_J2000'], obs_catalog_star['DELTA_J2000'], unit='deg'), sky_catalog=SkyCoord(ra=ref_catalog['ra'], dec=ref_catalog['dec'], unit='deg'), max_distance_second= self.seeing * 2)
         
         obs_matched = obs_catalog_star[idx_obs]
         ref_matched = ref_catalog[idx_ref]
@@ -215,7 +228,7 @@ class Image(PhotometryHelper):
             zp = ref_selected[mag_ref_key] - obs_selected[mag_obs_key]
             zp_median = np.median(zp)
             zperr_ref = np.sqrt(np.abs(ref_selected[magerr_ref_key])**2 + np.abs(obs_selected[magerr_obs_key])**2)
-            zperr = np.sum(zperr_ref)/len(zperr_ref)
+            zperr = np.sqrt(np.sum(zperr_ref**2)) / len(zperr_ref)
             depth_5sig = round(-2.5*np.log10(5*(obs_catalog_star['THRESHOLD'][0]/detect_threshold)*np.sqrt(np.pi*((float(aperture_size)/2)**2))) + zp_median,3)
             depth_3sig = round(-2.5*np.log10(3*(obs_catalog_star['THRESHOLD'][0]/detect_threshold)*np.sqrt(np.pi*((float(aperture_size)/2)**2))) + zp_median,3)
             self.zp[aper_key] = np.round(zp_median,5)
@@ -241,8 +254,10 @@ class Image(PhotometryHelper):
                     y_fit = model.predict(x_fit.reshape(-1, 1))
                     plt.plot(x_fit, y_fit, color='blue', linestyle='-', linewidth=2, label=f'Fit: y = {slope:.2f}(g-r) + {intercept:.2f}')
                     plt.legend()
-
+                    plt.show()
         
+        self.helper.print(f'ZP = {self.zp}, SEEING = {self.seeing}, DEPTH_3 = {self.depth_3}, DEPTH_5 = {self.depth_5}', print_output)
+
         if update_header:
             hdul = fits.open(self.target_image, mode='update')
             header = hdul[0].header
@@ -302,37 +317,59 @@ class Image(PhotometryHelper):
             fig.savefig(outputfile)
 
             # Show the combined figure
-            #plt.show()
-        
-        self.calculated = True
+            plt.show()
+        self.calculated = True  
 
-    def align(self, cut_outer : bool = False, outer_size = 0.95, detection_sigma = 5):
+    def align(self, cut_outer : bool = False, outer_size = 0.95, detection_sigma = 5, print_output : bool = True):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image alignment')
+        self.helper.print(f'Aligning {self.target_image} with {self.reference_image}', print_output)
         if cut_outer:
-            self.target_image = self.cutout_img(target_img = self.target_image, size = outer_size, prefix = 'cutouter_')
-            self.reference_image = self.cutout_img(target_img = self.reference_image, size = outer_size, prefix = 'cutouter_')
-        self.target_image = self.align_img(target_img=self.target_image, reference_img=self.reference_image, detection_sigma= detection_sigma)
+            self.target_image = self.helper.cutout_img(target_img = self.target_image, size = outer_size, prefix = 'cutouter_', print_output = False)
+            self.reference_image = self.helper.cutout_img(target_img = self.reference_image, size = outer_size, prefix = 'cutouter_', print_output = False)
+        self.target_image = self.helper.align_img(target_img=self.target_image, reference_img=self.reference_image, detection_sigma= detection_sigma, print_output = False)
+        self.helper.print(f'Aligned image is saved as {self.target_image}', print_output)
         
-    def cutout(self, cutout_size = 2000):
-        self.target_image = self.cutout_img(target_img = self.target_image, size = cutout_size, prefix = 'cutout_')
+    def cutout(self, cutout_size = 2000, print_output : bool = True):
+        self.helper.print(f'Cutting out the image {self.target_image} with size of {cutout_size}', print_output)
+        self.target_image = self.helper.cutout_img(target_img = self.target_image, size = cutout_size, prefix = 'cutout_')
+        self.helper.print(f'Cutout image is saved as {self.target_image}', print_output)
         
     def subtract(self,
                  align : bool = True,
                  cutout_target_image : bool = True,
                  cutout_reference_image : bool = True,
                  cutout_size : int = 1500,
+                 print_output : bool = True
                  ):
         if not self.reference_image:
             raise ValueError('Reference image is requred for image subtraction')
+        self.helper.print(f'Subtracting {self.target_image} with {self.reference_image}', print_output)
         if align:
-            self.align(cut_outer = False)
+            self.align(cut_outer = False, print_output = False)
         if cutout_target_image:
-            self.cutout(cutout_size = cutout_size)
+            self.cutout(cutout_size = cutout_size, print_output = False)
         if cutout_reference_image:
-            self.reference_image = self.cutout_img(target_img = self.reference_image, size = cutout_size)
-        self.target_image = self.subtract_img(target_img=self.target_image, reference_img=self.reference_image)
-        
+            self.reference_image = self.helper.cutout_img(target_img = self.reference_image, size = cutout_size, print_output = False)
+        self.target_image = self.helper.subtract_img(target_img=self.target_image, reference_img=self.reference_image, print_output = False)
+        self.helper.print(f'Subtracted image is saved as {self.target_image}', print_output)
+    
+    def subtract_bkg(self, 
+                     apply_2D_bkg: bool = True,
+                     mask_sources: bool = False,
+                     mask_source_size_in_pixel : int = 10,
+                     bkg_estimator: str = 'median', # mean, median, sextractor, 
+                     bkg_sigma: float = 3.0, 
+                     bkg_box_size: int = 300, 
+                     bkg_filter_size: int = 3, 
+                     prefix : str = 'subbkg_',
+                     update_header: bool = True,
+                     visualize: bool = False,
+                     print_output : bool = True):
+        self.helper.print(f'Subtracting background from {self.target_image}', print_output)
+        self.target_image = self.helper.subtract_background(target_img=self.target_image, apply_2D_bkg = apply_2D_bkg, mask_sources = mask_sources, mask_source_size_in_pixel = mask_source_size_in_pixel, bkg_estimator = bkg_estimator, bkg_sigma = bkg_sigma, bkg_box_size = bkg_box_size, bkg_filter_size = bkg_filter_size, prefix = prefix, update_header = update_header, visualize = visualize, print_output = False)
+        self.helper.print(f'Subtracted background image is saved as {self.target_image}', print_output)
+    
     def photometry(self,
                    ra : float,
                    dec : float,
@@ -340,12 +377,14 @@ class Image(PhotometryHelper):
                    detect_threshold : float  = 3.0,
                    aperture_type : str = 'relative', # relative or absolute
                    aperture_sizes : list = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                   cutout_target_image : bool = True,
-                   cutout_reference_image : bool = False,
-                   cutout_size : int = 1500,
-                   align : bool = True,
-                   subtract : bool = True,
+                   #cutout_target_image : bool = True,
+                   #cutout_reference_image : bool = False,
+                   #cutout_size : int = 1500,
+                   #align : bool = True,
+                   #subtract : bool = True,
+                   #subtract_bkg : bool = True,
                    visualize : bool = True,
+                   print_output : bool = True
                    ):
         '''
         ra =64.9723704
@@ -362,6 +401,7 @@ class Image(PhotometryHelper):
         visualize : bool = True
         '''
         
+        self.helper.print(f'Performing photometry for {self.target_image}', print_output)
         try:
             for i, aperture_size in enumerate(aperture_sizes):
                 zp_key = 'ZP_APER' if i == 0 else f'ZP_APER_{i}'
@@ -381,14 +421,19 @@ class Image(PhotometryHelper):
         except:
             raise ValueError('Zeropoint information is not available in the header. Run calculate_zeropoint()')             
             
-        if subtract:
-            self.subtract(align = align, cutout_target_image = cutout_target_image, cutout_reference_image = cutout_reference_image, cutout_size = cutout_size)
+        #if subtract:
+        #    self.helper.print(f'Subtracting background from {self.target_image}', print_output)
+        #    self.subtract(align = align, cutout_target_image = cutout_target_image, cutout_reference_image = cutout_reference_image, cutout_size = cutout_size, print_output = False)
+        
+        #if subtract_bkg:
+        #    self.helper.print(f'Subtracting background from {self.target_image}', print_output)
+        #    self.subtract_bkg(target_img = self.target_image, print_output = False)
         
         # source-extractor configuration
         if sex_configfile == None:
-            sex_configfile = f"{os.path.join(self.sexpath,self.telinfo['obs'])}.config"
+            sex_configfile = f"{os.path.join(self.helper.sexpath,self.telinfo['obs'])}.config"
         sex_params = dict()
-        sex_params['CATALOG_NAME'] = f"{self.sexpath}/result/{os.path.basename(self.target_image).split('.')[0]}.phot.cat"
+        sex_params['CATALOG_NAME'] = f"{self.helper.sexpath}/result/{os.path.basename(self.target_image).split('.')[0]}.phot.cat"
         sex_params['SEEING_FWHM'] = str(self.seeing)
         sex_params['DETECT_THRESH'] = detect_threshold
         sex_params['ANALYSIS_THRESH'] = detect_threshold
@@ -398,9 +443,9 @@ class Image(PhotometryHelper):
             aperture_size_list = [str(aperture_factor / self.telinfo['pixelscale']) for aperture_factor in aperture_sizes]
         sex_params['PHOT_APERTURES'] = ','.join(aperture_size_list)
         
-        obs_catalog = self.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True)
+        obs_catalog = self.helper.run_sextractor(image=self.target_image, sex_configfile=sex_configfile, sex_params=sex_params, return_result=True)
 
-        idx_obs, idx_ref, dist_second = self.cross_match(obj_catalog=SkyCoord(ra = obs_catalog['ALPHA_J2000'], dec = obs_catalog['DELTA_J2000'], unit='deg', frame = 'icrs'), sky_catalog=SkyCoord(ra=[ra], dec=[dec], unit='deg', frame = 'icrs'), max_distance_second=self.seeing * 3)
+        idx_obs, idx_ref, dist_second = self.helper.cross_match(obj_catalog=SkyCoord(ra = obs_catalog['ALPHA_J2000'], dec = obs_catalog['DELTA_J2000'], unit='deg', frame = 'icrs'), sky_catalog=SkyCoord(ra=[ra], dec=[dec], unit='deg', frame = 'icrs'), max_distance_second=self.seeing * 3)
         
         phot_info = dict(zip(obs_catalog.colnames, len(obs_catalog.colnames)*[[None]]))
         detected = False
@@ -429,6 +474,10 @@ class Image(PhotometryHelper):
                 phot_info[mag_sky_key] = [target[mag_obs_key][0] + self.zp[aper_key]]
                 phot_info[magerr_sky_key] = [np.sqrt(target[magerr_obs_key][0]**2 + self.zperr[aper_key]**2)]
                 detected = True
+        if detected:
+            self.helper.print(f'(Detected) Photometry is done for {self.target_image}', print_output)
+        else:
+            self.helper.print(f'(Non-detected) Photometry is done for {self.target_image}', print_output)
         phot_tbl = Table(phot_info)
         outputfile = self.target_image.split('fit')[0]+'phot'
         phot_tbl.write(outputfile, format = 'ascii', overwrite = True)
@@ -482,17 +531,16 @@ class Image(PhotometryHelper):
             ax.set_xlim()
             plt.legend(loc = 3)
             outputfile = self.target_image.split('fit')[0]+'_phot.png'
-            plt.savefig(outputfile)
-            #plt.show()
-            
-
+            plt.savefig(outputfile)            
         
-        
+    def visualize(self):
+        self.helper.visualize_image(self.target_image)
 #%% KCT
 
 if __name__ == '__main__':
     import json
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib*20230927*120.fits'))
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib*120.fits'))
+    reference_image = '/mnt/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-r-3360.com.fits'
     #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/r/com*-r-180.fits'))
 
     #filename = '20241002_153737_calculate_failed_imagelist.txt'
@@ -501,19 +549,22 @@ if __name__ == '__main__':
     #filelist = data['calculate']
     
     #reference_image = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/Ref-KCT_STX16803-NGC1097-r-5400.com.fits'
-    reference_image = filelist[3]
-    phot_helper = PhotometryHelper()
+    #reference_image = filelist[250]
+    phot_helper = Helper()
     telinfo = phot_helper.get_telinfo(telescope='KCT', ccd='STX16803')
     sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/KCT.config'
     #phot_helper.get_telinfo(telescope = 'LSGT', ccd = 'ASI1600MM')
     #sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/LSGT_ASI1600MM.config'
 #%%
 if __name__ == '__main__':
-    image = filelist[0]
+    image = filelist[200]
     #image = reference_image
     im = Image(image, telescope_info=telinfo, reference_image = reference_image)
-    im.align(cut_outer = True)
-    #im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
+    
+    #im.subtract_bkg(print_output = True, visualize = True, bkg_box_size = 500)
+    #im.visualize()
+    #im.align(cut_outer = True)
+    im.calculate_zeropoint(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = 'PS1', check_zp_by_color = True)
     #A.faster_calculate(sex_configfile = sex_configfile, num_processes = 6, 
 
 #%%

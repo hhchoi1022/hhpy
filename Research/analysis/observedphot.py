@@ -137,12 +137,12 @@ class ObservedPhot:
         return offsets
     
     def get_filt_data(self,
-                      data_tbl,
-                      filters : str ='UBVugri'):
+                      filters : str = None):
         all_filt_data = dict()
-        #filters = self.get_defined_filter()
+        if filters == None:
+            filters = self.get_defined_filter()
         for filter_ in filters:
-            all_filt_data[filter_] = data_tbl[data_tbl['filter'] == filter_]
+            all_filt_data[filter_] = self.data[self.data['filter'] == filter_]
         return all_filt_data
     
     def exclude_observatory(self,
@@ -346,7 +346,7 @@ if __name__ =='__main__':
     #observed_data.exclude_observatory('Swope')
 
     ax1, ax2 = obs_phot.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
-    ax3, ax4 = obs_spec.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
+    #ax3, ax4 = obs_spec.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
     ax1.set_ylim(22, 6)
     plt.xlim(59525, 59540)
     plt.show()

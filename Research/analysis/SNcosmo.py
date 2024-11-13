@@ -17,6 +17,9 @@ import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter
 import seaborn as sns
 from Research.helper import Helper
+import numpy as np
+from Research.helper import Helper
+
 #%%
 helper = Helper()
 color_key, offset_key, filter_key_sncosmo, _, name_key = helper.load_filt_keys()
@@ -101,7 +104,7 @@ def calc_chisq(formatted_fit_tbl, filt_):
     return reduced_chisq
 
 #source = sncosmo.get_source('salt3')
-model = sncosmo.Model(source='salt3')
+model = sncosmo.Model(source='salt2')
 dust = sncosmo.CCM89Dust()
 import sfdmap
 dustmap = sfdmap.SFDMap("./sfddata-master")
@@ -127,8 +130,6 @@ for band in set(formatted_fit_tbl['band']):
 sncosmo.plot_lc(formatted_fit_tbl, model=fitted_model, errors=result.errors, figtext = figtext, ncol = 3,  xfigsize = 10, tighten_ylim=False, color = 'black')
 
 #%%stretch parameter & delmag
-import numpy as np
-from HHsupport_analysis import flux_to_mag
 result.parameters
 z = result.parameters[0]
 t0 = result.parameters[1]
@@ -202,7 +203,8 @@ print(f'ABSmag_max = B={magB_max-nu}, V = {magV_max-nu}, R = {magR_max-nu}, g={m
 print(f'stretch_param = {param_stretch}+-{e_param_stretch}')
 print(f'delmag = {mB_15}+-{e_delmag}')
 print(f'magB_max = {magB_max}')
-print(f'ABSmagB_max = {magB_max-nu}+-{e_magerr_max}')
+print(f'ABSmagB_max = {magB_ㅣㄴ
+      max-nu}+-{e_magerr_max}')
 print(f'nu = {nu}+-{e_nu}')
 
 
