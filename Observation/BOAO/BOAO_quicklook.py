@@ -20,7 +20,6 @@ from scipy.interpolate import interp1d
 #%% Define the working directory
 WD = '/Users/hhchoi1022/Desktop/0112/'
 dpi  = 200
-
 #%%
 def get_imginfo(filelist,
                 keywords = 'default'
@@ -624,15 +623,6 @@ def err_weighted_combine(all_wave, all_flux, all_error, dispersion=None,
     error = np.sqrt(1. / np.ma.sum(1./errors**2., axis=0).filled(np.nan))
     
     return dispersion, flux, error
-#%%
-
-
-
-
-
-
-
-
 #%% 0. Setting the range of the spectrum & Cutout #######################
 cut_xmin = 720    ####### CHANGE HERE
 cut_xmax = 1020    ####### CHANGE HERE
@@ -746,8 +736,6 @@ ax2.legend()
 #%% 3. Nodding spectrum extraction ##############################################
 image_A_set = ['/Users/hhchoi1022/Desktop/0112/LS20230112_000486.fits', '/Users/hhchoi1022/Desktop/0112/LS20230112_000489.fits', '/Users/hhchoi1022/Desktop/0112/LS20230112_000490.fits'] 
 image_B_set = ['/Users/hhchoi1022/Desktop/0112/LS20230112_000487.fits', '/Users/hhchoi1022/Desktop/0112/LS20230112_000488.fits', '/Users/hhchoi1022/Desktop/0112/LS20230112_000491.fits'] 
-#image_A_set = ['/Users/hhchoi1022/Desktop/0112/LS20230112_000486.fits']
-#image_B_set = ['/Users/hhchoi1022/Desktop/0112/LS20230112_000487.fits']
 def nodding(image_A, 
             image_B,
             **kwargs
