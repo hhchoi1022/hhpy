@@ -10,7 +10,7 @@ Developed and tested on:
 - Python 3.6 (Spyder 4)
 """
 
-
+#%%
 import os
 import requests
 import json
@@ -50,11 +50,6 @@ err_msg             = ["Forbidden", "Internal Server Error: Something is broken"
 def set_bot_tns_marker():
     tns_marker = 'tns_marker{"tns_id": "' + str(TNS_BOT_ID) + '", "type": "bot", "name": "' + TNS_BOT_NAME + '"}'
     return tns_marker
-
-def format_to_json(source):
-    parsed = json.loads(source, object_pairs_hook = OrderedDict)
-    result = json.dumps(parsed, indent = 4)
-    return result
 
 def is_string_json(string):
     try:
@@ -172,11 +167,7 @@ def search_obj(ra,dec,radius='25',units='arcmin'):
     return json_data
 
 
-def get_obj(objname):
-    get_obj = [("objname", f"{objname}"), ("objid", ""), ("photometry", "0"), ("spectra", "0")]
-    get_response = get(get_obj)
-    json_data = json.loads(get_response.text)
-    return json_data
+
 
 
 def exist_AT(ra,dec,radius='25'):
@@ -213,9 +204,8 @@ def exist_AT(ra,dec,radius='25'):
     return ATtable
 
 #%%#
-
+os.makedirs('/Users/hhchoi1022/Gitrepo/makereference/TNS')
 os.chdir('/Users/hhchoi1022/Gitrepo/makereference/TNS')
-alltargetlist = ascii.read('/Users/hhchoi1022/Gitrepo/config/alltarget.dat')
 
 for name, ra, dec in alltargetlist['obj','ra','dec']:
     print(f'Searching Transient in {name}')
@@ -250,10 +240,146 @@ rate_limit_handling()
 
 #----------------------------------------------------------------------------------
 
+#%%
+import os
+import json
+import time
+import requests
+import pandas as pd
+from collections import OrderedDict
+from astropy.time import Time
+from astropy.coordinates import SkyCoord
+import astropy.units as u
 
 
+class TNSQuerier:
+    """
+    A class for querying the TNS server and saving results to CSV files.
+    """
+
+    def __init__(self, api_key, bot_id, bot_name, download_dir):
+        """
+        Initialize the TNSQuerier class.
+
+        Parameters:
+            api_key (str): The API key for TNS.
+            bot_id (str): The bot ID.
+            bot_name (str): The bot name.
+            download_dir (str): Directory to save the downloaded files.
+        """
+        self.api_key = api_key
+        self.bot_id = bot_id
+        self.bot_name = bot_name
+        self.base_url = "https://www.wis-tns.org/api/get"
+        self.download_dir = download_dir
+        self.tns_marker = self._set_bot_tns_marker()
+        os.makedirs(download_dir, exist_ok=True)
+
+    def _set_bot_tns_marker(self):
+        """Set the bot marker for TNS API."""
+        return f'tns_marker{{"tns_id": "{self.bot_id}", "type": "bot", "name": "{self.bot_name}"}}'
+
+    def search_by_objname(self, objname : str):
+        objinfo_dict = [("objname", f"{objname}"), ("objid", ""), ("photometry", "0"), ("spectra", "0")]
+        get_url = self.base_url + "/object"
+        headers = {'User-Agent': self.tns_marker}
+        query_json = OrderedDict(objinfo_dict)
+        search_data = {'api_key': self.api_key, 'data': json.dumps(query_json)}
+        response = requests.post(get_url, headers = headers, data = search_data)
+        json_data = json.loads(response.text)
+        return json_data
+
+    def search_by_coordinates(self, 
+                              ra : float, # float 
+                              dec : float, # float
+                              radius : str = 30 # arcmin
+                              ):
+        """
+        Search for objects in a region around the given RA and Dec.
+
+        Parameters:
+            ra (float): Right Ascension in degrees.
+            dec (float): Declination in degrees.
+            radius (str): Search radius (default: 25 arcmin).
+            units (str): Units of the radius (default: arcmin).
+
+        Returns:
+            dict: JSON response from the TNS server.
+        """
+        objinfo_dict = [
+            ("ra", f"{ra}"), ("dec", f"{dec}"), ("radius", radius), ("units", 'arcmin'),
+            ("objname", ""), ("objname_exact_match", 0), ("internal_name", ""),
+            ("internal_name_exact_match", 0), ("objname", ""), ("public_timestamp", "")
+        ]
+        search_url = f"{self.base_url}/search"
+        headers = {"User-Agent": self.tns_marker}
+        query_json = OrderedDict(objinfo_dict)
+        search_data = {"api_key": self.api_key, "data": json.dumps(query_json)}
+        response = requests.post(search_url, headers=headers, data=search_data)
+        json_data = json.loads(response.text)
+        return json_data
+
+    def search_by_date(self, 
+                       since_date : str = None):
+        """
+        Query recent transients from TNS within the specified date range.
+
+        Parameters:
+            start_date (str): Start date in ISO format (YYYY-MM-DD).
+            end_date (str): End date in ISO format (default is the current date).
+
+        Returns:
+            pd.DataFrame: DataFrame containing objname, ra, and dec.
+        """
+        if since_date is None:
+            since_date = (Time.now() - 5 * u.day).datetime.strftime("%Y-%m-%d")
+
+        objinfo_dict = [
+            ("public_timestamp", f"{since_date}")
+        ]
+        search_url = f"{self.base_url}/search"
+        headers = {"User-Agent": self.tns_marker}
+        query_json = OrderedDict(objinfo_dict)
+        search_data = {"api_key": self.api_key, "data": json.dumps(query_json)}
+        response = requests.post(search_url, headers=headers, data=search_data)
+        json_data = json.loads(response.text)
+        data = response.get("data", {}).get("reply", [])
+        
+        # Extract relevant information
+        transients = [
+            {
+                "objname": obj["objname"],
+                "ra": float(obj["ra"]),
+                "dec": float(obj["dec"])
+            }
+            for obj in data if "ra" in obj and "dec" in obj
+        ]
+        return pd.DataFrame(transients)
+    
+
+    def save_to_csv(self, df, filename):
+        """
+        Save a DataFrame to a CSV file.
+
+        Parameters:
+            df (pd.DataFrame): DataFrame to save.
+            filename (str): Name of the output CSV file.
+
+        Returns:
+            str: Path to the saved CSV file.
+        """
+        filepath = os.path.join(self.download_dir, filename)
+        df.to_csv(filepath, index=False)
+        print(f"Saved data to {filepath}")
+        return filepath
 
 
-
-
-                                        	   
+# Example usage
+if __name__ == "__main__":
+    # Initialize with your API key and bot credentials
+    api_key = "9da2ee1367ba2c229d1c5d6c4aebeca425a5d67c"
+    bot_id = "117913"
+    bot_name = "HH_bot"
+    download_dir = "./downloaded_files"
+    tns_querier = TNSQuerier(api_key, bot_id, bot_name, download_dir)
+# %%

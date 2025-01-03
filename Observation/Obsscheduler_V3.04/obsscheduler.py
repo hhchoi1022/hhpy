@@ -849,7 +849,7 @@ class ScriptMaker(mainConfig):
             rts_table['transit(LT)'] = scheduled_tbl['transit(LT)']
             rts_table['set(LT)'] = scheduled_tbl['set(LT)']
             rts_table['moon_dist(deg)'] = scheduled_tbl['moonsep']
-            rts_table['weight'] = scheduled_tbl['weight']
+            rts_table['priority'] = scheduled_tbl['weight']
             rts_table['note'] = scheduled_tbl['note']
             #rts_table['filter'] = obs_info['filter']
             #rts_table['exptime'] = obs_info['exptime']
@@ -1572,7 +1572,7 @@ if __name__ == '__main__':
     maintarget = mainTarget(name_telescope=scheduler_host.name_telescope, name_project= scheduler_host.name_project, observer = scheduler_host.observer, target_ra = scheduler_host.target.all['ra'][0], target_dec = scheduler_host.target.all['dec'][0])
     maintarget.staralt(utctime = date)
     
-    
+
     ####################### 
     # LOAO (2x RTS)
     #######################
@@ -1898,7 +1898,7 @@ if __name__ == '__main__':
 #%% SAMPLE (IMSNG)
 if __name__ == '__main__':
     ####################### KCT (IMSNG)
-    n_date = 100
+    n_date = 365
     for i in range(n_date):
         date = Time.now() + i *u.day
         ACP_savepath = f'./IMSNG/'
@@ -1921,7 +1921,6 @@ if __name__ == '__main__':
         #scriptmaker_host.write_log(n_target = 300, sort_keyword = 'priority', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
         #scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
 #%%
-
     ######################## LSGT (IMSNG)
     date = Time.now() 
     ACP_savepath = f'./IMSNG/'
@@ -1950,7 +1949,7 @@ if __name__ == '__main__':
     scriptmaker_host.write_ACPscript_LSGT(filename_prefix= filename_prefix, savepath = ACP_savepath, duplicate_when_empty= duplicate_when_empty)
     scriptmaker_host.write_log(n_target = 300, sort_keyword = 'priority', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
     scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
-    
+#%%
     ######################## RASA36 (IMSNG)
     date = Time.now()
     ACP_savepath = f'./IMSNG/'
@@ -1979,3 +1978,57 @@ if __name__ == '__main__':
     scriptmaker_host.write_log(n_target = 300, sort_keyword = 'priority', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
     scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
 #%%
+    ######################## LOAO (IMSNG)
+    n_date = 365
+    for i in range(n_date):
+        date = Time.now() + i *u.day
+        ACP_savepath = f'./IMSNG/'
+        name_telescope = 'LOAO'
+        name_project = 'IMSNG'
+        filename_prefix = 'IMSNG_'
+        duplicate_when_empty = True
+        data = ascii.read('./alltarget_prior2.dat', format = 'fixed_width')
+        data['weight'] = data['priority']
+
+        scheduler_host = ObsScheduler(target_db= data,
+                                    date = date,
+                                    name_project = name_project,
+                                    name_telescope = name_telescope,
+                                    entire_night = True)
+        # Define target
+        scriptmaker_host = ScriptMaker(scheduler_host)
+        # Action
+        #scriptmaker_host.write_ACPscript_KCT(filename_prefix= filename_prefix, savepath = ACP_savepath, shutdown = True, duplicate_when_empty= duplicate_when_empty, bias= True, dark = True)
+        scriptmaker_host.write_rts(filename_prefix= filename_prefix, savepath = './rts/', n_target_for_each_timeslot= 1)
+
+        #scriptmaker_host.write_log(n_target = 300, sort_keyword = 'priority', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
+
+        #scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
+# %%
+    ######################## LOAO (IMSNG)
+    n_date = 365
+    for i in range(n_date):
+        date = Time.now() + i *u.day
+        ACP_savepath = f'./IMSNG/'
+        name_telescope = 'DOAO'
+        name_project = 'IMSNG'
+        filename_prefix = 'IMSNG_'
+        duplicate_when_empty = True
+        data = ascii.read('./alltarget_prior2.dat', format = 'fixed_width')
+        data['weight'] = data['priority']
+
+        scheduler_host = ObsScheduler(target_db= data,
+                                    date = date,
+                                    name_project = name_project,
+                                    name_telescope = name_telescope,
+                                    entire_night = True)
+        # Define target
+        scriptmaker_host = ScriptMaker(scheduler_host)
+        # Action
+        #scriptmaker_host.write_ACPscript_KCT(filename_prefix= filename_prefix, savepath = ACP_savepath, shutdown = True, duplicate_when_empty= duplicate_when_empty, bias= True, dark = True)
+        scriptmaker_host.write_rts(filename_prefix= filename_prefix, savepath = './rts/', n_target_for_each_timeslot= 1)
+
+        #scriptmaker_host.write_log(n_target = 300, sort_keyword = 'priority', filename_prefix= filename_prefix, savepath= ACP_savepath, format_ = 'ascii.fixed_width', return_ = False)
+
+        #scriptmaker_host.show(save = True, filename_prefix = filename_prefix, savepath = ACP_savepath)
+# %%

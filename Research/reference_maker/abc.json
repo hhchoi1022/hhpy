@@ -1,0 +1,53 @@
+{
+    "id_code": 200,
+    "id_message": "OK",
+    "data": {
+        "received_data": {
+            "objname": "2020enz",
+            "objid": "",
+            "photometry": 0,
+            "spectra": 0
+        },
+        "reply": {
+            "objname": "2020enz",
+            "name_prefix": "AT",
+            "objid": 56027,
+            "object_type": {
+                "name": null,
+                "id": null
+            },
+            "redshift": null,
+            "ra": "13:30:23.820",
+            "dec": "-46:16:07.80",
+            "radeg": 202.59925,
+            "decdeg": -46.268833,
+            "radeg_err": 0,
+            "decdeg_err": 0,
+            "hostname": null,
+            "host_redshift": null,
+            "internal_names": "MASTER OT J133023.86-461607.8, MASTER OT J133023.82-461607.8",
+            "discoverer_internal_name": "MASTER OT J133023.86-461607.8",
+            "discoverydate": "2020-03-17 00:17:10.752",
+            "discoverer": "V.Shumkov, V. Lipunov, E. Gorbovskoy, V.Kornilov, N.Tyurina, P.Balanutsa, A.Kuznetsov, F.Balakin, V.Vladimirov, D. Vlasenko, I.Gorbunov, D.Zimnukhov, V.Senik, T.Pogrosheva, D.Kuvshinov, D. Cheryasov (Lomonosov Moscow State University, SAI, Physics Department), R. Podesta, C.Lopez, F. Podesta, C.Francile (Observatorio Astronomico Felix Aguilar OAFA), H.Levato (Instituto de Ciencias Astronomicas, de la Tierra y del Espacio ICATE), R. Rebolo, M. Serra (The Instituto de Astrofisica de Canarias), D. Buckley (South African Astronomical Observatory), O.A. Gres, N.M. Budnev, O.Ershova (Irkutsk State University, API), A. Tlatov, D. Dormidontov (Kislovodsk Solar Station of the Pulkovo Observatory), V. Yurkov, A. Gabovich, Yu. Sergienko (Blagoveschensk Educational State University)",
+            "reporter": "MASTER",
+            "reporterid": 42529,
+            "source": "bot",
+            "discoverymag": 17.9,
+            "discmagfilter": {
+                "id": 1,
+                "name": "Clear",
+                "family": ""
+            },
+            "reporting_group": {
+                "groupid": 36,
+                "group_name": "MASTER"
+            },
+            "discovery_data_source": {
+                "groupid": 36,
+                "group_name": "MASTER"
+            },
+            "public": 1,
+            "end_prop_period": null
+        }
+    }
+}
