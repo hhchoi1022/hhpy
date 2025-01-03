@@ -2010,7 +2010,7 @@ if __name__ == '__main__':
     for i in range(n_date):
         date = Time.now() + i *u.day
         ACP_savepath = f'./IMSNG/'
-        name_telescope = 'DOAO'
+        name_telescope = 'CBNUO'
         name_project = 'IMSNG'
         filename_prefix = 'IMSNG_'
         duplicate_when_empty = True
