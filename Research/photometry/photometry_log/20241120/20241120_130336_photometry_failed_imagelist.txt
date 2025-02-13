@@ -1,0 +1,13 @@
+{
+    "subbkg": [],
+    "astrometry": [],
+    "calculate": [],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "subtract": [
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/cutout_align_com_align_subbkg_Calib-RASA36-NGC1566-20220110-033648-r-60.fits"
+    ],
+    "photometry": [],
+    "outlier": []
+}

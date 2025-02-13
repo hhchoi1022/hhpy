@@ -12,13 +12,13 @@ from observedphot import ObservedPhot
 from lmfit import Parameters, minimize
 #%% Observation
 helper = Helper()
-DM = 31.17
+DM = 31.15
 ZP = 25
-filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
+filepath_all = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/phot_mw_host_dereddened.dat'
 model_directory = '/data1/supernova_model/Comp_model'
 #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 #model_directory = '/data7/yunyi/temp_supernova/DOM_model'
-fit_filterset = 'UBVugri'
+fit_filterset = 'BVgri'
 fit_start_mjd : int = 59529
 fit_end_mjd : int = 59537
 
@@ -28,8 +28,6 @@ obs_tbl = ascii.read(filepath_all, format = 'fixed_width')
 # Exclude some observatories with poor photometry
 observed_data = ObservedPhot(obs_tbl)
 observed_data.exclude_observatory(['LasCumbres0.4m', 'Swift'])
-observed_data.exclude_filter(['Unfilte'])
-
 # Get detected data
 detected_tbl = observed_data.get_data_detected()
 
@@ -40,14 +38,14 @@ fit_tbl = fit_tbl[(fit_tbl['obsdate'] > fit_start_mjd)&(fit_tbl['obsdate'] < fit
 fit_tbl.sort('obsdate')
 
 # Add systematic error
-systematic_error_cut = 0.03
-def adjust_errors(errors, systematic_error):
-    return np.sqrt(errors**2 + systematic_error**2)
-obs_lowerror_tbl = fit_tbl[fit_tbl['e_mag'] < systematic_error_cut]
-adjusted_errors = np.round(adjust_errors(obs_lowerror_tbl['e_mag'], systematic_error= systematic_error_cut),3)
-obs_lowerror_tbl['e_mag'] = adjusted_errors
-fit_tbl[fit_tbl['e_mag'] < systematic_error_cut] = obs_lowerror_tbl
-fit_tbl['e_mag'] = np.round(fit_tbl['e_mag'], 3)
+# systematic_error_cut = 0.03
+# def adjust_errors(errors, systematic_error):
+#     return np.sqrt(errors**2 + systematic_error**2)
+# obs_lowerror_tbl = fit_tbl[fit_tbl['e_mag'] < systematic_error_cut]
+# adjusted_errors = np.round(adjust_errors(obs_lowerror_tbl['e_mag'], systematic_error= systematic_error_cut),3)
+# obs_lowerror_tbl['e_mag'] = adjusted_errors
+# fit_tbl[fit_tbl['e_mag'] < systematic_error_cut] = obs_lowerror_tbl
+# fit_tbl['e_mag'] = np.round(fit_tbl['e_mag'], 3)
 
 # Add flux 
 fit_tbl['flux'] = helper.mag_to_flux(fit_tbl['mag'])
@@ -62,7 +60,7 @@ ax1, ax2 = observed_data.show_lightcurve(phase_binsize = 5,
                                          scatter_size=50, 
                                          errorbar_linewidth=0.5, 
                                          errorbar_capsize=0.1, 
-                                         color_UB = True,
+                                         color_UB = False,
                                          color_BV = True, 
                                          color_gr = True, 
                                          UL = True, 
@@ -147,78 +145,6 @@ def fit_both(fit_tbl,
     return out
 
 #%%
-header_parameters = ['rstar','m_wd','v9']
-header_fitvalues = ['exptime_CEI', 'exptime_FB']
-header_fitconfig = ['success','nfev', 'ndata', 'nvar', 'chisq', 'redchisqr', 'aic', 'bic']
-for filter_ in fit_filterset:
-    header_fitvalues.append(f'alpha_{filter_}')
-    header_fitvalues.append(f'amplitude_{filter_}')
-tot_header = header_parameters + header_fitvalues + header_fitconfig
-result_tbl = Table(names = tot_header)
-result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
-i = 0
-sample_parameters = dict(rstar  = 2.1,
-                         m_wd = 1.2,
-                         v9 = 1.0)
-result = fit_both(fit_tbl = fit_tbl, **sample_parameters, fit_method = 'leastsq')
-data_parameters = sample_parameters
-data_fitvalues = result.params.valuesdict()
-data_fitconfig = dict(success = result.success, nfev = result.nfev, ndata = result.ndata, nvar = result.nvarys, chisq = result.chisqr, redchisqr = result.redchi, aic = result.aic, bic = result.bic)
-all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
-all_values = []
-for colname in result_tbl.columns:
-    value = all_data[colname]
-    all_values.append(value)
-result_tbl.add_row(vals = all_values)
-#%%
-#%%
-header_parameters =['rstar','m_wd','v9']
-header_fitvalues = ['exptime_CEI', 'exptime_FB']
-header_fitconfig = ['success','nfev', 'ndata', 'nvar', 'chisq', 'redchisqr', 'aic', 'bic']
-for filter_ in fit_filterset:
-    header_fitvalues.append(f'alpha_{filter_}')
-    header_fitvalues.append(f'amplitude_{filter_}')
-tot_header = header_parameters + header_fitvalues + header_fitconfig
-result_tbl = Table(names = tot_header)
-result_tbl.add_row(vals = np.zeros(len(result_tbl.colnames)))
-
-range_rstar = np.round(np.arange(0.5, 30, 0.05),2)
-range_m_wd =  np.round(np.arange(1.0, 1.5, 0.1),1)
-range_v9 = np.round(np.arange(0.7, 1.4, 0.1),1)
-os.makedirs('./result/Comp_fit_result', exist_ok = True)
-
-for rstar in range_rstar:
-    for m_wd in range_m_wd:
-        result_tbl.write(f'./result/Comp_fit_result/Timestamp_M_wd_{m_wd}', format = 'ascii.fixed_width', overwrite = True)
-        for v9 in range_v9:
-            try:
-                result = fit_both(rstar,
-                                  m_wd,
-                                  v9,
-                                  fit_method = 'leastsq'
-                                  )
-                data_parameters = dict(rstar = rstar, m_wd = m_wd, v9 = v9)
-                data_fitvalues = result.params.valuesdict()
-                data_fitconfig = dict(success = result.success, nfev = result.nfev, ndata = result.ndata, nvar = result.nvarys, chisq = result.chisqr, redchisqr = result.redchi, aic = result.aic, bic = result.bic)
-                all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
-                all_values = []
-                for colname in result_tbl.columns:
-                    value = all_data[colname]
-                    all_values.append(value)
-                result_tbl.add_row(vals = all_values)
-            except:
-                data_parameters = dict(rstar = rstar, m_wd = m_wd)
-                data_fitvalues = {value : 99999 for value in header_fitvalues}
-                data_fitconfig = dict(success = False, nfev = 99999, ndata = 99999, nvar = 99999, chisq = 99999, redchisqr = 99999, aic = 99999, bic = 99999)
-                all_data = {**data_parameters, **data_fitvalues, **data_fitconfig}
-                all_values = []
-                for colname in result_tbl.columns:
-                    value = all_data[colname]
-                    all_values.append(value)
-                result_tbl.add_row(vals = all_values)   
-result_tbl.remove_row(index = 0)
-
-#%%
 import numpy as np
 import os
 import time
@@ -280,36 +206,35 @@ def main(fit_tbl):
                         for v9 in range_v9
                         ]
     # Use multiprocessing to process the combinations in parallel
-    with mp.Pool(processes=8) as pool:
+    with mp.Pool(processes=6) as pool:
         pool.map(process_combination, all_combinations)
 
 
 if __name__ == '__main__':
     main(fit_tbl = fit_tbl)
- & #%%
+#%%
 import glob
 from astropy.table import vstack
-result_key = '/data1/supernova_model/result/Comp_fit_result_BVgri/*/*.fit'
+result_key = '/data1/supernova_model/result/Comp_fit_result/*/*.fit'
 files = glob.glob(result_key)
 result_tbl = Table()
 for file_ in files:
     tbl = ascii.read(file_, format = 'fixed_width')
     result_tbl = vstack([result_tbl, tbl])
 result_tbl.sort('redchisqr')
-result_tbl.write('/data1/supernova_model/result/Comp_fit_result_BVgri.fit', format = 'ascii.fixed_width', overwrite = True)
+result_tbl.write('/data1/supernova_model/result/Comp_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
 
 #%%
 result_tbl = ascii.read('/data1/supernova_model/result/Comp_fit_result.fit', format = 'fixed_width')
 fit_filterset = set(fit_tbl['filter'])
 #fit_filterset = 'UBgVri'
-i = 2
+i = 0
 result_values = result_tbl[i]
 exptime_CEI = result_values['exptime_FB']
 exptime_FB = result_values['exptime_CEI']
 filter_key = fit_tbl.group_by('filter').groups.keys['filter']
 color_key, offset_key, _, _, label_key = helper.load_filt_keys()
-plt.figure(dpi = 300, figsize = (4.5, 6.5))
-plt.gca().invert_yaxis()
+
 phase_min_FB = np.max([59526, result_values['exptime_FB']])
 phase_min_CEI = np.max([59526, result_values['exptime_CEI']])
 phase_range_FB = np.arange(phase_min_FB, 59540, 0.1)
@@ -323,13 +248,15 @@ spl_allfilt_CEI = get_CEI_spline(CEI_LC, exptime_CEI = result_values['exptime_CE
 
 tbl_UL = observed_data.get_data_ul()
 tbl_obs = observed_data.get_data_detected()
-ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
+plt.figure(dpi = 300, figsize = (4.5, 6.5))
+ax1, ax2 = observed_data.show_lightcurve(
+                        phase_binsize = 5,
                             scatter_linewidth=0.5, 
                             scatter_size=50, 
                             scatter_alpha = 0.2,
                             errorbar_linewidth=0.5, 
                             errorbar_capsize=0.1, 
-                            color_UB = True,
+                            color_UB = False,
                             color_BV = True, 
                             color_gr = True, 
                             UL = True, 
@@ -337,6 +264,7 @@ ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                             label = True, 
                             label_location=4, 
                             )
+
 for filter_ in fit_filterset:
     amp = result_values[f'amplitude_{filter_}']
     alpha= result_values[f'alpha_{filter_}']
@@ -378,13 +306,13 @@ for filter_ in fit_filterset:
 #ax1.plot(0,0, ':', c='k', label = 'Compansion-ejecta')
 #ax1.plot(0,0, '-', c='k', label = 'Power law + Companion-ejecta')
 #ax1.legend(loc = 3)
-ax2.plot(phase_range_CEI, mag_U_model - mag_B_model -0.5, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1, alpha = 0.4)
+#ax2.plot(phase_range_CEI, mag_U_model - mag_B_model -0.5, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1, alpha = 0.4)
 ax2.plot(phase_range_CEI, mag_B_model - mag_V_model + 0.5, c = 'b', label = 'B-V', linestyle= ':', linewidth = 1, alpha = 0.4)
 ax2.plot(phase_range_CEI, mag_g_model - mag_r_model, c = 'g', label = 'g-r', linestyle= ':', linewidth = 1, alpha = 0.4)
-ax2.plot(phase_range_CEI, mag_U_CEI - mag_B_CEI -0.5, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1, alpha = 0.4)
+#ax2.plot(phase_range_CEI, mag_U_CEI - mag_B_CEI -0.5, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1, alpha = 0.4)
 ax2.plot(phase_range_CEI, mag_B_CEI - mag_V_CEI +0.5, c = 'b', label = 'B-V', linestyle= '--', linewidth = 1, alpha = 0.4)
 ax2.plot(phase_range_CEI, mag_g_CEI - mag_r_CEI, c = 'g', label = 'g-r', linestyle= '--', linewidth = 1, alpha = 0.4)
-ax2.plot(phase_range_CEI, mag_U_both - mag_B_both -0.5, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1, alpha = 1)
+#ax2.plot(phase_range_CEI, mag_U_both - mag_B_both -0.5, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1, alpha = 1)
 ax2.plot(phase_range_CEI, mag_B_both - mag_V_both +0.5, c = 'b', label = 'B-V', linestyle= '-', linewidth = 1, alpha = 1)
 ax2.plot(phase_range_CEI, mag_g_both - mag_r_both, c = 'g', label = 'g-r', linestyle= '-', linewidth = 1, alpha = 1)
 #ax2.yli(np.min(obs_tbl['obsdate']) + np.arange(-20, 200, 5), np.arange(-20, 200, 5) )
@@ -392,17 +320,18 @@ ax1.set_xlim(phase_range_FB[0]-1, 59537)
 ax2.set_xlim(phase_range_FB[0]-1, 59537)
 
 ax1.set_ylim(22.5, 8)
-
-ax1.clear()
+plt.show()
+#ax1.clear()
+#%%
 show_idx = [0,3,7, 9, 10, 12]
 obs_spec = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat', format = 'fixed_width')
 obs_spec_phot = ObservedPhot(data_tbl  = obs_spec)
 obs_spec_phot.data.sort('obsdate')
 filt_spec_tbl = obs_spec_phot.get_filt_data(obs_spec_phot.data)
-UB_tbl = helper.match_table(filt_spec_tbl['U'], filt_spec_tbl['B'], key = 'obsdate')
+#UB_tbl = helper.match_table(filt_spec_tbl['U'], filt_spec_tbl['B'], key = 'obsdate')
 BV_tbl = helper.match_table(filt_spec_tbl['B'], filt_spec_tbl['V'], key = 'obsdate')
 gr_tbl = helper.match_table(filt_spec_tbl['g'], filt_spec_tbl['r'], key = 'obsdate')
-
+#%%
 import glob
 import matplotlib.cm as cm  # Import the colormap
 from Research.spectroscopy.spectroscopyfile import SpectroscopyFile

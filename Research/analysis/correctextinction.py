@@ -40,7 +40,7 @@ class CorrectExtinction:
         _, _, _, filter_key, _ = self.helper.load_filt_keys()
         filterlist = sorted(list(set(corrected_data['filter'])))
         Av = Rv * ebv
-        corrected_data['A_filter'] = -99.9
+        corrected_data['A_filter'] = 0.0
         for filtname in filterlist:
             if filtname not in filter_key.keys():
                 print(f'filter "{filtname}" is not in filter_key')
@@ -52,11 +52,11 @@ class CorrectExtinction:
                 
                 if dereddening == True:
                     corrected_data['mag'][corrected_data['filter'] == filtname] -= Afilt
-                    corrected_data['A_filter'][corrected_data['filter'] == filtname] = -Afilt
+                    corrected_data['A_filter'][corrected_data['filter'] == filtname] -= Afilt
                     is_corrected = 'Host_dereddening'
                 elif dereddening == False:
                     corrected_data['mag'][corrected_data['filter'] == filtname] += Afilt
-                    corrected_data['A_filter'][corrected_data['filter'] == filtname] = Afilt
+                    corrected_data['A_filter'][corrected_data['filter'] == filtname] += Afilt
                     is_corrected = 'Host_reddening'
                 else:
                     raise ValueError(f'dereddening = {dereddening}')
@@ -89,7 +89,7 @@ class CorrectExtinction:
         _, _, _, filter_key, _ = self.helper.load_filt_keys()
         filterlist = sorted(list(set(corrected_data['filter'])))
         Av = mwRv * mwebv
-        corrected_data['A_filter'] = -99.9
+        corrected_data['A_filter'] = 0.0
         for filtname in filterlist:
             if filtname not in filter_key.keys():
                 print(f'filter "{filtname}" is not in filter_key')
@@ -100,12 +100,12 @@ class CorrectExtinction:
                 Afilt = round(extinction.fitzpatrick99(lpivot_AA, Av, mwRv)[0],3)
                 if dereddening == True:
                     corrected_data['mag'][corrected_data['filter'] == filtname] -= Afilt
-                    corrected_data['A_filter'][corrected_data['filter'] == filtname] = -Afilt
+                    corrected_data['A_filter'][corrected_data['filter'] == filtname] -= Afilt
                     is_corrected = 'MW_dereddening'
                     
                 elif dereddening == False:
                     corrected_data['mag'][corrected_data['filter'] == filtname] += Afilt
-                    corrected_data['A_filter'][corrected_data['filter'] == filtname] = Afilt
+                    corrected_data['A_filter'][corrected_data['filter'] == filtname] += Afilt
                     is_corrected = 'MW_reddening'
                 else:
                     raise ValueError(f'dereddening = {dereddening}')
@@ -122,16 +122,16 @@ class CorrectExtinction:
 
 #%%
 if __name__ == '__main__':
-    ebv = 0.1#097  # Hosseinzadeh 2022
+    ebv = 0.097  # Hosseinzadeh 2022
     ra = 64.9708333
     dec = -54.9480556
 #%%
 # data from Ahsall 2022 is already corrected for MW extinction >>> noextin_dat
 if __name__ == '__main__':
-    IMSNG_file = '/data1/supernova_rawdata/SN2021aefx/photometry/all_IMSNG.dat'
+    IMSNG_file = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/all_IMSNG.dat'
     C = CorrectExtinction(IMSNG_file)
     C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
-    #C.correct_host_extinction(ebv = ebv, Rv = 2.3)
+    C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
     C.save()
 #%% # For A22 table, already MW corrected. Thus reddeing A22 table to make them all same 
 if __name__ == '__main__':
@@ -140,14 +140,14 @@ if __name__ == '__main__':
     #C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = False)
     #C.save()
     
-    A22_file = '/data1/supernova_rawdata/SN2021aefx/photometry/Ashall2022.dat'
+    A22_file = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/Ashall2022.dat'
     C = CorrectExtinction(A22_file)
-    C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
-    C.correct_host_extinction(ebv = ebv, Rv = 2.3)
+    #C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = False)
+    C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
     C.save()
 #%% 
 if __name__ == '__main__':
-    H22_file = '/data1/supernova_rawdata/SN2021aefx/photometry/Hosseinzadeh2022.dat'
+    H22_file = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/Hosseinzadeh2022.dat'
     C = CorrectExtinction(H22_file)
     C.correct_mw_extinction(ra = ra, dec = dec, mwRv = 3.10, dereddening = True)
     C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
@@ -174,3 +174,6 @@ if __name__ == '__main__':
     C.correct_host_extinction(ebv = ebv, Rv = 2.3, dereddening= True)
     C.save()
 # %%
+
+
+#%% 

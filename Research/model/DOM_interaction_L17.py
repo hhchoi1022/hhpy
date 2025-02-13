@@ -17,8 +17,8 @@ from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures import as_completed
 from astropy.io import ascii
 import warnings
-warnings.filterwarnings("ignore", category=RuntimeWarning, message="overflow encountered in exp")
-matplotlib.use('Agg')
+#warnings.filterwarnings("ignore", category=RuntimeWarning, message="overflow encountered in exp")
+#matplotlib.use('Agg')
 #%%
 class Section(object): 
     """

@@ -1108,7 +1108,7 @@ class Photometry:
         
         if filelist is None:
             filelist = self.target_imagelist
-            
+        failed_imagelist_combine = {key: [] for key in self.failed_imagelist.keys()}   
         if combine_before_photometry:
             succeeded_imagelist, failed_imagelist_combine = self.combine(filelist = filelist,
                                                                          group_key = group_key,
@@ -1157,6 +1157,7 @@ class Photometry:
             self.target_imagelist = succeeded_imagelist
             filelist = self.target_imagelist
             
+        failed_imagelist_calculate = {key: [] for key in self.failed_imagelist.keys()}   
         if combine_before_photometry or calculate_before_photometry:
             # Calcuclate zeropoint of the images
             succeeded_imagelist, failed_imagelist_calculate = self.calculate(filelist = filelist,
@@ -1305,6 +1306,9 @@ class Photometry:
                           cutout_reference_image : bool = True,
                           cutout_size : int = 1500,
                           ):
+
+        if filelist is None:
+            filelist = self.target_imagelist
 
         # Split the target image list into groups
         self.helper.print(f"Splitting image list into {num_processes} groups...", print_output)
@@ -1509,74 +1513,77 @@ class Photometry:
 if __name__ == '__main__':    
     filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/g/*120.fits'))
     A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'), reference_image = '/mnt/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-g-4440.com.fits')
-    #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/com*120.fits'))
+    #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/r/Calib*120.fits'))
     #A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'), reference_image = '/mnt/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-r-3360.com.fits')
-    #filelist = sorted(glob.glob('/data2/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/com*120.fits'))
-    #A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'), reference_image = '/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-i-720.com.fits')
+    #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/i/Calib*120.fits'))
+    #A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'), reference_image = '/mnt/data1/reference_image/KCT_STX16803/Ref-KCT_STX16803-NGC1566-i-720.com.fits')
     sex_configfile = None
 #%% LSGT
 if __name__ == '__main__':    
-    # filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/g/com*180.fits'))
-    # A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'LSGT', ccd = 'SNUCAMII'), reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-180448-g-540.com.fits')
-    # filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/com*180.fits'))
-    # A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'LSGT', ccd = 'SNUCAMII'), reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-181452-r-540.com.fits')
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/com*180.fits'))
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'LSGT', ccd = 'SNUCAMII'), reference_image = '/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits')
-    sex_configfile = None
+    # filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/g/Calib*180.fits'))
+    # A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'LSGT', ccd = 'SNUCAMII'), reference_image = '/mnt/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-180448-g-540.com.fits')
+    #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/r/Calib*180.fits'))
+    #A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'LSGT', ccd = 'SNUCAMII'), reference_image = '/mnt/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20210916-181452-r-540.com.fits')
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib*180.fits'))
+    A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'LSGT', ccd = 'SNUCAMII'), reference_image = '/mnt/data1/reference_image/LSGT_STX16803/Calib-LSGT-NGC1566-20220401-100321-i-540.com.fits')
+    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/LSGT_SNUCAM.config'
 #%% RASA36
 if __name__ == '__main__':    
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib*60.fits'))
-    filelist_1 = filelist[:1209]
-    filelist_2 = filelist[1209:]
+    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/HIGH/Calib*60.fits'))
+    filelist_1 = filelist[:592]
+    filelist_2 = filelist[592:1003]
+    filelist_3 = filelist[1003:1497]
+    filelist_4 = filelist[1497:2016]
+    filelist_5 = filelist[2016:]
+    
 #%% RASA36, continued...
 if __name__ == '__main__':    
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'HIGH'), reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits')
+    A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'HIGH'), reference_image = '/mnt/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-HIGH.com.fits')
     sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
 #%% RASA36, continued...
 if __name__ == '__main__':    
-    filelist = sorted(glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/RASA36/r/MERGE/com*60.fits'))
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'MERGE'), reference_image = '/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-MERGE.com.fits')
+    A = Photometry(filelist, telescope_info = Helper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'MERGE'), reference_image = '/mnt/data1/reference_image/RASA36_KL4040/Ref-RASA36-NGC1566-r-3180-MERGE.com.fits')
     sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_MERGE.config'
 #%% Background subtraction
 if __name__ == '__main__':
-    A.faster_subtract_bkg(num_processes = 5,
+    A.faster_subtract_bkg(num_processes = 6,
                           filelist = None,
                           apply_2D_bkg = True,
                           mask_sources = True,
-                          mask_source_size_in_pixel = 10,
+                          mask_source_size_in_pixel = 20,
                           bkg_estimator = 'median', # mean, median, sextractor, 
                           bkg_sigma = 3.0, 
                           bkg_box_size = 300, 
                           bkg_filter_size = 3, 
                           prefix_subbkg = 'subbkg_',
-                          update_header_subbkg = True,
-                          visualize_subbkg = True,
+                          update_header = True,
+                          visualize = True,
                           write_log = True,
                           print_output = True)
 #%% Calculate ZP
 if __name__ == '__main__':    
     #A.calculate(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None, check_zp_by_color = True)
-    A.faster_calculate(filelist = None,
-                       sex_configfile = None,  # Absolute Path
+    A.faster_calculate(num_processes = 6,
+                       filelist = None,
+                       sex_configfile = sex_configfile,  # Absolute Path
                        detect_threshold = 3.0,
                        aperture_type = 'relative',  # relative or absolute
                        aperture_sizes = [1.5, 2.5, 3.5],  # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
                        ref_catalog_name = 'APASS',
                        ref_catalog_conversion = None,
-                       ref_maxmag = 16,
-                       ref_minmag = 12,
+                       ref_maxmag = 15,
+                       ref_minmag = 13,
                        visualize = False,
-                       update_header_calculate = True,
+                       update_header = True,
                        check_zp_by_color = False,
-                       num_processes = 4,
                        write_log = True,
                        print_output = True
                        )
 #%%
 if __name__ == '__main__':    
     A.exclude_outlier(sigma = 5,
-                      depth_cut = None,
-                      seeing_cut = None,
+                      depth_cut = 17.0,
+                      seeing_cut = 5.5,
                       depth_key = 'DEPTH5_APER_1_HH',
                       seeing_key = 'SEEING_HH',
                       visualize = True,
@@ -1585,7 +1592,7 @@ if __name__ == '__main__':
 #%%
 if __name__ == '__main__':    
     #A.combine(group_tolerance= 0.3)
-    A.faster_combine(  num_processes = 6,
+    A.combine( # num_processes = 4,
                        group_key = 'jd',
                        group_tolerance = 0.2,
                        print_output = True,
@@ -1605,7 +1612,7 @@ if __name__ == '__main__':
                        
                        # Background Subtraction params
                        subbkg_before_combine = False,
-                       apply_2D_bkg = True,
+                       apply_2D_bkg = False,
                        mask_sources = False,
                        mask_source_size_in_pixel = 10,
                        bkg_estimator = 'median', # mean, median, sextractor, 
@@ -1613,334 +1620,96 @@ if __name__ == '__main__':
                        bkg_box_size = 300, 
                        bkg_filter_size = 3, 
                        prefix_subbkg = 'subbkg_',
-                       update_header_subbkg = True,
+                       update_header_subbkg = False,
                        visualize_subbkg = False,
-                       
+
+                        # Calculate params
+                       calculate_before_combine = False,
+                       sex_configfile = sex_configfile, 
+                       detect_threshold = 3.0,
+                       aperture_type = 'relative',  # relative or absolute
+                       aperture_sizes = [1.5, 2.5, 3.5],  # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
+                       ref_catalog_name = 'APASS',
+                       ref_catalog_conversion = None,
+                       ref_maxmag = 15.0,
+                       ref_minmag = 12.0, 
+                       visualize_calculate = False, 
+                       update_header_calculate = False,
+                       check_zp_by_color = False,
+                        
                        # Align params
                        align_before_combine = True, 
-                       align_cut_outer = False,
+                       align_cut_outer = True,
                        align_outer_size = 0.95,
                        align_detection_sigma = 5
                        )
 #%%
 if __name__ == '__main__':    
-    A.faster_photometry(ra = 64.9725, 
-                        dec =  -54.948081, 
-                        num_processes = 4,
-                        filelist = None,
-                        sex_configfile = None,
-                        detect_threshold  = 3.0,
-                        aperture_type = 'relative', # relative or absolute
-                        aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                        visualize_photometry = True,
-                        write_log = True,
-                        print_output = True,
-                        
-                        # Combine params
-                        combine_before_photometry = True,
-                        group_key = 'jd',
-                        group_tolerance = 0.2,
-                        zp_key ='ZP_APER_1_HH',
-                        combine_method = 'median',
-                        scale = 'multiply',
-                        prefix_combine = 'com_',
-                        clip = 'extrema',
-                        clip_sigma_low = 2,
-                        clip_sigma_high = 5,
-                        clip_minmax_min = 3,
-                        clip_minmax_max = 3,
-                        clip_extrema_nlow = 1,
-                        clip_extrema_nhigh = 1,
+    A.photometry(ra = 64.9725, 
+                 dec =  -54.948081, 
+                 #num_processes = 4,
+                 filelist = None,
+                 sex_configfile = sex_configfile,
+                 detect_threshold  = 3.0,
+                 aperture_type = 'relative', # relative or absolute
+                 aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
+                 visualize_photometry = True,
+                 write_log = True,
+                 print_output = True,
+                 
+                 # Combine params
+                 combine_before_photometry = False,
+                 group_key = 'jd',
+                 group_tolerance = 0.3,
+                 zp_key ='ZP_APER_1_HH',
+                 combine_method = 'median',
+                 scale = 'multiply',
+                 prefix_combine = 'com_',
+                 clip = 'extrema',
+                 clip_sigma_low = 2,
+                 clip_sigma_high = 5,
+                 clip_minmax_min = 3,
+                 clip_minmax_max = 3,
+                 clip_extrema_nlow = 1,
+                 clip_extrema_nhigh = 1,
+             
+                 # Calculate params
+                 calculate_before_photometry = True,
+                 calculate_before_combine = False,
+                 ref_catalog_name = 'APASS',
+                 ref_catalog_conversion = None,
+                 ref_maxmag= 15,
+                 ref_minmag= 13,
+                 visualize_calculate = False,
+                 check_zp_by_color = False,
+                 update_header_calculate = True,
+ 
+                 # Background Subtraction params
+                 subbkg_before_combine = False,
+                 apply_2D_bkg = False,
+                 mask_sources = False,
+                 mask_source_size_in_pixel = 10,
+                 bkg_estimator = 'median', # mean, median, sextractor, 
+                 bkg_sigma = 3.0, 
+                 bkg_box_size = 300, 
+                 bkg_filter_size = 3, 
+                 prefix_subbkg = 'subbkg_',
+                 update_header_subbkg = True,
+                 visualize_subbkg = False,
+             
+                 # Align params
+                 align_before_combine = False, 
+                 align_cut_outer = True,
+                 align_outer_size = 0.95,
+                 align_detection_sigma = 5,
                     
-                        # Calculate params
-                        calculate_before_photometry = True,
-                        calculate_before_combine = True,
-                        ref_catalog_name = 'APASS',
-                        ref_catalog_conversion = None,
-                        ref_maxmag= 16,
-                        ref_minmag= 12,
-                        visualize_calculate = True,
-                        check_zp_by_color = False,
-                        update_header_calculate = True,
+                 # Subtraction params
+                 subtract_before_photometry = True,
+                 align_before_subtract = True,
+                 cutout_target_image = True,
+                 cutout_reference_image = True,
+                 cutout_size = 2500)
 
-                        # Background Subtraction params
-                        subbkg_before_combine = True,
-                        apply_2D_bkg = True,
-                        mask_sources = True,
-                        mask_source_size_in_pixel = 10,
-                        bkg_estimator = 'median', # mean, median, sextractor, 
-                        bkg_sigma = 3.0, 
-                        bkg_box_size = 300, 
-                        bkg_filter_size = 3, 
-                        prefix_subbkg = 'subbkg_',
-                        update_header_subbkg = True,
-                        visualize_subbkg = False,
-                    
-                        # Align params
-                        align_before_combine = True, 
-                        align_cut_outer = False,
-                        align_outer_size = 0.95,
-                        align_detection_sigma = 5,
-                            
-                        # Subtraction params
-                        subtract_before_photometry = True,
-                        align_before_subtract = True,
-                        cutout_target_image = True,
-                        cutout_reference_image = True,
-                        cutout_size = 2500)
-                        
-                        
-# %% #########################################################ls###
-
-if __name__ == '__main__':
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/aalign_com**120.fits'))
-if __name__ == '__main__':
-    #A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'), reference_image = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/Ref-KCT_STX16803-NGC1097-r-5400.com.fits')
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'), reference_image = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/Ref-KCT_STX16803-NGC1097-g-4440.com.fits')
-    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/KCT.config'
-#%%
-if __name__ == '__main__':
-    A.align(cut_outer = False, outer_size = 0.95, detection_sigma = 5)
-
-#%%
-if __name__ == '__main__':
-    pass
-    A.exclude_outlier(sigma = 2, depth_cut=17, seeing_cut=6, depth_key = 'DEPTH5_APER_1_HH', seeing_key = 'SEEING_HH', move = True, visualize = True)
-
-#%%
-if __name__ == '__main__':
-    pass
-    A.astrometry(sex_configfile  = sex_configfile, ra = 41.575542, dec = -30.239489, radius = 2)
-    #A.faster_astrometry(sex_configfile  = sex_configfile, ra = 41.575542, dec = -30.239489, radius = 2, num_processes = 4)
-#%%
-if __name__ == '__main__':
-    pass
-    A.faster_calculate(sex_configfile = sex_configfile, num_processes = 6, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
-#%%
-if __name__ == '__main__':
-    #A.combine(group_tolerance= 0.3,  align = True, align_cut_outer = True, align_detection_sigma = 3)
-    A.faster_combine(group_tolerance= 0.3, num_processes= 6,  align = True, align_cut_outer = True, align_outer_size = 0.95, align_detection_sigma = 3)
-
-#%%
-if __name__ == '__main__':
-    A.align(cut_outer = False, outer_size = 0.95, detection_sigma = 5)
-    #A.faster_align(cut_outer = False, outer_size = 0.95, detection_sigma = 5, num_processes =#%%
-#%%
-if __name__ == '__main__':    
-    A.photometry(ra = 41.575542, 
-                dec = -30.239489, 
-                #filelist = filelist,
-                sex_configfile = sex_configfile,
-                detect_threshold = 3,
-                aperture_type = 'relative', # relative or absolute
-                aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                cutout_target_image = True,
-                cutout_reference_image = True,
-                cutout_size = 2500,
-                align = False,
-                subtract = True,
-                visualize = True)
-
-
-#%%
-# (Reference image with no rotation, but shallower image)Combine -> Cutout with 2500 -> Align with cutouted reference image -> astrometry -> photometry
-# (Reference image with rotation) Combine -> Cutout with 2500 -> Align with cutouted reference image -> Cutout with 2000 -> astrometry -> photometry
-
-if __name__ == '__main__':    
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/r/align_com*fits'))
-    #filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image_tmp/acom*fits'))
-    filelist_1 = filelist[:1056]
-    filelist_2 = filelist[1056:]
-#%%
-if __name__ == '__main__':
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'RASA36', ccd = 'KL4040', readoutmode = 'HIGH'), reference_image = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/acom_align_Calib-RASA36-NGC1097-20230811-072108-r-60.fits')
-    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.config'
-# %%
-if __name__ == '__main__':
-    #A.cutout(cutout_size = 2500)
-    A.cutout(cutout_size = 2500)
-
-#%%
-if __name__ == '__main__':
-    A.align(cut_outer = False, outer_size = 0.95, detection_sigma = 5)
-    #A.faster_align(cut_outer = False, outer_size = 0.95, detection_sigma = 5, num_processes =#%%
-#%%
-if __name__ == '__main__':
-    A.astrometry(sex_configfile  = sex_configfile, ra = 41.575542, dec = -30.239489, radius = 2)
-    #A.faster_astrometry(sex_configfile = sex_configfile, num_processes = 2, ra = 41.575542, dec = -30.239489, radius = 2, overwrite = True)
-    #A.scamp(sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.scampconfig')
-    pass
-#%%
-if __name__ == '__main__':
-    pass
-    #A.exclude_outlier(sigma = 2, depth_key = 'DEPTH5_APER_1_HH', seeing_key = 'SEEING_HH', move = True, visualize = True)
-    #A.exclude_outlier(sigma = 3, depth_key = 'UL5_1', seeing_key = 'SEEING', move = False, visualize = True)
-    A.exclude_outlier(sigma = 3, depth_cut = 14, seeing_cut = 6, depth_key = 'DEPTH5_APER_1_HH', seeing_key = 'SEEING_HH', move = True, visualize = True)
-
-#%%
-if __name__ == '__main__':
-    pass
-    #A.calculate(sex_configfile = sex_configfile, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
-    A.faster_calculate(sex_configfile = sex_configfile, num_processes = 6, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
-#%%
-if __name__ == '__main__':    
-    #A.combine(group_tolerance= 10000,  align = True, align_cut_outer = False, align_detection_sigma = 5)
-    A.faster_combine(group_tolerance= 0.3, num_processes= 4,  align = True, align_cut_outer = False, align_outer_size = 0.95, align_detection_sigma = 3)
-
-# %%
-if __name__ == '__main__':    
-    A.photometry(ra = 41.575542, 
-                dec = -30.239489, 
-                #filelist = filelist,fin 
-                sex_configfile = sex_configfile,
-                detect_threshold = 3,
-                aperture_type = 'relative', # relative or absolute
-                aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                cutout_target_image = True,
-                cutout_reference_image = True,
-                cutout_size = 2000,
-                align = False,
-                subtract = True,
-                visualize = True)
-# %%
-if __name__ == '__main__':    
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/r/com*-r-180.fits'))
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/r/com*-r-180.fits'))
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = 'LSGT', ccd = 'ASI1600MM'), reference_image = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/LSGT_ASI1600MM/reference_image/r/com_align_Calib-LSGT_ASI1600MM-NGC1097-20230623-181206-r-180.fits')
-    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/LSGT_ASI1600MM.config'
-# %%
-if __name__ == '__main__':
-    A.exclude_outlier(sigma = 3, seeing_cut = 3.25, depth_cut = 19.4, depth_key = 'DEPTH5_APER_1_HH', seeing_key = 'SEEING_HH', move = False, visualize = True)
-
-#%%
-if __name__ == '__main__':    
-    A.faster_calculate(sex_configfile = sex_configfile, num_processes = 3, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
-#%%
-if __name__ == '__main__':    
-    #A.combine(group_tolerance= 10000,  align = True, align_cut_outer = False, align_detection_sigma = 5)
-    A.faster_combine(group_tolerance= 0.3, num_processes= 4,  align = True, align_cut_outer = False, align_outer_size = 0.95, align_detection_sigma = 3)
-
-# %%
-if __name__ == '__main__':    
-    A.photometry(ra = 41.575542, 
-                dec = -30.239489, 
-                #filelist = filelist,fin 
-                sex_configfile = sex_configfile,
-                detect_threshold = 1.5,
-                aperture_type = 'relative', # relative or absolute
-                aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                cutout_target_image = False,
-                cutout_reference_image = False,
-                cutout_size = 2000,
-                align = True,
-                subtract = True,
-                visualize = True)
-# %%
-
-
-
-#%%
-
-# %%
-if __name__ == '__main__':    
-    filelist = sorted(glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/7DT/late/r/com*.fits'))
-    A = Photometry(filelist, telescope_info = PhotometryHelper().get_telinfo(telescope = '7DT', ccd = 'C361K', readoutmode = 'low'), reference_image = None)
-    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/7DT_gain2750.config'
-# %%
-if __name__ == '__main__':
-    A.exclude_outlier(sigma = 3, depth_key = 'DEPTH5_APER_1_HH', seeing_key = 'SEEING_HH', move = False, visualize = True)
-
-#%%
-if __name__ == '__main__':    
-    A.faster_calculate(sex_configfile = sex_configfile, num_processes = 2, ref_catalog_name = 'APASS', ref_catalog_conversion = None)
-
-#%%
-if __name__ == '__main__':    
-    A.combine(group_tolerance= 10000,  align = True, align_cut_outer = False, align_detection_sigma = 5)
-   # A.faster_combine(group_tolerance= 0.3, num_processes= 4,  align = True, align_cut_outer = False, align_outer_size = 0.95, align_detection_sigma = 3)
-# %%                                                                    
-if __name__ == '__main__':    
-    #A.photometry(ra=64.9723704, dec=-54.9481347, sex_configfile = sex_configfile, calculate = True, cutout_reference_image= True, cutout_target_image= True, subtract = True, visualize= True)
-    A.faster_photometry(ra = 41.575542, 
-                        dec = -30.239489, 
-                        filelist = filelist,
-                        num_processes = 6,
-                        sex_configfile = sex_configfile,
-                        detect_threshold = 3.0,
-                        aperture_type = 'relative', # relative or absolute
-                        aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-                        cutout_target_image = True,
-                        cutout_reference_image = True,
-                        cutout_size = 2000,
-                        subtract = True,
-                        visualize = True)
-# %%
-
-
-#%% For dubugging
-
-text = """
-ra = 64.9725, 
-dec =  -54.948081, 
-#num_processes = 4,
-filelist = None,
-sex_configfile = None,
-detect_threshold  = 3.0,
-aperture_type = 'relative', # relative or absolute
-aperture_sizes = [1.5, 2.5, 3.5], # relative (1.5*seeing, 2.5*seeing, 3.5*seeing) or absolute (3", 5", 7")
-visualize_photometry = True,
-write_log = True,
-print_output = True,
-# Combine params
-combine_before_photometry = False,
-group_key = 'jd',
-group_tolerance = 0.2,
-zp_key ='ZP_APER_1_HH',
-combine_method = 'median',
-scale = 'multiply',
-prefix_combine = 'com_',
-clip = 'extrema',
-clip_sigma_low = 2,
-clip_sigma_high = 5,
-clip_minmax_min = 3,
-clip_minmax_max = 3,
-clip_extrema_nlow = 1,
-clip_extrema_nhigh = 1,
-# Calculate params
-calculate_before_photometry = True,
-ref_catalog_name = 'APASS',
-ref_catalog_conversion = None,
-ref_maxmag= 16,
-ref_minmag= 12,
-visualize_calculate = True,
-check_zp_by_color = False,
-# Background Subtraction params
-subbkg_before_combine = False,
-apply_2D_bkg = True,
-mask_sources = False,
-mask_source_size_in_pixel = 10,
-bkg_estimator = 'median', # mean, median, sextractor, 
-bkg_sigma = 3.0, 
-bkg_box_size = 300, 
-bkg_filter_size = 3, 
-prefix_subbkg = 'subbkg_',
-update_header_subbkg = True,
-visualize_subbkg = False,
-# Align params
-align_before_combine = False, 
-align_cut_outer = False,
-align_outer_size = 0.95,
-align_detection_sigma = 5,
-# Subtraction params
-subtract_before_photometry = True,
-align_before_subtract = True,
-cutout_target_image = True,
-cutout_reference_image = True,
-cutout_size = 2500
-"""
-
-# Remove commas
-text_no_commas = text.replace(",", "")
-print(text_no_commas)
+        # %%
 
 # %%

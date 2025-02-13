@@ -1,0 +1,25 @@
+{
+    "subbkg": [],
+    "astrometry": [],
+    "calculate": [
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220120-122730-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220122-122620-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220210-105541-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220212-105254-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220216-130054-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220314-122824-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220315-120759-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220321-113440-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220401-095958-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/com_align_cutouter_sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220114-111224-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/com_align_cutouter_sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220207-111222-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/com_align_cutouter_sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220213-104820-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/com_align_cutouter_sub_cutout_align_com_align_cutouter_Calib-LSGT-NGC1566-20220320-110400-i-180.fits"
+    ],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "subtract": [],
+    "photometry": [],
+    "outlier": []
+}

@@ -71,6 +71,7 @@ output_file = write_photometry_file(
                                     observatory='KCT'
                                     )
 output_filelist.append(output_file)
+
 # KCT in i band
 output_file = write_photometry_file(
                                     key='/data1/supernova_rawdata/SN2021aefx/photometry/KCT*/i/sub*.phot',
@@ -103,10 +104,11 @@ output_file = write_photometry_file(
                                     observatory='LSGT'
                                     )
 output_filelist.append(output_file)
+
 # RASA36 in r band HIGH mode
 
 output_file = write_photometry_file(
-                                    key='/data1/supernova_rawdata/SN2021aefx/photometry/RASA36*/r/HIGH/sub*.phot',
+                                    key='/data1/supernova_rawdata/SN2021aefx/photometry/RASA36*/r/HIGH/com*.phot',
                                     savepath='/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG_RASA36_r_HIGH.dat',
                                     filter_='r',
                                     observatory='RASA36'
@@ -125,8 +127,8 @@ output_filelist.append(output_file)
 output_filelist = glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/IMSNG*.dat')
 from astropy.table import vstack
 tbl_IMSNG = vstack([Table.read(output_file, format = 'ascii.fixed_width') for output_file in output_filelist])  
-tbl_hosse = Table.read('/data1/supernova_rawdata/SN2021aefx/photometry/Hosseinzadeh2022.dat', format = 'ascii.fixed_width')
-tbl_ashall = Table.read('/data1/supernova_rawdata/SN2021aefx/photometry/Ashall2022.dat', format = 'ascii.fixed_width')
+#tbl_hosse = Table.read('/data1/supernova_rawdata/SN2021aefx/photometry/Hosseinzadeh2022.dat', format = 'ascii.fixed_width')
+#tbl_ashall = Table.read('/data1/supernova_rawdata/SN2021aefx/photometry/Ashall2022.dat', format = 'ascii.fixed_width')
 tbl_IMSNG.write('/data1/supernova_rawdata/SN2021aefx/photometry/all_IMSNG.dat', format = 'ascii.fixed_width', overwrite = True)
 #%%
 from astropy.table import Table, MaskedColumn

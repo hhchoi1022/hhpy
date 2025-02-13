@@ -136,7 +136,7 @@ class AnalysisHelper():
                         ATLAS_o = 'darkorange',
                         )
         offset_key = dict(
-                        U = -3, 
+                        U = -4, 
                         B = -2,
                         V = 0,
                         R = 1,

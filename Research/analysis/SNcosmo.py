@@ -58,11 +58,11 @@ for responsefile in list_responsefile:
     Las_filterkey[filter_] = filename
 #%% Data 
 from observedphot import ObservedPhot
-obs_tbl = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat', format = 'fixed_width')
+obs_tbl = ascii.read('/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/phot_mw_host_dereddened.dat', format = 'fixed_width')
 # obs_tbl = ascii.read('/data1/supernova_rawdata/SN2021aefx/photometry/all_phot.dat', format = 'fixed_width')
 observed_data = ObservedPhot(obs_tbl, target = 'SN2021aefx')
-observed_data.exclude_observatory(['DLT40','LasCumbres0.4m','Swift', 'Swope(A22)','LCO(H22)'])
-observed_data.data['e_mag'][observed_data.data['e_mag']<0.01] = 0.03
+observed_data.exclude_observatory(['DLT40','LasCumbres0.4m','Swift', 'Swope(A22)'])
+#observed_data.data['e_mag'][observed_data.data['e_mag']<0.01] = 0.03
 
 fit_tbl = observed_data.get_data_detected()
 filterkeylist = [] 
@@ -203,11 +203,8 @@ print(f'ABSmag_max = B={magB_max-nu}, V = {magV_max-nu}, R = {magR_max-nu}, g={m
 print(f'stretch_param = {param_stretch}+-{e_param_stretch}')
 print(f'delmag = {mB_15}+-{e_delmag}')
 print(f'magB_max = {magB_max}')
-print(f'ABSmagB_max = {magB_ㅣㄴ
-      max-nu}+-{e_magerr_max}')
+print(f'ABSmagB_max = {magB_max-nu}+-{e_magerr_max}')
 print(f'nu = {nu}+-{e_nu}')
-
-
 #%%
 names = np.array(['Ia SNe', 'Tully-Fisher', 'IRAS', 'TRGB'])
 dis = (np.array([distance, 18000000, 21300000, 17900000]))

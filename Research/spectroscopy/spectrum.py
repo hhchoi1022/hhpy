@@ -298,14 +298,7 @@ if __name__ == '__main__':
     
     
     plt.legend()
-#%%
-    flux3 = flux2 + 
-    from Research.helper import AnalysisHelper
-    Planck = AnalysisHelper().planck
-    val = Planck(temperature=8000, wl_AA=wl)
-    
-    # Get a color from the colormap
-    color = colormap(i)
+
 
 # %%    
 if __name__ == '__main__':  

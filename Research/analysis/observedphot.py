@@ -137,12 +137,16 @@ class ObservedPhot:
         return offsets
     
     def get_filt_data(self,
+                      data_tbl = None,
                       filters : str = None):
         all_filt_data = dict()
+        if data_tbl == None:
+            data_tbl = self.data
         if filters == None:
             filters = self.get_defined_filter()
+
         for filter_ in filters:
-            all_filt_data[filter_] = self.data[self.data['filter'] == filter_]
+            all_filt_data[filter_] = data_tbl[data_tbl['filter'] == filter_]
         return all_filt_data
     
     def exclude_observatory(self,
@@ -151,8 +155,10 @@ class ObservedPhot:
         self.data = removed_tbl
     
     def exclude_filter(self,
-                       filter_ : str):        
-        removed_tbl = self.helper.remove_rows_table(self.data, column_key = 'filter', remove_keys = filter_)
+                       filterlist : list):     
+           
+        for filter_ in filterlist:
+            removed_tbl = self.helper.remove_rows_table(self.data, column_key = 'filter', remove_keys = filter_)
         self.data = removed_tbl
     
     def show_lightcurve(self,
@@ -248,7 +254,7 @@ class ObservedPhot:
             #Color
             ax2 = plt.subplot(gs[1], sharex = ax1)
             
-            filt_data = self.get_filt_data(data_detected)
+            filt_data = self.get_filt_data()
             if color_UB:
                 UB_tbl = self.helper.match_table(filt_data['U'], filt_data['B'], key = 'obsdate', tolerance = 1)
                 if len(UB_tbl) > 0:
@@ -277,7 +283,7 @@ class ObservedPhot:
             plt.xlabel('Phase [days]')
             ax2.set_ylabel('Color')
             ax2.set_xticks(np.arange(phase_min, phase_max, phase_binsize), dates, rotation = 45)
-            ax2.set_ylim(-1.5, 2)
+            ax2.set_ylim(-1.5, 1.5)
             ax2.set_xlim(phase_min, phase_max)
             
             # legends
@@ -333,24 +339,57 @@ class ObservedPhot:
 
 # %%
 if __name__ =='__main__':    
+    from astropy.table import vstack
     plt.figure(dpi = 400, figsize =(9,7))
-    filepath_phot = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
-    filepath_spec = '/data1/supernova_rawdata/SN2021aefx/photometry/all_spec_MW_dereddening_Host_dereddening.dat'
-
+    filepath_h22 = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/Hosseinzadeh2022_MW_dereddening_Host_dereddening.dat'
+    filepath_a22 = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/Ashall2022_Host_dereddening.dat'
+    filepath_imsng = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/all_IMSNG_MW_dereddening_Host_dereddening.dat'
     #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 
-    tbl_phot = ascii.read(filepath_phot, format = 'fixed_width')
-    tbl_spec = ascii.read(filepath_spec, format = 'fixed_width')
-    obs_phot = ObservedPhot(tbl_phot)
-    obs_spec = ObservedPhot(tbl_spec)
-    #observed_data.exclude_observatory('Swope')
+    tbl_imsng = ascii.read(filepath_imsng, format = 'fixed_width')
 
-    ax1, ax2 = obs_phot.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
-    #ax3, ax4 = obs_spec.show_lightcurve(UL = True, scatter_alpha = 1, UL_headlength=0.2, UL_headwidth=2,  UL_linelength_ver=0.3, scatter_size= 30, errorbar_capsize=0, UL_linewidth_hor=0.5, UL_linewidth_ver=0.8, UL_linelength_hor=1, label =True, color_BV = True, color_gr = True, color_UB = True, color_ug = False)
-    ax1.set_ylim(22, 6)
-    plt.xlim(59525, 59540)
+    tbl_a22 = ascii.read(filepath_a22, format = 'fixed_width')
+    #tbl_a22 = tbl_a22[tbl_a22['filter'] == 'r']
+    tbl_h22 = ascii.read(filepath_h22, format = 'fixed_width')
+    #tbl_h22 = tbl_h22[tbl_h22['filter'] == 'r']
+    tbl_phot = vstack([tbl_imsng,tbl_a22, tbl_h22])
+
+    obs_phot = ObservedPhot(tbl_phot)
+    obs_phot.exclude_observatory(['LasCumbres0.4m','Swift', 'DLT40', 'Swope'])
+    obs_phot.exclude_filter(['Undefined', 'UBV'])
+
+    obs_phot.show_lightcurve(dpi = 300,
+                            figsize = (12,8),
+                            phase_format = 'datetime',
+                            phase_min = 59528,
+                            phase_max = 59540,
+                            phase_binsize  = 50,
+                            mag_min = 6,
+                            mag_max = 20,
+                            mag_binsize  = 2,
+                            scatter_size = 60,
+                            scatter_linewidth = 0.4,
+                            errorbar_linewidth = 0.02,
+                            errorbar_capsize = 0.02,
+                            scatter_alpha = 1,
+                            line = False,
+                            label = True,
+                            label_location = 'upper right',
+                            color_UB = False,
+                            color_BV = False,
+                            color_ug = False,
+                            color_gr = True,
+                            UL = True,
+                            UL_linewidth_ver = 1,
+                            UL_linewidth_hor = 1,
+                            UL_linelength_ver = 0.5,
+                            UL_linelength_hor = 2.5,
+                            UL_headlength = 0.2,
+                            UL_headwidth = 3,
+                            UL_alpha = 0.5)
     plt.show()
 # %%
+#%%
 if __name__ == '__main__':
     from astropy.table import vstack
     filepath_imsng = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/all_IMSNG.dat'
@@ -365,11 +404,11 @@ if __name__ == '__main__':
     obs_all.show_lightcurve(dpi = 300,
                             figsize = (12,8),
                             phase_format = 'datetime',
-                            phase_min = 60180,
-                            phase_max = 60390,
+                            phase_min = None,
+                            phase_max = None,
                             phase_binsize  = 50,
-                            mag_min = 12,
-                            mag_max = 22,
+                            mag_min = 11,
+                            mag_max = 17,
                             mag_binsize  = 2,
                             scatter_size = 60,
                             scatter_linewidth = 0.4,
@@ -448,3 +487,40 @@ if __name__ =='__main__':
         spec.show_spec_date(idx, show_flux_unit= 'fnu', normalize = False, normalize_cenwl=6500, color = cmap((i+1)/num_spec), label = f'{i+1} th spectrum')
         plt.legend()
         
+        
+        #%%
+        
+        A = """                        
+                        dpi = 300,
+                        figsize = (12,8),
+                        phase_format = 'datetime',
+                        phase_min = None,
+                        phase_max = None,
+                        phase_binsize : int = 5,
+                        mag_min = None,
+                        mag_max = None,
+                        mag_binsize : float = 2,
+                        scatter_size = 20,
+                        scatter_linewidth = 0.02,
+                        errorbar_linewidth = 0.02,
+                        errorbar_capsize = 0.02,
+                        scatter_alpha : float = 0.4,
+                        line : bool = False,
+                        label : bool = False,
+                        label_location = 'upper right',
+                        color_UB : bool = False,
+                        color_BV : bool = False,
+                        color_ug : bool = False,
+                        color_gr : bool = False,
+                        UL : bool = False,
+                        UL_linewidth_ver : float = 0.03,
+                        UL_linewidth_hor : float = 0.03,
+                        UL_linelength_ver : float = 0.01,
+                        UL_linelength_hor : float = 0.02,
+                        UL_headlength : float = 0.015,
+                        UL_headwidth : float = 0.03,
+                        UL_alpha : float = 0.5
+                        """
+        for key in A.split(','):
+            print(key)
+# %%

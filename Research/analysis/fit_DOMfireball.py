@@ -14,9 +14,9 @@ import matplotlib
 #%matplotlib inline
 #%% Observation
 helper = Helper()
-DM = 31.17
+DM = 31.15
 ZP = 25
-filepath_all = '/data1/supernova_rawdata/SN2021aefx/photometry/all_phot_MW_dereddening_Host_dereddening.dat'
+filepath_all = '/home/hhchoi1022/hhpy/Research/analysis/data/SN2021aefx/phot_mw_host_dereddened.dat'
 model_directory = '/data1/supernova_model/DOM_model'
 #filepath_all = '/data7/yunyi/temp_supernova/Gitrepo/Research/analysis/all_phot_MW_dereddening_Host_dereddening.dat'
 #model_directory = '/data7/yunyi/temp_supernova/DOM_model'
@@ -42,14 +42,14 @@ fit_tbl = fit_tbl[(fit_tbl['obsdate'] > fit_start_mjd)&(fit_tbl['obsdate'] < fit
 fit_tbl.sort('obsdate')
 
 # Add systematic error
-systematic_error_cut = 0.03
-def adjust_errors(errors, systematic_error):
-    return np.sqrt(errors**2 + systematic_error**2)
-obs_lowerror_tbl = fit_tbl[fit_tbl['e_mag'] < systematic_error_cut]
-adjusted_errors = np.round(adjust_errors(obs_lowerror_tbl['e_mag'], systematic_error= systematic_error_cut),3)
-obs_lowerror_tbl['e_mag'] = adjusted_errors
-fit_tbl[fit_tbl['e_mag'] < systematic_error_cut] = obs_lowerror_tbl
-fit_tbl['e_mag'] = np.round(fit_tbl['e_mag'], 3)
+# systematic_error_cut = 0.03
+# def adjust_errors(errors, systematic_error):
+#     return np.sqrt(errors**2 + systematic_error**2)
+# obs_lowerror_tbl = fit_tbl[fit_tbl['e_mag'] < systematic_error_cut]
+# adjusted_errors = np.round(adjust_errors(obs_lowerror_tbl['e_mag'], systematic_error= systematic_error_cut),3)
+# obs_lowerror_tbl['e_mag'] = adjusted_errors
+# fit_tbl[fit_tbl['e_mag'] < systematic_error_cut] = obs_lowerror_tbl
+# fit_tbl['e_mag'] = np.round(fit_tbl['e_mag'], 3)
 
 # Add flux 
 fit_tbl['flux'] = helper.mag_to_flux(fit_tbl['mag'])
@@ -367,8 +367,8 @@ for file_ in tqdm(files):
 #%%
 result_tbl.sort('redchisqr')
 #%%
-result_tbl.write('/data1/supernova_model/result/DOM_fit_result_BVgri.fit', format = 'ascii.fixed_width', overwrite = True)
-r#%%
+result_tbl.write('/data1/supernova_model/result/DOM_fit_result.fit', format = 'ascii.fixed_width', overwrite = True)
+#%%
 #%%
 #import matplotlib#
 #matplotlib.use('TkAgg')  # Or 'Agg', 'Qt5Agg', etc. depending on your system
@@ -396,7 +396,7 @@ spl_allfilt_DEI = get_DEI_spline(DOM_LC, exptime_DEI = result_values['exptime_DE
 
 tbl_UL = observed_data.get_data_ul()
 tbl_obs = observed_data.get_data_detected()
-ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
+ax1, ax2 = observed_data.show_lightcurve(phase_binsize = 5,
                             scatter_linewidth=0.5, 
                             scatter_size=50, 
                             scatter_alpha = 0.2,
@@ -410,7 +410,7 @@ ax1, ax2 = observed_data.show_lightcurve(day_binsize = 5,
                             label = True, 
                             label_location=4, 
                             )
-for filter_ in 'UBVgri':
+for filter_ in 'BVgri':
     amp = result_values[f'amplitude_{filter_}']
     alpha= result_values[f'alpha_{filter_}']
     flux_FB = fireball_model(time = phase_range_DEI, amplitude = amp, alpha = alpha, exptime = result_values['exptime_FB'])
@@ -449,13 +449,13 @@ for filter_ in 'UBVgri':
 #observed_data.show_lightcurve( day_binsize = 5, color_BV = False, color_gr = False, color_UB = False, UL = True, label = False, label_location=2, scatter_size= 120)
 #observed_data.show_lightcurve( day_binsize = 5, color_BV = True, color_gr = True, color_UB = True, UL = True, label = False, label_location=2, scatter_size= 120)
 
-plt.plot(phase_range_DEI, mag_U_model - mag_B_model -0.5, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1)
+#plt.plot(phase_range_DEI, mag_U_model - mag_B_model -0.5, c = 'cyan', label = 'U-B', linestyle= '--', linewidth = 1)
 plt.plot(phase_range_DEI, mag_B_model - mag_V_model + 0.5, c = 'b', label = 'B-V', linestyle= '--', linewidth = 1)
 plt.plot(phase_range_DEI, mag_g_model - mag_r_model, c = 'g', label = 'g-r', linestyle= '--', linewidth = 1)
-plt.plot(phase_range_DEI, mag_U_CEI - mag_B_CEI -0.5, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1)
+#plt.plot(phase_range_DEI, mag_U_CEI - mag_B_CEI -0.5, c = 'cyan', label = 'U-B', linestyle= ':', linewidth = 1)
 plt.plot(phase_range_DEI, mag_B_CEI - mag_V_CEI +0.5, c = 'b', label = 'B-V', linestyle= ':', linewidth = 1)
 plt.plot(phase_range_DEI, mag_g_CEI - mag_r_CEI, c = 'g', label = 'g-r', linestyle= ':', linewidth = 1)
-plt.plot(phase_range_DEI, mag_U_both - mag_B_both-0.5, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1)
+#plt.plot(phase_range_DEI, mag_U_both - mag_B_both-0.5, c = 'cyan', label = 'U-B', linestyle= '-', linewidth = 1)
 plt.plot(phase_range_DEI, mag_B_both - mag_V_both+0.5, c = 'b', label = 'B-V', linestyle= '-', linewidth = 1)
 plt.plot(phase_range_DEI, mag_g_both - mag_r_both, c = 'g', label = 'g-r', linestyle= '-', linewidth = 1)
 #plt.ylim(-1, 1.7)

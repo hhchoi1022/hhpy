@@ -1,0 +1,17 @@
+{
+    "subbkg": [],
+    "astrometry": [],
+    "calculate": [],
+    "cutout": [],
+    "align": [],
+    "combine": [],
+    "subtract": [],
+    "photometry": [],
+    "outlier": [
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20211218-132302-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20211218-132611-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20211218-132921-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20220219-132051-i-180.fits",
+        "/mnt/data1/supernova_rawdata/SN2021aefx/photometry/LSGT_SNUCAMII/i/Calib-LSGT-NGC1566-20220219-132406-i-180.fits"
+    ]
+}

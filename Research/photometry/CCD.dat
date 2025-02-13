@@ -12,7 +12,7 @@
 |    MAO | INSTRUME |                                  FLI-New |           FLI |       FLI |       1 |    1.0 |      10.0 |   0.03 |      0.215 |  3056 | 3056 | 0.033 |  10.951 |  10.951 |  10.951 |       |
 |   DOAO | INSTRUME | Dirver for Princeton Instruments cameras |      PIsophia |           |       1 |  0.928 |      7.63 |        |     0.3855 |  2048 | 2048 | 0.048 |  13.158 |  13.158 |  13.158 |       |
 |   DOAO | INSTRUME |                                      FLI |           FLI |       FLI |       2 |   1.27 |      14.0 |  0.005 |      0.464 |  2048 | 2048 |  0.07 |  15.838 |  15.838 |  15.838 |       |
-|   SOAO | INSTRUME |                                    FLI4K |        FLI4K? |       FLI |       2 |   1.43 |      13.6 |        |     0.4454 |  2048 | 2048 | 0.064 |  15.203 |  15.203 |  15.203 |       |
+|   SOAO | INSTRUME |                                    FLI4K |         FLI4K |       FLI |       2 |   1.43 |      13.6 |        |     0.4454 |  2048 | 2048 | 0.064 |  15.203 |  15.203 |  15.203 |       |
 |   KHAO | INSTRUME |                                      FLI |           FLI |           |       2 |   1.45 |      10.0 |  0.005 |     0.3525 |  2048 | 2048 |  0.04 |  12.032 |  12.032 |  12.032 |       |
 |  MDFTS | INSTRUME |                         QSI 683ws Camera |           QSI |           |         |  0.468 |      15.1 |        |      0.757 |  1663 | 1252 | 0.092 |  20.982 |  15.796 |  18.205 |       |
 | RASA36 | INSTRUME |       ASCOM Camera Driver for FLI Kepler |        KL4040 |           |       1 |   0.71 |       3.7 |    0.2 |       2.36 |  4096 | 4096 |  7.21 | 161.109 | 161.109 | 161.109 |  HIGH |

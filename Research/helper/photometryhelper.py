@@ -15,6 +15,7 @@ import inspect
 import subprocess
 import re
 import warnings
+import json 
 
 # Suppress all warnings
 warnings.filterwarnings('ignore')
@@ -64,16 +65,28 @@ class PhotometryHelper():
 
     @property
     def scamppath(self):
-        return os.path.join(self.photpath, 'scamp')
+        configpath = os.path.join(self.photpath, 'scamp', 'config.json')
+        with open(configpath, 'r') as file:
+            config = json.load(file)
+        scamppath = config['RUNTIME_PATH']
+        return scamppath
     
     @property  
     def swarppath(self):
-        return os.path.join(self.photpath, 'swarp')
+        configpath = os.path.join(self.photpath, 'swarp', 'config.json')
+        with open(configpath, 'r') as file:
+            config = json.load(file)
+        swarppath = config['RUNTIME_PATH']
+        return swarppath
     
     @property
     def sexpath(self):
-        return os.path.join(self.photpath, 'sextractor')
- 
+        configpath = os.path.join(self.photpath, 'sextractor', 'config.json')
+        with open(configpath, 'r') as file:
+            config = json.load(file)
+        sexpath = config['RUNTIME_PATH']
+        return sexpath
+        
     def __repr__(self):
         methods = [f'PhotometryHelper.{name}()\n' for name, method in inspect.getmembers(
             PhotometryHelper, predicate=inspect.isfunction) if not name.startswith('_')]
@@ -84,6 +97,48 @@ class PhotometryHelper():
         print(string) if do_print else None
         
     # Load information
+
+    def get_allimginfo(self, filelist, return_only_light = True):
+        from astropy.table import Table, vstack
+        from ccdproc import ImageFileCollection
+
+        # Get unique parent directories
+        directories = list(set(os.path.dirname(file) for file in filelist))
+        
+        # Initialize an empty list to store all file paths
+        all_coll = Table()
+
+        # Iterate through directories and collect FITS file paths
+        for directory in directories:
+            coll = ImageFileCollection(location=directory, glob_include='*.fits')
+            if len(coll.files) > 0:
+                print(f"Loaded {len(coll.files)} FITS files from {directory}")
+
+                # Convert summary table to a uniform format
+                summary = coll.summary.copy()
+
+                # Ensure all string columns are explicitly converted to `str`vncprot
+                for colname in summary.colnames:
+                    col_dtype = summary[colname].dtype
+                    if col_dtype.kind in ('O', 'U', 'S'):  # Object, Unicode, or String types
+                        summary[colname] = summary[colname].astype(str)
+                    elif col_dtype.kind in ('i', 'f'):  # Integer or Float types
+                        summary[colname] = summary[colname].astype(str)  # Convert to string for consistency
+                        summary[colname].fill_value = ''  # Ensure NaN values are handled
+                # Stack tables
+                if all_coll is None:
+                    all_coll = summary
+                else:
+                    all_coll = vstack([all_coll, summary], metadata_conflicts='silent')
+
+            else:
+                print(f"Warning: No FITS files found in {directory}")
+
+        # Check final count of combined FITS files
+        print(f"Total FITS files combined: {len(all_coll)}")
+        if return_only_light:
+            all_coll = all_coll[all_coll['imagetyp'] == 'LIGHT']
+        return all_coll
 
     def get_imginfo(self, filelist, keywords=['jd', 'group', 'filter', 'exptime', 'object', 'telescop', 'instrume', 'ra', 'dec', 'xbinning', 'ybinning', 'imagetyp']):
         '''
@@ -120,8 +175,61 @@ class PhotometryHelper():
             result_tbl = vstack([iminfo, result_tbl])
         result_tbl = join(match_tbl, result_tbl, keys = 'file', join_type = 'inner')
         return result_tbl
+    
+    def get_sexconfigpath(self, 
+                          telescope: str,
+                          ccd: str = None,
+                          readoutmode: str = None,
+                          for_scamp : bool = False
+                          ):
+        file_key = f'{telescope.upper()}'
+        if ccd:
+            file_key += f'_{ccd.upper()}'
+        if readoutmode:
+            file_key += f'_{readoutmode.upper()}'
+        if for_scamp:
+            file_key += '_scamp'
+        file_key += '.sexconfig'
+        file_path = os.path.join(self.photpath, 'sextractor', file_key)
+        is_exist = os.path.exists(file_path)
+        if is_exist:
+            return file_path          
+        else:
+            raise FileNotFoundError(f'{file_key} not found in {os.path.join(self.photpath, "sextractor")}')
 
-    def get_telinfo(self, telescope: str = None, ccd: str = None, readoutmode: str = None, key_observatory='obs', key_ccd='ccd', key_mode = 'mode', obsinfo_file=None):
+    def get_scampconfigpath(self):
+        file_path = os.path.join(self.photpath, 'scamp', 'default.scampconfig')
+        is_exist = os.path.exists(file_path)
+        if is_exist:
+            return file_path
+        else:
+            raise FileNotFoundError(f'default.scampconfig not found in {os.path.join(self.photpath, "scamp")}')
+
+    def get_swarpconfigpath(self,
+                            telescope : str,
+                            ccd : str = None,
+                            readoutmode : str = None):
+        file_key = f'{telescope.upper()}'
+        if ccd:
+            file_key += f'_{ccd.upper()}'
+        if readoutmode:
+            file_key += f'_{readoutmode.upper()}'
+        file_key += '.swarpconfig'
+        file_path = os.path.join(self.photpath, 'swarp', file_key)
+        is_exist = os.path.exists(file_path)
+        if is_exist:
+            return file_path
+        else:
+            raise FileNotFoundError(f'{file_key} not found in {os.path.join(self.photpath, "swarp")}')
+
+    def get_telinfo(self, 
+                    telescope: str = None, 
+                    ccd: str = None, 
+                    readoutmode: str = None, 
+                    key_observatory='obs', 
+                    key_ccd='ccd', 
+                    key_mode = 'mode', 
+                    obsinfo_file=None):
         '''
         parameters
         ----------
@@ -172,7 +280,7 @@ class PhotometryHelper():
             if readoutmode.upper() == 'HIGH':
                 obs_info = obs_info[obs_info['mode'] == 'HIGH']
             if readoutmode.upper() == 'LOW':
-                obs_info = obs_info[obs_info['mode'] == 'HIGH']
+                obs_info = obs_info[obs_info['mode'] == 'LOW']
             if output_valid_func(obs_info):
                 return obs_info[0]
         
@@ -195,138 +303,72 @@ class PhotometryHelper():
             raise AttributeError(
                 f'{ccd} information not exist in {telescope}.\n available CCD name:{list(set(all_obsinfo[all_obsinfo[key_observatory] == telescope][key_ccd]))}')
 
-    def get_sexconfig(self):
-        '''
-        parameters
-        ----------
-
-        returns 
-        -------
-        default_config : dict
-                        default configuration for Source Extractor
-        notes 
-        -------
-        -----
-        '''
-        # source extractor configuration parameters
-        conf_param = dict(
-            # Default configuration file for Source Extractor 2.25.0
-            # EB 2018-02-08
-            #
-
-            # -------------------------------- Catalog ------------------------------------
-
-            CATALOG_NAME='./sextractor/temp.cat',       # name of the output catalog
-            CATALOG_TYPE='ASCII_HEAD',     # NONE,ASCII,ASCII_HEAD, ASCII_SKYCAT,
-            # ASCII_VOTABLE, FITS_1.0 or FITS_LDAC
-            PARAMETERS_NAME='default.param',  # name of the file containing catalog contents
-
-            # ------------------------------- Extraction ----------------------------------
-
-            # CCD (linear) or PHOTO (with gamma correction)
-            DETECT_TYPE='CCD',
-            DETECT_MINAREA=5,              # min. # of pixels above threshold
-            # max. # of pixels above threshold (0=unlimited)
-            DETECT_MAXAREA=0,
-            # threshold type: RELATIVE (in sigmas)
-            THRESH_TYPE='RELATIVE',
-            # or ABSOLUTE (in ADUs)
-            DETECT_THRESH=3,            # <sigmas> or <threshold>,<ZP> in mag.arcsec-2
-            ANALYSIS_THRESH=3,            # <sigmas> or <threshold>,<ZP> in mag.arcsec-2
-
-            FILTER='Y',              # apply filter for detection (Y or N)?
-            FILTER_NAME='default.conv',   # name of the file containing the filter
-
-            DEBLEND_NTHRESH=64,             # Number of deblending sub-thresholds
-            DEBLEND_MINCONT=0.0001,          # Minimum contrast parameter for deblending
-
-            CLEAN='N',              # Clean spurious detections? (Y or N)?
-            CLEAN_PARAM=1.0,            # Cleaning efficiency
-
-            MASK_TYPE='CORRECT',        # type of detection MASKing: can be one of
-            # NONE, BLANK or CORRECT
-
-            # -------------------------------- WEIGHTing ----------------------------------
-
-            WEIGHT_TYPE='NONE',           # type of WEIGHTing: NONE, BACKGROUND,
-            # MAP_RMS, MAP_VAR or MAP_WEIGHT
-            # Rescale input weights/variances (Y/N)?
-            RESCALE_WEIGHTS='N',
-            WEIGHT_IMAGE='weight.fits',    # weight-map filename
-            # modulate gain (E/ADU) with weights? (Y/N)
-            WEIGHT_GAIN='N',
-
-            # ------------------------------ Photometry -----------------------------------
-
-            # MAG_APER aperture diameter(s) in pixels
-            PHOT_APERTURES='6',
-            PHOT_AUTOPARAMS='2.5,3.5',       # MAG_AUTO parameters: <Kron_fact>,<min_radius>
-            PHOT_PETROPARAMS='2.0,3.5',       # MAG_PETRO parameters: <Petrosian_fact>,
-            # <min_radius>
-            PHOT_AUTOAPERS='0.0,0.0',        # <estimation>,<measurement> minimum apertures
-            # for MAG_AUTO and MAG_PETRO
-            # flux fraction[s] used for FLUX_RADIUS
-            PHOT_FLUXFRAC=0.5,
-
-            # level (in ADUs) at which arises saturation
-            SATUR_LEVEL=50000.0,
-            # keyword for saturation level (in ADUs)
-            SATUR_KEY='SATURATE',
-
-            MAG_ZEROPOINT=0.0,            # magnitude zero-point
-            # gamma of emulsion (for photographic scans)
-            MAG_GAMMA=4.0,
-            GAIN=0.0,            # detector gain in e-/ADU
-            GAIN_KEY='GAIN',           # keyword for detector gain in e-/ADU
-            # size of pixel in arcsec (0=use FITS WCS info)
-            PIXEL_SCALE=1.0,
-
-            # ------------------------- Star/Galaxy Separation ----------------------------
-
-            SEEING_FWHM=5,            # stellar FWHM in arcsec
-            STARNNW_NAME='default.nnw',    # Neural-Network_Weight table filename
-
-            # ------------------------------ Background -----------------------------------
-
-            BACK_TYPE='AUTO',           # AUTO or MANUAL
-            BACK_VALUE=0.0,            # Default background value in MANUAL mode
-            BACK_SIZE=64,             # Background mesh: <size> or <width>,<height>
-            BACK_FILTERSIZE=3,              # Background filter: <size> or <width>,<height>
-
-            BACKPHOTO_TYPE='GLOBAL',         # can be GLOBAL or LOCAL
-            BACKPHOTO_THICK=24,             # thickness of the background LOCAL annulus
-            BACK_FILTTHRESH=0.0,            # Threshold above which the background-
-            # map filter operates
-
-            # ------------------------------ Check Image ----------------------------------
-
-            # can be NONE, BACKGROUND, BACKGROUND_RMS,
-            CHECKIMAGE_TYPE='SEGMENTATION',
-            # MINIBACKGROUND, MINIBACK_RMS, -BACKGROUND,
-            # FILTERED, OBJECTS, -OBJECTS, SEGMENTATION,
-            # or APERTURES
-            CHECKIMAGE_NAME='check.fits',     # Filename for the check-image
-
-            # --------------------- Memory (change with caution!) -------------------------
-
-            MEMORY_OBJSTACK=3000,           # number of objects in stack
-            MEMORY_PIXSTACK=300000,         # number of pixels in stack
-            MEMORY_BUFSIZE=1024,           # number of lines in buffer
-
-            # --------------------------- Experimental Stuff -----------------------------
-
-            PSF_NAME='default.psf',    # File containing the PSF model
-            PSF_NMAX=1,              # Max.number of PSFs fitted simultaneously
-            PATTERN_TYPE='RINGS-HARMONIC',  # can RINGS-QUADPOLE, RINGS-OCTOPOLE,
-            # RINGS-HARMONICS or GAUSS-LAGUERRE
-            SOM_NAME='default.som'    # File containing Self-Organizing Map weights
-        )
-        return conf_param
-
     def load_sexconfig(self, sexconfig: str) -> dict:
         config_dict = {}
 
         with open(sexconfig, 'r') as file:
+            for line in file:
+                line = line.strip()
+                # Skip comments and empty lines
+                if not line or line.startswith('#'):
+                    continue
+                # Split the line into key and value
+                key_value = line.split(maxsplit=1)
+                if len(key_value) == 2:
+                    key, value = key_value
+                    # Remove inline comments
+                    value = value.split('#', 1)[0].strip()
+                    # Attempt to convert value to appropriate type
+                    try:
+                        # Handle lists
+                        if ',' in value:
+                            value = [float(v) if '.' in v else int(v)
+                                     for v in value.split(',')]
+                        else:
+                            # Convert to float if possible
+                            value = float(
+                                value) if '.' in value else int(value)
+                    except ValueError:
+                        # Keep as string if conversion fails
+                        pass
+                    config_dict[key] = value
+        return config_dict
+
+    def load_scampconfig(self, scampconfig: str) -> dict:
+        config_dict = {}
+
+        with open(scampconfig, 'r') as file:
+            for line in file:
+                line = line.strip()
+                # Skip comments and empty lines
+                if not line or line.startswith('#'):
+                    continue
+                # Split the line into key and value
+                key_value = line.split(maxsplit=1)
+                if len(key_value) == 2:
+                    key, value = key_value
+                    # Remove inline comments
+                    value = value.split('#', 1)[0].strip()
+                    # Attempt to convert value to appropriate type
+                    try:
+                        # Handle lists
+                        if ',' in value:
+                            value = [float(v) if '.' in v else int(v)
+                                     for v in value.split(',')]
+                        else:
+                            # Convert to float if possible
+                            value = float(
+                                value) if '.' in value else int(value)
+                    except ValueError:
+                        # Keep as string if conversion fails
+                        pass
+                    config_dict[key] = value
+        return config_dict
+    
+    def load_swarpconfig(self, swarpconfig: str) -> dict:
+        config_dict = {}
+
+        with open(swarpconfig, 'r') as file:
             for line in file:
                 line = line.strip()
                 # Skip comments and empty lines
@@ -770,6 +812,7 @@ class PhotometryHelper():
                     combine_method: str = 'median',
                     scale: str = 'multiply',
                     prefix: str = 'com_',
+                    output_name : str = None,
                     zp_key: str ='ZP5_1',
                     print_output: bool = True,
                     
@@ -821,6 +864,14 @@ class PhotometryHelper():
         '''
         from ccdproc import CCDData
         from ccdproc import Combiner
+        import psutil
+        import os
+        import gc
+
+        def print_memory_usage(output_string = 'Memory usage'):
+            process = psutil.Process(os.getpid())
+            mem_info = process.memory_info()
+            print(f"{output_string}: {mem_info.rss / 1024**2:.2f} MB")  # Convert bytes to MB
 
         if len(filelist) <3:
             clip = None
@@ -828,14 +879,19 @@ class PhotometryHelper():
         
         self.print('Start image combine... \n', print_output)
 
-        ccdlist = []
-        hdrlist = []
-        hdr = fits.getheader(filelist[0])
-        for file in filelist:
-            ccd = CCDData.read(file, unit = 'adu')
-            hdr = fits.getheader(file)
-            ccdlist.append(ccd)
-            hdrlist.append(hdr)
+        def read_fits_int16(filename):
+            with fits.open(filename, memmap=False) as hdul:
+                data = hdul[0].data.astype(np.int16)
+                header = hdul[0].header
+            return CCDData(data, unit='adu', meta=header)
+        
+        ccdlist = []        
+        for file_ in tqdm(filelist, desc = 'Reading files...'):
+            ccdlist.append(read_fits_int16(file_))
+            print_memory_usage()
+        hdr = ccdlist[0].header.copy()
+        init_mean, init_std = np.mean(ccdlist[0].data), np.std(ccdlist[0].data)
+        
         for i, file in enumerate(filelist):
             hdr[f'COMBIM{i+1}'] = os.path.basename(file)
         # 여기 다시 zp - zp_ref 해서 스케일링 하는걸로 변경
@@ -845,14 +901,18 @@ class PhotometryHelper():
         if 'DATE-OBS' in hdr.keys():
             hdr['DATE-OBS'] = Time(np.mean([Time(inim.header['DATE-OBS']).jd for inim in ccdlist]), format='jd').isot
         hdr['EXPTIME'] = float(np.sum([inim.header['EXPTIME'] for inim in ccdlist]))
-
+        print_memory_usage(output_string = 'Memory usage before combiner')
         combiner = Combiner(ccdlist, dtype=np.float32)
+        print_memory_usage(output_string = 'Memory usage after combiner')
         if scale == 'multiply':
-            zp_median = np.median([inim.header[zp_key] for inim in ccdlist])
-            for i, inim in enumerate(ccdlist):
-                zp = inim.header[zp_key]
-                zp_diff = zp - zp_median
-                ccdlist[i].data = ccdlist[i].data * 100 ** (-zp_diff/5)
+            zp_median = np.median([inim.header[zp_key] for inim in ccdlist]) 
+            for inim in ccdlist:
+                zp_diff = inim.header[zp_key] - zp_median
+                inim.data *= 100 ** (-zp_diff/5)
+            #for i, inim in enumerate(ccdlist):
+            #    zp = inim.header[zp_key]
+            #    zp_diff = zp - zp_median
+            #    ccdlist[i].data = ccdlist[i].data * 100 ** (-zp_diff/5)
             
         elif (scale == 'zero'):
             averages = [np.mean(ccddata) for ccddata in ccdlist]
@@ -861,14 +921,19 @@ class PhotometryHelper():
                 ccdlist[i].data = ccdlist[i].data-delvalue
                 combiner = Combiner(ccdlist, dtype=np.float32)
 
+        # Free memory 
+        del ccdlist
+        gc.collect()
+        
         # Clipping
+        print_memory_usage(output_string = 'Memory usage before clipping')
         if clip == 'minmax':
             combiner.minmax_clipping(min_clip=clip_minmax_min, max_clip=clip_minmax_max)
         if clip == 'sigma':
             combiner.sigma_clipping(low_thresh=clip_sigma_low, high_thresh=clip_sigma_high, func=np.ma.median)
         if clip == 'extrema':
             combiner.clip_extrema(nlow=clip_extrema_nlow, nhigh=clip_extrema_nhigh)
-
+        print_memory_usage(output_string = 'Memory usage after clipping')
         # Combining
         if combine_method == 'median':
             combined = combiner.median_combine(median_func=self.bn_median)
@@ -876,18 +941,19 @@ class PhotometryHelper():
             combined = combiner.average_combine()
         if combine_method == 'sum':
             combined = combiner.sum_combine()
+        print_memory_usage(output_string = 'Memory usage after combining')
 
         combined.header = hdr
 
         outputname = f'{os.path.dirname(filelist[0])}/{prefix}{os.path.basename(filelist[0])}'
+        if output_name:
+            outputname = os.path.join(os.path.dirname(filelist[0]), output_name)
         if (len(filelist) == 1):
             ccd.header = hdr
             ccd.write(outputname, overwrite=True, format='fits')
         else:
             combined.write(outputname, overwrite=True, format='fits')
-        init_mean, init_std = np.mean(ccdlist[0].data), np.std(ccdlist[0].data)
         fin_mean, fin_std = np.mean(combined.data), np.std(combined.data)
-
 
         self.print('Combine complete \n',print_output)
         self.print('Combine information',print_output)
@@ -902,6 +968,7 @@ class PhotometryHelper():
     def subtract_img(self,
                      target_img,
                      reference_img,
+                     reference_mask = None,
                      prefix='sub_',
                      method='hotpants',
                      # hotpants config
@@ -949,6 +1016,8 @@ class PhotometryHelper():
         outputname = f'{os.path.dirname(target_img)}/{prefix}{os.path.basename(target_img)}'
         if method == 'hotpants':
             command = f'hotpants -c t -n i -inim {target_img} -tmplim {reference_img} -outim {outputname} -iu {iu} -il {il} -tu {tu} -tl {tl} -v {v} -ng {ng} > .out && rm -rf .out'
+            if reference_mask != None:
+                command += f' -tmi {reference_mask}'
             
             result = subprocess.run(command, shell=True, timeout=900, check=True, text=True, capture_output=True)
 
@@ -1164,7 +1233,11 @@ class PhotometryHelper():
             self.print(f"An unknown error occurred while running the astrometry process.", print_output)
             return None
 
-    def run_sextractor(self, image, sex_configfile, sex_params: dict = None, return_result: bool = True, print_output : bool = True):
+    def run_sextractor(self, image, 
+                       sex_configfile, 
+                       sex_params: dict = None, 
+                       return_result: bool = True, 
+                       print_output : bool = True):
         """
         Parameters
         ----------
@@ -1221,30 +1294,44 @@ class PhotometryHelper():
             os.chdir(current_path)
             return None
 
-        
-    def run_scamp(self, filelist : str or list, sex_configfile : str, scamp_configfile : str = None, update_files : bool = True, print_output : bool = True):
+    def run_scamp(self, 
+                  filelist : str or list, 
+                  sex_configfile : str, 
+                  scamp_configfile : str,                   
+                  sex_params : dict = None,
+                  scamp_params : dict = None,
+                  update_files : bool = True, 
+                  print_output : bool = True):
         
         if isinstance(filelist, str):
             filelist = [filelist]
         
+        # Run SExtractor on each image in the filelist
         self.print(f'Start SCAMP process on {len(filelist)} images...=====================', print_output)
         sex_output_images = dict()
         for image in tqdm(filelist, desc='Running Source extractor...'):
-            sex_params = dict()
+            if sex_params is None:
+                sex_params = dict()
             sex_params['CATALOG_NAME'] = f"{self.scamppath}/result/{os.path.basename(image).split('.')[0]}.sexcat"
             sex_params['PARAMETERS_NAME'] = f'{self.sexpath}/scamp.param'
             output_file = self.run_sextractor(image = image, sex_configfile = sex_configfile, sex_params = sex_params, return_result = False, print_output = False)
             sex_output_images[image] = output_file
         
-        if scamp_configfile is None:
-            scamp_configfile = os.path.join(self.scamppath, 'default.scamp')
-        
-        # Sort out if the sextractor failed
+        # Filter out images that failed to produce a catalog
         sex_output_images = {key: value for key, value in sex_output_images.items() if value is not None}
         scamp_output_images = {key: value.replace('.sexcat', '.head') for key, value in sex_output_images.items()}
-
         all_images_str = ' '.join(sex_output_images.values())
-        command = f'scamp {all_images_str} -c {scamp_configfile}'
+        
+        # Load and apply SCAMP parameters
+        all_params = self.load_scampconfig(scamp_configfile)
+        scampparams_str = ''
+        if scamp_params:
+            for key, value in scamp_params.items():
+                scampparams_str += f'-{key} {value} '
+                all_params[key] = value
+                
+        # Command to run SCAMP
+        command = f'scamp {all_images_str} -c {scamp_configfile} {scampparams_str}'
         
         try:
             current_path = os.getcwd()
@@ -1306,6 +1393,7 @@ class PhotometryHelper():
                 
                 for image, header in scamp_output_images.items():
                     update_fits_with_head(image, header)
+                return scamp_output_images.keys()
             else:
                 return scamp_output_images.values()
         except:
@@ -1313,6 +1401,56 @@ class PhotometryHelper():
             return
         finally:
             os.chdir(current_path)
+            
+    def run_swarp(self,
+                  filelist : str or list, 
+                  path_outim : str,
+                  swarp_configfile : str,
+                  swarp_params : dict = None,
+                  do_scamp : bool = False,
+                  scamp_configfile : str = None,
+                  sex_configfile : str = None, 
+                  scamp_params : dict = None,
+                  sex_params : dict = None,
+                  print_output : bool = True):
+        
+        if isinstance(filelist, str):
+            filelist = [filelist]
+        
+        # Run SExtractor on each image in the filelist
+        succeeded_images = filelist
+        if do_scamp:
+            succeeded_images = self.run_scamp(filelist = filelist, sex_configfile= sex_configfile, scamp_configfile= scamp_configfile, sex_params= sex_params, scamp_params= scamp_params, update_files = True, print_output= print_output)        
+        
+        # Load and apply SWARP parameters
+        all_params = self.load_swarpconfig(swarp_configfile)
+        swarpparams_str = ''
+        if not swarp_params:
+            swarp_params = dict()
+        swarp_params['IMAGEOUT_NAME'] = path_outim
+        swarp_params['WEIGHTOUT_NAME'] = os.path.splitext(path_outim)[0] + '.weight.fits'
+        #swarp_params['CENTER'] = "07:43:15,-22:55:28"
+        #swarp_params['IMAGE_SIZE'] = '10200,6800'
+        #swarp_params['NTHREADS'] = 4
+        #swarp_params['CENTER_TYPE'] = 'MANUAL'
+        if swarp_params:
+            for key, value in swarp_params.items():
+                swarpparams_str += f'-{key} {value} '   
+                all_params[key] = value
+        
+        # Command to run SWARP
+        all_images_str = ' '.join(succeeded_images)
+        command = f'SWarp {all_images_str} -c {swarp_configfile} {swarpparams_str}'
+        
+        try:
+            current_path = os.getcwd()
+            os.chdir(os.path.join(self.swarppath,'result'))
+            # Run the SExtractor command using subprocess.run
+            subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.print("SWARP process finished=====================", print_output)
+            return path_outim
+        except:
+            return None
 
     def run_ds9(self, filelist, shell: str = '/bin/bash'):
         import subprocess
@@ -1387,23 +1525,35 @@ class PhotometryHelper():
 if __name__ == '__main__':
     import glob
     A = PhotometryHelper()
-    file_ = '/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/com_align_Calib-RASA36-NGC1097-20210719-091118-r-60.fits'
-    #file1 = '/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/align_com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20230801-075323-r-120.fits'
-    #file2 = '/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/cut_Ref-KCT_STX16803-NGC1097-r-5400.com.fits'
-    sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.scampconfig'
-    filelist = glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image_tmp/cutout*.fits')
-    #sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/KCT.config'
-    #A.run_astrometry(image = file1, sex_configfile = sex_configfile)
-    #A.run_scamp(filelist = file_, sex_configfile = sex_configfile)
+    sexconfigpath = A.get_sexconfigpath(telescope = '7DT', ccd = 'C361K', readoutmode = 'HIGH', for_scamp = True)
+    sexconfig = A.load_sexconfig(sexconfigpath)
+    #A.run_sextractor(image = '/mnt/data1/7DT/calib_7DT02_S240422ed_20240423_013036_r_120.fits', sex_configfile = sexconfigpath)
+    # file_ = '/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image/com_align_Calib-RASA36-NGC1097-20210719-091118-r-60.fits'
+    # #file1 = '/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/r/align_com_align_cutoutmost_Calib-KCT_STX16803-NGC1097-20230801-075323-r-120.fits'
+    # #file2 = '/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/reference_image/cut_Ref-KCT_STX16803-NGC1097-r-5400.com.fits'
+    # sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/RASA36_HIGH.scampconfig'
+    # filelist = glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/RASA36/reference_image_tmp/cutout*.fits')
+    # #sex_configfile = '/home/hhchoi1022/hhpy/Research/photometry/sextractor/KCT.config'
+    # #A.run_astrometry(image = file1, sex_configfile = sex_configfile)
+    # #A.run_scamp(filelist = file_, sex_configfile = sex_configfile)
     
-    #sex_params = dict()
-    #sex_params['CATALOG_NAME'] = f"{A.scamppath}/catalog/{os.path.basename(file_).split('.')[0]}.cat"
-    #sex_params['PARAMETERS_NAME'] = f'{A.sexpath}/scamp.param'
-    target_img = glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib*.fits')[10]
-    reference_img = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib-KCT_STX16803-NGC1097-20230927-063834-g-120.fits'
-    A.visualize_image(target_img)
-    A.visualize_image(reference_img)
+    # #sex_params = dict()
+    # #sex_params['CATALOG_NAME'] = f"{A.scamppath}/catalog/{os.path.basename(file_).split('.')[0]}.cat"
+    # #sex_params['PARAMETERS_NAME'] = f'{A.sexpath}/scamp.param'
+    # target_img = glob.glob('/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib*.fits')[10]
+    # reference_img = '/mnt/data1/supernova_rawdata/SN2023rve/analysis/KCT_STX16803/g/Calib-KCT_STX16803-NGC1097-20230927-063834-g-120.fits'
+    # A.visualize_image(target_img)
+    # A.visualize_image(reference_img)
     #A.align_img(target_img, reference_img)
 #%%
     A.subtract_bkg(reference_img, apply_2D_bkg = True, mask_sources = False,  bkg_estimator = 'SEXTRACTOR',  visualize = True, bkg_box_size = 300)
+# %%
+A = dict()
+
+#%%
+import json
+A['CONFIGURATION_PATH'] = "/home/hhchoi1022/hhpy/Research/photometry/sextractor"
+A['RUNTIME_PATH'] = "/mnt/data1/sextractor"
+with open('config.json', 'w') as f:
+    json.dump(A, f, indent = 4)
 # %%
