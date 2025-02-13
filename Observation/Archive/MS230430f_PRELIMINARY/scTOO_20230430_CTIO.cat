@@ -1,8 +1,0 @@
-# KMTNet Observation script
-#  ProjectID     LABEL         RA          DEC     COPT  IMGTYP   OBJECT_NAME FILTER EXPTIME      UTOBS          UTTOL #Comments
-#------------ ----------- ----------- ---- -------- ------------ ------ ------- ------------------- ----- ---------
-
-TOO         MS230430f-0    03:10:50.6   28:43:24     0   OBJECT    MS230430f      B     120                   -     0 #1
-TOO         MS230430f-0    03:10:50.6   28:43:24     0   OBJECT    MS230430f      R     120                   -     0 #2
-TOO         MS230430f-3    03:11:08.8   28:50:24     0   OBJECT    MS230430f      B     120                   -     0 #3
-TOO         MS230430f-3    03:11:08.8   28:50:24     0   OBJECT    MS230430f      R     120                   -     0 #4
