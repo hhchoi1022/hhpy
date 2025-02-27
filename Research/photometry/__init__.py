@@ -6,3 +6,4 @@ from .image import Image
 from .photometry import Photometry
 from .scienceimage import ScienceImage
 from .calibrationimage import CalibrationImage
+from .preprocess import Preprocess

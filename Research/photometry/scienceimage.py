@@ -128,16 +128,17 @@ class Logger:
 class ScienceImage:
     """ Handles FITS image processing and tracks its status """
 
-    def __init__(self, path: str, telinfo):
+    def __init__(self, path: str, telinfo, log_dir = None):
         self.helper = Helper()
         self.path = path
-        dirname = os.path.dirname(path)
+        if not log_dir:
+            log_dir = os.path.dirname(path)
         filename = os.path.basename(path)
-        self.statuspath = os.path.join(dirname, filename.split('.fits')[0] + '.status')
+        self.statuspath = os.path.join(log_dir, filename.split('.fits')[0] + '.status')
         self.telinfo = telinfo
         self._data = None
         self._header = None
-        logger_name = os.path.join(dirname, filename.split('.fits')[0] + '.log')
+        logger_name = os.path.join(log_dir, filename.split('.fits')[0] + '.log')
         self.logger = Logger(logger_name = logger_name).log()
         self.loggerpath = logger_name
         
@@ -184,5 +185,7 @@ class ScienceImage:
         if self._header is None:
             self._header = fits.getheader(self.path)
         return self._header
+    
 
 # %%
+

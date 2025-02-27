@@ -1,4 +1,5 @@
 
+
 #%%
 from Research.helper import Helper
 from Research.photometry import ScienceImage
@@ -17,7 +18,7 @@ class Preprocess(Helper):
         super().__init__()
     
     def correct_bdf(self, tgt_image: ScienceImage, bias_image: CalibrationImage, dark_image: CalibrationImage, flat_image: CalibrationImage,
-                    remove : bool = False
+                    output_dir : str = None
                     ):
         if tgt_image.status.biascor['status']:
             tgt_image.logger.warning(f"BIAS correction already applied to {tgt_image.path}. BIAS correction is not applied.")
@@ -58,12 +59,13 @@ class Preprocess(Helper):
         calib_data.meta['FLATPATH'] = flat_image.path
         
         # Determine output filename
-        dirpath = os.path.dirname(tgt_image.path)
+        if not output_dir:
+            output_dir = os.path.dirname(tgt_image.path)
         filename = os.path.basename(tgt_image.path)
         if 'cor_' in filename:
-            filepath = os.path.join(dirpath, 'fdb' + filename)
+            filepath = os.path.join(output_dir, 'fdb' + filename)
         else:
-            filepath = os.path.join(dirpath, 'fdbcor_' + filename)
+            filepath = os.path.join(output_dir, 'fdbcor_' + filename)
         calib_data.write(filepath, overwrite = True)
         
         # Create new image object
@@ -79,10 +81,6 @@ class Preprocess(Helper):
         bias_image.logger.info(f"Used for BIAS correction: FILEPATH = {calib_image.path}")
         dark_image.logger.info(f"Used for DARK correction: FILEPATH = {calib_image.path}")
         flat_image.logger.info(f"Used for FLAT correction: FILEPATH = {calib_image.path}")
-        if remove:
-            os.remove(tgt_image.path)
-            os.remove(tgt_image.loggerpath)
-            os.remove(tgt_image.statuspath)
         return calib_image
     
     def _correct_bdf(self, tgt_data : CCDData, bias_data : CCDData, dark_data : CCDData, flat_data : CCDData):
@@ -92,7 +90,7 @@ class Preprocess(Helper):
         return fdbcalib_data
     
     def correct_db(self, tgt_image: ScienceImage, bias_image: CalibrationImage, dark_image: CalibrationImage, 
-                    remove : bool = False
+                    output_dir : str = None
                     ):
         if tgt_image.status.biascor['status']:
             tgt_image.logger.warning(f"BIAS correction already applied to {tgt_image.path}. BIAS correction is not applied.")
@@ -125,12 +123,13 @@ class Preprocess(Helper):
         calib_data.meta['DARKPATH'] = dark_image.path
         
         # Determine output filename
-        dirpath = os.path.dirname(tgt_image.path)
+        if not output_dir:
+            output_dir = os.path.dirname(tgt_image.path)
         filename = os.path.basename(tgt_image.path)
         if 'cor_' in filename:
-            filepath = os.path.join(dirpath, 'db' + filename)
+            filepath = os.path.join(output_dir, 'db' + filename)
         else:
-            filepath = os.path.join(dirpath, 'dbcor_' + filename)
+            filepath = os.path.join(output_dir, 'dbcor_' + filename)
         calib_data.write(filepath, overwrite = True)
         
         # Create new image object
@@ -144,10 +143,6 @@ class Preprocess(Helper):
         tgt_image.logger.info(f"BIAS, DARK correction applied: FILEPATH = {calib_image.path}")
         bias_image.logger.info(f"Used for BIAS correction: FILEPATH = {calib_image.path}")
         dark_image.logger.info(f"Used for DARK correction: FILEPATH = {calib_image.path}")
-        if remove:
-            os.remove(tgt_image.path)
-            os.remove(tgt_image.loggerpath)
-            os.remove(tgt_image.statuspath)
         return calib_image
     
     def _correct_bd(self, tgt_data : CCDData, bias_data : CCDData, dark_data : CCDData):
@@ -156,7 +151,7 @@ class Preprocess(Helper):
         return dbcalib_data
         
     def correct_bias(self, tgt_image: ScienceImage or CalibrationImage, bias_image: CalibrationImage,
-                     remove : bool = False
+                     output_dir : str = None
                      ):
         """ Corrects bias in the image """
         if tgt_image.status.biascor['status']:
@@ -182,12 +177,13 @@ class Preprocess(Helper):
         calib_data.meta['BIASPATH'] = bias_image.path
         
         # Determine output filename
-        dirpath = os.path.dirname(tgt_image.path)
+        if not output_dir:
+            output_dir = os.path.dirname(tgt_image.path)
         filename = os.path.basename(tgt_image.path)
         if 'cor_' in filename:
-            filepath = os.path.join(dirpath, 'b' + filename)
+            filepath = os.path.join(output_dir, 'b' + filename)
         else:
-            filepath = os.path.join(dirpath, 'bcor_' + filename)          
+            filepath = os.path.join(output_dir, 'bcor_' + filename)          
         calib_data.write(filepath, overwrite = True)
         
         # Create new image object
@@ -199,10 +195,6 @@ class Preprocess(Helper):
         # Log information
         tgt_image.logger.info(f"BIAS correction applied: FILEPATH = {calib_image.path}")
         bias_image.logger.info(f"Used for BIAS correction: FILEPATH = {calib_image.path}")
-        if remove:
-            os.remove(tgt_image.path)
-            os.remove(tgt_image.loggerpath)
-            os.remove(tgt_image.statuspath)
         return calib_image
 
     
@@ -211,7 +203,7 @@ class Preprocess(Helper):
         return calib_data
     
     def correct_dark(self, tgt_image: ScienceImage or CalibrationImage, dark_image: CalibrationImage, 
-                     remove : bool = False
+                     output_dir : str = None
                      ):
         """ Corrects dark in the image """
         if tgt_image.status.darkcor['status']:
@@ -237,12 +229,13 @@ class Preprocess(Helper):
         calib_data.meta['DARKPATH'] = dark_image.path
         
         # Determine output filename
-        dirpath = os.path.dirname(tgt_image.path)
+        if not output_dir:
+            output_dir = os.path.dirname(tgt_image.path)
         filename = os.path.basename(tgt_image.path)
         if 'cor_' in filename:
-            filepath = os.path.join(dirpath, 'd' + filename)
+            filepath = os.path.join(output_dir, 'd' + filename)
         else:
-            filepath = os.path.join(dirpath, 'dcor_' + filename)           
+            filepath = os.path.join(output_dir, 'dcor_' + filename)           
         calib_data.write(filepath, overwrite = True)
         
         # Create new image object
@@ -254,10 +247,6 @@ class Preprocess(Helper):
         # Log information
         tgt_image.logger.info(f"DARK correction applied: FILEPATH = {calib_image.path}")
         dark_image.logger.info(f"Used for DARK correction: FILEPATH = {calib_image.path}")
-        if remove:
-            os.remove(tgt_image.path)
-            os.remove(tgt_image.loggerpath)
-            os.remove(tgt_image.statuspath)
         return calib_image
 
     def _correct_dark(self, tgt_data : CCDData, dark_data : CCDData):
@@ -265,7 +254,7 @@ class Preprocess(Helper):
         return calib_data
     
     def correct_flat(self, tgt_image: ScienceImage, flat_image: CalibrationImage,
-                     remove : bool = False
+                     output_dir : str = None
                      ):
         if tgt_image.status.flatcor['status']:
             tgt_image.logger.warning(f"FLAT correction already applied to {tgt_image.path}. FLAT correction is not applied.")
@@ -290,12 +279,13 @@ class Preprocess(Helper):
         calib_data.meta['FLATPATH'] = flat_image.path
         
         # Determine output filename
-        dirpath = os.path.dirname(tgt_image.path)
+        if not output_dir:
+            output_dir = os.path.dirname(tgt_image.path)
         filename = os.path.basename(tgt_image.path)
         if 'cor_' in filename:
-            filepath = os.path.join(dirpath, 'f' + filename)
+            filepath = os.path.join(output_dir, 'f' + filename)
         else:
-            filepath = os.path.join(dirpath, 'fcor_' + filename)
+            filepath = os.path.join(output_dir, 'fcor_' + filename)
         calib_data.write(filepath, overwrite = True)
         
         # Create new image object
@@ -307,10 +297,6 @@ class Preprocess(Helper):
         # Log information
         tgt_image.logger.info(f"FLAT correction applied: FILEPATH = {calib_image.path}")
         flat_image.logger.info(f"Used for FLAT correction: FILEPATH = {calib_image.path}")
-        if remove:
-            os.remove(tgt_image.path)
-            os.remove(tgt_image.loggerpath)
-            os.remove(tgt_image.statuspath)
         return calib_image
         
     def _correct_flat(self, tgt_data : CCDData, flat_data : CCDData):
@@ -379,7 +365,7 @@ class Preprocess(Helper):
                     output_name = f'{date_str}-dark.fits'
                     b_darkimagelist = []
                     for dark in tqdm(dark_fileinfo['image'], desc = 'BIAS correction on DARK frames...'):
-                        b_dark_image = self.correct_bias(tgt_image = dark, bias_image = master_files[key]['BIAS'], remove = False)
+                        b_dark_image = self.correct_bias(tgt_image = dark, bias_image = master_files[key]['BIAS'])
                         b_darkimagelist.append(b_dark_image)
                     b_darkfilelist = [image.path for image in b_darkimagelist]
                         
@@ -411,7 +397,7 @@ class Preprocess(Helper):
                         output_name = f'{date_str}-flat-{filter_name}.fits'
                         db_flatimagelist = []
                         for flat in tqdm(filter_group['image'], desc = 'BIAS, DARK correction on FLAT frames...'):
-                            db_flat_image = self.correct_db(tgt_image = flat, bias_image = master_files[key]['BIAS'], dark_image = master_files[key]['DARK'], remove = False)
+                            db_flat_image = self.correct_db(tgt_image = flat, bias_image = master_files[key]['BIAS'], dark_image = master_files[key]['DARK'])
                             db_flatimagelist.append(db_flat_image)
                         db_flatfilelist = [image.path for image in db_flatimagelist]
                     
@@ -426,38 +412,3 @@ class Preprocess(Helper):
                         mflat = CalibrationImage(path = output_name, telinfo = flat_imagelist[0].telinfo)
                         master_files[key]['FLAT'][filter_name] = mflat
         return master_files
-            
-        
-        
-        
-    
-# %%
-P = Preprocess()
-# %%
-from tqdm import tqdm
-import glob
-filelist = glob.glob('/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/test/rawdata/SNU*-g-*.fts')
-bias_path = '/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/test/zero/20210914-zero.fits'
-dark_path = '/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/test/dark/120-20210804-dark.fits'
-flat_path = '/data1/supernova_rawdata/SN2021aefx/photometry/KCT_STX16803/test/flat/20210804-ng.fits'
-bias = CalibrationImage(bias_path, telinfo = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'))
-dark = CalibrationImage(dark_path, telinfo = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'))
-flat = CalibrationImage(flat_path, telinfo = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'))
-for image in tqdm(filelist):
-    sci = ScienceImage(image, telinfo = Helper().get_telinfo(telescope = 'KCT', ccd = 'STX16803'))
-    #bsci = P.correct_bias(tgt_image = sci, bias_image = bias, remove = False)
-    #dbsci = P.correct_dark(tgt_image = bsci, dark_image = dark, remove = True)
-    #fdbsci = P.correct_flat(tgt_image = dbsci, flat_image = flat, remove = True)
-    fdbsci = P.correct_bdf(tgt_image = sci, bias_image = bias, dark_image = dark, flat_image = flat, remove = False)
-# %%
-import glob
-tel_name = '7DT02'
-biaslist = glob.glob(f'/data1/7DT/S240422ed/obsdata/{tel_name}/*BIAS*.fits')
-darklist = glob.glob(f'/data1/7DT/S240422ed/obsdata/{tel_name}/*DARK*.fits')
-flatlist = glob.glob(f'/data1/7DT/S240422ed/obsdata/{tel_name}/*FLAT*.fits')
-caliblist = biaslist + darklist + flatlist
-calib_imagelist = [CalibrationImage(path = file_, telinfo = Helper().get_telinfo(telescope = '7DT', ccd = 'C361K', readoutmode = 'high')) for file_ in caliblist]
-# %%
-self = Preprocess()
-mbias = CalibrationImage(path = '/data1/7DT/S240422ed/obsdata/7DT02/20240423-zero.fits', telinfo = tgt_imagelist[0].telinfo)
-# %%
